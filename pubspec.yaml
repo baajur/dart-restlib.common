@@ -1,0 +1,8 @@
+name: common
+description: A sample application
+dependencies:
+  unittest: any
+
+#dependencies:
+#  js: any
+#  unittest: any

@@ -1,0 +1,1 @@
+library common.objects_test;
