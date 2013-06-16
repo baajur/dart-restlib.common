@@ -4,11 +4,11 @@ class Either<L, R> {
   final Option<L> left;
   final Option<R> right;  
   
-  const Either.leftValue(final L value):
+  Either.leftValue(final L value):
     left = new Option(checkNotNull(value)),
     right = Option.NONE;
 
-  const Either.rightValue(final R value):
+  Either.rightValue(final R value):
     left = Option.NONE,
     right = new Option(checkNotNull(value));
   

@@ -1,7 +1,7 @@
 part of common.collections;
 
 class CopyOnWriteSet<E> extends IterableBase<E> implements ImmutableSet<E> {
-  static const CopyOnWriteSet EMPTY = const CopyOnWriteSet._internal(CopyOnWriteMap.EMPTY);
+  static final CopyOnWriteSet EMPTY = new CopyOnWriteSet._internal(CopyOnWriteMap.EMPTY);
   
   final ImmutableMap<E,E> _set;
  

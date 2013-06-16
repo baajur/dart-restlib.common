@@ -1,7 +1,7 @@
 part of common.collections;
 
 class PersistentStack<E> extends IterableBase<E> implements ImmutableStack<E> {  
-  static const PersistentStack EMPTY = const PersistentStack._internal(null, null);
+  static final PersistentStack EMPTY = new PersistentStack._internal(null, null);
   
   factory PersistentStack.from(final Iterable<E> src) =>
     checkNotNull(src)
@@ -14,7 +14,7 @@ class PersistentStack<E> extends IterableBase<E> implements ImmutableStack<E> {
   final PersistentStack _tail;
       
   // This code assumes either either head and rest are both null or neither null.
-  const PersistentStack._internal(final E head, final PersistentStack<E> rest):
+  PersistentStack._internal(final E head, final PersistentStack<E> rest):
     this._head = head,
     this._last = isNull(rest) ? null : (rest.isEmpty ? head : rest.last),
     this.length = isNotNull(head) ? 1 + rest.length : 0,

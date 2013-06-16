@@ -1,7 +1,7 @@
 part of common.collections;
 
 class CopyOnWriteMap<K,V> implements ImmutableMap<K,V> {
-  static const CopyOnWriteMap EMPTY = const CopyOnWriteMap._internal(new Map());
+  static final CopyOnWriteMap EMPTY = new CopyOnWriteMap._internal(new Map());
   
   final Map<K,V> _map;
   

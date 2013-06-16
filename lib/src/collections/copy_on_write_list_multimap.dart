@@ -1,7 +1,7 @@
 part of common.collections;
 
 class CopyOnWriteListMultimap<K,V> implements ImmutableMultimap<K,V> { 
-  static const EMPTY = const CopyOnWriteListMultimap._internal(CopyOnWriteMap.EMPTY);
+  static const EMPTY = new CopyOnWriteListMultimap._internal(CopyOnWriteMap.EMPTY);
   
   final CopyOnWriteMap<K, CopyOnWriteList<V>> _map;
   

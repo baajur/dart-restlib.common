@@ -4,7 +4,7 @@ class Pair<T1, T2> {
   final T1 fst;
   final T2 snd;
   
-  const Pair(final T1 fst, final T2 snd) :
+  Pair(final T1 fst, final T2 snd) :
     this.fst = checkNotNull(fst),
     this.snd = checkNotNull(snd);
   
