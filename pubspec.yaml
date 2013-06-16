@@ -1,4 +1,4 @@
-name: common
+name: dart_restlib_common
 description: A sample application
 dependencies:
   unittest: any
