@@ -3,9 +3,32 @@ part of restlib.common.collections;
 class ImmutableMap<K,V> extends Object with IterableMixin<E> implements Dictionary<K,V> {
   static final ImmutableMap EMPTY = new ImmutableMap._internal(new Map());
   
+  factory ImmutableMap.fromMap(final Map<K,V> map) {
+    if (map.length > 0) {
+      // FIXME: Null handling
+      final Map<K,V> newMap = new Map.from(map);
+      return new ImmutableMap._internal(newMap);
+    } else {
+      return EMPTY;
+    }
+  }
+  
+  factory ImmutableMap.fromPairs(final Iterable<Pair<K,V>> pairs) {
+    if (pairs is ImmutableMap) {
+      return pairs;
+    } else if (pairs.isEmpty) {
+      return EMPTY;
+    } else { 
+      final Map<K,V> newMap = new Map();
+      pairs.forEach((pair) =>
+          newMap[pair.fst] = pair.snd);
+      return new ImmutableMap._internal(newMap);
+    }
+  }
+  
   final Map<K,V> _map;
   
-  const ImmutableMap._internal(this._map);
+  ImmutableMap._internal(this._map);
   
   int get hashCode => computeHashCode(this);
   
