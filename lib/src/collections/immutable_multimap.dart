@@ -8,6 +8,10 @@ class ImmutableListMultimapBuilder<K,V> {
 class ImmutableListMultimap<K,V> implements Multimap<K,V> {
   static const ImmutableListMultimap EMPTY = new ImmutableListMultimap._internal(ImmutableMap.EMPTY);
   
+  factory ImmutableListMultimap.fromPairs(final Iterable<Pair<K,V>> pairs) {
+    
+  }
+  
   final ImmutableMap<K, ImmutableList<V>> _map;
   
   const ImmutableListMultimap._internal(this._map);
