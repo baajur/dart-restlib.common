@@ -22,6 +22,7 @@ abstract class Associative<K,V> {
   
   bool get isEmpty;
   bool get isNotEmpty;
+  Iterable<K> get keys;
 }
 
 abstract class Dictionary<K,V> implements Associative<K,V>, Iterable<Pair<K,V>> {
