@@ -1,21 +1,49 @@
 part of restlib.common.collections;
 
-abstract class ImmutableList<E> extends Iterable<E>{
-  ImmutableList<E> add(E element);
+class ImmutableList<E> extends Object with IterableMixin<E> {
+static final ImmutableList EMPTY = new ImmutableList._internal([]);
   
-  ImmutableList<E> addAll(Iterable<E> iterable); 
+  factory ImmutableList.from(Iterable<E> elements) {
+    if (elements is ImmutableList) {
+      return elements;
+    }
+    
+    List<E> list = new List(elements.length)..setAll(0, elements);
+    return new ImmutableList._internal(list);
+  }
   
-  ImmutableList<E> getRange(int start, int end);
+  final List<E> _list;
   
-  int indexOf(E element, [int start = 0]);
+  ImmutableList._internal(this._list);
+
+  E operator [](int index) => _list[index];
   
-  ImmutableList<E> insert(int index, E element);
+  bool operator==(other) {
+    if (identical(this, other)) {
+      return true;
+    } else if(other is ImmutableList && 
+        (this.length == (other as ImmutableList).length)) {
+      ImmutableList that = other;
+      for (int i = 0; i < this.length; i++) {
+        if (this[i] != that[i]) { return false; };
+      }
+      return true; 
+    } else {
+      return false;
+    }
+  }
   
-  ImmutableList<E> insertAll(int index, Iterable<E> iterable);
+  Iterator<E> get iterator => _list.iterator;
   
-  ImmutableList<E> sort();
+  int get hashCode => computeHashCode(this);
+
+  Iterable<E> getRange(int start, int end) {
+    return skip(start).take(end - start);
+  }
   
-  ImmutableList<E> sublist(int start, [int end]);
+  int indexOf(E element, [int start = 0]) => _list.indexOf(element, start);
   
-  Option<E> operator [](int index);
+  String toString() {
+    return _list.toString();
+  }
 }

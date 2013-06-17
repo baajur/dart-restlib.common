@@ -1,6 +1,6 @@
 part of restlib.common.collections;
 
-class PersistentStack<E> extends IterableBase<E> implements ImmutableStack<E> {  
+class PersistentStack<E> extends Object with IterableMixin<E> {  
   static final PersistentStack EMPTY = new PersistentStack._internal(null, null);
   
   factory PersistentStack.from(final Iterable<E> src) =>
@@ -63,14 +63,14 @@ class PersistentStack<E> extends IterableBase<E> implements ImmutableStack<E> {
   bool operator==(other){
     if (identical (this, other)) {
       return true;
-    } else if (other is ImmutableStack) {
+    } else if (other is PersistentStack) {
       return equal(this, other);
     } else {
       return false;
     }
   }
   
-  ImmutableStack<E> add(final E value) =>
+  PersistentStack<E> add(final E value) =>
       new PersistentStack._internal(checkNotNull(value), this);
   
   String toString() =>"[${join(", ")}]";

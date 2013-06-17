@@ -1,19 +1,49 @@
 part of restlib.common.collections;
 
-abstract class ImmutableMap<K,V> implements Iterable<Pair<K,V>> {
-  int get hashCode;
+class ImmutableMap<K,V> extends Object with IterableMixin<E> implements Dictionary<K,V> {
+  static final ImmutableMap EMPTY = new ImmutableMap._internal(new Map());
   
-  Iterable<K> get keys;
+  final Map<K,V> _map;
   
-  Option<V> operator[](K key);
+  const ImmutableMap._internal(this._map);
   
-  bool operator==(object);
+  int get hashCode => computeHashCode(this);
   
-  ImmutableMap<K,V> insert(K key, V value);
+  Iterator<Pair<K,V>> get iterator => new _ImmutableMapIterator(_map);
   
-  ImmutableMap<K,V> insertPair(Pair<K,V> pair);
+  Iterable<K> get keys => _map.keys;
   
-  ImmutableMap<K,V> insertAll(Iterable<Pair<K,V>> pairs);
+  Option<V> operator[](final K key) => new Option(_map[key]);
   
-  ImmutableMap<K,V> remove(K key);
+  bool operator==(object) {
+    if (identical(this, object)) {
+      return true;
+    } else if (object is ImmutableMap) {
+      return equal(this, object);
+    } else {
+      return false;
+    }
+  }
+}
+
+class _ImmutableMapIterator<K,V> implements Iterator<Pair<K,V>>{
+  final Map<K,V> _map;
+  final Iterator<K> _keysItr;
+  Pair<K,V> _current = null;
+  
+  _ImmutableMapIterator(final Map<K,V> map) :
+    _map = map,
+    _keysItr = map.keys.iterator;
+  
+  Pair<K,V> get current => _current;
+  
+  bool moveNext() {
+    if (_keysItr.moveNext()) {
+      _current = new Pair(_keysItr.current, _map[_keysItr.current]);
+      return true;
+    } else {
+      _current = null;
+      return false;
+    }
+  }  
 }
