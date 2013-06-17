@@ -17,7 +17,7 @@ part "src/collections/option.dart";
 part "src/collections/pair.dart";
 part "src/collections/persistent_stack.dart";
 
-abstract class Associative<K,V> {
+abstract class Associative<K,V> implements Iterable<Pair<K,V>> {
   Iterable<V> operator[](K key);
   
   bool get isEmpty;
@@ -25,7 +25,7 @@ abstract class Associative<K,V> {
   Iterable<K> get keys;
 }
 
-abstract class Dictionary<K,V> implements Associative<K,V>, Iterable<Pair<K,V>> {
+abstract class Dictionary<K,V> implements Associative<K,V> {
   Option<V> operator[](K key);
 }
 
@@ -33,8 +33,6 @@ abstract class BiMap<K,V> implements Dictionary<K,V> {
   BiMap<V,K> inverse();
 }
 
-abstract class Multimap<K,V> implements Associative<K,V> {
-  Iterable<Pair<K,V>> get entries;
-  
+abstract class Multimap<K,V> implements Associative<K,V> {  
   Dictionary<K, Iterable<V>> asDictionary();
 }

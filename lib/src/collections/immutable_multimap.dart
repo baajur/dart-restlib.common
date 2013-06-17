@@ -1,6 +1,6 @@
 part of restlib.common.collections;
 
-class ImmutableListMultimap<K,V> implements Multimap<K,V> {
+class ImmutableListMultimap<K,V> extends Object with IterableMixin<Pair<K,V>> implements Multimap<K,V> {
   static const ImmutableListMultimap EMPTY = new ImmutableListMultimap._internal(ImmutableMap.EMPTY);
   
   factory ImmutableListMultimap.fromPairs(final Iterable<Pair<K,V>> pairs) {
@@ -23,7 +23,7 @@ class ImmutableListMultimap<K,V> implements Multimap<K,V> {
   
   bool get isNotEmpty => _map.isNotEmpty;
   
-  Iterable<Pair<K,V>> get entries => new _MultimapEntriesIterable(this);
+  Iterator<Pair<K,V>> get iterator => new _MultimapEntriesIterator(this);
   
   Iterable<K> get keys => _map.keys;
   
@@ -72,7 +72,7 @@ class ImmutableListMultimapBuilder<K,V> {
   }
 }
 
-class ImmutableSetMultimap<K,V> implements Multimap<K,V> {
+class ImmutableSetMultimap<K,V> extends Object with IterableMixin<Pair<K,V>> implements Multimap<K,V> {
   static const ImmutableSetMultimap EMPTY = new ImmutableSetMultimap._internal(ImmutableMap.EMPTY);
   
   factory ImmutableSetMultimap.fromPairs(final Iterable<Pair<K,V>> pairs) {
@@ -95,7 +95,7 @@ class ImmutableSetMultimap<K,V> implements Multimap<K,V> {
   
   bool get isNotEmpty => _map.isNotEmpty;
   
-  Iterable<Pair<K,V>> get entries => new _MultimapEntriesIterable(this);
+  Iterator<Pair<K,V>> get iterator => new _MultimapEntriesIterator(this);
   
   Iterable<K> get keys => _map.keys;
   
@@ -142,14 +142,6 @@ class ImmutableSetMultimapBuilder<K,V> {
         built[key] = new ImmutableSet.from(_builder[key]));
     return new ImmutableSetMultimap._internal(new ImmutableMap._internal(built));
   }
-}
-
-class _MultimapEntriesIterable<K,V> extends Object with IterableMixin<Pair<K,V>> {
-  final Multimap<K,V> _multimap;
-  
-  _MultimapEntriesIterable(this._multimap);
-  
-  Iterator<Pair<K,V>> get iterator => new _MultimapEntriesIterator(_multimap); 
 }
 
 class _MultimapEntriesIterator<K,V> implements Iterator<Pair<K,V>> {
