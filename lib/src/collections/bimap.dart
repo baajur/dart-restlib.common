@@ -1,2 +1,2 @@
-part of common.collections;
+part of restlib.common.collections;
 

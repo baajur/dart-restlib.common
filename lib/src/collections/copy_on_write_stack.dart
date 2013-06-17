@@ -1,4 +1,4 @@
-part of common.collections;
+part of restlib.common.collections;
 
 
 class CopyOnWriteStack<E> extends IterableBase<E> implements ImmutableStack<E> {  

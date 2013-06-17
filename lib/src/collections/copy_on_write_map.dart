@@ -1,4 +1,4 @@
-part of common.collections;
+part of restlib.common.collections;
 
 class CopyOnWriteMap<K,V> implements ImmutableMap<K,V> {
   static final CopyOnWriteMap EMPTY = new CopyOnWriteMap._internal(new Map());

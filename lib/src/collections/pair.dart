@@ -1,4 +1,4 @@
-part of common.collections;
+part of restlib.common.collections;
 
 class Pair<T1, T2> {
   final T1 fst;

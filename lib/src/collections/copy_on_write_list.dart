@@ -1,4 +1,4 @@
-part of common.collections;
+part of restlib.common.collections;
 
 class CopyOnWriteList<E> extends IterableBase<E> implements ImmutableList<E> {
   static final CopyOnWriteList EMPTY = new CopyOnWriteList._internal([]);

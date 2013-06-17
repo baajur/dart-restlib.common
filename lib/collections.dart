@@ -1,4 +1,4 @@
-library common.collections;
+library restlib.common.collections;
 
 import "dart:collection";
 import "dart:math";

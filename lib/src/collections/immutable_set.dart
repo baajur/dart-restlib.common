@@ -1,4 +1,4 @@
-part of common.collections;
+part of restlib.common.collections;
 
 abstract class ImmutableSet<E> implements Iterable<E> {
   int get hashCode;

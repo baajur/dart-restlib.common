@@ -1,4 +1,4 @@
-part of common.collections;
+part of restlib.common.collections;
 
 class Either<L, R> {
   final Option<L> left;

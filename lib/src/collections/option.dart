@@ -1,4 +1,4 @@
-part of common.collections;
+part of restlib.common.collections;
 
 class Option<E> implements Iterable<E> {
   static const Option NONE = const Option._internal(null);

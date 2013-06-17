@@ -1,4 +1,4 @@
-part of common.collections;
+part of restlib.common.collections;
 
 class CopyOnWriteBiMap<K,V> implements ImmutableBiMap<K,V> {
   final CopyOnWriteMap<K,V> _map;

@@ -1,4 +1,4 @@
-part of common.collections;
+part of restlib.common.collections;
 
 abstract class ImmutableMap<K,V> implements Iterable<Pair<K,V>> {
   int get hashCode;

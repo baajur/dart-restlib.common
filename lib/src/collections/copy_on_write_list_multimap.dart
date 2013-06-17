@@ -1,4 +1,4 @@
-part of common.collections;
+part of restlib.common.collections;
 
 class CopyOnWriteListMultimap<K,V> implements ImmutableMultimap<K,V> { 
   static const EMPTY = new CopyOnWriteListMultimap._internal(CopyOnWriteMap.EMPTY);

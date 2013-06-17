@@ -1,10 +1,10 @@
-part of restlib.core;
+part of restlib.common.objects;
 
 abstract class Forwarder<T> {
   final InstanceMirror _delegateMirror;
   final T _delegate;
 
-  const Forwarder(final T delegate) :
+  Forwarder(final T delegate) :
     this._delegate = delegate,
     this._delegateMirror = reflect(delegate);
 

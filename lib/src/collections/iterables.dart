@@ -1,4 +1,4 @@
-part of common.collections;
+part of restlib.common.collections;
 
 Iterable/*<T>*/ concat(final Iterable/*<T>*/ fst, final Iterable/*<T>*/ snd) => 
     new _ConcatIterable(fst, snd);

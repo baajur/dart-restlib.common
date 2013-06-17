@@ -1,4 +1,4 @@
-part of common.collections;
+part of restlib.common.collections;
 
 class PersistentStack<E> extends IterableBase<E> implements ImmutableStack<E> {  
   static final PersistentStack EMPTY = new PersistentStack._internal(null, null);

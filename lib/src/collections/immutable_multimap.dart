@@ -1,4 +1,4 @@
-part of common.collections;
+part of restlib.common.collections;
 
 abstract class ImmutableMultimap<K,V> {  
   Iterable<Pair<K,V>> get entries;
