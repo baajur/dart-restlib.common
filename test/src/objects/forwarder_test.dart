@@ -39,11 +39,3 @@ class _TestObject {
 class _ForwardedTestObject extends restlib_common_objects.Forwarder<_TestObject> implements _TestObject {
   _ForwardedTestObject(_TestObject delegate) : super(delegate);
 }
-
-class _ValueObject {
-  final int hashCode = 1;
-  
-  bool operator==(other) {
-    return other is _ValueObject;
-  }
-}
