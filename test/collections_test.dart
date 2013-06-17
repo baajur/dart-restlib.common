@@ -1,4 +1,4 @@
-library common.collections_test;
+library restlib.common.collections_test;
 
 import "package:unittest/unittest.dart";
 

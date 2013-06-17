@@ -1,4 +1,4 @@
-part of common.collections_test;
+part of restlib.common.collections_test;
 
 optionTests() {
   new EqualsTester()
