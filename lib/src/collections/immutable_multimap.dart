@@ -7,6 +7,12 @@ class ImmutableListMultimap<K,V> implements Multimap<K,V> {
     return (new ImmutableListMultimapBuilder()..addAllPairs(pairs)).build();
   }
   
+  factory ImmutableListMultimap.fromMap(final Map<K,V> map) {
+    ImmutableListMultimapBuilder builder = new ImmutableListMultimapBuilder();
+    map.forEach((k,v) => builder.add(k, v));
+    return builder.build();
+  }
+  
   final ImmutableMap<K, ImmutableList<V>> _map;
   
   const ImmutableListMultimap._internal(this._map);
@@ -68,6 +74,16 @@ class ImmutableListMultimapBuilder<K,V> {
 
 class ImmutableSetMultimap<K,V> implements Multimap<K,V> {
   static const ImmutableSetMultimap EMPTY = new ImmutableSetMultimap._internal(ImmutableMap.EMPTY);
+  
+  factory ImmutableSetMultimap.fromPairs(final Iterable<Pair<K,V>> pairs) {
+    return (new ImmutableSetMultimapBuilder()..addAllPairs(pairs)).build();
+  }
+  
+  factory ImmutableSetMultimap.fromMap(final Map<K,V> map) {
+    ImmutableSetMultimapBuilder builder = new ImmutableSetMultimapBuilder();
+    map.forEach((k,v) => builder.add(k, v));
+    return builder.build();
+  }
   
   final ImmutableMap<K, ImmutableSet<V>> _map;
   
