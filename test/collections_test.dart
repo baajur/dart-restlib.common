@@ -3,7 +3,7 @@ library common.collections_test;
 import "package:unittest/unittest.dart";
 
 import "package:dart_restlib_common/collections.dart";
-import "package:dart_restlib_common/testing.dart";
+import "package:dart_restlib_testing/testing.dart";
 
 part "src/collections/either_test.dart";
 part "src/collections/iterables_test.dart";
