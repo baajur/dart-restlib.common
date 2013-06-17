@@ -19,6 +19,9 @@ part "src/collections/persistent_stack.dart";
 
 abstract class Associative<K,V> {
   Iterable<V> operator[](K key);
+  
+  bool get isEmpty;
+  bool get isNotEmpty;
 }
 
 abstract class Dictionary<K,V> implements Associative<K,V>, Iterable<Pair<K,V>> {

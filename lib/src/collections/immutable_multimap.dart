@@ -18,6 +18,10 @@ class ImmutableListMultimap<K,V> implements Multimap<K,V> {
   
   int get hashCode => _map.hashCode;
   
+  bool get isEmpty => _map.isEmpty;
+  
+  bool get isNotEmpty => _map.isNotEmpty;
+  
   Iterable<Pair<K,V>> get entries => new _MultimapEntriesIterable(this);
   
   Iterable<K> get keys => _map.keys;
@@ -46,6 +50,10 @@ class ImmutableSetMultimap<K,V> implements Multimap<K,V> {
   const ImmutableSetMultimap._internal(this._map);
   
   int get hashCode => _map.hashCode;
+  
+  bool get isEmpty => _map.isEmpty;
+  
+  bool get isNotEmpty => _map.isNotEmpty;
   
   Iterable<Pair<K,V>> get entries => new _MultimapEntriesIterable(this);
   
