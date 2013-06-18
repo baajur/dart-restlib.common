@@ -1,6 +1,6 @@
 part of restlib.common.collections;
 
-class ImmutableMap<K,V> extends Object with IterableMixin<E> implements Dictionary<K,V> {
+class ImmutableMap<K,V> extends Object with IterableMixin<Pair<K,V>> implements Dictionary<K,V> {
   static final ImmutableMap EMPTY = new ImmutableMap._internal(new Map());
   
   factory ImmutableMap.fromMap(final Map<K,V> map) {
