@@ -1,7 +1,7 @@
 part of restlib.common.collections;
 
 class ImmutableList<E> extends Object with IterableMixin<E> {
-  static const ImmutableList EMPTY = const ImmutableList._internal([]);
+  static final ImmutableList EMPTY = new ImmutableList._internal([]);
   
   factory ImmutableList.from(final Iterable<E> elements) {
     if (elements is ImmutableList) {
@@ -12,7 +12,7 @@ class ImmutableList<E> extends Object with IterableMixin<E> {
   
   final List<E> _list;
   
-  const ImmutableList._internal(this._list);
+  ImmutableList._internal(this._list);
   
   bool operator==(other) {
     if (identical(this, other)) {

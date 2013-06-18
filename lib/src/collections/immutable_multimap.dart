@@ -87,7 +87,7 @@ class ImmutableSetMultimap<K,V> extends Object with IterableMixin<Pair<K,V>> imp
   
   final ImmutableMap<K, ImmutableSet<V>> _map;
   
-  const ImmutableSetMultimap._internal(this._map);
+  ImmutableSetMultimap._internal(this._map);
   
   int get hashCode => _map.hashCode;
   

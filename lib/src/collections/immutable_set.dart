@@ -15,7 +15,7 @@ class ImmutableSet<E> extends Object with IterableMixin<E> {
   
   final Set<E> _set;
  
-  const ImmutableSet._internal(this._set);
+  ImmutableSet._internal(this._set);
    
   int get hashCode => computeHashCode(_set);
   
