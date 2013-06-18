@@ -1,7 +1,7 @@
 part of restlib.common.collections;
 
 class ImmutableListMultimap<K,V> extends Object with IterableMixin<Pair<K,V>> implements Multimap<K,V> {
-  static final ImmutableListMultimap EMPTY = new ImmutableListMultimap._internal(ImmutableMap.EMPTY);
+  static final ImmutableListMultimap EMPTY = new ImmutableListMultimap._internal(ImmutableDictionary.EMPTY);
   
   factory ImmutableListMultimap.fromPairs(final Iterable<Pair<K,V>> pairs) {
     return (new ImmutableListMultimapBuilder()..addAllPairs(pairs)).build();
@@ -13,7 +13,7 @@ class ImmutableListMultimap<K,V> extends Object with IterableMixin<Pair<K,V>> im
     return builder.build();
   }
   
-  final ImmutableMap<K, ImmutableList<V>> _map;
+  final ImmutableDictionary<K, ImmutableList<V>> _map;
   
   ImmutableListMultimap._internal(this._map);
   
@@ -68,12 +68,12 @@ class ImmutableListMultimapBuilder<K,V> {
     Map<K, ImmutableList<V>> built = new Map();
     _builder.keys.forEach((key) => 
         built[key] = new ImmutableList.from(_builder[key]));
-    return new ImmutableListMultimap._internal(new ImmutableMap._internal(built));
+    return new ImmutableListMultimap._internal(new ImmutableDictionary._internal(built));
   }
 }
 
 class ImmutableSetMultimap<K,V> extends Object with IterableMixin<Pair<K,V>> implements Multimap<K,V> {
-  static final ImmutableSetMultimap EMPTY = new ImmutableSetMultimap._internal(ImmutableMap.EMPTY);
+  static final ImmutableSetMultimap EMPTY = new ImmutableSetMultimap._internal(ImmutableDictionary.EMPTY);
   
   factory ImmutableSetMultimap.fromPairs(final Iterable<Pair<K,V>> pairs) {
     return (new ImmutableSetMultimapBuilder()..addAllPairs(pairs)).build();
@@ -85,7 +85,7 @@ class ImmutableSetMultimap<K,V> extends Object with IterableMixin<Pair<K,V>> imp
     return builder.build();
   }
   
-  final ImmutableMap<K, ImmutableSet<V>> _map;
+  final ImmutableDictionary<K, ImmutableSet<V>> _map;
   
   ImmutableSetMultimap._internal(this._map);
   
@@ -140,7 +140,7 @@ class ImmutableSetMultimapBuilder<K,V> {
     Map<K, ImmutableSet<V>> built = new Map();
     _builder.keys.forEach((key) => 
         built[key] = new ImmutableSet.from(_builder[key]));
-    return new ImmutableSetMultimap._internal(new ImmutableMap._internal(built));
+    return new ImmutableSetMultimap._internal(new ImmutableDictionary._internal(built));
   }
 }
 

@@ -9,7 +9,7 @@ import "preconditions.dart";
 part "src/collections/either.dart";
 part "src/collections/immutable_bimap.dart";
 part "src/collections/immutable_list.dart";
-part "src/collections/immutable_map.dart";
+part "src/collections/immutable_dictionary.dart";
 part "src/collections/immutable_multimap.dart";
 part "src/collections/immutable_set.dart";
 part "src/collections/iterables.dart";
