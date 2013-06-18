@@ -1,7 +1,7 @@
 part of restlib.common.collections;
 
 class ImmutableListMultimap<K,V> extends Object with IterableMixin<Pair<K,V>> implements Multimap<K,V> {
-  static const ImmutableListMultimap EMPTY = new ImmutableListMultimap._internal(ImmutableMap.EMPTY);
+  static final ImmutableListMultimap EMPTY = new ImmutableListMultimap._internal(ImmutableMap.EMPTY);
   
   factory ImmutableListMultimap.fromPairs(final Iterable<Pair<K,V>> pairs) {
     return (new ImmutableListMultimapBuilder()..addAllPairs(pairs)).build();
@@ -73,7 +73,7 @@ class ImmutableListMultimapBuilder<K,V> {
 }
 
 class ImmutableSetMultimap<K,V> extends Object with IterableMixin<Pair<K,V>> implements Multimap<K,V> {
-  static const ImmutableSetMultimap EMPTY = new ImmutableSetMultimap._internal(ImmutableMap.EMPTY);
+  static final ImmutableSetMultimap EMPTY = new ImmutableSetMultimap._internal(ImmutableMap.EMPTY);
   
   factory ImmutableSetMultimap.fromPairs(final Iterable<Pair<K,V>> pairs) {
     return (new ImmutableSetMultimapBuilder()..addAllPairs(pairs)).build();
