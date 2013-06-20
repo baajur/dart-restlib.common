@@ -34,7 +34,7 @@ class ImmutableListMultimap<K,V> extends Object with IterableMixin<Pair<K,V>> im
     if (identical(this,object)) {
       return true;
     } else if (object is ImmutableListMultimap) {
-      
+      return this.asDictionary() == object.asDictionary();
     } else {
       return false;
     }
@@ -106,7 +106,7 @@ class ImmutableSetMultimap<K,V> extends Object with IterableMixin<Pair<K,V>> imp
     if (identical(this,object)) {
       return true;
     } else if (object is ImmutableSetMultimap) {
-      
+      return this.asDictionary() == object.asDictionary();
     } else {
       return false;
     }
