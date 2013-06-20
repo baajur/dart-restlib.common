@@ -147,9 +147,7 @@ class ImmutableSetMultimapBuilder<K,V> {
 class _MultimapEntriesIterator<K,V> implements Iterator<Pair<K,V>> {
   final Iterator<Pair<K,Iterable<V>>> _multimapItr;
   
-  K _currentKey = null;
-  Iterator<V> _currentValuesItr = null;
-  
+  Iterator<V> _valuesItr = null; 
   Pair<K,V> _current = null;
   
   _MultimapEntriesIterator(Multimap<K,V> multimap) :
@@ -157,7 +155,18 @@ class _MultimapEntriesIterator<K,V> implements Iterator<Pair<K,V>> {
   
   Pair<K,V> get current => _current;
   
-  bool moveNext() { 
-
+  bool moveNext() {     
+    if (_valuesItr == null || !_valuesItr.moveNext()) {
+      if (_multimapItr.moveNext()) {
+        // Every value iterator is guaranteed to have at least one value.
+        _valuesItr = _multimapItr.current.snd.iterator..moveNext();      
+      } else {
+        _current = null;
+        return false;
+      }
+    }
+    
+    _current = new Pair(_multimapItr.current.fst, _valuesItr.current);
+    return true;
   }
 }
