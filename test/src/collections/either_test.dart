@@ -19,4 +19,13 @@ eitherTests() {
     new Either.rightValue(1).fold((right) => fail("Either value is right, but called fold left"), (right) => rightCalled = true);
     expect(rightCalled, isTrue);
   });
+  
+  test("toString()", () {
+    Either<String, String> left = new Either.leftValue("left");
+    Either<String, String> right = new Either.rightValue("right");
+    
+    expect(left.toString(), equals("Either.left(left)"));
+    expect(right.toString(), equals("Either.right(right)"));
+   
+  });
 }

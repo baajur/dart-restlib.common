@@ -37,5 +37,5 @@ class Either<L, R> {
   String toString() =>
       left
         .map((final L left) => "Either.left($left)")
-        .orElse("Either.right(${right.value}");
+        .orCompute(() => "Either.right(${right.value})").toString();
 }
