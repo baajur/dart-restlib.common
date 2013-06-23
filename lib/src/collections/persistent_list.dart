@@ -151,7 +151,7 @@ class PersistentList<E> extends Object with IterableMixin<E> implements Sequence
     }
   }
   
-  static List _doInsert(final int level, final List node, final int index, final E  object){
+  static List _doInsert(final int level, final List node, final int index, final Object object){
     final List ret = node.toList(growable: false);
     
     if (level == 0) {
@@ -218,7 +218,7 @@ class _SequenceIterator<E> implements Iterator<E> {
           null : _list[_currIndex];
 
   bool moveNext() =>
-      _currIndex + 1 < _list.length; 
+      (_currIndex++) < _list.length; 
 }
 
 class _ReverseSequence<E> extends Object with IterableMixin<E> implements Sequence<E> { 
