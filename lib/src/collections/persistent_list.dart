@@ -138,6 +138,9 @@ class PersistentList<E> extends Object with IterableMixin<E> implements Sequence
     throw new RangeError.value(index);
   }
   
+  String toString() =>
+      "[" + join(", ") + "]";
+  
   List _arrayFor(final int index) {
     if (index >= _tailoff()) {
       return _tail;
