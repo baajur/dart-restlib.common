@@ -3,6 +3,15 @@ part of restlib.common.collections;
 class PersistentList<E> extends Object with IterableMixin<E> implements Sequence<E>, Stack<E> {
   static final PersistentList EMPTY = new PersistentList._internal(0, 5, new List(32), new List(0));
   
+  factory PersistentList.from(final Iterable<E> elements) {
+    checkNotNull(elements);
+    
+    return (elements is PersistentList) ? elements :
+      elements.fold(EMPTY,
+          (accumulator, E element) => 
+              accumulator.add(element));
+  }
+  
   final int length;
   final int _shift;
   final List _root;
