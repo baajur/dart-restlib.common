@@ -1,7 +1,13 @@
 part of restlib.common.collections;
 
-class PersistentList<E> extends Object with IterableMixin<E> implements Sequence<E>, Stack<E> {
-  static final PersistentList EMPTY = new PersistentList._internal(0, 5, new List(32), new List(0));
+class PersistentList<E> extends IterableBase<E> implements Sequence<E>, Stack<E> {
+  static const _EMPTY_LIST_32 = 
+      const [null, null, null, null, null, null, null, null,
+             null, null, null, null, null, null, null, null,
+             null, null, null, null, null, null, null, null,
+             null, null, null, null, null, null, null, null];
+  
+  static const PersistentList EMPTY = const PersistentList._internal(0, 5, _EMPTY_LIST_32, const []);
   
   factory PersistentList.from(final Iterable<E> elements) {
     checkNotNull(elements);
@@ -17,7 +23,7 @@ class PersistentList<E> extends Object with IterableMixin<E> implements Sequence
   final List _root;
   final List _tail;
   
-  PersistentList._internal(this.length, this._shift, this._root, this._tail);
+  const PersistentList._internal(this.length, this._shift, this._root, this._tail);
   
   E get first =>
       isEmpty ? throw new StateError("List is empty") : this[0];
