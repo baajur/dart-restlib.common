@@ -10,6 +10,7 @@ part "src/collections/either.dart";
 part "src/collections/iterables.dart";
 part "src/collections/option.dart";
 part "src/collections/pair.dart";
+part "src/collections/persistent_hash_bimap.dart";
 part "src/collections/persistent_hash_map.dart";
 part "src/collections/persistent_hash_multimap.dart";
 part "src/collections/persistent_hash_set.dart";
@@ -25,7 +26,7 @@ abstract class Dictionary<K,V> implements Associative<K,V>, Iterable<Pair<K,V>>{
 }
 
 abstract class BiMap<K,V> implements Dictionary<K,V> {  
-  BiMap<V,K> inverse();
+  BiMap<V,K> get inverse;
 }
 
 abstract class Multimap<K,V> implements Associative<K,V>, Iterable<Pair<K,V>> {  

@@ -13,6 +13,9 @@ class PersistentList<E> extends Object with IterableMixin<E> implements Sequence
   E get first =>
       isEmpty ? throw new StateError("List is empty") : this[0];
   
+  int get hashCode =>
+      computeHashCode(this);
+      
   bool get isEmpty =>
       length == 0;
   
@@ -49,6 +52,16 @@ class PersistentList<E> extends Object with IterableMixin<E> implements Sequence
       }
     
       return new PersistentList._internal(length - 1, newshift, newroot, newtail);
+    }
+  }
+  
+  bool operator==(other) {
+    if (identical(this, other)) {
+      return true;
+    } else if (other is PersistentList) {
+      return equal(this, other);
+    } else {
+      return false;
     }
   }
   
@@ -231,17 +244,4 @@ class _SubSequence<E> extends Object with IterableMixin<E> implements Sequence<E
   
   Option<E> operator[](int index) =>
       delegate[_start + index];
-}
-
-
-
-main() {
-  var list = PersistentList.EMPTY;
-  for (int i=0; i <100; i++) {
-    list = list.insert(i, i);
-  }
-  
-  for (int i=0; i <100; i++) {
-    print (list[i]);
-  }
 }

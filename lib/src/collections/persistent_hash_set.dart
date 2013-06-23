@@ -12,6 +12,8 @@ class PersistentHashSet<E> extends Object with IterableMixin<E> {
   E get first =>
       _map.first.fst;
   
+  int get hashCode => _map.hashCode;
+  
   bool get isEmpty =>
       _map.isEmpty;
   
@@ -26,6 +28,16 @@ class PersistentHashSet<E> extends Object with IterableMixin<E> {
   
   E get single =>
       _map.single.fst;
+  
+  bool operator==(other) {
+    if (identical(this, other)) {
+      return true;
+    } else if (other is PersistentHashSet) {
+      return this._map == other._map;
+    } else {
+      return false;
+    }
+  }
   
   PersistentHashSet<E> add(final E element) =>
       new PersistentHashSet._internal(

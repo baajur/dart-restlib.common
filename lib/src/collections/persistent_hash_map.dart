@@ -1,15 +1,18 @@
 part of restlib.common.collections;
 
-class PersistentHashMap<K,V> extends Object with IterableMixin<Pair<K,V>> implements Dictionary<K,V> {
+class PersistentHashMap<K,V> extends IterableBase<Pair<K,V>> implements Dictionary<K,V> {
   static const PersistentHashMap EMPTY = const PersistentHashMap._internal(0, null);
   
   factory PersistentHashMap.fromMap(final Map<K,V> map) {
+    checkNotNull(map);
+    
     PersistentHashMap<K,V> result = EMPTY;
     map.forEach((k,v) => result = result.put(k, v));
     return result;
   }
   
   factory PersistentHashMap.fromPairs(final Iterable<Pair<K,V>> pairs) {
+    checkNotNull(pairs);
     if (pairs is PersistentHashMap) {
       return pairs;
     } else if (pairs.isEmpty) {
@@ -24,7 +27,12 @@ class PersistentHashMap<K,V> extends Object with IterableMixin<Pair<K,V>> implem
   final int length;
   final _INode _root;
   
-  const PersistentHashMap._internal (this.length, this._root);
+  const PersistentHashMap._internal(this.length, this._root);
+  
+  // FIXME: Would be better to compute on object creation
+  int get hashCode =>
+      fold(0, (int accumulator, Pair<K,V> pair) => 
+          accumulator + (pair.fst.hashCode ^ pair.snd.hashCode));
   
   bool get isEmpty => length != 0;
   
@@ -33,6 +41,23 @@ class PersistentHashMap<K,V> extends Object with IterableMixin<Pair<K,V>> implem
   
   Pair<K,V> get single =>
     (length == 1) ? (iterator..moveNext()..current) : throw new StateError("");
+  
+  bool operator ==(final other) {
+    if (identical(this, other)) {
+      return true;
+    } else if (other is PersistentHashMap) {
+      if (this.length != other.length) {
+        return false;
+      }
+      
+      return every((Pair<K,V> pair) => 
+          other[pair.fst].map((V value) => 
+              pair.snd == value).orElse(false));
+      
+    } else {
+      return false;
+    }
+  }
   
   Option<V> operator[](final K key){
     checkNotNull(key); 
@@ -47,7 +72,7 @@ class PersistentHashMap<K,V> extends Object with IterableMixin<Pair<K,V>> implem
     checkNotNull(key);
     checkNotNull(value);
     
-    final _INode newroot = firstNotNull(_root, _BitmapIndexedNode.EMPTY).assoc(0, key, value);
+    final _INode newroot = firstNotNull(_root, _BitmapIndexedNode.EMPTY).assoc(0, key.hashCode, key, value);
     
     return (identical(newroot, _root)) ? this :
       new PersistentHashMap._internal(length + 1, newroot);
@@ -63,6 +88,9 @@ class PersistentHashMap<K,V> extends Object with IterableMixin<Pair<K,V>> implem
       return identical(newroot, _root) ? this : new PersistentHashMap._internal(length - 1, newroot); 
     }
   }
+  
+  String toString() =>
+      "{" + map((pair) => "${pair.fst} : ${pair.snd}").join(", ") + "}";
 }
 
 abstract class _INode<K,V> extends Iterable<Pair<K,V>> {  
@@ -90,10 +118,10 @@ class _ArrayNode<K,V> extends Object with IterableMixin<Pair<K,V>> implements _I
     final _INode node = _array[idx];
     
     if (isNull(node)) {
-      return new _ArrayNode(_count + 1, _cloneAndSetValue(_array, idx, _BitmapIndexedNode.EMPTY.assoc(shift + 5, keyHash, key, value)));   
+      return new _ArrayNode(_count + 1, _cloneAndSetObject(_array, idx, _BitmapIndexedNode.EMPTY.assoc(shift + 5, keyHash, key, value)));   
     } else {
       final _INode n = node.assoc(shift + 5, keyHash, key, value);
-      return identical(n, node) ? this : new _ArrayNode(_count, _cloneAndSetINode(_array, idx, n)); 
+      return identical(n, node) ? this : new _ArrayNode(_count, _cloneAndSetObject(_array, idx, n)); 
     }
   }
   
@@ -111,14 +139,14 @@ class _ArrayNode<K,V> extends Object with IterableMixin<Pair<K,V>> implements _I
       return this;
     }
     
-    final _INode<K,V> n = node.without(keyHash, shift + 5, key);
+    final _INode<K,V> n = node.without(shift + 5, keyHash, key);
     if (identical(n, node)) {
       return this;
     } else if (isNull(n)) {
       return (_count <= 8) ? // shrink  
-          _pack(idx) : new _ArrayNode(_count - 1, _cloneAndSetINode(_array, idx, n));
+          _pack(idx) : new _ArrayNode(_count - 1, _cloneAndSetObject(_array, idx, n));
     } else {
-      return new _ArrayNode(_count, _cloneAndSetINode(_array, idx, n));
+      return new _ArrayNode(_count, _cloneAndSetObject(_array, idx, n));
     }
   }
   
@@ -170,10 +198,10 @@ class _BitmapIndexedNode<K,V> extends Object with IterableMixin<Pair<K,V>> imple
       if (isNull(keyOrNull)) {
         final _INode n = (valOrNode as _INode).assoc(shift + 5, keyHash, key, value);
         return (n == valOrNode) ? this : 
-          new _BitmapIndexedNode(_bitmap, _cloneAndSetINode(_array, 2*idx+1, n));
+          new _BitmapIndexedNode(_bitmap, _cloneAndSetObject(_array, 2*idx+1, n));
       } else if (key == keyOrNull) {
         return (value == valOrNode) ? this : 
-          new _BitmapIndexedNode(_bitmap, _cloneAndSetValue(_array, 2*idx+1, value));
+          new _BitmapIndexedNode(_bitmap, _cloneAndSetObject(_array, 2*idx+1, value));
       } else {
         return new _BitmapIndexedNode(_bitmap, 
           _cloneAndSetKeyValue(_array, 
@@ -242,12 +270,12 @@ class _BitmapIndexedNode<K,V> extends Object with IterableMixin<Pair<K,V>> imple
     final Object keyOrNull = _array[2*idx];
     final Object valOrNode = _array[2*idx+1];
     
-    if(isNull(keyOrNull)) {
+    if (isNull(keyOrNull)) {
       _INode<K,V> n = (valOrNode as _INode).without(shift + 5, keyHash, key);
       if (n == valOrNode) {
         return this;
       } else if (isNotNull(n)) {
-        return new _BitmapIndexedNode(_bitmap, _cloneAndSetINode(_array, 2*idx+1, n));
+        return new _BitmapIndexedNode(_bitmap, _cloneAndSetObject(_array, 2*idx+1, n));
       } else if (_bitmap == bit) {
         return null;
       } else {
@@ -318,7 +346,7 @@ class _HashCollisionNode<K,V> extends Object with IterableMixin<Pair<K,V>> imple
     if (keyHash == _hash) {
       final int idx = findIndex(key);
       if (idx != -1) {
-        return (_array[idx + 1] == value) ? this : new _HashCollisionNode(_hash, _count, _cloneAndSetValue(_array, idx + 1, value));
+        return (_array[idx + 1] == value) ? this : new _HashCollisionNode(_hash, _count, _cloneAndSetObject(_array, idx + 1, value));
       } else {
         final List newArray = new List(_array.length + 2)..setAll(0, _array)..[_array.length] = key..[_array.length + 1] = value;
         return new _HashCollisionNode(_hash, _count + 1, newArray);
@@ -384,10 +412,7 @@ class _HashCollisionNodeIterator<K,V> implements Iterator<Pair<K,V>> {
   }
 }
 
-List<_INode> _cloneAndSetINode(final List<_INode> array, final int i, final _INode a) =>
-  array.toList(growable: false)..[i] = a;
-
-List _cloneAndSetValue(final List array, final int i, final Object a) =>
+List _cloneAndSetObject(final List array, final int i, final Object a) =>
   array.toList(growable: false)..[i] = a;
 
 List _cloneAndSetKeyValue(final List array, final int i, final Object a, final int j, final Object b) =>
@@ -401,8 +426,6 @@ _INode _createNode(final int shift, final int key1hash,
         _BitmapIndexedNode.EMPTY
           .assoc(shift, key1hash, key1, val1)
           .assoc(shift, key2hash, key2, val2);
-  
-
 
 int _bitpos(final int hash, final int shift) =>
     1 << _mask(hash, shift);

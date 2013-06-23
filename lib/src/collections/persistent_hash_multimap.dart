@@ -8,6 +8,8 @@ class PersistentListMultimap<K,V> extends Object with IterableMixin<Pair<K,V>> i
   
   const PersistentListMultimap._internal(this._map);
   
+  int get hashCode => _map.hashCode;
+  
   bool get isEmpty => _map.isEmpty;
   
   Iterator<Pair<K,V>> get iterator =>
@@ -15,13 +17,26 @@ class PersistentListMultimap<K,V> extends Object with IterableMixin<Pair<K,V>> i
           pair.snd.map((V value) =>
               new Pair(pair.fst, value))).iterator;
   
+  bool operator==(other) {
+    if (identical(this, other)) {
+      return true;
+    } else if (other is PersistentListMultimap) {
+      return this._map == other._map;
+    } else {
+      return false;
+    }
+  }
+  
   PersistentList<V> operator[](final K key) =>
       _map[key].map((e) => e).orElse(PersistentList.EMPTY);
   
   Dictionary<K, PersistentList<V>> asDictionary() => _map;
   
   PersistentListMultimap<K,V> put(final K key, final V value) =>
-      _map.put(key, this[key].add(value));
+      new PersistentListMultimap._internal(
+          _map.put(key, this[key].add(value)));
+  
+  String toString() => _map.toString();
 }
 
 class PersistentSetMultimap<K,V> extends Object with IterableMixin<Pair<K,V>> implements Multimap<K,V> {
@@ -32,6 +47,8 @@ class PersistentSetMultimap<K,V> extends Object with IterableMixin<Pair<K,V>> im
   
   const PersistentSetMultimap._internal(this._map);
   
+  int get hashCode => _map.hashCode;
+  
   bool get isEmpty => _map.isEmpty;
   
   Iterator<Pair<K,V>> get iterator =>
@@ -39,11 +56,24 @@ class PersistentSetMultimap<K,V> extends Object with IterableMixin<Pair<K,V>> im
           pair.snd.map((V value) =>
               new Pair(pair.fst, value))).iterator;
   
+  bool operator==(other) {
+    if (identical(this, other)) {
+      return true;
+    } else if (other is PersistentSetMultimap) {
+      return this._map == other._map;
+    } else {
+      return false;
+    }
+  }
+  
   PersistentHashSet<V> operator[](final K key) =>
       _map[key].map((e) => e).orElse(PersistentHashSet.EMPTY);
   
   Dictionary<K, PersistentHashSet<V>> asDictionary() => _map;
   
   PersistentSetMultimap<K,V> put(final K key, final V value) =>
-      _map.put(key, this[key].add(value));
+      new PersistentSetMultimap._internal(
+          _map.put(key, this[key].add(value)));
+  
+  String toString() => _map.toString();
 }
