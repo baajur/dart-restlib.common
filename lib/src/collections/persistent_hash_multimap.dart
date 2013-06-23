@@ -1,6 +1,6 @@
 part of restlib.common.collections;
 
-class PersistentListMultimap<K,V> extends Object with IterableMixin<Pair<K,V>> implements Multimap<K,V> {
+class PersistentListMultimap<K,V> extends IterableBase<Pair<K,V>> implements Multimap<K,V> {
   static const PersistentListMultimap EMPTY = 
       const PersistentListMultimap._internal(PersistentHashMap.EMPTY);
   
@@ -54,14 +54,14 @@ class PersistentListMultimap<K,V> extends Object with IterableMixin<Pair<K,V>> i
   String toString() => _map.toString();
 }
 
-class PersistentSetMultimap<K,V> extends Object with IterableMixin<Pair<K,V>> implements Multimap<K,V> {
+class PersistentSetMultimap<K,V> extends IterableBase<Pair<K,V>> implements Multimap<K,V> {
   static const PersistentSetMultimap EMPTY = 
       const PersistentSetMultimap._internal(PersistentHashMap.EMPTY);
   
   factory PersistentSetMultimap.fromMap(final Map<K,V> map) {
     checkNotNull(map);
     
-    PersistentListMultimap<K,V> retval = EMPTY;
+    PersistentSetMultimap<K,V> retval = EMPTY;
     map.forEach((k,v) => retval = retval.put(k, v));
     return retval;
   }
