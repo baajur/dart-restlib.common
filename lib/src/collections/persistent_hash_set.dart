@@ -1,6 +1,6 @@
 part of restlib.common.collections;
 
-class PersistentHashSet<E> extends Object with IterableMixin<E> {
+class PersistentHashSet<E> extends IterableBase<E> {
   static const PersistentHashSet EMPTY = 
       const PersistentHashSet._internal(
           PersistentHashMap.EMPTY);
