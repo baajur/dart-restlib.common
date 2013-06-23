@@ -1,6 +1,6 @@
 part of restlib.common.collections;
 
-class PersistentStack<E> extends Object with IterableMixin<E> {  
+class PersistentStack<E> extends Object with IterableMixin<E> implements Stack<E> {  
   static final PersistentStack EMPTY = new PersistentStack._internal(null, null);
   
   factory PersistentStack.from(final Iterable<E> src) =>
