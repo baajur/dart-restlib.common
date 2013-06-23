@@ -4,6 +4,13 @@ class PersistentListMultimap<K,V> extends Object with IterableMixin<Pair<K,V>> i
   static const PersistentListMultimap EMPTY = 
       const PersistentListMultimap._internal(PersistentHashMap.EMPTY);
   
+  factory PersistentListMultimap.fromPairs(final Iterable<Pair<K,V>> pairs) {
+    checkNotNull(pairs);
+    return (pairs is PersistentListMultimap) ? pairs :
+      pairs.fold(EMPTY, (accumulator, Pair<K,V> pair) => 
+          accumulator.put(pair.fst, pair.snd));
+  }
+  
   final PersistentHashMap<K, PersistentList<V>> _map;
   
   const PersistentListMultimap._internal(this._map);
@@ -42,6 +49,13 @@ class PersistentListMultimap<K,V> extends Object with IterableMixin<Pair<K,V>> i
 class PersistentSetMultimap<K,V> extends Object with IterableMixin<Pair<K,V>> implements Multimap<K,V> {
   static const PersistentSetMultimap EMPTY = 
       const PersistentSetMultimap._internal(PersistentHashMap.EMPTY);
+  
+  factory PersistentSetMultimap.fromPairs(final Iterable<Pair<K,V>> pairs) {
+    checkNotNull(pairs);
+    return (pairs is PersistentSetMultimap) ? pairs :
+      pairs.fold(EMPTY, (accumulator, Pair<K,V> pair) => 
+          accumulator.put(pair.fst, pair.snd));
+  }
   
   final PersistentHashMap<K, PersistentHashSet<V>> _map;
   

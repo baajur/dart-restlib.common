@@ -13,15 +13,10 @@ class PersistentHashMap<K,V> extends IterableBase<Pair<K,V>> implements Dictiona
   
   factory PersistentHashMap.fromPairs(final Iterable<Pair<K,V>> pairs) {
     checkNotNull(pairs);
-    if (pairs is PersistentHashMap) {
-      return pairs;
-    } else if (pairs.isEmpty) {
-      return EMPTY;
-    } else { 
-      return pairs.fold(EMPTY, 
-          (PersistentHashMap<K,V> previousValue, Pair<K,V> element) 
-            => previousValue.put(element.fst, element.snd));
-    }
+    return (pairs is PersistentHashMap) ? pairs :
+      pairs.fold(EMPTY, 
+          (accumulator, Pair<K,V> element) 
+            => accumulator.put(element.fst, element.snd));
   }
   
   final int length;
