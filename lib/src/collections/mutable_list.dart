@@ -11,6 +11,9 @@ abstract class MutableList<E> implements Sequence<E> {
   void add(E value);
   
   void addAll(Iterable<E> elements);
+  
+  List<E> asList();
+  
   void insert(int index, E element);
 }
 
@@ -65,6 +68,9 @@ class _FixedSizeList<E> extends IterableBase<E> implements MutableList<E> {
       .forEach((E element) => 
           add(element));
   
+  List<E> asList() =>
+      new UnmodifiableListView(this._delegate);
+  
   E elementAt(int index) =>
       this[index].orCompute(() => throw new RangeError.range(index, 0, length - 1));
   
@@ -111,6 +117,9 @@ class _GrowableList<E> extends IterableBase<E> implements MutableList<E> {
   
   void insert(final int index, final E element) =>
       this[index] = element;
+  
+  List<E> asList() =>
+      new UnmodifiableListView(this._delegate);
   
   String toString() => _delegate.toString();
 }
