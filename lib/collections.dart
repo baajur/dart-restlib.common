@@ -8,6 +8,8 @@ import "preconditions.dart";
 
 part "src/collections/either.dart";
 part "src/collections/iterables.dart";
+part "src/collections/mutable_hash_map.dart";
+part "src/collections/mutable_list.dart";
 part "src/collections/option.dart";
 part "src/collections/pair.dart";
 part "src/collections/persistent_hash_bimap.dart";
