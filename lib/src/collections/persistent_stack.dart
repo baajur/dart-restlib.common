@@ -1,7 +1,7 @@
 part of restlib.common.collections;
 
 class PersistentStack<E> extends Object with IterableMixin<E> implements Stack<E> {  
-  static final PersistentStack EMPTY = new PersistentStack._internal(null, null);
+  static const PersistentStack EMPTY = const PersistentStack._empty();
   
   factory PersistentStack.from(final Iterable<E> src) =>
     checkNotNull(src)
@@ -13,12 +13,17 @@ class PersistentStack<E> extends Object with IterableMixin<E> implements Stack<E
   final int length;
   final PersistentStack _tail;
       
-  // This code assumes either either head and rest are both null or neither null.
-  PersistentStack._internal(final E head, final PersistentStack<E> rest):
-    this._head = head,
-    this._last = isNull(rest) ? null : (rest.isEmpty ? head : rest.last),
-    this.length = isNotNull(head) ? 1 + rest.length : 0,
-    this._tail = rest;
+  PersistentStack._internal(final E head, final PersistentStack<E> tail):
+    this._head = checkNotNull(head),
+    this._tail = checkNotNull(tail),
+    this._last = (tail.isEmpty ? head : tail.last),
+    this.length = 1 + tail.length;
+  
+  const PersistentStack._empty() :
+    this._head = null,
+    this._last = null,
+    this.length = 0,
+    this._tail = null;
   
   E get first {
     if (!isEmpty) {
