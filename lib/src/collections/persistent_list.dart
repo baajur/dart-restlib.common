@@ -117,7 +117,7 @@ class PersistentList<E> extends Object with IterableMixin<E> implements Sequence
   }
   
   E elementAt(int index) =>
-      this[index].orCompute(() => new RangeError.range(index, 0, length - 1));
+      this[index].orCompute(() => throw new RangeError.range(index, 0, length - 1));
   
   // assocN
   PersistentList<E> insert(final int index, final E element) {
@@ -218,10 +218,10 @@ class _SequenceIterator<E> implements Iterator<E> {
   
   E get current => 
       (_currIndex < 0 || _currIndex >= _list.length) ?
-          null : _list[_currIndex];
+          null : _list[_currIndex].value;
 
   bool moveNext() =>
-      (_currIndex++) < _list.length; 
+      (++_currIndex) < _list.length; 
 }
 
 class _ReverseSequence<E> extends Object with IterableMixin<E> implements Sequence<E> { 
