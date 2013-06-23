@@ -5,6 +5,13 @@ class PersistentHashSet<E> extends Object with IterableMixin<E> {
       const PersistentHashSet._internal(
           PersistentHashMap.EMPTY);
   
+  factory PersistentHashSet.from(Iterable<E> elements) {
+    checkNotNull(elements);
+    return (elements is PersistentHashSet) ? elements :
+      elements.fold(EMPTY, (accumulator, E element) => 
+          accumulator.add(element));
+  }
+  
   final PersistentHashMap<E,E> _map;
   
   const PersistentHashSet._internal(this._map);
