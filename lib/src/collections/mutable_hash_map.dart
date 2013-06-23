@@ -1,11 +1,11 @@
 part of restlib.common.collections;
 
 class MutableHashMap<K,V> extends IterableBase<Pair<K,V>> implements Dictionary<K,V> {
-  factory MutableHashMap.fromPairs(final Iterable<Pair<K,V>> pairs) {
-    final HashMap<K,V> delegate = new HashMap();
-    pairs.forEach((pair) => delegate[pair.fst] = pair.snd);
-    return new MutableHashMap._internal(delegate);
-  } 
+  factory MutableHashMap.fromPairs(final Iterable<Pair<K,V>> pairs) =>
+    new MutableHashMap._internal(
+        checkNotNull(pairs)
+          .fold(new HashMap(), (delegate, pair) => 
+              delegate[pair.fst] = pair.snd));
   
   final HashMap<K,V> _delegate;
   
