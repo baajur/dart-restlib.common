@@ -29,7 +29,7 @@ class PersistentHashMap<K,V> extends IterableBase<Pair<K,V>> implements Dictiona
       fold(0, (int accumulator, Pair<K,V> pair) => 
           accumulator + (pair.fst.hashCode ^ pair.snd.hashCode));
   
-  bool get isEmpty => length != 0;
+  bool get isEmpty => length == 0;
   
   Iterator<Pair<K,V>> get iterator =>
       isNotNull(_root) ? _root.iterator : EMPTY_LIST.iterator;
