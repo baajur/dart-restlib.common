@@ -46,10 +46,10 @@ class _FixedSizeList<E> extends IterableBase<E> implements MutableList<E> {
     if (index >= 0 && index < length) {
       _delegate[index] = value;
     } else if (index == length) {
-      return add(value);
+      add(value);
+    } else {
+      throw new RangeError.value(index);
     }
-    
-    throw new RangeError.value(index);
   }
   
   void add(final E element) {
@@ -58,9 +58,9 @@ class _FixedSizeList<E> extends IterableBase<E> implements MutableList<E> {
     if (length < _delegate.length) {
       _delegate[length] = element;
       _length++;
+    } else {
+      throw new RangeError.value(length);
     }
-    
-    throw new RangeError.value(length);
   }
   
   void addAll(final Iterable<E> elements) =>
