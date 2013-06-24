@@ -10,6 +10,7 @@ part "src/collections/either.dart";
 part "src/collections/forwarding_bimap.dart";
 part "src/collections/forwarding_dictionary.dart";
 part "src/collections/forwarding_iterable.dart";
+part "src/collections/forwarding_multimap.dart";
 part "src/collections/forwarding_sequence.dart";
 part "src/collections/iterables.dart";
 part "src/collections/mutable_hash_bimap.dart";
