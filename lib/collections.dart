@@ -7,9 +7,15 @@ import "objects.dart";
 import "preconditions.dart";
 
 part "src/collections/either.dart";
+part "src/collections/forwarding_bimap.dart";
+part "src/collections/forwarding_dictionary.dart";
+part "src/collections/forwarding_iterable.dart";
+part "src/collections/forwarding_sequence.dart";
 part "src/collections/iterables.dart";
 part "src/collections/mutable_hash_bimap.dart";
 part "src/collections/mutable_hash_map.dart";
+part "src/collections/mutable_hash_multimap.dart";
+part "src/collections/mutable_hash_set.dart";
 part "src/collections/mutable_list.dart";
 part "src/collections/option.dart";
 part "src/collections/pair.dart";
@@ -19,6 +25,7 @@ part "src/collections/persistent_hash_multimap.dart";
 part "src/collections/persistent_hash_set.dart";
 part "src/collections/persistent_list.dart";
 part "src/collections/persistent_stack.dart";
+part "src/collections/sequence.dart";
 
 const List EMPTY_LIST = const [];
 
@@ -43,7 +50,7 @@ abstract class Stack<E> implements Iterable<E> {
 }
 
 abstract class Sequence<E> implements Associative<int, E>, Iterable<E> {
-  Iterable<E> get reversed;
+  Sequence<E> get reversed;
   
   Option<E> operator[](int index);
 }

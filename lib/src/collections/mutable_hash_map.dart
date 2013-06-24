@@ -36,8 +36,9 @@ class MutableHashMap<K,V> extends IterableBase<Pair<K,V>> implements Dictionary<
   bool contains(final Pair<K,V> pair) =>
       this[checkNotNull(pair).fst].map((value) => value == pair.snd).orElse(false);
   
-  void put(final K key, final V value) =>
+  void put(final K key, final V value) {
       this[key] = value;
+  }
   
   void remove(final K key) =>
       _delegate[checkNotNull(key)] = null;

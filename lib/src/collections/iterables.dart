@@ -69,7 +69,7 @@ class _ConcatIterable<T> extends IterableBase<T> {
   Iterator<T> get iterator => new _ConcatIterator(_fst.iterator, _snd.iterator);
 }
 
-class _ConcatIterator<T> extends IterableBase<T> {
+class _ConcatIterator<T> implements Iterator<T> {
   final Iterator<T> _fst;
   final Iterator<T> _snd;
   

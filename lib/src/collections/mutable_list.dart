@@ -30,7 +30,7 @@ class _FixedSizeList<E> extends IterableBase<E> implements MutableList<E> {
   int get length => _length;
   
   Iterable<E> get reversed =>
-      new  _ReverseSequence(this);
+      new _ReverseSequence(this);
   
   Option<E> operator[](final int index) {
     checkNotNull(index);
@@ -74,8 +74,9 @@ class _FixedSizeList<E> extends IterableBase<E> implements MutableList<E> {
   E elementAt(int index) =>
       this[index].orCompute(() => throw new RangeError.range(index, 0, length - 1));
   
-  void insert(final int index, final E element) =>
+  void insert(final int index, final E element) {
       this[index] = element;
+  }
   
   String toString() => _delegate.take(_length).toString();
 }
@@ -115,12 +116,12 @@ class _GrowableList<E> extends IterableBase<E> implements MutableList<E> {
   E elementAt(int index) =>
       this[index].orCompute(() => throw new RangeError.range(index, 0, length - 1));
   
-  void insert(final int index, final E element) =>
+  void insert(final int index, final E element) {
       this[index] = element;
+  }
   
   List<E> asList() =>
       new UnmodifiableListView(this._delegate);
   
   String toString() => _delegate.toString();
 }
-
