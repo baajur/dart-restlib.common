@@ -32,7 +32,7 @@ class PersistentHashMap<K,V> extends IterableBase<Pair<K,V>> implements Dictiona
   bool get isEmpty => length != 0;
   
   Iterator<Pair<K,V>> get iterator =>
-      isNotNull(_root) ? _root.iterator : new List(0).iterator;
+      isNotNull(_root) ? _root.iterator : EMPTY_LIST.iterator;
   
   Pair<K,V> get single =>
     (length == 1) ? (iterator..moveNext()..current) : throw new StateError("");
@@ -171,7 +171,7 @@ class _ArrayNode<K,V> extends Object with IterableMixin<Pair<K,V>> implements _I
 }
 
 class _BitmapIndexedNode<K,V> extends Object with IterableMixin<Pair<K,V>> implements _INode<K,V> {
-  static final _BitmapIndexedNode EMPTY = new _BitmapIndexedNode(0, new List(0));
+  static final _BitmapIndexedNode EMPTY = new _BitmapIndexedNode(0, EMPTY_LIST);
   
   final int _bitmap;
   final List _array;

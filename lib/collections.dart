@@ -20,6 +20,8 @@ part "src/collections/persistent_hash_set.dart";
 part "src/collections/persistent_list.dart";
 part "src/collections/persistent_stack.dart";
 
+const List EMPTY_LIST = const [];
+
 abstract class Associative<K,V> {
   Iterable<V> operator[](K key);
 }

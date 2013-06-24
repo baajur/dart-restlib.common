@@ -28,22 +28,22 @@ iterablesTests() {
       test("lastWhere(false): $itr", () => 
           expect(lastWhere(itr, (e) => false), equals(Option.NONE)));
       
-  testElementAt([], 2, Option.NONE);
-  testElementAt([], 0, Option.NONE);
-  testElementAt([],-1, Option.NONE);
+  testElementAt(EMPTY_LIST, 2, Option.NONE);
+  testElementAt(EMPTY_LIST, 0, Option.NONE);
+  testElementAt(EMPTY_LIST,-1, Option.NONE);
   testElementAt([1, 2, 3], 1, new Option(2));
 
-  testFirst([], Option.NONE);
+  testFirst(EMPTY_LIST, Option.NONE);
   testFirst([1,2,3], new Option(1));
 
-  testFirstWhereAlwaysTrue([], Option.NONE);
+  testFirstWhereAlwaysTrue(EMPTY_LIST, Option.NONE);
   testFirstWhereAlwaysFalse([1, 2, 3]);
   testFirstWhereAlwaysTrue([1, 2, 3], new Option(1));
   
-  testLast([], Option.NONE);
+  testLast(EMPTY_LIST, Option.NONE);
   testLast([1, 2, 3], new Option(3));
   
-  testLastWhereAlwaysTrue([], Option.NONE);
+  testLastWhereAlwaysTrue(EMPTY_LIST, Option.NONE);
   testLastWhereAlwaysFalse([1, 2, 3]);
   testLastWhereAlwaysTrue([1, 2, 3], new Option(3));
 }

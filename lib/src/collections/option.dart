@@ -19,7 +19,7 @@ class Option<E> implements Iterable<E> {
   bool get isNotEmpty => !isEmpty;
   
   Iterator<E> get iterator => 
-      (_value == null) ? [].iterator : [_value].iterator;
+      (_value == null) ? EMPTY_LIST.iterator : [_value].iterator;
   
   E get last => value;
   

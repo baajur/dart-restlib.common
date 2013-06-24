@@ -7,7 +7,7 @@ class PersistentList<E> extends IterableBase<E> implements Sequence<E>, Stack<E>
              null, null, null, null, null, null, null, null,
              null, null, null, null, null, null, null, null];
   
-  static const PersistentList EMPTY = const PersistentList._internal(0, 5, _EMPTY_LIST_32, const []);
+  static const PersistentList EMPTY = const PersistentList._internal(0, 5, _EMPTY_LIST_32, EMPTY_LIST);
   
   factory PersistentList.from(final Iterable<E> elements) {
     checkNotNull(elements);
@@ -58,7 +58,7 @@ class PersistentList<E> extends IterableBase<E> implements Sequence<E>, Stack<E>
       return new PersistentList._internal(length - 1, _shift, _root, newTail);
     } else {
       final List newtail = _arrayFor(length - 2);
-      List newroot = firstNotNull(_popTail(_shift, _root), new List(0));
+      List newroot = firstNotNull(_popTail(_shift, _root), EMPTY_LIST);
       int newshift = _shift;
  
       if (_shift > 5 && isNull(newroot[1])) {
