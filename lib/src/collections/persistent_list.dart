@@ -122,6 +122,10 @@ class PersistentList<E> extends IterableBase<E> implements Sequence<E>, Stack<E>
     }
   }
   
+  PersistentList<E> addAll(final Iterable<E> elements) =>
+      elements.fold(this, (accumulator, element) => 
+          accumulator.add(element));
+  
   E elementAt(int index) =>
       this[index].orCompute(() => throw new RangeError.range(index, 0, length - 1));
   
