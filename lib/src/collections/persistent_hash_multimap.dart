@@ -51,6 +51,13 @@ class PersistentListMultimap<K,V> extends IterableBase<Pair<K,V>> implements Mul
       new PersistentListMultimap._internal(
           _map.put(key, this[key].add(value)));
   
+  PersistentListMultimap<K,V> putPair(final Pair<K,V> pair) =>
+      put(pair.fst, pair.snd);
+  
+  PersistentListMultimap<K,V> putAll(final Iterable<Pair<K,V>> pairs) =>
+      pairs.fold(this, (accumulator,pair) =>
+          accumulator.put(pair));
+  
   PersistentListMultimap<K,V> remove(final K key) =>
       new PersistentListMultimap._internal(
           _map.remove(key));
@@ -108,6 +115,13 @@ class PersistentSetMultimap<K,V> extends IterableBase<Pair<K,V>> implements Mult
   PersistentSetMultimap<K,V> put(final K key, final V value) =>
       new PersistentSetMultimap._internal(
           _map.put(key, this[key].add(value)));
+  
+  PersistentSetMultimap<K,V> putPair(final Pair<K,V> pair) =>
+      put(pair.fst, pair.snd);
+  
+  PersistentSetMultimap<K,V> putAll(final Iterable<Pair<K,V>> pairs) =>
+      pairs.fold(this, (accumulator,pair) =>
+          accumulator.put(pair));
   
   PersistentSetMultimap<K,V> remove(final K key) =>
       new PersistentSetMultimap._internal(
