@@ -75,6 +75,7 @@ class PersistentStack<E> extends IterableBase<E> implements Stack<E> {
     }
   }
   
+  // FIXME: Push
   PersistentStack<E> add(final E value) =>
       new PersistentStack._internal(checkNotNull(value), this);
   

@@ -1,14 +1,14 @@
 part of restlib.common.collections;
 
 class Option<E> implements Iterable<E> {
-  static const Option NONE = const Option._internal(null);
+  static const Option NONE = const Option.constant(null);
   
   factory Option(final E value) =>
-      value == null ? Option.NONE : new Option._internal(value);
+      value == null ? Option.NONE : new Option.constant(value);
   
   final E _value;
   
-  const Option._internal(this._value);
+  const Option.constant(this._value);
   
   E get first => value;
   
@@ -115,7 +115,7 @@ class Option<E> implements Iterable<E> {
       (_value != null && n > 0) ? this : Option.NONE;
   
   Option<E> takeWhile(bool test(E value)) => 
-      (_value != null && test(_value)) ? this : Option.NONE;
+      (_value != null && test(_value)) ? this : Option.NONE;     
   
   List<E> toList({ final bool growable: true }) => 
       new List<E>.from(this, growable: growable);
