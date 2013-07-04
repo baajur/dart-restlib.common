@@ -23,7 +23,7 @@ class PersistentList<E> extends IterableBase<E> implements Sequence<E>, Stack<E>
   const PersistentList._internal(this.length, this._shift, this._root, this._tail);
   
   E get first =>
-      isEmpty ? throw new StateError("List is empty") : this[0];
+      isEmpty ? throw new StateError("List is empty") : this[0].value;
   
   int get hashCode =>
       computeHashCode(this);
