@@ -6,15 +6,12 @@ class PersistentHashBiMap<K,V> extends IterableBase<Pair<K,V>> implements BiMap<
           PersistentHashMap.EMPTY, PersistentHashMap.EMPTY);
   
   factory PersistentHashBiMap.fromMap(final Map<K,V> map) {
-    checkNotNull(map);
-    
     PersistentHashBiMap<K,V> result = EMPTY;
     map.forEach((k,v) => result = result.put(k, v));
     return result;
   }
   
   factory PersistentHashBiMap.fromPairs(final Iterable<Pair<K,V>> pairs) {
-    checkNotNull(pairs);
     if (pairs is PersistentHashBiMap) {
       return pairs;
     } else if (pairs.isEmpty) {

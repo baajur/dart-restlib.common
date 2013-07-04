@@ -9,14 +9,11 @@ class PersistentList<E> extends IterableBase<E> implements Sequence<E>, Stack<E>
   
   static const PersistentList EMPTY = const PersistentList._internal(0, 5, _EMPTY_LIST_32, EMPTY_LIST);
   
-  factory PersistentList.from(final Iterable<E> elements) {
-    checkNotNull(elements);
-    
-    return (elements is PersistentList) ? elements :
+  factory PersistentList.from(final Iterable<E> elements) =>
+    (elements is PersistentList) ? elements :
       elements.fold(EMPTY,
           (accumulator, E element) => 
               accumulator.add(element));
-  }
   
   final int length;
   final int _shift;
@@ -82,8 +79,6 @@ class PersistentList<E> extends IterableBase<E> implements Sequence<E>, Stack<E>
   
   // nth
   Option<E> operator[](final int index) {
-    checkNotNull(index);
-    
     if(index >= 0 && index < length) {
       List node = _arrayFor(index);
       return new Option(node[index & 0x01f]);
@@ -131,7 +126,6 @@ class PersistentList<E> extends IterableBase<E> implements Sequence<E>, Stack<E>
   
   // assocN
   PersistentList<E> insert(final int index, final E element) {
-    checkNotNull(index);
     checkNotNull(element);
     
     if (index >= 0 && index < length) {

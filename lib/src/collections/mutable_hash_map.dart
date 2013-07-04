@@ -3,8 +3,7 @@ part of restlib.common.collections;
 class MutableHashMap<K,V> extends IterableBase<Pair<K,V>> implements Dictionary<K,V> {
   factory MutableHashMap.fromPairs(final Iterable<Pair<K,V>> pairs) =>
     new MutableHashMap._internal(
-        checkNotNull(pairs)
-          .fold(new HashMap(), (delegate, pair) => 
+        pairs.fold(new HashMap(), (delegate, pair) => 
               delegate[pair.fst] = pair.snd));
   
   final HashMap<K,V> _delegate;
@@ -30,11 +29,11 @@ class MutableHashMap<K,V> extends IterableBase<Pair<K,V>> implements Dictionary<
       _delegate[checkNotNull(key)] = checkNotNull(value);
   
   void addAll(final Iterable<Pair<K, V>> other) =>
-      checkNotNull(other).forEach((Pair<K,V> pair) =>
+      other.forEach((Pair<K,V> pair) =>
           _delegate[pair.fst] = pair.snd);
   
   bool contains(final Pair<K,V> pair) =>
-      this[checkNotNull(pair).fst].map((value) => value == pair.snd).orElse(false);
+      this[pair.fst].map((value) => value == pair.snd).orElse(false);
   
   void put(final K key, final V value) {
       this[key] = value;

@@ -4,9 +4,8 @@ class PersistentStack<E> extends IterableBase<E> implements Stack<E> {
   static const PersistentStack EMPTY = const PersistentStack._empty();
   
   factory PersistentStack.from(final Iterable<E> src) =>
-    checkNotNull(src)
-      .fold(EMPTY, (PersistentStack retval, E element) => 
-          retval.add(element));
+    src.fold(EMPTY, (PersistentStack retval, E element) => 
+          retval.push(element));
   
   final E _head;
   final E _last;
@@ -75,9 +74,8 @@ class PersistentStack<E> extends IterableBase<E> implements Stack<E> {
     }
   }
   
-  // FIXME: Push
-  PersistentStack<E> add(final E value) =>
-      new PersistentStack._internal(checkNotNull(value), this);
+  PersistentStack<E> push(final E value) =>
+      new PersistentStack._internal(value, this);
   
   String toString() =>"[${join(", ")}]";
 }

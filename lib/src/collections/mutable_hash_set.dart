@@ -1,12 +1,10 @@
 part of restlib.common.collections;
 
 class MutableHashSet<E> extends IterableBase<E> {  
-  factory MutableHashSet.from(final Iterable<E> elements) {
-    checkNotNull(elements);
-    return (elements is PersistentHashSet) ? elements :
+  factory MutableHashSet.from(final Iterable<E> elements) =>
+    (elements is PersistentHashSet) ? elements :
       elements.fold(new MutableHashSet(), (accumulator, E element) => 
           accumulator.add(element));
-  }
   
   final MutableHashMap<E,E> _map;
   

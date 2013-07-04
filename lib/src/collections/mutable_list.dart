@@ -33,14 +33,12 @@ class _FixedSizeList<E> extends IterableBase<E> implements MutableList<E> {
       new _ReverseSequence(this);
   
   Option<E> operator[](final int index) {
-    checkNotNull(index);
     return (index >= 0 && index < length) ?
       new Option(_delegate[index]) :
       Option.NONE;
   }
   
   void operator[]=(final int index, final E value) {
-    checkNotNull(index);
     checkNotNull(value);
     
     if (index >= 0 && index < length) {
@@ -64,8 +62,7 @@ class _FixedSizeList<E> extends IterableBase<E> implements MutableList<E> {
   }
   
   void addAll(final Iterable<E> elements) =>
-    checkNotNull(elements)
-      .forEach((E element) => 
+    elements.forEach((E element) => 
           add(element));
   
   List<E> asList() =>
@@ -96,7 +93,6 @@ class _GrowableList<E> extends IterableBase<E> implements MutableList<E> {
       new  _ReverseSequence(this);
   
   Option<E> operator[](final int index) {
-    checkNotNull(index);
     return (index >= 0 && index < length) ?
       new Option(_delegate[index]) :
       Option.NONE;
@@ -109,8 +105,7 @@ class _GrowableList<E> extends IterableBase<E> implements MutableList<E> {
       _delegate.add(checkNotNull(element));
   
   void addAll(final Iterable<E> elements) =>
-    checkNotNull(elements)
-      .forEach((E element) => 
+    elements.forEach((E element) => 
           add(element));
   
   E elementAt(int index) =>

@@ -14,10 +14,7 @@ class Either<L, R> {
   
   int get hashCode => computeHashCode([left, right]);
   
-  /*<T>*/ fold(/*<T>*/ leftCase(L left), /*<T>*/ rightCase(R right)) {
-    checkNotNull(leftCase);
-    checkNotNull(rightCase);
-      
+  /*<T>*/ fold(/*<T>*/ leftCase(L left), /*<T>*/ rightCase(R right)) {      
     return left
       .map((final L left) => leftCase(left))
       .orCompute(() => rightCase(right.value)); 

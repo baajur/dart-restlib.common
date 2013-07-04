@@ -9,12 +9,9 @@ part "src/objects/forwarder.dart";
 const int _HASH_INITIAL_VALUE = 17;
 const int _HASH_MULTIPLIER_VALUE = 31;
 
-int computeHashCode(final Iterable items) {
-  checkNotNull(items);
-
-  return items.fold(_HASH_INITIAL_VALUE, (int prev, var ele) => 
+int computeHashCode(final Iterable items) =>
+  items.fold(_HASH_INITIAL_VALUE, (int prev, var ele) => 
       _HASH_MULTIPLIER_VALUE * prev + ele.hashCode);
-}
 
 /*<T>*/ computeIfNull(final /*<T>*/first, /*<T>*/second()) {
   return isNotNull(first) ? first : second();

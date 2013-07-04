@@ -3,8 +3,7 @@ part of restlib.common.collections;
 class ForwardingIterable<E> implements Iterable<E> {
   final Iterable<E> _delegate;
   
-  ForwardingIterable(final Iterable<E> delegate) :
-    this._delegate = checkNotNull(delegate);
+  const ForwardingIterable(this._delegate);
   
   Iterable map(f(E element)) => _delegate.map(f);
 

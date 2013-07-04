@@ -5,13 +5,11 @@ class PersistentHashSet<E> extends IterableBase<E> {
       const PersistentHashSet._internal(
           PersistentHashMap.EMPTY);
   
-  factory PersistentHashSet.from(Iterable<E> elements) {
-    checkNotNull(elements);
-    return (elements is PersistentHashSet) ? elements :
+  factory PersistentHashSet.from(Iterable<E> elements) =>
+    (elements is PersistentHashSet) ? elements :
       elements.fold(EMPTY, (accumulator, E element) => 
           accumulator.add(element));
-  }
-  
+
   final PersistentHashMap<E,E> _map;
   
   const PersistentHashSet._internal(this._map);
@@ -59,4 +57,7 @@ class PersistentHashSet<E> extends IterableBase<E> {
     return (newMap.isEmpty) ? 
         EMPTY : new PersistentHashSet._internal(newMap);
   }
+  
+  String toString() =>
+      "[" + join(", ") + "]";
 }

@@ -4,15 +4,12 @@ class PersistentHashMap<K,V> extends IterableBase<Pair<K,V>> implements Dictiona
   static const PersistentHashMap EMPTY = const PersistentHashMap._internal(0, null);
   
   factory PersistentHashMap.fromMap(final Map<K,V> map) {
-    checkNotNull(map);
-    
     PersistentHashMap<K,V> result = EMPTY;
     map.forEach((k,v) => result = result.put(k, v));
     return result;
   }
   
   factory PersistentHashMap.fromPairs(final Iterable<Pair<K,V>> pairs) {
-    checkNotNull(pairs);
     return (pairs is PersistentHashMap) ? pairs :
       pairs.fold(EMPTY, 
           (accumulator, Pair<K,V> element) 
@@ -61,7 +58,7 @@ class PersistentHashMap<K,V> extends IterableBase<Pair<K,V>> implements Dictiona
   }
   
   bool contains(final Pair<K,V> pair) =>
-    this[checkNotNull(pair).fst].map((value) => value == pair.snd).orElse(false);
+    this[pair.fst].map((value) => value == pair.snd).orElse(false);
   
   PersistentHashMap<K,V> put(final K key, final V value) {
     checkNotNull(key);

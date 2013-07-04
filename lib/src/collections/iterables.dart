@@ -12,8 +12,8 @@ Option/*<T>*/ elementAt(final Iterable/*<T>*/ itr, final int index) {
 }
 
 bool equal(final Iterable fst, final Iterable snd) {
-  final Iterator itrFst = checkNotNull(fst).iterator;
-  final Iterator itrSnd = checkNotNull(snd).iterator;
+  final Iterator itrFst = fst.iterator;
+  final Iterator itrSnd = snd.iterator;
   
   while(itrFst.moveNext() && itrSnd.moveNext()) {
     if(itrFst.current != itrSnd.current) {

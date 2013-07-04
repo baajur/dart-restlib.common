@@ -5,15 +5,12 @@ class PersistentListMultimap<K,V> extends IterableBase<Pair<K,V>> implements Mul
       const PersistentListMultimap._internal(PersistentHashMap.EMPTY);
   
   factory PersistentListMultimap.fromMap(final Map<K,V> map) {
-    checkNotNull(map);
-    
     PersistentListMultimap<K,V> retval = EMPTY;
     map.forEach((k,v) => retval = retval.put(k, v));
     return retval;
   }
   
   factory PersistentListMultimap.fromPairs(final Iterable<Pair<K,V>> pairs) {
-    checkNotNull(pairs);
     return (pairs is PersistentListMultimap) ? pairs :
       pairs.fold(EMPTY, (accumulator, Pair<K,V> pair) => 
           accumulator.put(pair.fst, pair.snd));
@@ -69,16 +66,13 @@ class PersistentSetMultimap<K,V> extends IterableBase<Pair<K,V>> implements Mult
   static const PersistentSetMultimap EMPTY = 
       const PersistentSetMultimap._internal(PersistentHashMap.EMPTY);
   
-  factory PersistentSetMultimap.fromMap(final Map<K,V> map) {
-    checkNotNull(map);
-    
+  factory PersistentSetMultimap.fromMap(final Map<K,V> map) {    
     PersistentSetMultimap<K,V> retval = EMPTY;
     map.forEach((k,v) => retval = retval.put(k, v));
     return retval;
   }
   
   factory PersistentSetMultimap.fromPairs(final Iterable<Pair<K,V>> pairs) {
-    checkNotNull(pairs);
     return (pairs is PersistentSetMultimap) ? pairs :
       pairs.fold(EMPTY, (accumulator, Pair<K,V> pair) => 
           accumulator.put(pair.fst, pair.snd));
