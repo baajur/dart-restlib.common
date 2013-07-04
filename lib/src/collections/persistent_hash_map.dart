@@ -5,16 +5,15 @@ class PersistentHashMap<K,V> extends IterableBase<Pair<K,V>> implements Dictiona
   
   factory PersistentHashMap.fromMap(final Map<K,V> map) {
     PersistentHashMap<K,V> result = EMPTY;
-    map.forEach((k,v) => result = result.put(k, v));
+    map.forEach((final K k, final V v) => 
+        result = result.put(k, v));
     return result;
   }
   
-  factory PersistentHashMap.fromPairs(final Iterable<Pair<K,V>> pairs) {
-    return (pairs is PersistentHashMap) ? pairs :
-      pairs.fold(EMPTY, 
-          (accumulator, Pair<K,V> element) 
-            => accumulator.put(element.fst, element.snd));
-  }
+  factory PersistentHashMap.fromPairs(final Iterable<Pair<K,V>> pairs) => 
+      (pairs is PersistentHashMap) ? pairs : 
+        pairs.fold(EMPTY, (final PersistentHashMap accumulator, final Pair<K,V> element) => 
+            accumulator.putIfAbsent(element.fst, element.snd));
   
   final int length;
   final _INode _root;
@@ -69,6 +68,13 @@ class PersistentHashMap<K,V> extends IterableBase<Pair<K,V>> implements Dictiona
     return (identical(newroot, _root)) ? this :
       new PersistentHashMap._internal(length + 1, newroot);
   }
+  
+  PersistentHashMap<K,V> putIfAbsent(final K key, final V value) =>
+      this[key]
+        .map((final V value) => 
+            this)
+        .orCompute(() => 
+            this.put(key, value));
   
   PersistentHashMap<K,V> remove(final K key) {
     checkNotNull(key);
