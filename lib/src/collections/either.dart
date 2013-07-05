@@ -14,6 +14,13 @@ class Either<L, R> {
   
   int get hashCode => computeHashCode([left, right]);
   
+  dynamic get value =>
+      left
+        .map((final L left) =>
+          left)
+         .orCompute(() =>
+             right.value); 
+  
   /*<T>*/ fold(/*<T>*/ leftCase(L left), /*<T>*/ rightCase(R right)) {      
     return left
       .map((final L left) => leftCase(left))
