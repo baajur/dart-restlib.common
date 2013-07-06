@@ -30,3 +30,5 @@ bool isFalse(final bool value) => value == false;
 bool isNotNull(final value) => !identical(value, null);
 bool isNull(final value) => identical(value, null);
 bool isTrue(final bool value) => value == true;
+
+String objectToString(final dynamic obj) => obj.toString();
