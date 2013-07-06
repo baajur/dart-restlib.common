@@ -3,8 +3,9 @@ part of restlib.common.collections;
 class MutableHashSet<E> extends IterableBase<E> {  
   factory MutableHashSet.from(final Iterable<E> elements) =>
     (elements is PersistentHashSet) ? elements :
-      elements.fold(new MutableHashSet(), (accumulator, E element) => 
-          accumulator.add(element));
+      elements.fold(new MutableHashSet(), 
+          (final MutableHashSet<E> accumulator, final E element) => 
+            accumulator.add(element));
   
   final MutableHashMap<E,E> _map;
   
@@ -18,7 +19,8 @@ class MutableHashSet<E> extends IterableBase<E> {
       _map.isEmpty;
   
   Iterator<E> get iterator =>
-      _map.map((Pair<E,E> pair) => pair.fst).iterator;
+      _map.map((final Pair<E,E> pair) => 
+          pair.fst).iterator;
   
   E get last =>
       _map.last.fst;
@@ -32,8 +34,12 @@ class MutableHashSet<E> extends IterableBase<E> {
   void add(final E element) =>
       _map.put(element, element);
   
+  void addAll(final Iterable<E> elements) =>
+      elements.forEach((final E element) => 
+          add(element));
+  
   bool contains(final E element) =>
-      _map[element].map((v) => true).orElse(false);
+      _map[element].map((final E v) => true).orElse(false);
   
   void remove(final E element) =>
       _map.remove(element);
