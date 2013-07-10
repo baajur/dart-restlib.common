@@ -5,7 +5,7 @@ class MutableHashSet<E> extends IterableBase<E> {
     (elements is PersistentHashSet) ? elements :
       elements.fold(new MutableHashSet(), 
           (final MutableHashSet<E> accumulator, final E element) => 
-            accumulator.add(element));
+            accumulator..add(element));
   
   final MutableHashMap<E,E> _map;
   
