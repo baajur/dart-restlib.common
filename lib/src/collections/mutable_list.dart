@@ -27,16 +27,16 @@ class _FixedSizeList<E> extends IterableBase<E> implements MutableList<E> {
   Iterator<E> get iterator =>
       _delegate.take(_length).iterator;
   
-  int get length => _length;
+  int get length => 
+      _length;
   
   Iterable<E> get reversed =>
       new _ReverseSequence(this);
   
-  Option<E> operator[](final int index) {
-    return (index >= 0 && index < length) ?
-      new Option(_delegate[index]) :
-      Option.NONE;
-  }
+  Option<E> operator[](final int index) =>
+      (index >= 0 && index < length) ? 
+          new Option(_delegate[index]) : 
+            Option.NONE;
   
   void operator[]=(final int index, final E value) {
     checkNotNull(value);
@@ -62,20 +62,22 @@ class _FixedSizeList<E> extends IterableBase<E> implements MutableList<E> {
   }
   
   void addAll(final Iterable<E> elements) =>
-    elements.forEach((E element) => 
+    elements.forEach((final E element) => 
           add(element));
   
   List<E> asList() =>
       new UnmodifiableListView(this._delegate);
   
   E elementAt(int index) =>
-      this[index].orCompute(() => throw new RangeError.range(index, 0, length - 1));
+      this[index].orCompute(() => 
+          throw new RangeError.range(index, 0, length - 1));
   
   void insert(final int index, final E element) {
       this[index] = element;
   }
   
-  String toString() => _delegate.take(_length).toString();
+  String toString() => 
+      _delegate.take(_length).toString();
 }
 
 class _GrowableList<E> extends IterableBase<E> implements MutableList<E> {
@@ -87,16 +89,16 @@ class _GrowableList<E> extends IterableBase<E> implements MutableList<E> {
   Iterator<E> get iterator =>
       _delegate.iterator;
   
-  int get length => _delegate.length;
+  int get length => 
+      _delegate.length;
   
   Iterable<E> get reversed =>
       new  _ReverseSequence(this);
   
-  Option<E> operator[](final int index) {
-    return (index >= 0 && index < length) ?
-      new Option(_delegate[index]) :
-      Option.NONE;
-  }
+  Option<E> operator[](final int index) =>
+      (index >= 0 && index < length) ? 
+          new Option(_delegate[index]) :
+            Option.NONE;
   
   void operator[]=(final int index, final E value) =>
       _delegate[index] = checkNotNull(value);
@@ -109,7 +111,8 @@ class _GrowableList<E> extends IterableBase<E> implements MutableList<E> {
           add(element));
   
   E elementAt(int index) =>
-      this[index].orCompute(() => throw new RangeError.range(index, 0, length - 1));
+      this[index].orCompute(() => 
+          throw new RangeError.range(index, 0, length - 1));
   
   void insert(final int index, final E element) {
       this[index] = element;
@@ -118,5 +121,6 @@ class _GrowableList<E> extends IterableBase<E> implements MutableList<E> {
   List<E> asList() =>
       new UnmodifiableListView(this._delegate);
   
-  String toString() => _delegate.toString();
+  String toString() => 
+      _delegate.toString();
 }

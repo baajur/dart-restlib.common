@@ -39,7 +39,10 @@ class MutableHashSet<E> extends IterableBase<E> {
           add(element));
   
   bool contains(final E element) =>
-      _map[element].map((final E v) => true).orElse(false);
+      _map[element]
+        .map((final E v) => 
+            true)
+        .orElse(false);
   
   void remove(final E element) =>
       _map.remove(element);

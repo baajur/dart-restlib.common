@@ -3,21 +3,23 @@ part of restlib.common.collections;
 class MutableHashMap<K,V> extends IterableBase<Pair<K,V>> implements Dictionary<K,V> {
   factory MutableHashMap.fromPairs(final Iterable<Pair<K,V>> pairs) =>
     new MutableHashMap._internal(
-        pairs.fold(new HashMap(), (delegate, pair) => 
+        pairs.fold(new HashMap(), (final HashMap<K,V> delegate, final Pair<K,V> pair) => 
               delegate[pair.fst] = pair.snd));
   
   final HashMap<K,V> _delegate;
   
-  MutableHashMap() : this._internal(new HashMap());
+  MutableHashMap() : this._internal(new HashMap<K,V>());
     
   MutableHashMap._internal(this._delegate);
   
-  bool get isEmpty => _delegate.isEmpty;
+  bool get isEmpty =>
+      _delegate.isEmpty;
   
   Iterator<Pair<K,V>> get iterator =>
       new _MapIterator(_delegate);
   
-  int get length => _delegate.length;
+  int get length => 
+      _delegate.length;
   
   Pair<K,V> get single =>
     (length == 1) ? (iterator..moveNext()..current) : throw new StateError("");
@@ -33,16 +35,21 @@ class MutableHashMap<K,V> extends IterableBase<Pair<K,V>> implements Dictionary<
           _delegate[pair.fst] = pair.snd);
   
   bool contains(final Pair<K,V> pair) =>
-      this[pair.fst].map((value) => value == pair.snd).orElse(false);
+      this[pair.fst]
+        .map((final V value) => 
+            value == pair.snd)
+        .orElse(false);
   
   void put(final K key, final V value) {
       this[key] = value;
   }
   
-  void remove(final K key) =>
-      _delegate[checkNotNull(key)] = null;
+  void remove(final K key) {
+      _delegate.remove(checkNotNull(key));
+  }
   
-  String toString() => _delegate.toString();
+  String toString() => 
+      _delegate.toString();
 }
 
 class _MapIterator<K,V> implements Iterator<Pair<K,V>> {

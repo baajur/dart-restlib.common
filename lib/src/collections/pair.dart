@@ -8,7 +8,8 @@ class Pair<T1, T2> {
     this.fst = checkNotNull(fst),
     this.snd = checkNotNull(snd);
   
-  int get hashCode => computeHashCode([fst, snd]);
+  int get hashCode => 
+      computeHashCode([fst, snd]);
   
   bool operator==(final other) {
     if (identical(this, other)) {
@@ -21,5 +22,6 @@ class Pair<T1, T2> {
     }
   }
   
-  String toString() => "Pair($fst, $snd)";
+  String toString() => 
+      "Pair($fst, $snd)";
 }

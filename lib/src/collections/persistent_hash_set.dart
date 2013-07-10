@@ -7,7 +7,7 @@ class PersistentHashSet<E> extends IterableBase<E> {
   
   factory PersistentHashSet.from(Iterable<E> elements) =>
     (elements is PersistentHashSet) ? elements :
-      elements.fold(EMPTY, (accumulator, E element) => 
+      elements.fold(EMPTY, (final PersistentHashSet<E> accumulator, final E element) => 
           accumulator.add(element));
 
   final PersistentHashMap<E,E> _map;
@@ -17,13 +17,15 @@ class PersistentHashSet<E> extends IterableBase<E> {
   E get first =>
       _map.first.fst;
   
-  int get hashCode => _map.hashCode;
+  int get hashCode => 
+      _map.hashCode;
   
   bool get isEmpty =>
       _map.isEmpty;
   
   Iterator<E> get iterator =>
-      _map.map((Pair<E,E> pair) => pair.fst).iterator;
+      _map.map((final Pair<E,E> pair) => 
+          pair.fst).iterator;
   
   E get last =>
       _map.last.fst;
@@ -49,7 +51,10 @@ class PersistentHashSet<E> extends IterableBase<E> {
         _map.put(element, element));
   
   bool contains(final E element) =>
-      _map[element].map((v) => true).orElse(false);
+      _map[element]
+        .map((final E v) => 
+            true)
+        .orElse(false);
   
   PersistentHashSet<E> remove(final E element) {
     final PersistentHashMap<E,E> newMap =

@@ -8,11 +8,9 @@ abstract class Forwarder<T> {
     this._delegate = delegate,
     this._delegateMirror = reflect(delegate);
 
-  noSuchMethod(final Invocation invocation) {
-    return _delegateMirror.delegate(invocation);
-  }
+  noSuchMethod(final Invocation invocation) =>
+      _delegateMirror.delegate(invocation);
   
-  String toString() {
-    return _delegate.toString();
-  }
+  String toString() => 
+      _delegate.toString();
 }

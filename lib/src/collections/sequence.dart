@@ -25,7 +25,7 @@ class _ReverseSequence<E> extends IterableBase<E> implements Sequence<E> {
   int get length =>
       reversed.length;
   
-  Option<E> operator[](int index) =>
+  Option<E> operator[](final int index) =>
       reversed[reversed.length - index - 1];
 }
 
@@ -44,6 +44,6 @@ class _SubSequence<E> extends IterableBase<E> implements Sequence<E> {
   Sequence<E> get reversed =>
       new _ReverseSequence(this);
   
-  Option<E> operator[](int index) =>
+  Option<E> operator[](final int index) =>
       delegate[_start + index];
 }

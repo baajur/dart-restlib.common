@@ -4,7 +4,7 @@ class PersistentStack<E> extends IterableBase<E> implements Stack<E> {
   static const PersistentStack EMPTY = const PersistentStack._empty();
   
   factory PersistentStack.from(final Iterable<E> src) =>
-    src.fold(EMPTY, (PersistentStack retval, E element) => 
+    src.fold(EMPTY, (final PersistentStack<E> retval, final E element) => 
           retval.push(element));
   
   final E _head;
@@ -24,13 +24,8 @@ class PersistentStack<E> extends IterableBase<E> implements Stack<E> {
     this.length = 0,
     this._tail = null;
   
-  E get first {
-    if (!isEmpty) {
-      return _head;
-    } else {
-      throw new StateError("Stack is empty");
-    }
-  }
+  E get first =>
+    (!isEmpty) ? _head : throw new StateError("Stack is empty");
   
   int get hashCode => computeHashCode(this);
   
@@ -38,13 +33,8 @@ class PersistentStack<E> extends IterableBase<E> implements Stack<E> {
   
   Iterator<E> get iterator => new _PersistentStackIterator._internal(this);
   
-  E get last {
-    if (!isEmpty) {
-      return _last;
-    } else {
-      throw new StateError("Stack is empty");
-    } 
-  }
+  E get last => 
+      (!isEmpty) ? _last : throw new StateError("Stack is empty");
 
   E get single {
     if (!isEmpty && tail.isEmpty) {
@@ -56,13 +46,8 @@ class PersistentStack<E> extends IterableBase<E> implements Stack<E> {
     }
   }
   
-  PersistentStack get tail {
-    if (isEmpty) {
-      throw new StateError("Stack is empty");
-    } else {
-      return this._tail;
-    }
-  }
+  PersistentStack get tail =>
+      isEmpty ? throw new StateError("Stack is empty") : this._tail;
   
   bool operator==(other){
     if (identical (this, other)) {
@@ -77,7 +62,8 @@ class PersistentStack<E> extends IterableBase<E> implements Stack<E> {
   PersistentStack<E> push(final E value) =>
       new PersistentStack._internal(value, this);
   
-  String toString() =>"[${join(", ")}]";
+  String toString() =>
+      "[${join(", ")}]";
 }
 
 class _PersistentStackIterator<E> implements Iterator<E> {
@@ -88,7 +74,8 @@ class _PersistentStackIterator<E> implements Iterator<E> {
     _head = null,
     _tail = stack;
   
-  E get current => _head;
+  E get current => 
+      _head;
   
   bool moveNext() {
     if (!_tail.isEmpty) {

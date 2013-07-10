@@ -22,7 +22,7 @@ class PersistentHashMap<K,V> extends IterableBase<Pair<K,V>> implements Dictiona
   
   // FIXME: Would be better to compute on object creation
   int get hashCode =>
-      fold(0, (int accumulator, Pair<K,V> pair) => 
+      fold(0, (final int accumulator, final Pair<K,V> pair) => 
           accumulator + (pair.fst.hashCode ^ pair.snd.hashCode));
   
   bool get isEmpty => length == 0;
@@ -41,9 +41,11 @@ class PersistentHashMap<K,V> extends IterableBase<Pair<K,V>> implements Dictiona
         return false;
       }
       
-      return every((Pair<K,V> pair) => 
-          other[pair.fst].map((V value) => 
-              pair.snd == value).orElse(false));
+      return every((final Pair<K,V> pair) => 
+          other[pair.fst]
+            .map((final V value) => 
+                pair.snd == value)
+            .orElse(false));
       
     } else {
       return false;
@@ -57,7 +59,10 @@ class PersistentHashMap<K,V> extends IterableBase<Pair<K,V>> implements Dictiona
   }
   
   bool contains(final Pair<K,V> pair) =>
-    this[pair.fst].map((value) => value == pair.snd).orElse(false);
+    this[pair.fst]
+      .map((final V value) => 
+          value == pair.snd)
+      .orElse(false);
   
   PersistentHashMap<K,V> put(final K key, final V value) {
     checkNotNull(key);
@@ -173,13 +178,13 @@ class _ArrayNode<K,V> extends Object with IterableMixin<Pair<K,V>> implements _I
   }
 }
 
-class _BitmapIndexedNode<K,V> extends Object with IterableMixin<Pair<K,V>> implements _INode<K,V> {
-  static final _BitmapIndexedNode EMPTY = new _BitmapIndexedNode(0, EMPTY_LIST);
+class _BitmapIndexedNode<K,V> extends IterableBase<Pair<K,V>> implements _INode<K,V> {
+  static const _BitmapIndexedNode EMPTY = const _BitmapIndexedNode(0, EMPTY_LIST);
   
   final int _bitmap;
   final List _array;
   
-  _BitmapIndexedNode(this._bitmap, this._array);
+  const _BitmapIndexedNode(this._bitmap, this._array);
   
   Iterator<Pair<K,V>> get iterator =>
       new _BitmapIndexedNodeIterator(this);

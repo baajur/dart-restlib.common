@@ -10,30 +10,34 @@ class Option<E> implements Iterable<E> {
   
   const Option.constant(this._value);
   
-  E get first => value;
+  E get first => 
+      value;
   
-  int get hashCode => _value.hashCode;
+  int get hashCode => 
+      _value.hashCode;
   
-  bool get isEmpty => _value == null;
+  bool get isEmpty => 
+      _value == null;
   
-  bool get isNotEmpty => !isEmpty;
+  bool get isNotEmpty => 
+      !isEmpty;
   
   Iterator<E> get iterator => 
       (_value == null) ? EMPTY_LIST.iterator : [_value].iterator;
   
-  E get last => value;
+  E get last => 
+      value;
   
-  int get length => (_value == null) ? 0 : 1;
+  int get length => 
+      (_value == null) ? 0 : 1;
   
-  E get single => value;
+  E get single => 
+      value;
   
-  E get value {
-    if (_value == null) {
-      throw new StateError("Option is NONE.");
-    }
-    return _value;
-  }
-  
+  E get value =>
+    (_value == null) ? 
+        throw new StateError("Option is NONE.") : _value;
+
   bool any(bool f(E element)) => 
       (_value == null) ? false : f(_value);
   
@@ -66,7 +70,7 @@ class Option<E> implements Iterable<E> {
   Option flatMap(Option f(E element)) =>
       (_value == null) ? Option.NONE : f(_value);
   
-  dynamic fold(final initialValue, combine(var previousValue, E element)) => 
+  fold(final initialValue, combine(var previousValue, E element)) => 
       (_value == null) ? initialValue : combine(initialValue, _value);  
   
   void forEach(f(E element)) {
@@ -76,7 +80,8 @@ class Option<E> implements Iterable<E> {
   String join([final String separator]) => 
       (_value == null) ? "" : _value.toString();
   
-  E lastWhere(bool test(E value), {E orElse()}) => firstWhere(test, orElse: orElse);
+  E lastWhere(bool test(E value), {E orElse()}) => 
+      firstWhere(test, orElse: orElse);
   
   Option map(f(E element)) => 
       (_value == null) ? Option.NONE : new Option(f(_value));
@@ -91,17 +96,14 @@ class Option<E> implements Iterable<E> {
     }
   }
   
-  dynamic orCompute(dynamic call()) => computeIfNull(_value, call);
+  dynamic orCompute(dynamic call()) => 
+      computeIfNull(_value, call);
 
   dynamic orElse(final dynamic alternative) => 
     firstNotNull(_value, alternative);
   
-  E reduce(E combine(E value, E element)) {
-    if (_value == null) {
-      throw new StateError("Option is NONE");
-    }
-    return _value;
-  }
+  E reduce(E combine(E value, E element)) =>
+    (_value == null) ? throw new StateError("Option is NONE") : _value;
   
   E singleWhere(bool test(E value)) => firstWhere(test);
   
@@ -120,7 +122,8 @@ class Option<E> implements Iterable<E> {
   List<E> toList({ final bool growable: true }) => 
       new List<E>.from(this, growable: growable);
   
-  Set<E> toSet() => new Set<E>.from(this);
+  Set<E> toSet() => 
+      new Set<E>.from(this);
   
   String toString() =>
       (_value == null) ? "Option.NONE" : "Option($_value)";

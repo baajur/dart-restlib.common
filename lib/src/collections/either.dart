@@ -18,13 +18,15 @@ class Either<L, R> {
       left
         .map((final L left) =>
           left)
-         .orCompute(() =>
+        .orCompute(() =>
              right.value); 
   
   /*<T>*/ fold(/*<T>*/ leftCase(L left), /*<T>*/ rightCase(R right)) {      
     return left
-      .map((final L left) => leftCase(left))
-      .orCompute(() => rightCase(right.value)); 
+      .map((final L left) => 
+          leftCase(left))
+      .orCompute(() => 
+          rightCase(right.value)); 
   }
 
   bool operator==(final other) {
@@ -39,7 +41,9 @@ class Either<L, R> {
   }
   
   String toString() =>
-      left
-        .map((final L left) => "Either.left($left)")
-        .orCompute(() => "Either.right(${right.value})").toString();
+      fold(
+          (final L left) => 
+              "Either.left($left)", 
+          (final R right) =>     
+            "Either.right($right)");
 }

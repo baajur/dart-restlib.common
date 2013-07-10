@@ -6,13 +6,14 @@ class PersistentListMultimap<K,V> extends IterableBase<Pair<K,V>> implements Mul
   
   factory PersistentListMultimap.fromMap(final Map<K,V> map) {
     PersistentListMultimap<K,V> retval = EMPTY;
-    map.forEach((k,v) => retval = retval.put(k, v));
+    map.forEach((final K k, final V v) => 
+        retval = retval.put(k, v));
     return retval;
   }
   
   factory PersistentListMultimap.fromPairs(final Iterable<Pair<K,V>> pairs) {
     return (pairs is PersistentListMultimap) ? pairs :
-      pairs.fold(EMPTY, (accumulator, Pair<K,V> pair) => 
+      pairs.fold(EMPTY, (final PersistentListMultimap<K,V> accumulator, final Pair<K,V> pair) => 
           accumulator.put(pair.fst, pair.snd));
   }
   
@@ -20,13 +21,15 @@ class PersistentListMultimap<K,V> extends IterableBase<Pair<K,V>> implements Mul
   
   const PersistentListMultimap._internal(this._map);
   
-  int get hashCode => _map.hashCode;
+  int get hashCode => 
+      _map.hashCode;
   
-  bool get isEmpty => _map.isEmpty;
+  bool get isEmpty => 
+      _map.isEmpty;
   
   Iterator<Pair<K,V>> get iterator =>
-      _map.expand((Pair<K, PersistentList<V>> pair) => 
-          pair.snd.map((V value) =>
+      _map.expand((final Pair<K, PersistentList<V>> pair) => 
+          pair.snd.map((final V value) =>
               new Pair(pair.fst, value))).iterator;
   
   bool operator==(other) {
@@ -40,7 +43,10 @@ class PersistentListMultimap<K,V> extends IterableBase<Pair<K,V>> implements Mul
   }
   
   PersistentList<V> operator[](final K key) =>
-      _map[key].map((e) => e).orElse(PersistentList.EMPTY);
+      _map[key]
+        .map((final V value) => 
+            value)
+        .orElse(PersistentList.EMPTY);
   
   Dictionary<K, PersistentList<V>> asDictionary() => _map;
   
@@ -52,14 +58,15 @@ class PersistentListMultimap<K,V> extends IterableBase<Pair<K,V>> implements Mul
       put(pair.fst, pair.snd);
   
   PersistentListMultimap<K,V> putAll(final Iterable<Pair<K,V>> pairs) =>
-      pairs.fold(this, (accumulator,pair) =>
-          accumulator.put(pair));
+      pairs.fold(this, (final PersistentListMultimap<K,V> accumulator, final Pair<K,V> pair) =>
+          accumulator.putPair(pair));
   
   PersistentListMultimap<K,V> remove(final K key) =>
       new PersistentListMultimap._internal(
           _map.remove(key));
   
-  String toString() => _map.toString();
+  String toString() => 
+      _map.toString();
 }
 
 class PersistentSetMultimap<K,V> extends IterableBase<Pair<K,V>> implements Multimap<K,V> {
@@ -68,13 +75,14 @@ class PersistentSetMultimap<K,V> extends IterableBase<Pair<K,V>> implements Mult
   
   factory PersistentSetMultimap.fromMap(final Map<K,V> map) {    
     PersistentSetMultimap<K,V> retval = EMPTY;
-    map.forEach((k,v) => retval = retval.put(k, v));
+    map.forEach((final K k, final V v) => 
+        retval = retval.put(k, v));
     return retval;
   }
   
   factory PersistentSetMultimap.fromPairs(final Iterable<Pair<K,V>> pairs) {
     return (pairs is PersistentSetMultimap) ? pairs :
-      pairs.fold(EMPTY, (accumulator, Pair<K,V> pair) => 
+      pairs.fold(EMPTY, (final PersistentSetMultimap<K,V> accumulator, final Pair<K,V> pair) => 
           accumulator.put(pair.fst, pair.snd));
   }
   
@@ -87,8 +95,8 @@ class PersistentSetMultimap<K,V> extends IterableBase<Pair<K,V>> implements Mult
   bool get isEmpty => _map.isEmpty;
   
   Iterator<Pair<K,V>> get iterator =>
-      _map.expand((Pair<K, PersistentHashSet<V>> pair) => 
-          pair.snd.map((V value) =>
+      _map.expand((final Pair<K, PersistentHashSet<V>> pair) => 
+          pair.snd.map((final V value) =>
               new Pair(pair.fst, value))).iterator;
   
   bool operator==(other) {
@@ -102,9 +110,13 @@ class PersistentSetMultimap<K,V> extends IterableBase<Pair<K,V>> implements Mult
   }
   
   PersistentHashSet<V> operator[](final K key) =>
-      _map[key].map((e) => e).orElse(PersistentHashSet.EMPTY);
+      _map[key]
+        .map((final V value) => 
+            value)
+        .orElse(PersistentHashSet.EMPTY);
   
-  Dictionary<K, PersistentHashSet<V>> asDictionary() => _map;
+  Dictionary<K, PersistentHashSet<V>> asDictionary() => 
+      _map;
   
   PersistentSetMultimap<K,V> put(final K key, final V value) =>
       new PersistentSetMultimap._internal(
@@ -114,8 +126,8 @@ class PersistentSetMultimap<K,V> extends IterableBase<Pair<K,V>> implements Mult
       put(pair.fst, pair.snd);
   
   PersistentSetMultimap<K,V> putAll(final Iterable<Pair<K,V>> pairs) =>
-      pairs.fold(this, (accumulator,pair) =>
-          accumulator.put(pair));
+      pairs.fold(this, (final PersistentSetMultimap<K,V> accumulator, final Pair<K,V> pair) =>
+          accumulator.putPair(pair));
   
   PersistentSetMultimap<K,V> remove(final K key) =>
       new PersistentSetMultimap._internal(
