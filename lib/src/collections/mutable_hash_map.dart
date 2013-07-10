@@ -27,8 +27,9 @@ class MutableHashMap<K,V> extends IterableBase<Pair<K,V>> implements Dictionary<
   Option<V> operator[](final K key) =>
     new Option(_delegate[checkNotNull(key)]);
   
-  void operator[]=(final K key, final V value) =>
+  void operator[]=(final K key, final V value) {
       _delegate[checkNotNull(key)] = checkNotNull(value);
+  }
   
   void addAll(final Iterable<Pair<K, V>> other) =>
       other.forEach((Pair<K,V> pair) =>
