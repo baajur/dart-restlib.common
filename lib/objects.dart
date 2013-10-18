@@ -2,8 +2,6 @@ library restlib.common.objects;
 
 import "dart:mirrors";
 
-import "preconditions.dart";
-
 part "src/objects/forwarder.dart";
 
 const int _HASH_INITIAL_VALUE = 17;

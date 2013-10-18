@@ -1,7 +1,6 @@
 library restlib.common.collections;
 
 import "dart:collection";
-import "dart:math";
 
 import "objects.dart";
 import "preconditions.dart";
