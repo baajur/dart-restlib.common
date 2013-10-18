@@ -36,6 +36,6 @@ class _TestObject {
   }
 }
 
-class _ForwardedTestObject extends restlib_common_objects.Forwarder<_TestObject> implements _TestObject {
+class _ForwardedTestObject extends objects.Forwarder<_TestObject> implements _TestObject {
   _ForwardedTestObject(_TestObject delegate) : super(delegate);
 }

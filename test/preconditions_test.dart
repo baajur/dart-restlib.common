@@ -44,7 +44,7 @@ preconditionsTests() {
 }
 
 preconditionsTestGroup() =>
-    group("preconditions", preconditionsTests);
+    group("package:preconditions", preconditionsTests);
 
 main() {
   preconditionsTestGroup();
