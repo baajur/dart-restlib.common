@@ -23,7 +23,7 @@ collectionsTestGroup() {
     
     // group("class:PersistentHashBiMap", persistentHashBiMapTests);
     // group("class:PersistentHashMap", persistentHashMapTests);
-    // group("class:PersistentList", persistentListTests);
+    group("class:PersistentList", persistentListTests);
   });
 }
 

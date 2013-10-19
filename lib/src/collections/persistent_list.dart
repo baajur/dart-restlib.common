@@ -12,7 +12,7 @@ class PersistentList<E> extends IterableBase<E> implements Sequence<E>, Stack<E>
   factory PersistentList.from(final Iterable<E> elements) =>
     (elements is PersistentList) ? elements :
       elements.fold(EMPTY,
-          (accumulator, E element) => 
+          (final PersistentList<E> accumulator, final E element) => 
               accumulator.add(element));
   
   final int length;
@@ -23,7 +23,7 @@ class PersistentList<E> extends IterableBase<E> implements Sequence<E>, Stack<E>
   const PersistentList._internal(this.length, this._shift, this._root, this._tail);
   
   E get first =>
-      isEmpty ? throw new StateError("List is empty") : this[0].value;
+      isEmpty ? throw new StateError("List is empty") : this.elementAt(0);
   
   int get hashCode =>
       computeHashCode(this);
@@ -35,14 +35,14 @@ class PersistentList<E> extends IterableBase<E> implements Sequence<E>, Stack<E>
       new _SequenceIterator(this);
   
   E get last =>
-    this[length - 1];    
+      isEmpty ? throw new StateError("List is empty") : this.elementAt(length - 1);    
   
   // rseq
   Iterable<E> get reversed =>
       new  _ReverseSequence(this);
   
   E get single =>
-      (length == 1) ? this[0] : throw new StateError("List has $length elements");
+      (length == 1) ? elementAt(0) : throw new StateError("List has $length elements");
   
   // pop
   PersistentList<E> get tail {
@@ -51,7 +51,7 @@ class PersistentList<E> extends IterableBase<E> implements Sequence<E>, Stack<E>
     } else if (length == 1) {
       return EMPTY;
     } else if (length - _tailoff() > 1) {
-      List newTail = new List(_tail.length - 1)..setAll(0, _tail);
+      final List newTail = new List(_tail.length - 1)..setAll(0, _tail.sublist(0, _tail.length - 1));
       return new PersistentList._internal(length - 1, _shift, _root, newTail);
     } else {
       final List newtail = _arrayFor(length - 2);
@@ -80,7 +80,7 @@ class PersistentList<E> extends IterableBase<E> implements Sequence<E>, Stack<E>
   // nth
   Option<E> operator[](final int index) {
     if(index >= 0 && index < length) {
-      List node = _arrayFor(index);
+      final List node = _arrayFor(index);
       return new Option(node[index & 0x01f]);
     }
     return Option.NONE;
@@ -102,7 +102,7 @@ class PersistentList<E> extends IterableBase<E> implements Sequence<E>, Stack<E>
       List newroot;
       final List tailnode = _tail;
       int newshift = _shift;
-  
+      
       // overflow root?
       if ((length >> 5) > (1 << _shift)) {
         newroot = 
@@ -121,9 +121,13 @@ class PersistentList<E> extends IterableBase<E> implements Sequence<E>, Stack<E>
       elements.fold(this, (final PersistentList<E> accumulator, final E element) => 
           accumulator.add(element));
   
-  E elementAt(final int index) =>
-      this[index].orCompute(() => 
-          throw new RangeError.range(index, 0, length - 1));
+  E elementAt(final int index) {
+    if(index >= 0 && index < length) {
+      final List node = _arrayFor(index);
+      return node[index & 0x01f];
+    }
+    throw new RangeError.range(index, 0, length - 1);
+  }       
   
   // assocN
   PersistentList<E> insert(final int index, final E element) {
@@ -144,7 +148,7 @@ class PersistentList<E> extends IterableBase<E> implements Sequence<E>, Stack<E>
   }
   
   String toString() =>
-      "[" + join(", ") + "]";
+      "[${join(", ")}]";
   
   List _arrayFor(final int index) {
     if (index >= _tailoff()) {
@@ -165,7 +169,7 @@ class PersistentList<E> extends IterableBase<E> implements Sequence<E>, Stack<E>
     if (level == 0) {
       ret[index & 0x01f] = object;
     } else {
-      int subidx = (index >> level) & 0x01f;
+      final int subidx = (index >> level) & 0x01f;
       ret[subidx] = _doInsert(level - 5, node[subidx], index, object);
     }
     
@@ -176,14 +180,14 @@ class PersistentList<E> extends IterableBase<E> implements Sequence<E>, Stack<E>
     if (level == 0) {
       return node;
     } else {
-      List ret = new List(32);
+      final List ret = new List(32);
       ret[0] = _newPath(level - 5, node);
       return ret;
     }
   }
   
   List _popTail(final int level, final List node) {
-    int subidx = ((length-2) >> level) & 0x01f;
+    final int subidx = ((length-2) >> level) & 0x01f;
     
     if (level > 5) {
       final List newchild = _popTail(level - 5, node[subidx]);  
