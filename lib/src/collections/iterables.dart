@@ -1,7 +1,14 @@
 part of restlib.common.collections;
 
-Iterable/*<T>*/ concat(final Iterable/*<T>*/ fst, final Iterable/*<T>*/ snd) => 
-    new _ConcatIterable(fst, snd);
+Iterable/*<T>*/ concat(final Iterable/*<T>*/ fst, final Iterable/*<T>*/ snd) {
+    if (fst.isEmpty) {
+      return snd;
+    } else if (snd.isEmpty) {
+      return fst;
+    } else {
+      return new _ConcatIterable(fst, snd);
+    }
+}
 
 Option/*<T>*/ elementAt(final Iterable/*<T>*/ itr, final int index) {
   try {
@@ -15,13 +22,17 @@ bool equal(final Iterable fst, final Iterable snd) {
   final Iterator itrFst = fst.iterator;
   final Iterator itrSnd = snd.iterator;
   
-  while(itrFst.moveNext() && itrSnd.moveNext()) {
+  bool fstMoveNext = itrFst.moveNext();
+  bool sndMoveNext = itrSnd.moveNext();
+  
+  for (;fstMoveNext && sndMoveNext; 
+      fstMoveNext = itrFst.moveNext(), sndMoveNext = itrSnd.moveNext()) {
     if(itrFst.current != itrSnd.current) {
       return false;
     }
   }
   
-  return !(itrFst.moveNext() || itrSnd.moveNext());
+  return fstMoveNext == sndMoveNext;
 }
 
 Option/*<T>*/ first(final Iterable/*<T>*/ itr) {
@@ -79,7 +90,6 @@ class _ConcatIterator<T> implements Iterator<T> {
   
   bool moveNext() =>
     _fst.moveNext() ? true : _snd.moveNext();
-
 }
 
 class _ZippedOptionalIterable<T1,T2> extends IterableBase<Pair<Option<T1>, Option<T2>>> {
@@ -90,7 +100,6 @@ class _ZippedOptionalIterable<T1,T2> extends IterableBase<Pair<Option<T1>, Optio
   
   Iterator<Pair<Option<T1>, Option<T2>>> get iterator =>
       new _ZippedOptionalIterator(_fst.iterator, _snd.iterator);
-  
 }
 
 class _ZippedOptionalIterator<T1,T2> implements Iterator<Pair<Option<T1>, Option<T2>>> {

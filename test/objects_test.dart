@@ -100,7 +100,7 @@ objectsTests() {
   });
 }
 
-objectTestGroups() {
+objectTestGroup() {
   group("package:object", () {
     group("class:Forwarder", forwarderTests);
     objectsTests();
@@ -108,5 +108,5 @@ objectTestGroups() {
 }
 
 main() {
-  objectTestGroups();
+  objectTestGroup();
 }

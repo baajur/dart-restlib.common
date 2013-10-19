@@ -30,12 +30,12 @@ class _ReverseSequence<E> extends IterableBase<E> implements Sequence<E> {
 }
 
 class _SubSequence<E> extends IterableBase<E> implements Sequence<E> { 
-  final Sequence<E> delegate;
+  final Sequence<E> _delegate;
   final int _start;
   final int length;
   
-  _SubSequence(this.delegate, this._start, this.length) {
-    checkArgument(_start + length <= delegate.length);
+  _SubSequence(this._delegate, this._start, this.length) {
+    checkArgument(_start + length <= _delegate.length);
   }
   
   Iterator<E> get iterator =>
@@ -45,5 +45,5 @@ class _SubSequence<E> extends IterableBase<E> implements Sequence<E> {
       new _ReverseSequence(this);
   
   Option<E> operator[](final int index) =>
-      delegate[_start + index];
+      _delegate[_start + index];
 }
