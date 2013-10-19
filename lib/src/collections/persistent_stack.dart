@@ -29,7 +29,7 @@ class PersistentStack<E> extends IterableBase<E> implements Stack<E> {
   
   int get hashCode => computeHashCode(this);
   
-  bool get isEmpty => identical(this, EMPTY);
+  bool get isEmpty => length == 0;
   
   Iterator<E> get iterator => new _PersistentStackIterator._internal(this);
   
