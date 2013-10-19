@@ -80,7 +80,7 @@ iterablesTests() {
   group("zipOptionally()", () {
     test("with two empty lists", () => 
         expect(zipOptionally([], []), equals([])));
-    test("with two equal length lists", (){
+    test("with two equal length lists", () {
       final Iterable<String> first = ["a", "b", "c"];
       final Iterable<String> second = ["A", "B", "C"];
       final Iterable<Pair<Option<String>, Option<String>>> result =
@@ -91,7 +91,7 @@ iterablesTests() {
       expect(zipOptionally(first, second), equals(result));
     });
     
-    test("with first list longer than second list", (){
+    test("with first list longer than second list", () {
       final Iterable<String> first = ["a", "b", "c", "d"];
       final Iterable<String> second = ["A", "B", "C"];
       final Iterable<Pair<Option<String>, Option<String>>> result =
@@ -103,7 +103,7 @@ iterablesTests() {
       expect(zipOptionally(first, second), equals(result));
     });
     
-    test("with second list longer than first list", (){
+    test("with second list longer than first list", () {
       final Iterable<String> first = ["a", "b", "c"];
       final Iterable<String> second = ["A", "B", "C", "D"];
       final Iterable<Pair<Option<String>, Option<String>>> result =
