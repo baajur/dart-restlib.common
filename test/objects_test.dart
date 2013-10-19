@@ -8,10 +8,7 @@ import "package:restlib_common/objects.dart" as objects;
 part "src/objects/forwarder_test.dart";
 
 objectsTests() {
-  group("computeHashCode", () {
-    test("with empty iterable", () =>
-        expect(() => objects.computeHashCode([]), throwsArgumentError));
-    
+  group("computeHashCode", () {    
     test("with two iterables containing the same values", () {
       final Iterable<String> fst = ["a", "b", "c"];
       final Iterable<String> snd = ["a", "b", "c"];
