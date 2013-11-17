@@ -12,9 +12,9 @@ class MutableHashBiMap<K,V> extends ForwardingDictionary<K,V> implements BiMap<K
           (final MutableHashBiMap<K,V> accumulator, final Pair<K,V> pair) => 
               accumulator..put(pair.fst, pair.snd));
  
-  final MutableHashMap<K,V> _inverse;
+  final MutableHashMap<V,K> _inverse;
   
-  MutableHashBiMap() : this._internal(new MutableHashMap<K,V>(), new MutableHashMap<K,V>());
+  MutableHashBiMap() : this._internal(new MutableHashMap<K,V>(), new MutableHashMap<V, K>());
   
   MutableHashBiMap._internal(final MutableHashMap<K,V> delegate, this._inverse) : super(delegate);
   
