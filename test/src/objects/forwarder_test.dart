@@ -36,6 +36,7 @@ class _TestObject {
   }
 }
 
+@proxy
 class _ForwardedTestObject extends objects.Forwarder<_TestObject> implements _TestObject {
   _ForwardedTestObject(_TestObject delegate) : super(delegate);
 }
