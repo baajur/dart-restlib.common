@@ -12,6 +12,7 @@ part "src/collections/pair_test.dart";
 part "src/collections/persistent_hash_bimap_test.dart";
 part "src/collections/persistent_hash_map_test.dart";
 part "src/collections/persistent_list_test.dart";
+part "src/collections/persistent_stack_test.dart";
 
 collectionsTestGroup() {
   group("package:collections", () {
@@ -22,8 +23,9 @@ collectionsTestGroup() {
     group("class:Pair", pairTests);
     
     // group("class:PersistentHashBiMap", persistentHashBiMapTests);
-    // group("class:PersistentHashMap", persistentHashMapTests);
+    group("class:PersistentHashMap", persistentHashMapTests);
     group("class:PersistentList", persistentListTests);
+    group("class:PersistentStack", persistentStackTests);
   });
 }
 
