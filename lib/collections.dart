@@ -31,6 +31,7 @@ part "src/collections/mutable_set.dart";
 part "src/collections/option.dart";
 part "src/collections/pair.dart";
 part "src/collections/persistent_bimap.dart";
+part "src/collections/persistent_collection.dart";
 part "src/collections/persistent_dictionary.dart";
 part "src/collections/persistent_multimap.dart";
 part "src/collections/persistent_multiset.dart";

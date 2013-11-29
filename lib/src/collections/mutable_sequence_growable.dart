@@ -1,7 +1,13 @@
+
 part of restlib.common.collections;
 
-class GrowableSequence<E> extends _AbstractMutableSequence<E> implements MutableSequence<E> {  
-  GrowableSequence() : super (new List());
+abstract class GrowableSequence<E> implements MutableSequence<E> {  
+  factory GrowableSequence() =>
+      new _GrowableSequenceBase();
+}
+
+class _GrowableSequenceBase<E> extends _AbstractMutableSequence<E> implements GrowableSequence<E> {
+  _GrowableSequenceBase() : super (new List());
   
   Iterator<E> get iterator =>
       _delegate.iterator;

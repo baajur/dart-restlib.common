@@ -1,50 +1,55 @@
 part of restlib.common.collections;
 
-class FixedSizeSequence<E> extends _AbstractMutableSequence<E> implements MutableSequence<E> {
-  static FixedSizeSequence<double> newFloat32Sequence(final int size) =>
-      new FixedSizeSequence._internal(new Float32List(size));
+abstract class MutableFixedSizeSequence<E> implements MutableSequence<E> {
+  static MutableFixedSizeSequence<double> newFloat32Sequence(final int size) =>
+      new _MutableFixedSizeSequenceBase._internal(new Float32List(size));
   
-  static FixedSizeSequence<Float32x4> newFloat32x4Sequence(final int size) =>
-      new FixedSizeSequence._internal(new Float32x4List(size));
+  static MutableFixedSizeSequence<Float32x4> newFloat32x4Sequence(final int size) =>
+      new _MutableFixedSizeSequenceBase._internal(new Float32x4List(size));
   
-  static FixedSizeSequence<double> newFloat64Sequence(final int size) =>
-      new FixedSizeSequence._internal(new Float64List(size));
+  static MutableFixedSizeSequence<double> newFloat64Sequence(final int size) =>
+      new _MutableFixedSizeSequenceBase._internal(new Float64List(size));
   
-  static FixedSizeSequence<int> newInt16Sequence(final int size) =>
-      new FixedSizeSequence._internal(new Int16List(size));
+  static MutableFixedSizeSequence<int> newInt16Sequence(final int size) =>
+      new _MutableFixedSizeSequenceBase._internal(new Int16List(size));
   
-  static FixedSizeSequence<int> newInt32Sequence(final int size) =>
-      new FixedSizeSequence._internal(new Int32List(size));
+  static MutableFixedSizeSequence<int> newInt32Sequence(final int size) =>
+      new _MutableFixedSizeSequenceBase._internal(new Int32List(size));
   
-  static FixedSizeSequence<Int32x4> newInt32x4Sequence(final int size) =>
-      new FixedSizeSequence._internal(new Int32x4List(size));
+  static MutableFixedSizeSequence<Int32x4> newInt32x4Sequence(final int size) =>
+      new _MutableFixedSizeSequenceBase._internal(new Int32x4List(size));
   
-  static FixedSizeSequence<int> newInt64Sequence(final int size) =>
-      new FixedSizeSequence._internal(new Int64List(size));
+  static MutableFixedSizeSequence<int> newInt64Sequence(final int size) =>
+      new _MutableFixedSizeSequenceBase._internal(new Int64List(size));
   
-  static FixedSizeSequence<int> newInt8Sequence(final int size) =>
-      new FixedSizeSequence._internal(new Int8List(size));
+  static MutableFixedSizeSequence<int> newInt8Sequence(final int size) =>
+      new _MutableFixedSizeSequenceBase._internal(new Int8List(size));
   
-  static FixedSizeSequence<int> newUint16Sequence(final int size) =>
-      new FixedSizeSequence._internal(new Uint16List(size));
+  static MutableFixedSizeSequence<int> newUint16Sequence(final int size) =>
+      new _MutableFixedSizeSequenceBase._internal(new Uint16List(size));
   
-  static FixedSizeSequence<int> newUint32Sequence(final int size) =>
-      new FixedSizeSequence._internal(new Uint32List(size));
+  static MutableFixedSizeSequence<int> newUint32Sequence(final int size) =>
+      new _MutableFixedSizeSequenceBase._internal(new Uint32List(size));
   
-  static FixedSizeSequence<int> newUint64Sequence(final int size) =>
-      new FixedSizeSequence._internal(new Uint64List(size));
+  static MutableFixedSizeSequence<int> newUint64Sequence(final int size) =>
+      new _MutableFixedSizeSequenceBase._internal(new Uint64List(size));
   
-  static FixedSizeSequence<int> newUint8ClampedSequence(final int size) =>
-      new FixedSizeSequence._internal(new Uint8ClampedList(size));
+  static MutableFixedSizeSequence<int> newUint8ClampedSequence(final int size) =>
+      new _MutableFixedSizeSequenceBase._internal(new Uint8ClampedList(size));
   
-  static FixedSizeSequence<int> newUint8Sequence(final int size) =>
-      new FixedSizeSequence._internal(new Uint8List(size));
+  static MutableFixedSizeSequence<int> newUint8Sequence(final int size) =>
+      new _MutableFixedSizeSequenceBase._internal(new Uint8List(size));
   
+  factory MutableFixedSizeSequence(final int size) =>
+      new _MutableFixedSizeSequenceBase._internal(new List<E>(size));
+  
+  int get size;
+}
+
+class _MutableFixedSizeSequenceBase<E> extends _AbstractMutableSequence<E> implements MutableFixedSizeSequence<E> {
   int _length = 0;
-  
-  FixedSizeSequence(final int size) : super(new List<E>(size));
-  
-  FixedSizeSequence._internal(final List<E> delegate) : super(delegate);
+    
+  _MutableFixedSizeSequenceBase._internal(final List<E> delegate) : super(delegate);
   
   bool get isEmpty => 
       _length == 0;
