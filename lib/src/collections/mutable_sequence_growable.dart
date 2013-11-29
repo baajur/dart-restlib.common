@@ -25,7 +25,7 @@ class _GrowableSequenceBase<E> extends _AbstractMutableSequence<E> implements Gr
       (_delegate as List).remove(element) ?
           new Option(element) : Option.NONE;
   
-  Option<E> removeKey(int index) {
+  Option<E> removeAt(int index) {
     checkArgument(index > 0);
     
     if (index < length) {

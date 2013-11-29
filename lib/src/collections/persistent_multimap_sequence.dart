@@ -20,7 +20,7 @@ abstract class PersistentSequenceMultimap<K,V> implements PersistentMultimap<K,V
   
   PersistentSequenceMultimap<K,V> put(final K key, final V value);
   
-  PersistentSequenceMultimap<K,V> removeKey(final K key);
+  PersistentSequenceMultimap<K,V> removeAt(final K key);
 }
 
 class _PersistentSequenceMultimapBase<K,V> extends _AbstractPersistentMultimap<K,V,PersistentSequence<V>> implements PersistentSequenceMultimap<K,V> {    
@@ -33,7 +33,7 @@ class _PersistentSequenceMultimapBase<K,V> extends _AbstractPersistentMultimap<K
       new _PersistentSequenceMultimapBase._internal(
           dictionary.put(key, this[key].add(value)));
   
-  PersistentSequenceMultimap<K,V> removeKey(final K key) =>
+  PersistentSequenceMultimap<K,V> removeAt(final K key) =>
       new _PersistentSequenceMultimapBase._internal(
-          dictionary.removeKey(key));
+          dictionary.removeAt(key));
 }

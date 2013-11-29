@@ -70,7 +70,7 @@ class _PersistentSetBase<E> extends IterableBase<E> implements PersistentSet<E> 
   
   PersistentSet<E> remove(final E element) {
     final PersistentDictionary<E,E> newMap =
-        _map.removeKey(element);
+        _map.removeAt(element);
     return (newMap.isEmpty) ? 
         PersistentSet.EMPTY : new _PersistentSetBase._internal(newMap);
   }

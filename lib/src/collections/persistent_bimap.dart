@@ -27,7 +27,7 @@ abstract class PersistentBiMap<K,V> implements BiMap<K,V>, PersistentDictionary<
   
   PersistentBiMap<K,V> putPair(final Pair<K,V> pair);
   
-  PersistentBiMap<K,V> removeKey(final K key);
+  PersistentBiMap<K,V> removeAt(final K key);
   
   PersistentBiMap<K,V> putIfAbsent(final K key, final V value);
 }
@@ -72,7 +72,7 @@ class _PersistentBiMapBase<K,V> extends ForwardingDictionary<K,V> implements Per
     PersistentDictionary newInverse = _inverse;
     
     newInverse[value].map((final K key) => 
-        newMap = newMap.removeKey(key));  
+        newMap = newMap.removeAt(key));  
     
     newInverse = newInverse.put(value, key);
     newMap = newMap.put(key, value);
@@ -95,15 +95,15 @@ class _PersistentBiMapBase<K,V> extends ForwardingDictionary<K,V> implements Per
   PersistentBiMap<K,V> putPair(final Pair<K,V> pair) =>
       put(pair.fst, pair.snd);
   
-  PersistentBiMap<K,V> removeKey(final K key) {
+  PersistentBiMap<K,V> removeAt(final K key) {
     checkNotNull(key);
     
     PersistentDictionary newMap = _delegate;
     PersistentDictionary newInverse = _inverse;
     
     newMap[key].map((final V value) => 
-        newInverse = newInverse.removeKey(value));
-    newMap = newMap.removeKey (key);
+        newInverse = newInverse.removeAt(value));
+    newMap = newMap.removeAt (key);
     
     return newMap == _delegate ? this : new _PersistentBiMapBase._internal(newMap, newInverse);
   }

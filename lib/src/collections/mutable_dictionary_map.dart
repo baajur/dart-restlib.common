@@ -41,7 +41,7 @@ class _MutableDictionaryBase<K,V> extends IterableBase<Pair<K,V>> implements Mut
   void putPair(final Pair<K,V> pair) =>
       put(pair.fst, pair.snd);
   
-  Option<V> removeKey(final K key) {
+  Option<V> removeAt(final K key) {
     if (containsKey(key)) {
       final Option<V> retval = this[key];
       _delegate.remove(checkNotNull(key));

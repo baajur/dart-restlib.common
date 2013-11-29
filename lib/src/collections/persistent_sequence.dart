@@ -25,7 +25,7 @@ abstract class PersistentSequence<E> implements Sequence<E>, PersistentCollectio
   
   PersistentSequence<E> putPair(final Pair<int,E> pair);
   
-  PersistentSequence<E> removeKey(final int key);
+  PersistentSequence<E> removeAt(final int key);
 }
 
 class _PersistentSequenceBase<E> extends IterableBase<E> implements PersistentSequence<E> {
@@ -186,7 +186,7 @@ class _PersistentSequenceBase<E> extends IterableBase<E> implements PersistentSe
   // FIXME:
   PersistentSequence<E> remove(E element) => null;
   
-  PersistentSequence<E> removeKey(final int key) {
+  PersistentSequence<E> removeAt(final int key) {
     // FIXME:
     return this;
   }

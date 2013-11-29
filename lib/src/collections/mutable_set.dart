@@ -56,5 +56,5 @@ class _MutableDictionaryBackedSet<E> extends IterableBase<E> implements MutableS
         .orElse(false);
   
   Option<E> remove(final E element) =>
-      _map.removeKey(element);
+      _map.removeAt(element);
 }

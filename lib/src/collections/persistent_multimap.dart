@@ -7,7 +7,7 @@ abstract class PersistentMultimap<K,V, I extends Iterable<V>> implements Multima
   
   PersistentMultimap<K,V,I> put(final K key, final V value);
   
-  PersistentMultimap<K,V,I> removeKey(final K key);
+  PersistentMultimap<K,V,I> removeAt(final K key);
 }
 
 abstract class _AbstractPersistentMultimap<K,V, I extends PersistentCollection<V>> extends IterableBase<Pair<K,V>> implements PersistentMultimap<K,V, I> {

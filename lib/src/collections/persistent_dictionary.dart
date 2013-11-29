@@ -19,7 +19,7 @@ abstract class PersistentDictionary<K,V> implements Dictionary<K,V>, PersistentA
   
   PersistentDictionary<K,V> putPair(final Pair<K,V> pair);
   
-  PersistentDictionary<K,V> removeKey(final K key);
+  PersistentDictionary<K,V> removeAt(final K key);
   
   PersistentDictionary<K,V> putIfAbsent(final K key, final V value);
 }
@@ -102,7 +102,7 @@ class _PersistentDictionaryBase<K,V> extends IterableBase<Pair<K,V>> implements 
         .orCompute(() => 
             this.put(key, value));
   
-  PersistentDictionary<K,V> removeKey(final K key) {
+  PersistentDictionary<K,V> removeAt(final K key) {
     checkNotNull(key);
     
     if (isNull(_root)) {

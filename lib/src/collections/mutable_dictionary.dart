@@ -15,5 +15,5 @@ abstract class MutableDictionary<K,V> implements Dictionary<K,V>, MutableAssocia
                   delegate[pair.fst] = pair.snd)) :
             new _MutableDictionaryBase._internal(new SplayTreeMap<K,V>());
   
-  Option<V> removeKey(final K key);
+  Option<V> removeAt(final K key);
 }

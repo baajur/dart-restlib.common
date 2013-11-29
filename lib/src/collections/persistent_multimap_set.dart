@@ -20,7 +20,7 @@ abstract class PersistentSetMultimap<K,V> extends IterableBase<Pair<K,V>> implem
   
   PersistentSetMultimap<K,V> put(final K key, final V value);
   
-  PersistentSetMultimap<K,V> removeKey(final K key);
+  PersistentSetMultimap<K,V> removeAt(final K key);
 }
 
 class _PersistentSetMultimapBase<K,V> extends _AbstractPersistentMultimap<K,V,PersistentSet<V>> implements PersistentSetMultimap<K,V>{  
@@ -34,7 +34,7 @@ class _PersistentSetMultimapBase<K,V> extends _AbstractPersistentMultimap<K,V,Pe
       new _PersistentSetMultimapBase._internal(
           dictionary.put(key, this[key].add(value)));
   
-  PersistentSetMultimap<K,V> removeKey(final K key) =>
+  PersistentSetMultimap<K,V> removeAt(final K key) =>
       new _PersistentSetMultimapBase._internal(
-          dictionary.removeKey(key));
+          dictionary.removeAt(key));
 }

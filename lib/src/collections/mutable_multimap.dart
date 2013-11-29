@@ -5,7 +5,7 @@ abstract class MutableMultimap<K, V, I extends MutableCollection<V>> implements 
   
   I operator[](final K key);
   
-  I removeKey(K key);
+  I removeAt(K key);
 }
 
 abstract class _AbstractMutableMultimap<K,V, I extends MutableCollection<V>> extends IterableBase<Pair<K,V>> implements MutableMultimap<K,V, I> {
@@ -57,8 +57,8 @@ abstract class _AbstractMutableMultimap<K,V, I extends MutableCollection<V>> ext
   void putPair(final Pair<K,V> pair) =>
       put(pair.fst, pair.snd);
   
-  I removeKey(final K key) =>
-      _delegate.removeKey(key);
+  I removeAt(final K key) =>
+      _delegate.removeAt(key);
   
   String toString() => 
       _delegate.toString();

@@ -7,5 +7,5 @@ abstract class PersistentAssociative<K,V> implements Associative<K,V> {
 
   PersistentAssociative<K,V> putPair(final Pair<K,V> pair);
   
-  PersistentAssociative<K,V> removeKey(final K key);
+  PersistentAssociative<K,V> removeAt(final K key);
 }

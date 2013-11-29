@@ -102,7 +102,7 @@ class _MutableFixedSizeSequenceBase<E> extends _AbstractMutableSequence<E> imple
     return Option.NONE;
   }
   
-  E removeKey(int index) {
+  E removeAt(int index) {
     checkArgument(index > 0);
     
     if (index < _length) {

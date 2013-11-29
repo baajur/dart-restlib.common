@@ -20,7 +20,7 @@ abstract class PersistentMultisetMultimap<K,V> extends IterableBase<Pair<K,V>> i
   
   PersistentMultisetMultimap<K,V> put(final K key, final V value);
   
-  PersistentMultisetMultimap<K,V> removeKey(final K key);
+  PersistentMultisetMultimap<K,V> removeAt(final K key);
 }
 
 class _PersistentMultisetMultimapBase<K,V> extends _AbstractPersistentMultimap<K,V,PersistentMultiset<V>> implements PersistentMultisetMultimap<K,V>{  
@@ -34,7 +34,7 @@ class _PersistentMultisetMultimapBase<K,V> extends _AbstractPersistentMultimap<K
       new _PersistentMultisetMultimapBase._internal(
           dictionary.put(key, this[key].add(value)));
   
-  PersistentMultisetMultimap<K,V> removeKey(final K key) =>
+  PersistentMultisetMultimap<K,V> removeAt(final K key) =>
       new _PersistentMultisetMultimapBase._internal(
-          dictionary.removeKey(key));
+          dictionary.removeAt(key));
 }

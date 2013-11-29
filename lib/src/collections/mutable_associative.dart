@@ -9,5 +9,5 @@ abstract class MutableAssociative<K,V> implements Associative<K,V> {
   
   void putPair(final Pair<K,V> pair);
  
-  Iterable<V> removeKey(final K key);
+  Iterable<V> removeAt(final K key);
 }

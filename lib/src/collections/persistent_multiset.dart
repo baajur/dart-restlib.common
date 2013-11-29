@@ -44,9 +44,9 @@ class _PersistentMultisetBase<E> extends IterableBase<E> implements PersistentMu
         .map((final int i) =>
             (i > 1) ? 
                 new _PersistentMultisetBase(_delegate.put(element, i - 1)) : 
-                  new _PersistentMultisetBase(_delegate.removeKey(element)))
+                  new _PersistentMultisetBase(_delegate.removeAt(element)))
         .orElse(this);
   
   PersistentMultiset<E> removeAll(final E element) =>
-      new _PersistentMultisetBase(_delegate.removeKey(element));
+      new _PersistentMultisetBase(_delegate.removeAt(element));
 }
