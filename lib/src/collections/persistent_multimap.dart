@@ -26,6 +26,9 @@ abstract class _AbstractPersistentMultimap<K,V, I extends PersistentCollection<V
           pair.snd.map((final V value) =>
               new Pair(pair.fst, value))).iterator;
   
+  Iterable<K> get keys =>
+      dictionary.keys;
+  
   bool operator==(other) {
     if (identical(this, other)) {
       return true;
@@ -49,9 +52,10 @@ abstract class _AbstractPersistentMultimap<K,V, I extends PersistentCollection<V
   
   bool containsKey(final K key) =>
       dictionary.containsKey(key);
-  
-  // FIXME:
-  bool containsValue(final V value) => null;
+
+  bool containsValue(final V value) => 
+      keys.any((final K key) => 
+          this[key].contains(value));
   
   PersistentMultimap<K,V,I> insertPair(final Pair<K,V> pair) =>
       insert(pair.fst, pair.snd);

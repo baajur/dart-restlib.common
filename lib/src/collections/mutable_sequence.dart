@@ -6,6 +6,10 @@ abstract class MutableSequence<E> implements Sequence<E>, MutableCollection<E>, 
 abstract class _AbstractMutableSequence<E> extends ForwardingIterable<E> implements MutableSequence<E> {
   _AbstractMutableSequence(List<E> delegate) : super (delegate);
   
+  Iterable<int> get keys =>
+      new List.generate(length, 
+          (final int index) => index);
+  
   Iterable<E> get reversed =>
       new _ReverseSequence(this);
   

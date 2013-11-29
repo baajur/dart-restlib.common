@@ -48,6 +48,8 @@ part "src/collections/sequence.dart";
 const List EMPTY_LIST = const [];
 
 abstract class Associative<K,V> {
+  Iterable<K> get keys;
+  
   Iterable<V> operator[](K key);
   
   bool containsKey(K key);

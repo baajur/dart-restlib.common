@@ -25,6 +25,9 @@ abstract class _AbstractMutableMultimap<K,V, I extends MutableCollection<V>> ext
           pair.snd.map((final V value) =>
               new Pair(pair.fst, value))).iterator;
   
+  Iterable<K> get keys =>
+      _delegate.keys;
+  
   I operator[](final K key) =>
       _delegate[key]
         .map((final I container) => container)
@@ -45,9 +48,9 @@ abstract class _AbstractMutableMultimap<K,V, I extends MutableCollection<V>> ext
   bool containsKey(final K key) =>
       _delegate.containsKey(key);
   
-  // FIXME:
   bool containsValue(final V value) =>
-      null;
+      keys.any((final K key) => 
+          this[key].contains(value));
   
   void insert(final K key, final V value) => 
       _delegate.insert(key, 

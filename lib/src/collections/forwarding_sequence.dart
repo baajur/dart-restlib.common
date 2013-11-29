@@ -3,6 +3,9 @@ part of restlib.common.collections;
 class ForwardingSequence<E> extends ForwardingIterable<E> implements Sequence<E> {
   const ForwardingSequence(final Sequence<E> delegate) : super(delegate);
   
+  Iterable<int> get keys =>
+      (_delegate as Sequence).keys;
+  
   Iterable<E> get reversed => 
       (_delegate as Sequence).reversed;
   

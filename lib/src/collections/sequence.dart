@@ -49,6 +49,10 @@ abstract class _AbstractSequence<E> extends IterableBase<E> implements Sequence<
   Iterator<E> get iterator =>
       new _SequenceIterator(this);
   
+  Iterable<int> get keys =>
+      new List.generate(length, 
+          (final int index) => index);
+  
   Sequence<E> get reversed =>
       new _ReverseSequence(this);
   

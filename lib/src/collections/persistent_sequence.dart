@@ -56,6 +56,10 @@ class _PersistentSequenceBase<E> extends IterableBase<E> implements PersistentSe
   Iterator<E> get iterator =>
       new _SequenceIterator(this);
   
+  Iterable<int> get keys =>
+      new List.generate(length, 
+          (final int index) => index);
+  
   E get last =>
       isEmpty ? throw new StateError("List is empty") : this.elementAt(length - 1);    
   
