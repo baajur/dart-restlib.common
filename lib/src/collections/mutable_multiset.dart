@@ -34,6 +34,9 @@ class _MutableMultisetBase<E> extends IterableBase<E> implements MutableMultiset
       elements.forEach((final E element) => 
           add(element));
   
+  void clear() =>
+      _delegate.clear();
+  
   bool contains(final E element) =>
       _delegate.containsKey(element);
       

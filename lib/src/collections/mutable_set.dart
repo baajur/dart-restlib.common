@@ -49,6 +49,9 @@ class _MutableDictionaryBackedSet<E> extends IterableBase<E> implements MutableS
       elements.forEach((final E element) => 
           add(element));
   
+  void clear() =>
+      _map.clear();
+  
   bool contains(final E element) =>
       _map[element]
         .map((final E v) => 

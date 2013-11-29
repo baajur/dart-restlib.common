@@ -39,6 +39,9 @@ abstract class _AbstractMutableMultimap<K,V, I extends MutableCollection<V>> ext
   
   I _newValueContainer();
   
+  void clear() =>
+      _delegate.clear();
+  
   bool containsKey(final K key) =>
       _delegate.containsKey(key);
   

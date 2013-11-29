@@ -21,6 +21,9 @@ class _MutableDictionaryBase<K,V> extends IterableBase<Pair<K,V>> implements Mut
       _delegate[checkNotNull(key)] = checkNotNull(value);
   }
   
+  void clear() =>
+      _delegate.clear();
+  
   void insertAll(final Iterable<Pair<K, V>> other) =>
       other.forEach((final Pair<K,V> pair) =>
           _delegate[pair.fst] = pair.snd);

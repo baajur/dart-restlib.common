@@ -32,6 +32,11 @@ class _MutableBiMapBase<K,V> extends ForwardingDictionary<K,V> implements Mutabl
   void operator[]=(final K key, final V value) => 
       insert(key, value);
   
+  void clear() {
+      (_delegate as MutableDictionary<K,V>).clear();
+      _inverse.clear;
+  }
+  
   void insertAll(final Iterable<Pair<K, V>> other) =>
       other.forEach((final Pair<K,V> pair) =>
           insert(pair.fst, pair.snd));
