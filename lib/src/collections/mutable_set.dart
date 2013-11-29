@@ -1,6 +1,6 @@
 part of restlib.common.collections;
 
-abstract class MutableSet<E> extends MutableCollection<E> {
+abstract class MutableSet<E> extends MutableCollection<E> implements FiniteSet<E>{
   factory MutableSet.hash({final Iterable<E> elements}) =>
       (elements != null) ?
           elements.fold(
@@ -16,6 +16,10 @@ abstract class MutableSet<E> extends MutableCollection<E> {
               (final MutableSet<E> accumulator, final E element) => 
                   accumulator..add(element)) :
             new _MutableDictionaryBackedSet(new MutableDictionary.splayTree());
+  
+  MutableSet<E> difference(FiniteSet<E> other);
+  MutableSet<E> intersection(FiniteSet<Object> other);
+  MutableSet<E> union(FiniteSet<E> other);
 }
 
 class _MutableDictionaryBackedSet<E> extends IterableBase<E> implements MutableSet<E> {   
@@ -57,6 +61,22 @@ class _MutableDictionaryBackedSet<E> extends IterableBase<E> implements MutableS
         .map((final E v) => 
             true)
         .orElse(false);
+  
+  MutableSet<E> difference(FiniteSet<E> other) =>
+    // FIXME: Probaly should make the return type implementation specific
+    new MutableSet.hash()..addAll(
+        this.where((final E element) => 
+            !other.contains(element)));
+
+  MutableSet<E> intersection(FiniteSet<Object> other) =>
+    // FIXME: Probaly should make the return type implementation specific
+    new MutableSet.hash()..addAll(
+        this.where((final E element) => 
+            other.contains(element)));
+  
+  MutableSet<E> union(FiniteSet<E> other) =>
+    // FIXME: Probaly should make the return type implementation specific
+    new MutableSet.hash()..addAll(this)..addAll(other);
   
   Option<E> remove(final E element) =>
       _map.removeAt(element);

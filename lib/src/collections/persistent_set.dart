@@ -1,6 +1,6 @@
 part of restlib.common.collections;
 
-abstract class PersistentSet<E> extends PersistentCollection<E> {
+abstract class PersistentSet<E> extends PersistentCollection<E> implements FiniteSet<E>{
   static const PersistentSet EMPTY = 
       const _PersistentSetBase._internal(
           PersistentDictionary.EMPTY);
@@ -67,6 +67,19 @@ class _PersistentSetBase<E> extends IterableBase<E> implements PersistentSet<E> 
         .map((final E v) => 
             true)
         .orElse(false);
+  
+  PersistentSet<E> difference(FiniteSet<E> other) =>
+      PersistentSet.EMPTY.addAll(
+          this.where((final E element) => 
+              !other.contains(element)));
+  
+  PersistentSet<E> intersection(FiniteSet<Object> other) =>
+      PersistentSet.EMPTY.addAll(
+          this.where((final E element) => 
+              other.contains(element)));
+    
+  PersistentSet<E> union(FiniteSet<E> other) =>
+      PersistentSet.EMPTY.addAll(this).addAll(other);
   
   PersistentSet<E> remove(final E element) {
     final PersistentDictionary<E,E> newMap =

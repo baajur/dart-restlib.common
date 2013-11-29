@@ -65,6 +65,12 @@ abstract class Dictionary<K,V> implements Associative<K,V>, Iterable<Pair<K,V>>{
   Option<V> operator[](K key);
 }
 
+abstract class FiniteSet<E> implements Iterable<E> {
+  FiniteSet<E> difference(FiniteSet<E> other);
+  FiniteSet<E> intersection(FiniteSet<Object> other);
+  FiniteSet<E> union(FiniteSet<E> other);
+}
+
 abstract class Multimap<K,V, I extends Iterable<V>> implements Associative<K,V>, Iterable<Pair<K,V>> {  
   Dictionary<K, I> get dictionary;
 }
