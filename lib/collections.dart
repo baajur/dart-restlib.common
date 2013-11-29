@@ -16,6 +16,7 @@ part "src/collections/forwarding_sequence.dart";
 part "src/collections/forwarding_stack.dart";
 part "src/collections/iterables.dart";
 part "src/collections/mutable_bimap.dart";
+part "src/collections/mutable_collection.dart";
 part "src/collections/mutable_dictionary.dart";
 part "src/collections/mutable_dictionary_map.dart";
 part "src/collections/mutable_multimap.dart";

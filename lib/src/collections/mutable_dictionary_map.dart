@@ -1,9 +1,9 @@
 part of restlib.common.collections;
 
-class _MutableMapDictionary<K,V> extends IterableBase<Pair<K,V>> implements MutableDictionary<K,V> {
+class _MutableDictionaryBase<K,V> extends IterableBase<Pair<K,V>> implements MutableDictionary<K,V> {
   final Map<K,V> _delegate;
     
-  _MutableMapDictionary._internal(this._delegate);
+  _MutableDictionaryBase._internal(this._delegate);
   
   bool get isEmpty =>
       _delegate.isEmpty;
@@ -21,7 +21,7 @@ class _MutableMapDictionary<K,V> extends IterableBase<Pair<K,V>> implements Muta
       _delegate[checkNotNull(key)] = checkNotNull(value);
   }
   
-  void addAll(final Iterable<Pair<K, V>> other) =>
+  void putAll(final Iterable<Pair<K, V>> other) =>
       other.forEach((final Pair<K,V> pair) =>
           _delegate[pair.fst] = pair.snd);
   

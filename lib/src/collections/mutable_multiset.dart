@@ -1,25 +1,19 @@
 part of restlib.common.collections;
 
-abstract class MutableMultiset<E> implements Multiset<E> {
+abstract class MutableMultiset<E> implements Multiset<E>, MutableCollection<E> {
   factory MutableMultiset.hash() =>
-      new _AbstractMutableMultiset(new MutableDictionary.hash());
+      new _MutableMultisetBase(new MutableDictionary.hash());
   
   factory MutableMultiset.splayTree() =>
-      new _AbstractMutableMultiset(new MutableDictionary.splayTree());
-  
-  void add(final E element);
-  
-  void addAll(final Iterable<E> elements);
-  
-  bool remove (final E element);
+      new _MutableMultisetBase(new MutableDictionary.splayTree());
   
   bool removeAll(final E element);
 }
 
-class _AbstractMutableMultiset<E> extends IterableBase<E> implements MutableMultiset<E> {
-  final _MutableMapDictionary<E,int> _delegate;
+class _MutableMultisetBase<E> extends IterableBase<E> implements MutableMultiset<E> {
+  final _MutableDictionaryBase<E,int> _delegate;
   
-  _AbstractMutableMultiset(this._delegate);
+  _MutableMultisetBase(this._delegate);
   
   Iterator<E> get iterator => 
       _delegate.expand((final Pair<E, int> pair) =>

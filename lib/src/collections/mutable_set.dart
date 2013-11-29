@@ -1,6 +1,6 @@
 part of restlib.common.collections;
 
-abstract class MutableSet<E> extends Iterable<E> {
+abstract class MutableSet<E> extends MutableCollection<E> {
   factory MutableSet.hash({final Iterable<E> elements}) =>
       (elements != null) ?
           elements.fold(
@@ -16,12 +16,6 @@ abstract class MutableSet<E> extends Iterable<E> {
               (final MutableSet<E> accumulator, final E element) => 
                   accumulator..add(element)) :
             new _MutableDictionaryBackedSet(new MutableDictionary.splayTree());
-  
-  void add(final E element);
-  
-  void addAll(final Iterable<E> elements);
-  
-  bool remove(final E element);
 }
 
 class _MutableDictionaryBackedSet<E> extends IterableBase<E> implements MutableSet<E> {   

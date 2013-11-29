@@ -1,15 +1,9 @@
 part of restlib.common.collections;
 
-abstract class MutableSequence<E> implements Sequence<E> {    
+abstract class MutableSequence<E> implements Sequence<E>, MutableCollection<E> {    
   void operator[]=(int index, E element);
   
-  void add(E value);
-  
-  void addAll(Iterable<E> elements);
-  
   void insert(int index, E element);
-  
-  bool remove(E element);
   
   Option<E> removeAt(int index);
 }
