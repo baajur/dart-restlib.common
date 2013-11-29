@@ -45,6 +45,10 @@ abstract class _AbstractMutableMultimap<K,V, I extends MutableCollection<V>> ext
   bool containsKey(final K key) =>
       _delegate.containsKey(key);
   
+  // FIXME:
+  bool containsValue(final V value) =>
+      null;
+  
   void insert(final K key, final V value) => 
       _delegate.insert(key, 
           _delegate[key]

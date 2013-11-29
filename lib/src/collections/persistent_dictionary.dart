@@ -78,6 +78,9 @@ class _PersistentDictionaryBase<K,V> extends IterableBase<Pair<K,V>> implements 
   bool containsKey(final K key) =>
       this[key] != Option.NONE;
   
+  // FIXME:
+  bool containsValue(final V value) => null;
+  
   PersistentDictionary<K,V> insert(final K key, final V value) {
     checkNotNull(key);
     checkNotNull(value);

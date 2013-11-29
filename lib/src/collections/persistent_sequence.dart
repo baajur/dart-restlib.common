@@ -146,6 +146,9 @@ class _PersistentSequenceBase<E> extends IterableBase<E> implements PersistentSe
   bool containsKey(final int key) =>
       (key >= 0) && (key < length);
   
+  bool containsValue(final E value) =>
+      contains(value);
+  
   E elementAt(final int index) {
     if(index >= 0 && index < length) {
       final List node = _arrayFor(index);

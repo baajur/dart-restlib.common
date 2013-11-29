@@ -52,6 +52,9 @@ abstract class _AbstractSequence<E> extends IterableBase<E> implements Sequence<
   Sequence<E> get reversed =>
       new _ReverseSequence(this);
   
+  bool containsValue(final E value) =>
+      contains(value);
+  
   Sequence<E> subSequence(int start, int length) =>
       new _SubSequence(this, start, length);
 }

@@ -8,4 +8,7 @@ class ForwardingDictionary<K,V> extends ForwardingIterable<Pair<K,V>> implements
   
   bool containsKey(final K key) =>
       (_delegate as Dictionary).containsKey(key);
+  
+  bool containsValue(V value) =>
+      (_delegate as Dictionary).containsValue(value);
 }

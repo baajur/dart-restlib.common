@@ -51,6 +51,7 @@ abstract class Associative<K,V> {
   Iterable<V> operator[](K key);
   
   bool containsKey(K key);
+  bool containsValue(V value);
 }
 
 abstract class BiMap<K,V> implements Dictionary<K,V> {  

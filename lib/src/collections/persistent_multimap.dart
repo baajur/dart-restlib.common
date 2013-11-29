@@ -50,6 +50,9 @@ abstract class _AbstractPersistentMultimap<K,V, I extends PersistentCollection<V
   bool containsKey(final K key) =>
       dictionary.containsKey(key);
   
+  // FIXME:
+  bool containsValue(final V value) => null;
+  
   PersistentMultimap<K,V,I> insertPair(final Pair<K,V> pair) =>
       insert(pair.fst, pair.snd);
   

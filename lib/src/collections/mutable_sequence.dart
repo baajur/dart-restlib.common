@@ -35,6 +35,9 @@ abstract class _AbstractMutableSequence<E> extends ForwardingIterable<E> impleme
   bool containsKey(final int key) =>
       (key >= 0) && (key < length);
   
+  bool containsValue(final E element) =>
+      _delegate.contains(element);
+  
   E elementAt(final int index) =>
       (index >= 0 && index < length) ?
         (_delegate as List)[index] :

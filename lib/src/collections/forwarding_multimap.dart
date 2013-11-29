@@ -11,5 +11,7 @@ class ForwardingMultimap<K,V,I extends Iterable<V>> extends ForwardingIterable<P
   
   bool containsKey(final K key) =>
       (_delegate as Multimap).containsKey(key);
-
+  
+  bool containsValue(final V value) =>
+      (_delegate as Multimap).containsValue(value);
 }

@@ -37,6 +37,9 @@ class _MutableDictionaryBase<K,V> extends IterableBase<Pair<K,V>> implements Mut
   bool containsKey(final K key) =>
       _delegate.containsKey(key);
   
+  bool containsValue(final V value) =>
+      _delegate.containsValue(value);
+  
   void insert(final K key, final V value) {
       this[key] = value;
   }
