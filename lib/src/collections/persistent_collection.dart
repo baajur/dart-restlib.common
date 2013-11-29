@@ -5,5 +5,5 @@ abstract class PersistentCollection<E> extends Iterable<E> {
   
   PersistentCollection<E> addAll(Iterable<E> elements);  
   
-  bool remove(E element);
+  PersistentCollection<E> remove(E element);
 }

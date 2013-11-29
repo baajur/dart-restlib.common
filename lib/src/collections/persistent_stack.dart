@@ -1,24 +1,30 @@
 part of restlib.common.collections;
 
-class PersistentStack<E> extends IterableBase<E> implements Stack<E> {  
-  static const PersistentStack EMPTY = const PersistentStack._empty();
+abstract class PersistentStack<E> implements Stack<E> {  
+  static const PersistentStack EMPTY = const _PersistentStackBase._empty();
   
   factory PersistentStack.from(final Iterable<E> src) =>
     src.fold(EMPTY, (final PersistentStack<E> retval, final E element) => 
           retval.push(element));
   
+  PersistentStack<E> get tail;    
+  
+  PersistentStack<E> push(E value);
+}
+
+class _PersistentStackBase<E> extends IterableBase<E> implements PersistentStack<E> {  
   final E _head;
   final E _last;
   final int length;
   final PersistentStack _tail;
       
-  PersistentStack._internal(final E head, final PersistentStack<E> tail):
+  _PersistentStackBase._internal(final E head, final PersistentStack<E> tail):
     this._head = checkNotNull(head),
     this._tail = checkNotNull(tail),
     this._last = (tail.isEmpty ? head : tail.last),
     this.length = 1 + tail.length;
   
-  const PersistentStack._empty() :
+  const _PersistentStackBase._empty() :
     this._head = null,
     this._last = null,
     this.length = 0,
@@ -60,7 +66,7 @@ class PersistentStack<E> extends IterableBase<E> implements Stack<E> {
   }
   
   PersistentStack<E> push(final E value) =>
-      new PersistentStack._internal(value, this);
+      new _PersistentStackBase._internal(value, this);
   
   String toString() =>
       "[${join(", ")}]";

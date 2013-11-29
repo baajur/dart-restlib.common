@@ -1,18 +1,20 @@
 part of restlib.common.collections;
 
-class PersistentSet<E> extends IterableBase<E> {
+abstract class PersistentSet<E> extends PersistentCollection<E> {
   static const PersistentSet EMPTY = 
-      const PersistentSet._internal(
+      const _PersistentSetBase._internal(
           PersistentDictionary.EMPTY);
   
   factory PersistentSet.from(Iterable<E> elements) =>
-    (elements is PersistentSet) ? elements :
-      elements.fold(EMPTY, (final PersistentSet<E> accumulator, final E element) => 
+    (elements is _PersistentSetBase) ? elements :
+      elements.fold(EMPTY, (final _PersistentSetBase<E> accumulator, final E element) => 
           accumulator.add(element));
+}
 
+class _PersistentSetBase<E> extends IterableBase<E> implements PersistentSet<E> {
   final PersistentDictionary<E,E> _map;
   
-  const PersistentSet._internal(this._map);
+  const _PersistentSetBase._internal(this._map);
   
   E get first =>
       _map.first.fst;
@@ -39,7 +41,7 @@ class PersistentSet<E> extends IterableBase<E> {
   bool operator==(other) {
     if (identical(this, other)) {
       return true;
-    } else if (other is PersistentSet) {
+    } else if (other is _PersistentSetBase) {
       return this._map == other._map;
     } else {
       return false;
@@ -47,8 +49,14 @@ class PersistentSet<E> extends IterableBase<E> {
   }
   
   PersistentSet<E> add(final E element) =>
-      new PersistentSet._internal(
+      new _PersistentSetBase._internal(
         _map.put(element, element));
+  
+  PersistentSet<E> addAll(Iterable<E> elements) =>
+      elements.fold(
+          this, 
+          (final PersistentSet<E> accumulator, final E element) => 
+              accumulator.add(element));
   
   bool contains(final E element) =>
       _map[element]
@@ -60,7 +68,7 @@ class PersistentSet<E> extends IterableBase<E> {
     final PersistentDictionary<E,E> newMap =
         _map.remove(element);
     return (newMap.isEmpty) ? 
-        EMPTY : new PersistentSet._internal(newMap);
+        PersistentSet.EMPTY : new _PersistentSetBase._internal(newMap);
   }
   
   String toString() =>
