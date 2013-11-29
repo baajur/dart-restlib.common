@@ -19,11 +19,11 @@ abstract class PersistentSequence<E> implements Sequence<E>, PersistentCollectio
   
   PersistentSequence<E> push(E value);
   
-  PersistentSequence<E> putAll(final Iterable<Pair<int, E>> other);
+  PersistentSequence<E> insertAll(final Iterable<Pair<int, E>> other);
   
-  PersistentSequence<E> put(final int key, final E value);
+  PersistentSequence<E> insert(final int key, final E value);
   
-  PersistentSequence<E> putPair(final Pair<int,E> pair);
+  PersistentSequence<E> insertPair(final Pair<int,E> pair);
   
   PersistentSequence<E> removeAt(final int key);
 }
@@ -155,7 +155,7 @@ class _PersistentSequenceBase<E> extends IterableBase<E> implements PersistentSe
   }       
   
   // assocN
-  PersistentSequence<E> put(final int index, final E element) {
+  PersistentSequence<E> insert(final int index, final E element) {
     checkNotNull(element);
     
     if (index >= 0 && index < length) {
@@ -172,13 +172,13 @@ class _PersistentSequenceBase<E> extends IterableBase<E> implements PersistentSe
     throw new RangeError.value(index);
   }
   
-  PersistentSequence<E> putPair(final Pair<int,E> pair) =>
-      put(pair.fst, pair.snd);
+  PersistentSequence<E> insertPair(final Pair<int,E> pair) =>
+      insert(pair.fst, pair.snd);
   
-  PersistentSequence<E> putAll(final Iterable<Pair<int, E>> pairs) =>
+  PersistentSequence<E> insertAll(final Iterable<Pair<int, E>> pairs) =>
       pairs.fold(this, 
           (final PersistentSequence<E> accumulator, final Pair<int, E> pair) => 
-              accumulator.put(pair.fst, pair.snd));
+              accumulator.insert(pair.fst, pair.snd));
  
   PersistentSequence<E> push(E element) =>
       add(element);

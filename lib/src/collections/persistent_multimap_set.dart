@@ -7,18 +7,18 @@ abstract class PersistentSetMultimap<K,V> extends IterableBase<Pair<K,V>> implem
   factory PersistentSetMultimap.fromMap(final Map<K,V> map) {    
     PersistentSetMultimap<K,V> retval = EMPTY;
     map.forEach((final K k, final V v) => 
-        retval = retval.put(k, v));
+        retval = retval.insert(k, v));
     return retval;
   }
   
   factory PersistentSetMultimap.fromPairs(final Iterable<Pair<K,V>> pairs) => 
-      (pairs is PersistentSetMultimap) ? pairs : EMPTY.putAll(pairs);
+      (pairs is PersistentSetMultimap) ? pairs : EMPTY.insertAll(pairs);
 
   PersistentDictionary<K, PersistentSet<V>> get dictionary;
   
-  PersistentSetMultimap<K,V> putAll(final Iterable<Pair<K, V>> other);
+  PersistentSetMultimap<K,V> insertAll(final Iterable<Pair<K, V>> other);
   
-  PersistentSetMultimap<K,V> put(final K key, final V value);
+  PersistentSetMultimap<K,V> insert(final K key, final V value);
   
   PersistentSetMultimap<K,V> removeAt(final K key);
 }
@@ -30,9 +30,9 @@ class _PersistentSetMultimapBase<K,V> extends _AbstractPersistentMultimap<K,V,Pe
   PersistentSet _emptyValueContainer() =>
       PersistentSet.EMPTY;
   
-  PersistentSetMultimap<K,V> put(final K key, final V value) =>
+  PersistentSetMultimap<K,V> insert(final K key, final V value) =>
       new _PersistentSetMultimapBase._internal(
-          dictionary.put(key, this[key].add(value)));
+          dictionary.insert(key, this[key].add(value)));
   
   PersistentSetMultimap<K,V> removeAt(final K key) =>
       new _PersistentSetMultimapBase._internal(

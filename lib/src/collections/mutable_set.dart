@@ -43,7 +43,7 @@ class _MutableDictionaryBackedSet<E> extends IterableBase<E> implements MutableS
       _map.single.fst;
   
   void add(final E element) =>
-      _map.put(element, element);
+      _map.insert(element, element);
   
   void addAll(final Iterable<E> elements) =>
       elements.forEach((final E element) => 

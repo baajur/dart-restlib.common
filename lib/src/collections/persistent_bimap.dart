@@ -5,7 +5,7 @@ abstract class PersistentBiMap<K,V> implements BiMap<K,V>, PersistentDictionary<
   
   factory PersistentBiMap.fromMap(final Map<K,V> map) {
     PersistentBiMap<K,V> result = EMPTY;
-    map.forEach((k,v) => result = result.put(k, v));
+    map.forEach((k,v) => result = result.insert(k, v));
     return result;
   }
   
@@ -17,15 +17,15 @@ abstract class PersistentBiMap<K,V> implements BiMap<K,V>, PersistentDictionary<
     } else { 
       return pairs.fold(EMPTY, 
           (final PersistentDictionary<K,V> previousValue, final Pair<K,V> element) 
-            => previousValue.put(element.fst, element.snd));
+            => previousValue.insert(element.fst, element.snd));
     }
   }
   
-  PersistentBiMap<K,V> putAll(final Iterable<Pair<K, V>> other);
+  PersistentBiMap<K,V> insertAll(final Iterable<Pair<K, V>> other);
   
-  PersistentBiMap<K,V> put(final K key, final V value);
+  PersistentBiMap<K,V> insert(final K key, final V value);
   
-  PersistentBiMap<K,V> putPair(final Pair<K,V> pair);
+  PersistentBiMap<K,V> insertPair(final Pair<K,V> pair);
   
   PersistentBiMap<K,V> removeAt(final K key);
   
@@ -64,7 +64,7 @@ class _PersistentBiMapBase<K,V> extends ForwardingDictionary<K,V> implements Per
   Option<V> operator[](final K key) => 
       (_delegate as Dictionary<K,V>)[key];
   
-  PersistentBiMap<K,V> put(final K key, final V value) {
+  PersistentBiMap<K,V> insert(final K key, final V value) {
     checkNotNull(key);
     checkNotNull(value);
     
@@ -74,26 +74,26 @@ class _PersistentBiMapBase<K,V> extends ForwardingDictionary<K,V> implements Per
     newInverse[value].map((final K key) => 
         newMap = newMap.removeAt(key));  
     
-    newInverse = newInverse.put(value, key);
-    newMap = newMap.put(key, value);
+    newInverse = newInverse.insert(value, key);
+    newMap = newMap.insert(key, value);
     
     return newMap == _delegate ? this : new _PersistentBiMapBase._internal(newMap, newInverse);
   }
   
-  PersistentBiMap<K, V> putAll(final Iterable<Pair<K,V>> pairs) =>
+  PersistentBiMap<K, V> insertAll(final Iterable<Pair<K,V>> pairs) =>
       pairs.fold(this, 
           (final PersistentBiMap<K,V> previousValue, final Pair<K,V> element) 
-            => previousValue.put(element.fst, element.snd));
+            => previousValue.insert(element.fst, element.snd));
   
   PersistentBiMap<K,V> putIfAbsent(final K key, final V value) =>
       this[key]
         .map((final V value) => 
             this)
         .orCompute(() => 
-            this.put(key, value));
+            this.insert(key, value));
  
-  PersistentBiMap<K,V> putPair(final Pair<K,V> pair) =>
-      put(pair.fst, pair.snd);
+  PersistentBiMap<K,V> insertPair(final Pair<K,V> pair) =>
+      insert(pair.fst, pair.snd);
   
   PersistentBiMap<K,V> removeAt(final K key) {
     checkNotNull(key);

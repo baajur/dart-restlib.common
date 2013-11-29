@@ -14,16 +14,16 @@ abstract class _AbstractMutableSequence<E> extends ForwardingIterable<E> impleme
           new Option((_delegate as List)[index]) : 
             Option.NONE;
   
-  void putAll(final Iterable<Pair<int, E>> other) =>
+  void insertAll(final Iterable<Pair<int, E>> other) =>
       other.forEach((final Pair<int, E> pair) => 
-          this.put(pair.fst, pair.snd));
+          this.insert(pair.fst, pair.snd));
   
-  void put(final int key, final E value) {
+  void insert(final int key, final E value) {
       this[key] = value;
   }
   
-  void putPair(final Pair<int, E> pair) =>
-      put(pair.fst, pair.snd);
+  void insertPair(final Pair<int, E> pair) =>
+      insert(pair.fst, pair.snd);
           
   void addAll(final Iterable<E> elements) =>
       elements.forEach((final E element) => 

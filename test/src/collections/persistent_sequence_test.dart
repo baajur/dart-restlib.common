@@ -108,7 +108,7 @@ persistentSequenceTests() {
       }
       
       for (int i = 0; i < 1000; i++) {
-        test = test.put(i, i);
+        test = test.insert(i, i);
       }
       
       for (int i = 0; i < 1000; i++) {
@@ -117,10 +117,10 @@ persistentSequenceTests() {
     });
     
     test("element at list.length element", () =>
-        expect(PersistentSequence.EMPTY.put(0, "a").elementAt(0), equals("a")));
+        expect(PersistentSequence.EMPTY.insert(0, "a").elementAt(0), equals("a")));
     
     test("element at invalid index", () => 
-        expect(() => PersistentSequence.EMPTY.put(100, "a"), throwsRangeError));
+        expect(() => PersistentSequence.EMPTY.insert(100, "a"), throwsRangeError));
   });
 
   group("toString()", () {

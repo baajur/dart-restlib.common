@@ -28,8 +28,8 @@ class _PersistentMultisetBase<E> extends IterableBase<E> implements PersistentMu
   PersistentMultiset<E> add(final E element) =>
       _delegate[element]
         .map((final int i) =>
-          new _PersistentMultisetBase(_delegate.put(element, i + 1)))
-        .orElse(new _PersistentMultisetBase(_delegate.put(element, 1)));
+          new _PersistentMultisetBase(_delegate.insert(element, i + 1)))
+        .orElse(new _PersistentMultisetBase(_delegate.insert(element, 1)));
   
   PersistentMultiset<E> addAll(final Iterable<E> elements) =>
       elements.fold(this, 
@@ -43,7 +43,7 @@ class _PersistentMultisetBase<E> extends IterableBase<E> implements PersistentMu
       _delegate[element]
         .map((final int i) =>
             (i > 1) ? 
-                new _PersistentMultisetBase(_delegate.put(element, i - 1)) : 
+                new _PersistentMultisetBase(_delegate.insert(element, i - 1)) : 
                   new _PersistentMultisetBase(_delegate.removeAt(element)))
         .orElse(this);
   

@@ -6,18 +6,18 @@ abstract class PersistentDictionary<K,V> implements Dictionary<K,V>, PersistentA
   factory PersistentDictionary.fromMap(final Map<K,V> map) {
     PersistentDictionary<K,V> result = EMPTY;
     map.forEach((final K k, final V v) => 
-        result = result.put(k, v));
+        result = result.insert(k, v));
     return result;
   }
   
   factory PersistentDictionary.fromPairs(final Iterable<Pair<K,V>> pairs) => 
-      (pairs is PersistentDictionary) ? pairs : EMPTY.putAll(pairs);
+      (pairs is PersistentDictionary) ? pairs : EMPTY.insertAll(pairs);
   
-  PersistentDictionary<K,V> putAll(final Iterable<Pair<K, V>> other);
+  PersistentDictionary<K,V> insertAll(final Iterable<Pair<K, V>> other);
   
-  PersistentDictionary<K,V> put(final K key, final V value);
+  PersistentDictionary<K,V> insert(final K key, final V value);
   
-  PersistentDictionary<K,V> putPair(final Pair<K,V> pair);
+  PersistentDictionary<K,V> insertPair(final Pair<K,V> pair);
   
   PersistentDictionary<K,V> removeAt(final K key);
   
@@ -78,7 +78,7 @@ class _PersistentDictionaryBase<K,V> extends IterableBase<Pair<K,V>> implements 
   bool containsKey(final K key) =>
       this[key] != Option.NONE;
   
-  PersistentDictionary<K,V> put(final K key, final V value) {
+  PersistentDictionary<K,V> insert(final K key, final V value) {
     checkNotNull(key);
     checkNotNull(value);
     
@@ -88,10 +88,10 @@ class _PersistentDictionaryBase<K,V> extends IterableBase<Pair<K,V>> implements 
       new _PersistentDictionaryBase._internal(length + 1, newroot);
   }
   
-  PersistentDictionary<K,V> putPair(final Pair<K,V> pair) =>
-      put(pair.fst, pair.snd);
+  PersistentDictionary<K,V> insertPair(final Pair<K,V> pair) =>
+      insert(pair.fst, pair.snd);
   
-  PersistentAssociative<K,V> putAll(final Iterable<Pair<K, V>> pairs) =>
+  PersistentAssociative<K,V> insertAll(final Iterable<Pair<K, V>> pairs) =>
       pairs.fold(this, (final PersistentDictionary accumulator, final Pair<K,V> element) => 
           accumulator.putIfAbsent(element.fst, element.snd));
   
@@ -100,7 +100,7 @@ class _PersistentDictionaryBase<K,V> extends IterableBase<Pair<K,V>> implements 
         .map((final V value) => 
             this)
         .orCompute(() => 
-            this.put(key, value));
+            this.insert(key, value));
   
   PersistentDictionary<K,V> removeAt(final K key) {
     checkNotNull(key);

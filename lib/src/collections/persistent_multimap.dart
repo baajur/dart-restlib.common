@@ -3,9 +3,9 @@ part of restlib.common.collections;
 abstract class PersistentMultimap<K,V, I extends Iterable<V>> implements Multimap<K,V,I>, PersistentAssociative<K,V> {
   PersistentDictionary<K, I> get dictionary;
   
-  PersistentMultimap<K,V,I> putAll(final Iterable<Pair<K, V>> other);
+  PersistentMultimap<K,V,I> insertAll(final Iterable<Pair<K, V>> other);
   
-  PersistentMultimap<K,V,I> put(final K key, final V value);
+  PersistentMultimap<K,V,I> insert(final K key, final V value);
   
   PersistentMultimap<K,V,I> removeAt(final K key);
 }
@@ -50,12 +50,12 @@ abstract class _AbstractPersistentMultimap<K,V, I extends PersistentCollection<V
   bool containsKey(final K key) =>
       dictionary.containsKey(key);
   
-  PersistentMultimap<K,V,I> putPair(final Pair<K,V> pair) =>
-      put(pair.fst, pair.snd);
+  PersistentMultimap<K,V,I> insertPair(final Pair<K,V> pair) =>
+      insert(pair.fst, pair.snd);
   
-  PersistentMultimap<K,V,I> putAll(final Iterable<Pair<K,V>> pairs) =>
+  PersistentMultimap<K,V,I> insertAll(final Iterable<Pair<K,V>> pairs) =>
       pairs.fold(this, (final PersistentMultimap<K,V,I> accumulator, final Pair<K,V> pair) =>
-          accumulator.putPair(pair));
+          accumulator.insertPair(pair));
   
   String toString() => 
       dictionary.toString();

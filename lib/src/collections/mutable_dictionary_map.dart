@@ -21,7 +21,7 @@ class _MutableDictionaryBase<K,V> extends IterableBase<Pair<K,V>> implements Mut
       _delegate[checkNotNull(key)] = checkNotNull(value);
   }
   
-  void putAll(final Iterable<Pair<K, V>> other) =>
+  void insertAll(final Iterable<Pair<K, V>> other) =>
       other.forEach((final Pair<K,V> pair) =>
           _delegate[pair.fst] = pair.snd);
   
@@ -34,12 +34,12 @@ class _MutableDictionaryBase<K,V> extends IterableBase<Pair<K,V>> implements Mut
   bool containsKey(final K key) =>
       _delegate.containsKey(key);
   
-  void put(final K key, final V value) {
+  void insert(final K key, final V value) {
       this[key] = value;
   }
   
-  void putPair(final Pair<K,V> pair) =>
-      put(pair.fst, pair.snd);
+  void insertPair(final Pair<K,V> pair) =>
+      insert(pair.fst, pair.snd);
   
   Option<V> removeAt(final K key) {
     if (containsKey(key)) {

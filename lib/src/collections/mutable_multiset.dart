@@ -25,9 +25,9 @@ class _MutableMultisetBase<E> extends IterableBase<E> implements MutableMultiset
   void add(final E element) =>
       _delegate[element]
         .map((final int i) {
-          _delegate.put(element, i + 1);
+          _delegate.insert(element, i + 1);
         }).orCompute(() {
-          _delegate.put(element, 1);
+          _delegate.insert(element, 1);
         });
   
   void addAll(final Iterable<E> elements) =>
@@ -41,7 +41,7 @@ class _MutableMultisetBase<E> extends IterableBase<E> implements MutableMultiset
       _delegate[element]
         .map((final int i) {
           if (i > 1) {
-            _delegate.put(element, i - 1);
+            _delegate.insert(element, i - 1);
           } else {
             _delegate.take(element);
           }

@@ -54,7 +54,7 @@ class _PersistentSetBase<E> extends IterableBase<E> implements PersistentSet<E> 
   
   PersistentSet<E> add(final E element) =>
       new _PersistentSetBase._internal(
-        _map.put(element, element));
+        _map.insert(element, element));
   
   PersistentSet<E> addAll(Iterable<E> elements) =>
       elements.fold(

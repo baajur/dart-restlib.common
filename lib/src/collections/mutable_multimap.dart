@@ -30,32 +30,32 @@ abstract class _AbstractMutableMultimap<K,V, I extends MutableCollection<V>> ext
         .map((final I container) => container)
         .orCompute(() {
           final I value = _newValueContainer();
-          _delegate.put(key, value);
+          _delegate.insert(key, value);
           return value;
         });
   
   void operator[]=(final K key, final V value) =>
-      put(key, value);
+      insert(key, value);
   
   I _newValueContainer();
   
   bool containsKey(final K key) =>
       _delegate.containsKey(key);
   
-  void put(final K key, final V value) => 
-      _delegate.put(key, 
+  void insert(final K key, final V value) => 
+      _delegate.insert(key, 
           _delegate[key]
             .map((final I container) => 
                 container.add(value))
             .orCompute(() =>  
                 _newValueContainer().add(value)));
   
-  void putAll(final Iterable<Pair<K, V>> pairs) =>
+  void insertAll(final Iterable<Pair<K, V>> pairs) =>
       pairs.forEach((final Pair<K, V> pair) => 
-          put(pair.fst, pair.snd));
+          insert(pair.fst, pair.snd));
   
-  void putPair(final Pair<K,V> pair) =>
-      put(pair.fst, pair.snd);
+  void insertPair(final Pair<K,V> pair) =>
+      insert(pair.fst, pair.snd);
   
   I removeAt(final K key) =>
       _delegate.removeAt(key);

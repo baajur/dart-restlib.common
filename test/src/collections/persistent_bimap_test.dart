@@ -3,10 +3,10 @@ part of restlib.common.collections_test;
 persistentBiMapTests() {
   test("", (){
     print(PersistentBiMap.EMPTY
-      .put("a", "b")
-      .put("b", "b")
-      .put("c", "b")
-      .put("c", "a"));
+      .insert("a", "b")
+      .insert("b", "b")
+      .insert("c", "b")
+      .insert("c", "a"));
     
   });
 }
