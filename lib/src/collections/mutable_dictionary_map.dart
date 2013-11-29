@@ -11,6 +11,9 @@ class _MutableDictionaryBase<K,V> extends IterableBase<Pair<K,V>> implements Mut
   Iterator<Pair<K,V>> get iterator =>
       new _MapIterator(_delegate);
   
+  Iterable<K> get keys =>
+      _delegate.keys;
+  
   int get length => 
       _delegate.length;
   
