@@ -9,6 +9,10 @@ abstract class PersistentSet<E> extends PersistentCollection<E> {
     (elements is _PersistentSetBase) ? elements :
       elements.fold(EMPTY, (final _PersistentSetBase<E> accumulator, final E element) => 
           accumulator.add(element));
+  
+  PersistentSet<E> add(E value);
+  PersistentSet<E> addAll(Iterable<E> elements);
+  PersistentSet<E> remove(E element);
 }
 
 class _PersistentSetBase<E> extends IterableBase<E> implements PersistentSet<E> {
@@ -66,7 +70,7 @@ class _PersistentSetBase<E> extends IterableBase<E> implements PersistentSet<E> 
   
   PersistentSet<E> remove(final E element) {
     final PersistentDictionary<E,E> newMap =
-        _map.remove(element);
+        _map.removeKey(element);
     return (newMap.isEmpty) ? 
         PersistentSet.EMPTY : new _PersistentSetBase._internal(newMap);
   }

@@ -1,7 +1,7 @@
 part of restlib.common.collections;
 
-class PersistentDictionary<K,V> extends IterableBase<Pair<K,V>> implements Dictionary<K,V> {
-  static const PersistentDictionary EMPTY = const PersistentDictionary._internal(0, null);
+abstract class PersistentDictionary<K,V> implements Dictionary<K,V>, PersistentAssociative<K,V> {
+  static const PersistentDictionary EMPTY = const _PersistentDictionaryBase._internal(0, null);
   
   factory PersistentDictionary.fromMap(final Map<K,V> map) {
     PersistentDictionary<K,V> result = EMPTY;
@@ -11,14 +11,25 @@ class PersistentDictionary<K,V> extends IterableBase<Pair<K,V>> implements Dicti
   }
   
   factory PersistentDictionary.fromPairs(final Iterable<Pair<K,V>> pairs) => 
-      (pairs is PersistentDictionary) ? pairs : 
-        pairs.fold(EMPTY, (final PersistentDictionary accumulator, final Pair<K,V> element) => 
-            accumulator.putIfAbsent(element.fst, element.snd));
+      (pairs is PersistentDictionary) ? pairs : EMPTY.putAll(pairs);
   
+  PersistentDictionary<K,V> putAll(final Iterable<Pair<K, V>> other);
+  
+  PersistentDictionary<K,V> put(final K key, final V value);
+  
+  PersistentDictionary<K,V> putPair(final Pair<K,V> pair);
+  
+  PersistentDictionary<K,V> removeKey(final K key);
+  
+  PersistentDictionary<K,V> putIfAbsent(final K key, final V value);
+}
+
+class _PersistentDictionaryBase<K,V> extends IterableBase<Pair<K,V>> implements PersistentDictionary<K,V> {
+
   final int length;
   final _INode _root;
   
-  const PersistentDictionary._internal(this.length, this._root);
+  const _PersistentDictionaryBase._internal(this.length, this._root);
   
   // FIXME: Would be better to compute on object creation
   int get hashCode =>
@@ -74,8 +85,15 @@ class PersistentDictionary<K,V> extends IterableBase<Pair<K,V>> implements Dicti
     final _INode newroot = firstNotNull(_root, _BitmapIndexedNode.EMPTY).assoc(0, key.hashCode, key, value);
     
     return (identical(newroot, _root)) ? this :
-      new PersistentDictionary._internal(length + 1, newroot);
+      new _PersistentDictionaryBase._internal(length + 1, newroot);
   }
+  
+  PersistentDictionary<K,V> putPair(final Pair<K,V> pair) =>
+      put(pair.fst, pair.snd);
+  
+  PersistentAssociative<K,V> putAll(final Iterable<Pair<K, V>> pairs) =>
+      pairs.fold(this, (final PersistentDictionary accumulator, final Pair<K,V> element) => 
+          accumulator.putIfAbsent(element.fst, element.snd));
   
   PersistentDictionary<K,V> putIfAbsent(final K key, final V value) =>
       this[key]
@@ -84,14 +102,14 @@ class PersistentDictionary<K,V> extends IterableBase<Pair<K,V>> implements Dicti
         .orCompute(() => 
             this.put(key, value));
   
-  PersistentDictionary<K,V> remove(final K key) {
+  PersistentDictionary<K,V> removeKey(final K key) {
     checkNotNull(key);
     
     if (isNull(_root)) {
       return this;
     } else { 
       final _INode newroot = _root.without(0, key.hashCode, key);
-      return identical(newroot, _root) ? this : new PersistentDictionary._internal(length - 1, newroot); 
+      return identical(newroot, _root) ? this : new _PersistentDictionaryBase._internal(length - 1, newroot); 
     }
   }
   

@@ -1,6 +1,6 @@
 part of restlib.common.collections;
 
-abstract class PersistentSequence<E> implements Sequence<E>, PersistentCollection<E>, Stack<E> {
+abstract class PersistentSequence<E> implements Sequence<E>, PersistentCollection<E>, PersistentStack<E>, PersistentAssociative<int, E> {
   static const PersistentSequence EMPTY = _PersistentSequenceBase.EMPTY;
   
   factory PersistentSequence.from(final Iterable<E> elements) =>
@@ -14,6 +14,18 @@ abstract class PersistentSequence<E> implements Sequence<E>, PersistentCollectio
   PersistentSequence<E> addAll(Iterable<E> elements);  
   
   PersistentSequence<E> remove(E element);
+  
+  PersistentSequence<E> get tail;    
+  
+  PersistentSequence<E> push(E value);
+  
+  PersistentSequence<E> putAll(final Iterable<Pair<int, E>> other);
+  
+  PersistentSequence<E> put(final int key, final E value);
+  
+  PersistentSequence<E> putPair(final Pair<int,E> pair);
+  
+  PersistentSequence<E> removeKey(final int key);
 }
 
 class _PersistentSequenceBase<E> extends IterableBase<E> implements PersistentSequence<E> {
@@ -55,7 +67,7 @@ class _PersistentSequenceBase<E> extends IterableBase<E> implements PersistentSe
       (length == 1) ? elementAt(0) : throw new StateError("List has $length elements");
   
   // pop
-  _PersistentSequenceBase<E> get tail {
+  PersistentSequence<E> get tail {
     if (length == 0) {
       throw new StateError("Empty list does not have a tail.");
     } else if (length == 1) {
@@ -97,7 +109,7 @@ class _PersistentSequenceBase<E> extends IterableBase<E> implements PersistentSe
   }
   
   // cons
-  _PersistentSequenceBase<E> add(final E element) {
+  PersistentSequence<E> add(final E element) {
     checkNotNull(element);
     
     // room in tail?
@@ -127,7 +139,7 @@ class _PersistentSequenceBase<E> extends IterableBase<E> implements PersistentSe
     }
   }
   
-  _PersistentSequenceBase<E> addAll(final Iterable<E> elements) =>
+  PersistentSequence<E> addAll(final Iterable<E> elements) =>
       elements.fold(this, (final _PersistentSequenceBase<E> accumulator, final E element) => 
           accumulator.add(element));
   
@@ -143,7 +155,7 @@ class _PersistentSequenceBase<E> extends IterableBase<E> implements PersistentSe
   }       
   
   // assocN
-  _PersistentSequenceBase<E> insert(final int index, final E element) {
+  PersistentSequence<E> put(final int index, final E element) {
     checkNotNull(element);
     
     if (index >= 0 && index < length) {
@@ -160,8 +172,24 @@ class _PersistentSequenceBase<E> extends IterableBase<E> implements PersistentSe
     throw new RangeError.value(index);
   }
   
+  PersistentSequence<E> putPair(final Pair<int,E> pair) =>
+      put(pair.fst, pair.snd);
+  
+  PersistentSequence<E> putAll(final Iterable<Pair<int, E>> pairs) =>
+      pairs.fold(this, 
+          (final PersistentSequence<E> accumulator, final Pair<int, E> pair) => 
+              accumulator.put(pair.fst, pair.snd));
+ 
+  PersistentSequence<E> push(E element) =>
+      add(element);
+  
   // FIXME:
   PersistentSequence<E> remove(E element) => null;
+  
+  PersistentSequence<E> removeKey(final int key) {
+    // FIXME:
+    return this;
+  }
   
   Sequence subSequence(int start, int length) =>
       new _SubSequence(this, start, length);

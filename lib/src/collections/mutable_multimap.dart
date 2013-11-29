@@ -54,6 +54,9 @@ abstract class _AbstractMutableMultimap<K,V, I extends MutableCollection<V>> ext
       pairs.forEach((final Pair<K, V> pair) => 
           put(pair.fst, pair.snd));
   
+  void putPair(final Pair<K,V> pair) =>
+      put(pair.fst, pair.snd);
+  
   I removeKey(final K key) =>
       _delegate.removeKey(key);
   

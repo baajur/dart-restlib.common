@@ -46,6 +46,9 @@ class _MutableBiMapBase<K,V> extends ForwardingDictionary<K,V> implements Mutabl
     _inverse.put(value, key);
     (_delegate as MutableDictionary<K,V>).put(key, value);
   }
+  
+  void putPair(final Pair<K,V> pair) =>
+      put(pair.fst, pair.snd);
  
   Option<V> removeKey(final K key) {
     checkNotNull(key);

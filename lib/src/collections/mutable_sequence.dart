@@ -21,6 +21,9 @@ abstract class _AbstractMutableSequence<E> extends ForwardingIterable<E> impleme
   void put(final int key, final E value) {
       this[key] = value;
   }
+  
+  void putPair(final Pair<int, E> pair) =>
+      put(pair.fst, pair.snd);
           
   void addAll(final Iterable<E> elements) =>
       elements.forEach((final E element) => 
