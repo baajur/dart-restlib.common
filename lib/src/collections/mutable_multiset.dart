@@ -7,7 +7,7 @@ abstract class MutableMultiset<E> implements Multiset<E>, MutableCollection<E> {
   factory MutableMultiset.splayTree() =>
       new _MutableMultisetBase(new MutableDictionary.splayTree());
   
-  bool removeAll(final E element);
+  Iterable<E> removeAll(final E element);
 }
 
 class _MutableMultisetBase<E> extends IterableBase<E> implements MutableMultiset<E> {
@@ -37,18 +37,21 @@ class _MutableMultisetBase<E> extends IterableBase<E> implements MutableMultiset
   bool contains(final E element) =>
       _delegate.containsKey(element);
       
-  bool remove (final E element) => 
+  Option<E> remove (final E element) => 
       _delegate[element]
         .map((final int i) {
           if (i > 1) {
             _delegate.put(element, i - 1);
           } else {
-            _delegate.remove(element);
+            _delegate.take(element);
           }
-          return true;
-        }).orElse(false);
+          return new Option(element);
+        }).orElse(Option.NONE);
   
-  
-  bool removeAll(final E element) =>
-      _delegate.remove(element);
+  Iterable<E> removeAll(final E element) {
+    _delegate[element]
+      .map((final int i) => 
+          new List.filled(i, element))
+      .orElse(EMPTY_LIST);
+  }
 }

@@ -1,6 +1,6 @@
 part of restlib.common.collections;
 
-abstract class MutableSequenceMultimap<K, V> implements MutableMultimap<K, V, GrowableSequence<V>> {
+abstract class MutableSequenceMultimap<K, V> implements MutableMultimap<K, V, GrowableSequence<V>>, SequenceMultimap<K,V,GrowableSequence<V>> {
   factory MutableSequenceMultimap.hash() =>
       new _MutableSequenceMultimapBase(new MutableDictionary.hash());
   

@@ -1,6 +1,6 @@
 part of restlib.common.collections;
 
-class PersistentListMultimap<K,V> extends IterableBase<Pair<K,V>> implements Multimap<K,V> {
+class PersistentListMultimap<K,V> extends IterableBase<Pair<K,V>> implements Multimap<K,V, PersistentSequence<V>> {
   static const PersistentListMultimap EMPTY = 
       const PersistentListMultimap._internal(PersistentDictionary.EMPTY);
   
@@ -70,7 +70,7 @@ class PersistentListMultimap<K,V> extends IterableBase<Pair<K,V>> implements Mul
       dictionary.toString();
 }
 
-class PersistentSetMultimap<K,V> extends IterableBase<Pair<K,V>> implements Multimap<K,V> {
+class PersistentSetMultimap<K,V> extends IterableBase<Pair<K,V>> implements Multimap<K,V, PersistentSet<V>> {
   static const PersistentSetMultimap EMPTY = 
       const PersistentSetMultimap._internal(PersistentDictionary.EMPTY);
   

@@ -87,7 +87,7 @@ class _MutableFixedSizeSequenceBase<E> extends _AbstractMutableSequence<E> imple
     }
   }
   
-  bool remove(E element) {
+  Option<E> remove(E element) {
     final int indexOfE = (_delegate as List).indexOf(E);
     
     if(indexOfE > -1) {
@@ -96,13 +96,13 @@ class _MutableFixedSizeSequenceBase<E> extends _AbstractMutableSequence<E> imple
       for(int i = indexOfE; i < (_delegate.length - 1); i++) {
         (_delegate as List)[i] = (_delegate as List)[i + 1];
       }
-      return true;
+      return new Option(element);
     } 
     
-    return false;
+    return Option.NONE;
   }
   
-  E removeAt(int index) {
+  E removeKey(int index) {
     checkArgument(index > 0);
     
     if (index < _length) {

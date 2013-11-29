@@ -21,10 +21,11 @@ class _GrowableSequenceBase<E> extends _AbstractMutableSequence<E> implements Gr
   void add(final E element) =>
       (_delegate as List).add(checkNotNull(element));
   
-  bool remove(E element) =>
-      (_delegate as List).remove(element);
+  Option<E> remove(E element) =>
+      (_delegate as List).remove(element) ?
+          new Option(element) : Option.NONE;
   
-  Option<E> removeAt(int index) {
+  Option<E> removeKey(int index) {
     checkArgument(index > 0);
     
     if (index < length) {

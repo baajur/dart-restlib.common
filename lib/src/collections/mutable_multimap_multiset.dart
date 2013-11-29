@@ -1,6 +1,6 @@
 part of restlib.common.collections;
 
-abstract class MutableMultisetMultimap<K, V> implements MutableMultimap<K, V, MutableMultiset<V>> {
+abstract class MutableMultisetMultimap<K, V> implements MutableMultimap<K, V, MutableMultiset<V>>, MultisetMultimap<K, V, MutableMultiset<V>> {
   factory MutableMultisetMultimap.hashMultisetHashDictionary() => 
       new _MutableHashMultisetMultimapBase(new MutableDictionary.hash());
   

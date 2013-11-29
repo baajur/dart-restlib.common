@@ -38,8 +38,15 @@ class _MutableDictionaryBase<K,V> extends IterableBase<Pair<K,V>> implements Mut
       this[key] = value;
   }
   
-  bool remove(final K key) =>
+  Option<V> removeKey(final K key) {
+    if (containsKey(key)) {
+      final Option<V> retval = this[key];
       _delegate.remove(checkNotNull(key));
+      return retval;
+    } else {
+      return Option.NONE;
+    }
+  }
   
   String toString() => 
       _delegate.toString();

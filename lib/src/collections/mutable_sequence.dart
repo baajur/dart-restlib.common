@@ -1,11 +1,6 @@
 part of restlib.common.collections;
 
-abstract class MutableSequence<E> implements Sequence<E>, MutableCollection<E> {    
-  void operator[]=(int index, E element);
-  
-  void insert(int index, E element);
-  
-  Option<E> removeAt(int index);
+abstract class MutableSequence<E> implements Sequence<E>, MutableCollection<E>, MutableAssociative<int, E> {      
 }
 
 abstract class _AbstractMutableSequence<E> extends ForwardingIterable<E> implements MutableSequence<E> {
@@ -18,6 +13,14 @@ abstract class _AbstractMutableSequence<E> extends ForwardingIterable<E> impleme
       (index >= 0 && index < length) ? 
           new Option((_delegate as List)[index]) : 
             Option.NONE;
+  
+  void putAll(final Iterable<Pair<int, E>> other) =>
+      other.forEach((final Pair<int, E> pair) => 
+          this.put(pair.fst, pair.snd));
+  
+  void put(final int key, final E value) {
+      this[key] = value;
+  }
           
   void addAll(final Iterable<E> elements) =>
       elements.forEach((final E element) => 
@@ -29,11 +32,7 @@ abstract class _AbstractMutableSequence<E> extends ForwardingIterable<E> impleme
   E elementAt(final int index) =>
       (index >= 0 && index < length) ?
         (_delegate as List)[index] :
-          throw new RangeError.range(index, 0, length - 1);
-          
-  void insert(final int index, final E element) {
-    this[index] = element;
-  }        
+          throw new RangeError.range(index, 0, length - 1);   
   
   Sequence<E> subSequence(int start, int length) =>
       new _SubSequence(this, start, length);

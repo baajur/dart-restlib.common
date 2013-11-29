@@ -1,7 +1,7 @@
 part of restlib.common.collections;
 
-class ForwardingMultimap<K,V> extends ForwardingIterable<Pair<K,V>> implements Multimap<K,V> {
-  const ForwardingMultimap(final Multimap<K,V> delegate) : super(delegate);
+class ForwardingMultimap<K,V,I extends Iterable<V>> extends ForwardingIterable<Pair<K,V>> implements Multimap<K,V,I> {
+  const ForwardingMultimap(final Multimap<K,V,I> delegate) : super(delegate);
   
   Dictionary<K, Iterable<V>> get dictionary => 
       (_delegate as Multimap).dictionary;

@@ -5,5 +5,5 @@ abstract class MutableCollection<E> extends Iterable<E> {
   
   void addAll(Iterable<E> elements);  
   
-  bool remove(E element);
+  Option<E> remove(E element);
 }

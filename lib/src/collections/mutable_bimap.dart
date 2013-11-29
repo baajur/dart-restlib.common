@@ -41,18 +41,18 @@ class _MutableBiMapBase<K,V> extends ForwardingDictionary<K,V> implements Mutabl
     checkNotNull(value);
     
     _inverse[value].map((final K key) => 
-        (_delegate as MutableDictionary<K,V>).remove(key));  
+        (_delegate as MutableDictionary<K,V>).take(key));  
     
     _inverse.put(value, key);
     (_delegate as MutableDictionary<K,V>).put(key, value);
   }
  
-  bool remove(final K key) {
+  Option<V> removeKey(final K key) {
     checkNotNull(key);
     
     (_delegate as MutableDictionary<K,V>)[key]
       .map((final V value) => 
-          _inverse.remove(value));
-    (_delegate as MutableDictionary<K,V>).remove(key);
+          _inverse.removeKey(value));
+    (_delegate as MutableDictionary<K,V>).removeKey(key);
   }
 }

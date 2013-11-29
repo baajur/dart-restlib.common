@@ -1,15 +1,11 @@
 part of restlib.common.collections;
 
-abstract class MutableMultimap<K, V, I extends MutableCollection<V>> implements Multimap<K, V> {
+abstract class MutableMultimap<K, V, I extends MutableCollection<V>> implements Multimap<K, V, I>, MutableAssociative<K,V> {
   MutableDictionary<K, I> get dictionary;
   
   I operator[](final K key);
   
-  void put(final K key, final V value);
-  
-  void putAll(final Iterable<Pair<K, V>> other);
-  
-  bool remove(final K key);
+  I removeKey(K key);
 }
 
 abstract class _AbstractMutableMultimap<K,V, I extends MutableCollection<V>> extends IterableBase<Pair<K,V>> implements MutableMultimap<K,V, I> {
@@ -38,6 +34,9 @@ abstract class _AbstractMutableMultimap<K,V, I extends MutableCollection<V>> ext
           return value;
         });
   
+  void operator[]=(final K key, final V value) =>
+      put(key, value);
+  
   I _newValueContainer();
   
   bool containsKey(final K key) =>
@@ -55,8 +54,8 @@ abstract class _AbstractMutableMultimap<K,V, I extends MutableCollection<V>> ext
       pairs.forEach((final Pair<K, V> pair) => 
           put(pair.fst, pair.snd));
   
-  bool remove(final K key) =>
-      _delegate.remove(key);
+  I removeKey(final K key) =>
+      _delegate.removeKey(key);
   
   String toString() => 
       _delegate.toString();

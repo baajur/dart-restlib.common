@@ -15,6 +15,7 @@ part "src/collections/forwarding_multiset.dart";
 part "src/collections/forwarding_sequence.dart";
 part "src/collections/forwarding_stack.dart";
 part "src/collections/iterables.dart";
+part "src/collections/mutable_associative.dart";
 part "src/collections/mutable_bimap.dart";
 part "src/collections/mutable_collection.dart";
 part "src/collections/mutable_dictionary.dart";
@@ -30,6 +31,7 @@ part "src/collections/mutable_sequence_growable.dart";
 part "src/collections/mutable_set.dart";
 part "src/collections/option.dart";
 part "src/collections/pair.dart";
+part "src/collections/persistent_associative.dart";
 part "src/collections/persistent_bimap.dart";
 part "src/collections/persistent_collection.dart";
 part "src/collections/persistent_dictionary.dart";
@@ -56,8 +58,16 @@ abstract class Dictionary<K,V> implements Associative<K,V>, Iterable<Pair<K,V>>{
   Option<V> operator[](K key);
 }
 
-abstract class Multimap<K,V> implements Associative<K,V>, Iterable<Pair<K,V>> {  
-  Dictionary<K, Iterable<V>> get dictionary;
+abstract class Multimap<K,V, I extends Iterable<V>> implements Associative<K,V>, Iterable<Pair<K,V>> {  
+  Dictionary<K, I> get dictionary;
+}
+
+abstract class SequenceMultimap<K,V, I extends Sequence<V>> extends Multimap<K,V,I> {
+  
+}
+
+abstract class MultisetMultimap<K,V, I extends Multiset<V>> extends Multimap<K,V,I> {
+  
 }
 
 abstract class Multiset<E> implements Iterable<E> {
