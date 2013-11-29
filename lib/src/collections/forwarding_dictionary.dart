@@ -5,4 +5,7 @@ class ForwardingDictionary<K,V> extends ForwardingIterable<Pair<K,V>> implements
   
   Option<V> operator[](final K key) => 
       (_delegate as Dictionary)[key];
+  
+  bool containsKey(final K key) =>
+      (_delegate as Dictionary).containsKey(key);
 }

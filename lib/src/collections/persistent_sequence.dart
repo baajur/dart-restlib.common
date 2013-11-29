@@ -1,18 +1,18 @@
 part of restlib.common.collections;
 
-class PersistentList<E> extends IterableBase<E> implements Sequence<E>, Stack<E> {
+class PersistentSequence<E> extends IterableBase<E> implements Sequence<E>, Stack<E> {
   static const _EMPTY_LIST_32 = 
       const [null, null, null, null, null, null, null, null,
              null, null, null, null, null, null, null, null,
              null, null, null, null, null, null, null, null,
              null, null, null, null, null, null, null, null];
   
-  static const PersistentList EMPTY = const PersistentList._internal(0, 5, _EMPTY_LIST_32, EMPTY_LIST);
+  static const PersistentSequence EMPTY = const PersistentSequence._internal(0, 5, _EMPTY_LIST_32, EMPTY_LIST);
   
-  factory PersistentList.from(final Iterable<E> elements) =>
-    (elements is PersistentList) ? elements :
+  factory PersistentSequence.from(final Iterable<E> elements) =>
+    (elements is PersistentSequence) ? elements :
       elements.fold(EMPTY,
-          (final PersistentList<E> accumulator, final E element) => 
+          (final PersistentSequence<E> accumulator, final E element) => 
               accumulator.add(element));
   
   final int length;
@@ -20,7 +20,7 @@ class PersistentList<E> extends IterableBase<E> implements Sequence<E>, Stack<E>
   final List _root;
   final List _tail;
   
-  const PersistentList._internal(this.length, this._shift, this._root, this._tail);
+  const PersistentSequence._internal(this.length, this._shift, this._root, this._tail);
   
   E get first =>
       isEmpty ? throw new StateError("List is empty") : this.elementAt(0);
@@ -45,14 +45,14 @@ class PersistentList<E> extends IterableBase<E> implements Sequence<E>, Stack<E>
       (length == 1) ? elementAt(0) : throw new StateError("List has $length elements");
   
   // pop
-  PersistentList<E> get tail {
+  PersistentSequence<E> get tail {
     if (length == 0) {
       throw new StateError("Empty list does not have a tail.");
     } else if (length == 1) {
       return EMPTY;
     } else if (length - _tailoff() > 1) {
       final List newTail = new List(_tail.length - 1)..setAll(0, _tail.sublist(0, _tail.length - 1));
-      return new PersistentList._internal(length - 1, _shift, _root, newTail);
+      return new PersistentSequence._internal(length - 1, _shift, _root, newTail);
     } else {
       final List newtail = _arrayFor(length - 2);
       List newroot = firstNotNull(_popTail(_shift, _root), EMPTY_LIST);
@@ -63,14 +63,14 @@ class PersistentList<E> extends IterableBase<E> implements Sequence<E>, Stack<E>
         newshift -= 5;
       }
     
-      return new PersistentList._internal(length - 1, newshift, newroot, newtail);
+      return new PersistentSequence._internal(length - 1, newshift, newroot, newtail);
     }
   }
   
   bool operator==(other) {
     if (identical(this, other)) {
       return true;
-    } else if (other is PersistentList) {
+    } else if (other is PersistentSequence) {
       return equal(this, other);
     } else {
       return false;
@@ -87,7 +87,7 @@ class PersistentList<E> extends IterableBase<E> implements Sequence<E>, Stack<E>
   }
   
   // cons
-  PersistentList<E> add(final E element) {
+  PersistentSequence<E> add(final E element) {
     checkNotNull(element);
     
     // room in tail?
@@ -96,7 +96,7 @@ class PersistentList<E> extends IterableBase<E> implements Sequence<E>, Stack<E>
           new List(_tail.length + 1)
             ..setAll(0, _tail)
             ..[_tail.length] = element;
-      return new PersistentList._internal(length + 1, _shift, _root, newTail);
+      return new PersistentSequence._internal(length + 1, _shift, _root, newTail);
     } else {
       //full tail, push into tree
       List newroot;
@@ -113,13 +113,16 @@ class PersistentList<E> extends IterableBase<E> implements Sequence<E>, Stack<E>
       } else {
         newroot = _pushTail(_shift, _root, tailnode);
       }
-      return new PersistentList._internal(length + 1, newshift, newroot, new List(1)..[0] = element);
+      return new PersistentSequence._internal(length + 1, newshift, newroot, new List(1)..[0] = element);
     }
   }
   
-  PersistentList<E> addAll(final Iterable<E> elements) =>
-      elements.fold(this, (final PersistentList<E> accumulator, final E element) => 
+  PersistentSequence<E> addAll(final Iterable<E> elements) =>
+      elements.fold(this, (final PersistentSequence<E> accumulator, final E element) => 
           accumulator.add(element));
+  
+  bool containsKey(final int key) =>
+      (key >= 0) && (key < length);
   
   E elementAt(final int index) {
     if(index >= 0 && index < length) {
@@ -130,15 +133,15 @@ class PersistentList<E> extends IterableBase<E> implements Sequence<E>, Stack<E>
   }       
   
   // assocN
-  PersistentList<E> insert(final int index, final E element) {
+  PersistentSequence<E> insert(final int index, final E element) {
     checkNotNull(element);
     
     if (index >= 0 && index < length) {
       if (index >= _tailoff()) {
         final List newTail = new List(_tail.length)..setAll(0, _tail)..[index & 0x01f] = element;
-        return new PersistentList._internal(length, _shift, _root, newTail);
+        return new PersistentSequence._internal(length, _shift, _root, newTail);
       } else {
-        return new PersistentList._internal(length, _shift, _doInsert(_shift, _root, index, element), _tail);
+        return new PersistentSequence._internal(length, _shift, _doInsert(_shift, _root, index, element), _tail);
       }
     } else if(index == length) {
       return add(element);
@@ -146,6 +149,9 @@ class PersistentList<E> extends IterableBase<E> implements Sequence<E>, Stack<E>
     
     throw new RangeError.value(index);
   }
+  
+  Sequence subSequence(int start, int length) =>
+      new _SubSequence(this, start, length);
   
   String toString() =>
       "[${join(", ")}]";

@@ -54,7 +54,7 @@ class Option<E> implements Iterable<E> {
   }
   
   bool every(bool f(E element)) => 
-      (_value == null) ? false : f(_value);
+      (_value == null) ? true : f(_value);
   
   Iterable expand(Iterable f(E element)) => 
       (_value == null) ? Option.NONE : f(_value);

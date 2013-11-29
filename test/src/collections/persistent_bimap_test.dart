@@ -1,8 +1,8 @@
 part of restlib.common.collections_test;
 
-persistentHashBiMapTests() {
+persistentBiMapTests() {
   test("", (){
-    print(PersistentHashBiMap.EMPTY
+    print(PersistentBiMap.EMPTY
       .put("a", "b")
       .put("b", "b")
       .put("c", "b")

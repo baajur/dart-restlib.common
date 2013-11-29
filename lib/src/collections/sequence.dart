@@ -14,22 +14,22 @@ class _SequenceIterator<E> implements Iterator<E> {
       (++_currIndex) < _list.length; 
 }
 
-class _ReverseSequence<E> extends IterableBase<E> implements Sequence<E> { 
+class _ReverseSequence<E> extends _AbstractSequence<E> { 
   final Sequence<E> reversed;
   
   _ReverseSequence(this.reversed);
-  
-  Iterator<E> get iterator =>
-      new _SequenceIterator(this);
   
   int get length =>
       reversed.length;
   
   Option<E> operator[](final int index) =>
       reversed[reversed.length - index - 1];
+  
+  bool containsKey(final int key) =>
+      (reversed.length - key) >= 0;
 }
 
-class _SubSequence<E> extends IterableBase<E> implements Sequence<E> { 
+class _SubSequence<E> extends _AbstractSequence<E> { 
   final Sequence<E> _delegate;
   final int _start;
   final int length;
@@ -38,12 +38,20 @@ class _SubSequence<E> extends IterableBase<E> implements Sequence<E> {
     checkArgument(_start + length <= _delegate.length);
   }
   
+  Option<E> operator[](final int index) =>
+      _delegate[_start + index];
+  
+  bool containsKey(final int key) =>
+      (_start + key) < length;
+}
+
+abstract class _AbstractSequence<E> extends IterableBase<E> implements Sequence<E> {
   Iterator<E> get iterator =>
       new _SequenceIterator(this);
   
   Sequence<E> get reversed =>
       new _ReverseSequence(this);
   
-  Option<E> operator[](final int index) =>
-      _delegate[_start + index];
+  Sequence<E> subSequence(int start, int length) =>
+      new _SubSequence(this, start, length);
 }

@@ -8,4 +8,10 @@ class ForwardingSequence<E> extends ForwardingIterable<E> implements Sequence<E>
   
   Option<E> operator[](int index) => 
       (_delegate as Sequence)[index];
+  
+  bool containsKey(final int key) =>
+      (_delegate as Sequence).containsKey(key);
+  
+  Sequence<E> subSequence(int start, int length) =>
+      (_delegate as Sequence).subSequence(start, length);
 }

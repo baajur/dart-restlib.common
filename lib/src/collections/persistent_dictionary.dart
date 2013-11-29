@@ -1,24 +1,24 @@
 part of restlib.common.collections;
 
-class PersistentHashMap<K,V> extends IterableBase<Pair<K,V>> implements Dictionary<K,V> {
-  static const PersistentHashMap EMPTY = const PersistentHashMap._internal(0, null);
+class PersistentDictionary<K,V> extends IterableBase<Pair<K,V>> implements Dictionary<K,V> {
+  static const PersistentDictionary EMPTY = const PersistentDictionary._internal(0, null);
   
-  factory PersistentHashMap.fromMap(final Map<K,V> map) {
-    PersistentHashMap<K,V> result = EMPTY;
+  factory PersistentDictionary.fromMap(final Map<K,V> map) {
+    PersistentDictionary<K,V> result = EMPTY;
     map.forEach((final K k, final V v) => 
         result = result.put(k, v));
     return result;
   }
   
-  factory PersistentHashMap.fromPairs(final Iterable<Pair<K,V>> pairs) => 
-      (pairs is PersistentHashMap) ? pairs : 
-        pairs.fold(EMPTY, (final PersistentHashMap accumulator, final Pair<K,V> element) => 
+  factory PersistentDictionary.fromPairs(final Iterable<Pair<K,V>> pairs) => 
+      (pairs is PersistentDictionary) ? pairs : 
+        pairs.fold(EMPTY, (final PersistentDictionary accumulator, final Pair<K,V> element) => 
             accumulator.putIfAbsent(element.fst, element.snd));
   
   final int length;
   final _INode _root;
   
-  const PersistentHashMap._internal(this.length, this._root);
+  const PersistentDictionary._internal(this.length, this._root);
   
   // FIXME: Would be better to compute on object creation
   int get hashCode =>
@@ -36,7 +36,7 @@ class PersistentHashMap<K,V> extends IterableBase<Pair<K,V>> implements Dictiona
   bool operator ==(final other) {
     if (identical(this, other)) {
       return true;
-    } else if (other is PersistentHashMap) {
+    } else if (other is PersistentDictionary) {
       if (this.length != other.length) {
         return false;
       }
@@ -64,31 +64,34 @@ class PersistentHashMap<K,V> extends IterableBase<Pair<K,V>> implements Dictiona
           value == pair.snd)
       .orElse(false);
   
-  PersistentHashMap<K,V> put(final K key, final V value) {
+  bool containsKey(final K key) =>
+      this[key] != Option.NONE;
+  
+  PersistentDictionary<K,V> put(final K key, final V value) {
     checkNotNull(key);
     checkNotNull(value);
     
     final _INode newroot = firstNotNull(_root, _BitmapIndexedNode.EMPTY).assoc(0, key.hashCode, key, value);
     
     return (identical(newroot, _root)) ? this :
-      new PersistentHashMap._internal(length + 1, newroot);
+      new PersistentDictionary._internal(length + 1, newroot);
   }
   
-  PersistentHashMap<K,V> putIfAbsent(final K key, final V value) =>
+  PersistentDictionary<K,V> putIfAbsent(final K key, final V value) =>
       this[key]
         .map((final V value) => 
             this)
         .orCompute(() => 
             this.put(key, value));
   
-  PersistentHashMap<K,V> remove(final K key) {
+  PersistentDictionary<K,V> remove(final K key) {
     checkNotNull(key);
     
     if (isNull(_root)) {
       return this;
     } else { 
       final _INode newroot = _root.without(0, key.hashCode, key);
-      return identical(newroot, _root) ? this : new PersistentHashMap._internal(length - 1, newroot); 
+      return identical(newroot, _root) ? this : new PersistentDictionary._internal(length - 1, newroot); 
     }
   }
   
