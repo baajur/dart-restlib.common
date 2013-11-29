@@ -11,7 +11,7 @@ abstract class MutableMultiset<E> implements Multiset<E>, MutableCollection<E> {
 }
 
 class _MutableMultisetBase<E> extends IterableBase<E> implements MutableMultiset<E> {
-  final _MutableDictionaryBase<E,int> _delegate;
+  final MutableDictionary<E,int> _delegate;
   
   _MutableMultisetBase(this._delegate);
   
@@ -19,7 +19,8 @@ class _MutableMultisetBase<E> extends IterableBase<E> implements MutableMultiset
       _delegate.expand((final Pair<E, int> pair) =>
           new List.filled(pair.snd, pair.fst)).iterator;
   
-  int count(final E element) => 0;
+  int count(final E element) => 
+      _delegate[element].orElse(0);
   
   void add(final E element) =>
       _delegate[element]
