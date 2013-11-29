@@ -49,6 +49,7 @@ const List EMPTY_LIST = const [];
 
 abstract class Associative<K,V> {
   Iterable<K> get keys;
+  Iterable<V> get values;
   
   Iterable<V> operator[](K key);
   

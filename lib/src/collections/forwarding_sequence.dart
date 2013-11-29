@@ -6,6 +6,9 @@ class ForwardingSequence<E> extends ForwardingIterable<E> implements Sequence<E>
   Iterable<int> get keys =>
       (_delegate as Sequence).keys;
   
+  Iterable<E> get values =>
+      (_delegate as Sequence).values;
+  
   Iterable<E> get reversed => 
       (_delegate as Sequence).reversed;
   

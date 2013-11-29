@@ -9,6 +9,9 @@ class ForwardingMultimap<K,V,I extends Iterable<V>> extends ForwardingIterable<P
   Iterable<K> get keys =>
       (_delegate as Multimap).keys;
   
+  Iterable<V> get values =>
+      (_delegate as Multimap).values;
+  
   Iterable<V> operator[](final K key) => 
       (_delegate as Multimap)[key];
   

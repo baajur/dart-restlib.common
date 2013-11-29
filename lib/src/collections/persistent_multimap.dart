@@ -29,6 +29,10 @@ abstract class _AbstractPersistentMultimap<K,V, I extends PersistentCollection<V
   Iterable<K> get keys =>
       dictionary.keys;
   
+  Iterable<V> get values =>
+      this.map((final Pair<K,V> pair) => 
+          pair.snd);
+  
   bool operator==(other) {
     if (identical(this, other)) {
       return true;

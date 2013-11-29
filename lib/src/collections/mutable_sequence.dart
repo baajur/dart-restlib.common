@@ -10,6 +10,9 @@ abstract class _AbstractMutableSequence<E> extends ForwardingIterable<E> impleme
       new List.generate(length, 
           (final int index) => index);
   
+  Iterable<E> get values =>
+      this;
+  
   Iterable<E> get reversed =>
       new _ReverseSequence(this);
   

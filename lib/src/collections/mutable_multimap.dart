@@ -28,6 +28,10 @@ abstract class _AbstractMutableMultimap<K,V, I extends MutableCollection<V>> ext
   Iterable<K> get keys =>
       _delegate.keys;
   
+  Iterable<V> get values =>
+      this.map((final Pair<K,V> pair) => 
+          pair.snd);
+  
   I operator[](final K key) =>
       _delegate[key]
         .map((final I container) => container)

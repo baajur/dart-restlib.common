@@ -45,6 +45,10 @@ class _PersistentDictionaryBase<K,V> extends IterableBase<Pair<K,V>> implements 
       this.map((final Pair<K,V> pair) => 
           pair.fst);
   
+  Iterable<V> get values =>
+      this.map((final Pair<K,V> pair) => 
+          pair.snd);
+  
   Pair<K,V> get single =>
     (length == 1) ? (iterator..moveNext()..current) : throw new StateError("");
   

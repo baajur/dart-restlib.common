@@ -6,6 +6,9 @@ class ForwardingDictionary<K,V> extends ForwardingIterable<Pair<K,V>> implements
   Iterable<K> get keys =>
       (_delegate as Dictionary).keys;
   
+  Iterable<V> get values =>
+      (_delegate as Dictionary).values;
+  
   Option<V> operator[](final K key) => 
       (_delegate as Dictionary)[key];
   
