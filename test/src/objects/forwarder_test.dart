@@ -1,8 +1,8 @@
 part of restlib.common.objects_test;
 
 noSuchMethodForwarderTests() {
-  _TestObject reference = new _TestObject();
-  _TestObject forwarded = new _NoSuchMethodForwardedTestObject(new _TestObject());
+  final _TestObject reference = new _TestObject();
+  final dynamic forwarded = (new objects.NoSuchMethodForwarder(reference) as dynamic);
   
   test("forwarding variable access", () =>
       expect(reference.variable == forwarded.variable, isTrue));
@@ -16,7 +16,14 @@ noSuchMethodForwarderTests() {
   test("assert forwarded objects are not equal", () =>
       expect(reference != forwarded, isTrue));
   
-  test("forwarding to string", () =>
+  test("forwarding toString()", () =>
+      expect(reference.toString() == forwarded.toString(), isTrue));
+}
+
+toStringForwarderTests() {
+  final _TestObject reference = new _TestObject();
+  final _ToStringForwarderTest forwarded = new _ToStringForwarderTest(reference);
+  test("forwarding toString()", () =>
       expect(reference.toString() == forwarded.toString(), isTrue));
 }
 
@@ -27,16 +34,13 @@ class _TestObject {
     return 2;
   }
   
-  int method(int retval) {
-    return retval;
-  }
+  int method(int retval) => retval;
   
-  String toString() {
-    return "$variable and $property";
-  }
+  String toString() => "$variable and $property";
 }
 
-@proxy
-class _NoSuchMethodForwardedTestObject extends objects.NoSuchMethodForwarder implements _TestObject {
-  _NoSuchMethodForwardedTestObject(_TestObject delegate) : super(delegate);
+class _ToStringForwarderTest extends Object with objects.ToStringForwarder implements objects.Forwarder {
+  final dynamic delegate;
+  
+  _ToStringForwarderTest(this.delegate);
 }

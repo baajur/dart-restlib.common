@@ -100,6 +100,7 @@ objectsTests() {
 objectTestGroup() {
   group("package:object", () {
     group("class:NoSuchMethodForwarder", noSuchMethodForwarderTests);
+    group("class:ToStringForwarder", toStringForwarderTests);
     objectsTests();
   });
 }
