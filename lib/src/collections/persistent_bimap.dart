@@ -1,7 +1,9 @@
 part of restlib.common.collections;
 
 abstract class PersistentBiMap<K,V> implements BiMap<K,V>, PersistentDictionary<K,V> {
-  static const PersistentBiMap EMPTY = _PersistentBiMapBase.EMPTY;
+  // FIXME: Ideally this would const, but dart doesn't yet allow using mixins with const
+  // see: https://code.google.com/p/dart/issues/detail?id=9745
+  static final PersistentBiMap EMPTY = _PersistentBiMapBase.EMPTY;
   
   factory PersistentBiMap.fromMap(final Map<K,V> map) {
     PersistentBiMap<K,V> result = EMPTY;
@@ -32,27 +34,38 @@ abstract class PersistentBiMap<K,V> implements BiMap<K,V>, PersistentDictionary<
   PersistentBiMap<K,V> putIfAbsent(final K key, final V value);
 }
 
-class _PersistentBiMapBase<K,V> extends ForwardingDictionary<K,V> implements PersistentBiMap<K,V> {
-  static const PersistentBiMap EMPTY = 
-      const _PersistentBiMapBase._internal(
+class _PersistentBiMapBase<K,V> 
+    extends Object
+    with Forwarder<PersistentDictionary<K,V>>, 
+      ForwardingDictionary<K,V, PersistentDictionary<K,V>>, 
+      ForwardingAssociative<K,V, PersistentDictionary<K,V>>,
+      ForwardingIterable<Pair<K,V>, PersistentDictionary<K,V>> 
+    implements PersistentBiMap<K,V> {
+      
+  // FIXME: Ideally this would const, but dart doesn't yet allow using mixins with const
+  // see: https://code.google.com/p/dart/issues/detail?id=9745    
+  static final PersistentBiMap EMPTY = 
+      new _PersistentBiMapBase._internal(
           PersistentDictionary.EMPTY, PersistentDictionary.EMPTY);
 
-  final PersistentDictionary _inverse;
+  final PersistentDictionary<K,V> delegate;
+  final PersistentDictionary<V,K> _inverse;
   
-  const _PersistentBiMapBase._internal(final PersistentDictionary delegate, this._inverse) : 
-    super(delegate);
+  // FIXME: Ideally this would const, but dart doesn't yet allow using mixins with const
+  // see: https://code.google.com/p/dart/issues/detail?id=9745
+  _PersistentBiMapBase._internal(this.delegate, this._inverse);
   
   int get hashCode => 
-      _delegate.hashCode;
+      delegate.hashCode;
   
   BiMap<V,K> get inverse =>
-      isEmpty ? EMPTY : new _PersistentBiMapBase._internal(_inverse, _delegate);
+      isEmpty ? EMPTY : new _PersistentBiMapBase._internal(_inverse, delegate);
   
   bool operator==(other) {
     if (identical(this, other)) {
       return true;
     } else if (other is _PersistentBiMapBase) {
-      return this._delegate == other._delegate;
+      return this.delegate == other.delegate;
     } else if (other is PersistentBiMap) {
       // FIXME:
       return false;
@@ -62,13 +75,13 @@ class _PersistentBiMapBase<K,V> extends ForwardingDictionary<K,V> implements Per
   }
       
   Option<V> operator[](final K key) => 
-      (_delegate as Dictionary<K,V>)[key];
+      delegate[key];
   
   PersistentBiMap<K,V> insert(final K key, final V value) {
     checkNotNull(key);
     checkNotNull(value);
     
-    PersistentDictionary newMap = _delegate;
+    PersistentDictionary newMap = delegate;
     PersistentDictionary newInverse = _inverse;
     
     newInverse[value].map((final K key) => 
@@ -77,7 +90,7 @@ class _PersistentBiMapBase<K,V> extends ForwardingDictionary<K,V> implements Per
     newInverse = newInverse.insert(value, key);
     newMap = newMap.insert(key, value);
     
-    return newMap == _delegate ? this : new _PersistentBiMapBase._internal(newMap, newInverse);
+    return newMap == delegate ? this : new _PersistentBiMapBase._internal(newMap, newInverse);
   }
   
   PersistentBiMap<K, V> insertAll(final Iterable<Pair<K,V>> pairs) =>
@@ -98,13 +111,13 @@ class _PersistentBiMapBase<K,V> extends ForwardingDictionary<K,V> implements Per
   PersistentBiMap<K,V> removeAt(final K key) {
     checkNotNull(key);
     
-    PersistentDictionary newMap = _delegate;
+    PersistentDictionary newMap = delegate;
     PersistentDictionary newInverse = _inverse;
     
     newMap[key].map((final V value) => 
         newInverse = newInverse.removeAt(value));
     newMap = newMap.removeAt (key);
     
-    return newMap == _delegate ? this : new _PersistentBiMapBase._internal(newMap, newInverse);
+    return newMap == delegate ? this : new _PersistentBiMapBase._internal(newMap, newInverse);
   }
 }

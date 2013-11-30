@@ -55,20 +55,20 @@ class _MutableFixedSizeSequenceBase<E> extends _AbstractMutableSequence<E> imple
       _length == 0;
   
   Iterator<E> get iterator =>
-      _delegate.take(_length).iterator;
+      delegate.take(_length).iterator;
   
   int get length => 
       _length;
   
   int get size =>
-      _delegate.length;
+      delegate.length;
   
   void operator[]=(final int index, final E value) {
     checkArgument(index > 0);
     checkNotNull(value);
     
     if (index >= 0 && index < length) {
-      (_delegate as List)[index] = value;
+      delegate[index] = value;
     } else if (index == length) {
       add(value);
     } else {
@@ -80,7 +80,7 @@ class _MutableFixedSizeSequenceBase<E> extends _AbstractMutableSequence<E> imple
     checkNotNull(element);
     
     if (length < size) {
-      (_delegate as List)[length] = element;
+      delegate[length] = element;
       _length++;
     } else {
       throw new RangeError.value(length);
@@ -88,13 +88,13 @@ class _MutableFixedSizeSequenceBase<E> extends _AbstractMutableSequence<E> imple
   }
   
   Option<E> remove(E element) {
-    final int indexOfE = (_delegate as List).indexOf(E);
+    final int indexOfE = delegate.indexOf(E);
     
     if(indexOfE > -1) {
       _length--;
       
-      for(int i = indexOfE; i < (_delegate.length - 1); i++) {
-        (_delegate as List)[i] = (_delegate as List)[i + 1];
+      for(int i = indexOfE; i < (delegate.length - 1); i++) {
+        delegate[i] = delegate[i + 1];
       }
       return new Option(element);
     } 
@@ -109,8 +109,8 @@ class _MutableFixedSizeSequenceBase<E> extends _AbstractMutableSequence<E> imple
       final E retVal = 
       _length--;
       
-      for(int i = index; i < (_delegate.length - 1); i++) {
-        (_delegate as List)[i] = (_delegate as List)[i + 1];
+      for(int i = index; i < (delegate.length - 1); i++) {
+        delegate[i] = delegate[i + 1];
       }
       
     } else {
@@ -119,5 +119,5 @@ class _MutableFixedSizeSequenceBase<E> extends _AbstractMutableSequence<E> imple
   }
   
   String toString() => 
-      _delegate.take(_length).toString();
+      delegate.take(_length).toString();
 }

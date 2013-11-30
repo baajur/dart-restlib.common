@@ -18,22 +18,24 @@ abstract class MutableBiMap<K,V> implements BiMap<K,V>, MutableDictionary<K,V> {
                     new _MutableBiMapBase._internal(new MutableDictionary.splayTree(), new MutableDictionary.splayTree()); 
 }
 
-class _MutableBiMapBase<K,V> extends ForwardingDictionary<K,V> implements MutableBiMap<K,V> {     
+class _MutableBiMapBase<K,V> extends ConstForwarder<MutableDictionary<K,V>> 
+    with ForwardingDictionary<K,V, MutableDictionary<K,V>>, ForwardingIterable<Pair<K,V>, MutableDictionary<K,V>>, ForwardingAssociative<K,V, MutableDictionary<K,V>> 
+    implements MutableBiMap<K,V> {     
   final MutableDictionary<V,K> _inverse;
  
   _MutableBiMapBase._internal(final MutableDictionary<K,V> delegate, this._inverse) : super(delegate);
   
   BiMap<V,K> get inverse =>
-      new _MutableBiMapBase._internal(_inverse, _delegate);
+      new _MutableBiMapBase._internal(_inverse, delegate);
       
   Option<V> operator[](final K key) => 
-      (_delegate as MutableDictionary<K,V>)[key];
+      delegate[key];
   
   void operator[]=(final K key, final V value) => 
       insert(key, value);
   
   void clear() {
-      (_delegate as MutableDictionary<K,V>).clear();
+      delegate.clear();
       _inverse.clear;
   }
   
@@ -46,10 +48,10 @@ class _MutableBiMapBase<K,V> extends ForwardingDictionary<K,V> implements Mutabl
     checkNotNull(value);
     
     _inverse[value].map((final K key) => 
-        (_delegate as MutableDictionary<K,V>).take(key));  
+        delegate.take(key));  
     
     _inverse.insert(value, key);
-    (_delegate as MutableDictionary<K,V>).insert(key, value);
+    delegate.insert(key, value);
   }
   
   void insertPair(final Pair<K,V> pair) =>
@@ -58,9 +60,9 @@ class _MutableBiMapBase<K,V> extends ForwardingDictionary<K,V> implements Mutabl
   Option<V> removeAt(final K key) {
     checkNotNull(key);
     
-    (_delegate as MutableDictionary<K,V>)[key]
+    delegate[key]
       .map((final V value) => 
           _inverse.removeAt(value));
-    (_delegate as MutableDictionary<K,V>).removeAt(key);
+    delegate.removeAt(key);
   }
 }

@@ -7,6 +7,7 @@ import "objects.dart";
 import "preconditions.dart";
 
 part "src/collections/either.dart";
+part "src/collections/forwarding_associative.dart";
 part "src/collections/forwarding_bimap.dart";
 part "src/collections/forwarding_dictionary.dart";
 part "src/collections/forwarding_iterable.dart";

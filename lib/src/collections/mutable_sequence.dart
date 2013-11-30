@@ -3,7 +3,10 @@ part of restlib.common.collections;
 abstract class MutableSequence<E> implements Sequence<E>, MutableCollection<E>, MutableAssociative<int, E> {      
 }
 
-abstract class _AbstractMutableSequence<E> extends ForwardingIterable<E> implements MutableSequence<E> {
+abstract class _AbstractMutableSequence<E> 
+    extends ConstForwarder<List<E>> 
+    with ForwardingIterable<E, List<E>> 
+    implements MutableSequence<E> {
   _AbstractMutableSequence(List<E> delegate) : super (delegate);
   
   Iterable<int> get keys =>
@@ -18,11 +21,11 @@ abstract class _AbstractMutableSequence<E> extends ForwardingIterable<E> impleme
   
   Option<E> operator[](final int index) =>
       (index >= 0 && index < length) ? 
-          new Option((_delegate as List)[index]) : 
+          new Option(delegate[index]) : 
             Option.NONE;
   
   void clear() =>
-      (_delegate as List<E>).clear();
+      delegate.clear();
   
   void insertAll(final Iterable<Pair<int, E>> other) =>
       other.forEach((final Pair<int, E> pair) => 
@@ -43,11 +46,11 @@ abstract class _AbstractMutableSequence<E> extends ForwardingIterable<E> impleme
       (key >= 0) && (key < length);
   
   bool containsValue(final E element) =>
-      _delegate.contains(element);
+      delegate.contains(element);
   
   E elementAt(final int index) =>
       (index >= 0 && index < length) ?
-        (_delegate as List)[index] :
+        delegate[index] :
           throw new RangeError.range(index, 0, length - 1);   
   
   Sequence<E> subSequence(int start, int length) =>

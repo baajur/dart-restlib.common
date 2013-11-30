@@ -1,8 +1,6 @@
 part of restlib.common.collections;
 
-class ForwardingBiMap<K,V> extends ForwardingDictionary<K,V> implements BiMap<K,V> {
-  const ForwardingBiMap(final BiMap<K,V> delegate) : super(delegate);
-  
+abstract class ForwardingBiMap<K,V, D extends BiMap<K,V>> implements Forwarder<D>, BiMap<K,V> {  
   BiMap<V,K> get inverse => 
-      (_delegate as BiMap).inverse;
+      delegate.inverse;
 }

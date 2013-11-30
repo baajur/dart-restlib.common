@@ -1,8 +1,6 @@
 part of restlib.common.collections;
 
-class ForwardingMultiset<E> extends ForwardingIterable<E> implements Multiset<E> {
-  const ForwardingMultiset(final Multiset<E> delegate) : super(delegate);
-  
+abstract class ForwardingMultiset<E, D extends Multiset<E>> implements Forwarder<D>, Multiset<E> {  
   int count(final E element) =>
-      (_delegate as Multiset).count(element);
+      delegate.count(element);
 }

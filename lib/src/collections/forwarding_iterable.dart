@@ -1,88 +1,84 @@
 part of restlib.common.collections;
 
-class ForwardingIterable<E> implements Iterable<E> {
-  final Iterable<E> _delegate;
-  
-  const ForwardingIterable(this._delegate);
-  
+abstract class ForwardingIterable<E, D extends Iterable<E>> implements Forwarder<D>, Iterable<E> {  
   Iterable map(f(E element)) => 
-      _delegate.map(f);
+      delegate.map(f);
 
   Iterable<E> where(bool f(E element)) => 
-      _delegate.where(f);
+      delegate.where(f);
       
   Iterable expand(Iterable f(E element)) => 
-      _delegate.expand(f);
+      delegate.expand(f);
 
   bool contains(final E element) => 
-      _delegate.contains(element);
+      delegate.contains(element);
 
   void forEach(void f(E element)) => 
-      _delegate.forEach(f);
+      delegate.forEach(f);
 
   E reduce(E combine(E value, E element)) => 
-      _delegate.reduce(combine);
+      delegate.reduce(combine);
 
   fold(initialValue, combine(previousValue, E element)) =>
-      _delegate.fold(initialValue, combine);
+      delegate.fold(initialValue, combine);
 
   bool every(bool f(E element)) => 
-      _delegate.every(f);
+      delegate.every(f);
 
   String join([final String separator]) => 
-      _delegate.join(separator);
+      delegate.join(separator);
 
   bool any(bool f(E element)) => 
-      _delegate.any(f);
+      delegate.any(f);
 
   List<E> toList({ final bool growable: true }) => 
-      _delegate.toList(growable: growable);
+      delegate.toList(growable: growable);
 
   Set<E> toSet() => 
-      _delegate.toSet();
+      delegate.toSet();
 
   Iterator<E> get iterator => 
-      _delegate.iterator;
+      delegate.iterator;
   
   int get length => 
-      _delegate.length;
+      delegate.length;
 
   bool get isEmpty => 
-      _delegate.isEmpty;
+      delegate.isEmpty;
 
   bool get isNotEmpty => 
-      _delegate.isNotEmpty;
+      delegate.isNotEmpty;
 
   Iterable<E> take(final int n) => 
-      _delegate.take(n);
+      delegate.take(n);
 
   Iterable<E> takeWhile(bool test(E value)) => 
-      _delegate.takeWhile(test);
+      delegate.takeWhile(test);
 
   Iterable<E> skip(final int n) => 
-      _delegate.skip(n);
+      delegate.skip(n);
 
   Iterable<E> skipWhile(bool test(E value)) => 
-      _delegate.skipWhile(test);
+      delegate.skipWhile(test);
 
   E get first => 
-      _delegate.first;
+      delegate.first;
 
   E get last => 
-      _delegate.last;
+      delegate.last;
 
   E get single => 
-      _delegate.single;
+      delegate.single;
 
   E firstWhere(bool test(E value), { E orElse() }) => 
-      _delegate.firstWhere(test, orElse: orElse);
+      delegate.firstWhere(test, orElse: orElse);
 
   E lastWhere(bool test(E value), {E orElse()}) => 
-      _delegate.lastWhere(test, orElse: orElse);
+      delegate.lastWhere(test, orElse: orElse);
 
   E singleWhere(bool test(E value)) => 
-      _delegate.singleWhere(test);
+      delegate.singleWhere(test);
 
   E elementAt(final int index) =>
-      _delegate.elementAt(index);
+      delegate.elementAt(index);
 }

@@ -9,32 +9,23 @@ abstract class GrowableSequence<E> implements MutableSequence<E> {
 class _GrowableSequenceBase<E> extends _AbstractMutableSequence<E> implements GrowableSequence<E> {
   _GrowableSequenceBase() : super (new List());
   
-  Iterator<E> get iterator =>
-      _delegate.iterator;
-  
-  int get length => 
-      _delegate.length;
-  
   void operator[]=(final int index, final E value) =>
-      (_delegate as List)[index] = checkNotNull(value);
+      delegate[index] = checkNotNull(value);
   
   void add(final E element) =>
-      (_delegate as List).add(checkNotNull(element));
+      delegate.add(checkNotNull(element));
   
   Option<E> remove(E element) =>
-      (_delegate as List).remove(element) ?
+      delegate.remove(element) ?
           new Option(element) : Option.NONE;
   
   Option<E> removeAt(int index) {
     checkArgument(index > 0);
     
     if (index < length) {
-      return new Option((_delegate as List).removeAt(index));
+      return new Option(delegate.removeAt(index));
     } else {
       return Option.NONE;
     }
   }
-      
-  String toString() => 
-      _delegate.toString();
 }
