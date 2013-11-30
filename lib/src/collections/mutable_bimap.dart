@@ -18,12 +18,18 @@ abstract class MutableBiMap<K,V> implements BiMap<K,V>, MutableDictionary<K,V> {
                     new _MutableBiMapBase._internal(new MutableDictionary.splayTree(), new MutableDictionary.splayTree()); 
 }
 
-class _MutableBiMapBase<K,V> extends ConstForwarder<MutableDictionary<K,V>> 
-    with ForwardingDictionary<K,V, MutableDictionary<K,V>>, ForwardingIterable<Pair<K,V>, MutableDictionary<K,V>>, ForwardingAssociative<K,V, MutableDictionary<K,V>> 
-    implements MutableBiMap<K,V> {     
+class _MutableBiMapBase<K,V> 
+    extends Object
+    with ForwardingDictionary<K,V>, 
+      ForwardingIterable<Pair<K,V>>, 
+      ForwardingAssociative<K,V>,
+      ToStringForwarder
+    implements MutableBiMap<K,V>, Forwarder {   
+  
+  final MutableDictionary<K,V> delegate;    
   final MutableDictionary<V,K> _inverse;
  
-  _MutableBiMapBase._internal(final MutableDictionary<K,V> delegate, this._inverse) : super(delegate);
+  _MutableBiMapBase._internal(this.delegate, this._inverse);
   
   BiMap<V,K> get inverse =>
       new _MutableBiMapBase._internal(_inverse, delegate);

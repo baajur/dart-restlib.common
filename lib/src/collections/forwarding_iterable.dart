@@ -1,6 +1,6 @@
 part of restlib.common.collections;
 
-abstract class ForwardingIterable<E, D extends Iterable<E>> implements Forwarder<D>, Iterable<E> {  
+abstract class ForwardingIterable<E> implements Forwarder, Iterable<E> {  
   Iterable map(f(E element)) => 
       delegate.map(f);
 

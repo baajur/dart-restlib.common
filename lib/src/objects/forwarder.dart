@@ -1,23 +1,19 @@
 part of restlib.common.objects;
 
-abstract class Forwarder<T> {  
-  T get delegate;
+abstract class Forwarder {  
+  dynamic get delegate;
 }
 
-class ConstForwarder<T> implements Forwarder<T> {
-  final T delegate;
-  
-  const ConstForwarder(this.delegate);
-  
-  String toString() => 
+abstract class ToStringForwarder implements Forwarder {
+  String toString() =>
       delegate.toString();
 }
 
-class NoSuchMethodForwarder<T> implements Forwarder<T> {
-  final T delegate;
+class NoSuchMethodForwarder implements Forwarder {
+  final dynamic delegate;
   final InstanceMirror _delegateMirror;
 
-  NoSuchMethodForwarder(final T delegate) :
+  NoSuchMethodForwarder(final dynamic delegate) :
     this._delegateMirror = reflect(delegate), 
     this.delegate = delegate;
 

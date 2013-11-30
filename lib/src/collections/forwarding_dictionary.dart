@@ -1,6 +1,6 @@
 part of restlib.common.collections;
 
-abstract class ForwardingDictionary<K,V, D extends Dictionary<K,V>> implements Forwarder<D>, Dictionary<K,V> {  
+abstract class ForwardingDictionary<K,V> implements Forwarder, Dictionary<K,V> {  
   Option<V> operator[](final K key) => 
       delegate[key];
 }

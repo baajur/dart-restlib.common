@@ -1,8 +1,8 @@
 part of restlib.common.objects_test;
 
-forwarderTests() {
+noSuchMethodForwarderTests() {
   _TestObject reference = new _TestObject();
-  _TestObject forwarded = new _ForwardedTestObject(new _TestObject());
+  _TestObject forwarded = new _NoSuchMethodForwardedTestObject(new _TestObject());
   
   test("forwarding variable access", () =>
       expect(reference.variable == forwarded.variable, isTrue));
@@ -37,6 +37,6 @@ class _TestObject {
 }
 
 @proxy
-class _ForwardedTestObject extends objects.NoSuchMethodForwarder<_TestObject> implements _TestObject {
-  _ForwardedTestObject(_TestObject delegate) : super(delegate);
+class _NoSuchMethodForwardedTestObject extends objects.NoSuchMethodForwarder implements _TestObject {
+  _NoSuchMethodForwardedTestObject(_TestObject delegate) : super(delegate);
 }

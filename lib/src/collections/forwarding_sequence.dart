@@ -1,6 +1,6 @@
 part of restlib.common.collections;
 
-abstract class ForwardingSequence<E, D extends Sequence<E>> implements Forwarder<D>, Sequence<E> {
+abstract class ForwardingSequence<E> implements Forwarder, Sequence<E> {
   Iterable<E> get reversed => 
       delegate.reversed;
   

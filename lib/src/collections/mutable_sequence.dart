@@ -4,10 +4,13 @@ abstract class MutableSequence<E> implements Sequence<E>, MutableCollection<E>, 
 }
 
 abstract class _AbstractMutableSequence<E> 
-    extends ConstForwarder<List<E>> 
-    with ForwardingIterable<E, List<E>> 
-    implements MutableSequence<E> {
-  _AbstractMutableSequence(List<E> delegate) : super (delegate);
+    extends Object
+    with ForwardingIterable<E>, 
+      ToStringForwarder
+    implements MutableSequence<E>, Forwarder {
+  final List<E> delegate;
+  
+  _AbstractMutableSequence(this.delegate);
   
   Iterable<int> get keys =>
       new List.generate(length, 

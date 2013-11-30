@@ -2,7 +2,7 @@ part of restlib.common.collections;
 
 abstract class PersistentBiMap<K,V> implements BiMap<K,V>, PersistentDictionary<K,V> {
   // FIXME: Ideally this would const, but dart doesn't yet allow using mixins with const
-  // see: https://code.google.com/p/dart/issues/detail?id=9745
+  // see: https://code.google.com/p/dart/issues/detail?id=9745   
   static final PersistentBiMap EMPTY = _PersistentBiMapBase.EMPTY;
   
   factory PersistentBiMap.fromMap(final Map<K,V> map) {
@@ -36,11 +36,11 @@ abstract class PersistentBiMap<K,V> implements BiMap<K,V>, PersistentDictionary<
 
 class _PersistentBiMapBase<K,V> 
     extends Object
-    with Forwarder<PersistentDictionary<K,V>>, 
-      ForwardingDictionary<K,V, PersistentDictionary<K,V>>, 
-      ForwardingAssociative<K,V, PersistentDictionary<K,V>>,
-      ForwardingIterable<Pair<K,V>, PersistentDictionary<K,V>> 
-    implements PersistentBiMap<K,V> {
+    with ForwardingDictionary<K,V>, 
+      ForwardingAssociative<K,V>,
+      ForwardingIterable<Pair<K,V>>, 
+      ToStringForwarder
+    implements PersistentBiMap<K,V>, Forwarder {
       
   // FIXME: Ideally this would const, but dart doesn't yet allow using mixins with const
   // see: https://code.google.com/p/dart/issues/detail?id=9745    

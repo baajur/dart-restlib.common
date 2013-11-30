@@ -99,7 +99,7 @@ objectsTests() {
 
 objectTestGroup() {
   group("package:object", () {
-    group("class:Forwarder", forwarderTests);
+    group("class:NoSuchMethodForwarder", noSuchMethodForwarderTests);
     objectsTests();
   });
 }

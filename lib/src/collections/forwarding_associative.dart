@@ -1,6 +1,6 @@
 part of restlib.common.collections;
 
-abstract class ForwardingAssociative<K,V, D extends Associative<K,V>> implements Forwarder<D>, Associative<K,V> { 
+abstract class ForwardingAssociative<K,V> implements Forwarder, Associative<K,V> { 
   Iterable<K> get keys =>
       delegate.keys;
   
