@@ -31,6 +31,9 @@ class Option<E> implements Iterable<E> {
   int get length => 
       (_value == null) ? 0 : 1;
   
+  E get nullableValue =>
+      _value;
+  
   E get single => 
       value;
   
