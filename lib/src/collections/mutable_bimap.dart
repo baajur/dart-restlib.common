@@ -40,6 +40,9 @@ class _MutableBiMapBase<K,V>
   void operator[]=(final K key, final V value) => 
       insert(key, value);
   
+  Map<K,V> asMap() =>
+      new _DictionaryAsMap(this);
+  
   void clear() {
       delegate.clear();
       _inverse.clear;

@@ -74,6 +74,9 @@ class _PersistentDictionaryBase<K,V> extends IterableBase<Pair<K,V>> implements 
     return isNotNull(_root) ? _root.find(0, key.hashCode, key) : Option.NONE;
   }
   
+  Map<K,V> asMap() =>
+      new _DictionaryAsMap(this);
+  
   bool contains(final Object pair) {
     if (pair is Pair) {
       return this[pair.fst]

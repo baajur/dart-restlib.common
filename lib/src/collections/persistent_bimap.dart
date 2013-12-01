@@ -77,6 +77,9 @@ class _PersistentBiMapBase<K,V>
   Option<V> operator[](final K key) => 
       delegate[key];
   
+  Map<K,V> asMap() =>
+      new _DictionaryAsMap(this);
+  
   PersistentBiMap<K,V> insert(final K key, final V value) {
     checkNotNull(key);
     checkNotNull(value);

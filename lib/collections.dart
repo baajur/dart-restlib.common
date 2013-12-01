@@ -8,6 +8,7 @@ import "objects.dart";
 import "preconditions.dart";
 
 part "src/collections/array.dart";
+part "src/collections/dictionary.dart";
 part "src/collections/either.dart";
 part "src/collections/forwarding_associative.dart";
 part "src/collections/forwarding_bimap.dart";
@@ -66,6 +67,8 @@ abstract class BiMap<K,V> implements Dictionary<K,V> {
 
 abstract class Dictionary<K,V> implements Associative<K,V>, Iterable<Pair<K,V>>{
   Option<V> operator[](K key);
+  
+  Map<K,V> asMap();
 }
 
 abstract class FiniteSet<E> implements Iterable<E> {
