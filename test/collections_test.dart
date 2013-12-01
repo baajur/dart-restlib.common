@@ -14,6 +14,7 @@ part "src/collections/testers/persistent_collection_tester.dart";
 part "src/collections/testers/sequence_tester.dart";
 part "src/collections/testers/stack_tester.dart";
 
+part "src/collections/array_test.dart";
 part "src/collections/either_test.dart";
 part "src/collections/iterables_test.dart";
 part "src/collections/mutable_sequence_test.dart";
@@ -29,6 +30,8 @@ collectionsTestGroup() {
   group("package:collections", () {
     iterablesTests();
     
+    group("class:Array", () =>
+        new ArrayTester().testArray());
     group("class:Either", eitherTests);
     group("class:Option", optionTests);
     group("class:Pair", pairTests);

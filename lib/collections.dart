@@ -98,6 +98,8 @@ abstract class Sequence<E> implements Associative<int, E>, Iterable<E> {
   int indexOf(E element, [int start=0]);
   
   Sequence<E> subSequence(int start, int length);
+  
+  List<E> asList();
 }
 
 abstract class Stack<E> implements Iterable<E> {

@@ -26,6 +26,8 @@ abstract class _AbstractMutableSequence<E>
       (index >= 0 && index < length) ? 
           new Option(delegate[index]) : 
             Option.NONE;
+  List<E> asList() =>
+      new _SequenceAsList(this);         
           
   int indexOf(E element, [int start=0]) =>
       delegate.indexOf(checkNotNull(element), start);

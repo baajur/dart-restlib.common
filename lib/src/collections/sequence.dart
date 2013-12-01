@@ -59,6 +59,9 @@ abstract class _AbstractSequence<E> extends IterableBase<E> implements Sequence<
   Sequence<E> get reversed =>
       new _ReverseSequence(this);
   
+  List<E> asList() =>
+      new _SequenceAsList(this);
+  
   bool containsValue(final E value) =>
       contains(value);
   
@@ -75,3 +78,27 @@ abstract class _AbstractSequence<E> extends IterableBase<E> implements Sequence<
   Sequence<E> subSequence(int start, int length) =>
       new _SubSequence(this, start, length);
 }
+
+class _SequenceAsList<E> 
+    extends Object
+    with ListMixin<E>
+    implements List<E>, Forwarder {
+
+  final Sequence<E> delegate;
+  
+  _SequenceAsList(this.delegate);
+  
+  E operator [](int index) =>
+      delegate.elementAt(index);
+  
+  void operator []=(int index, E value) =>
+      throw new UnsupportedError("List is readonly");
+      
+  int get length =>
+      delegate.length;
+  
+  void set length(int length) =>
+      throw new UnsupportedError("List is readonly");
+}
+  
+  

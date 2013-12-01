@@ -149,6 +149,9 @@ class _PersistentSequenceBase<E> extends IterableBase<E> implements PersistentSe
       elements.fold(this, (final _PersistentSequenceBase<E> accumulator, final E element) => 
           accumulator.add(element));
   
+  List<E> asList() =>
+      new _SequenceAsList(this);
+  
   bool containsKey(final int key) =>
       (key >= 0) && (key < length);
   
