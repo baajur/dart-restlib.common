@@ -1,9 +1,9 @@
 part of restlib.common.collections_test;
 
 abstract class AssociativeTester {
-  Associative get empty;
-  Associative get single;
-  Associative get big;
+  dynamic get empty;
+  dynamic get single;
+  dynamic get big;
   
   dynamic get invalidKey;
   

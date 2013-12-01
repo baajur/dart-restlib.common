@@ -1,17 +1,5 @@
 part of restlib.common.collections_test;
 
-mutableSequenceTests() {
-  group("class:FixedSizeSequence", () {
-    new MutableSequenceTester((final int size) => new MutableFixedSizeSequence(size))
-      ..testMutableSequence();
-  });
-  
-  group("class:GrowableSequence", () {
-    new MutableSequenceTester((final int size) => new GrowableSequence())
-    ..testMutableSequence();  
-  });
-}
-
 class MutableSequenceTester
     extends Object
     with MutableAssociativeTester, 
@@ -39,9 +27,9 @@ class MutableSequenceTester
   testMutableSequence() {
     testIterable();
     testAssociative();
+    testSequence();
     testMutableAssociative();
     testMutableCollection();
-    testSequence();
   }
 }
 

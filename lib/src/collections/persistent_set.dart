@@ -13,6 +13,11 @@ abstract class PersistentSet<E> extends PersistentCollection<E> implements Finit
   PersistentSet<E> add(E value);
   PersistentSet<E> addAll(Iterable<E> elements);
   PersistentSet<E> remove(E element);
+  
+
+  PersistentSet<E> difference(FiniteSet<E> other);
+  PersistentSet<E> intersection(FiniteSet<Object> other);
+  PersistentSet<E> union(FiniteSet<E> other);
 }
 
 class _PersistentSetBase<E> extends IterableBase<E> implements PersistentSet<E> {
@@ -62,7 +67,7 @@ class _PersistentSetBase<E> extends IterableBase<E> implements PersistentSet<E> 
           (final PersistentSet<E> accumulator, final E element) => 
               accumulator.add(element));
   
-  bool contains(final E element) =>
+  bool contains(final Object element) =>
       _map[element]
         .map((final E v) => 
             true)

@@ -21,4 +21,31 @@ persistentDictionaryTests() {
   group("PersistentHashMap.fromPairs()", () {
     
   });
+  
+  new PersistentDictionaryTester().testPersistentDictionary();
+  
+}
+
+class PersistentDictionaryTester
+    extends Object
+    with 
+      PersistentAssociativeTester,
+      AssociativeTester,
+      IterableTester {
+  
+  final PersistentDictionary empty = PersistentDictionary.EMPTY;
+  final PersistentDictionary single = PersistentDictionary.EMPTY.insert(1, 1);
+  final PersistentDictionary big = PersistentDictionary.EMPTY.insertAll(new List.generate(1000, (i) => new Pair(i,i)));
+  final int invalidKey = 1001;
+  
+  final dynamic generator = () => PersistentDictionary.EMPTY;
+  final PairGenerator pairGenerator = new SequencePairGenerator();
+  
+  PersistentDictionaryTester();
+  
+  testPersistentDictionary() {
+    testIterable();
+    testAssociative();
+    testPersistentAssociative();
+  }
 }

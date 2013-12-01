@@ -62,6 +62,16 @@ abstract class _AbstractSequence<E> extends IterableBase<E> implements Sequence<
   bool containsValue(final E value) =>
       contains(value);
   
+  int indexOf(E element, [int start=0]) {
+    checkNotNull(element);
+    for (int i = start; i < length; i++) {
+      if (this[i] == element) {
+        return i;
+      }
+    }
+    return -1;
+  }
+  
   Sequence<E> subSequence(int start, int length) =>
       new _SubSequence(this, start, length);
 }

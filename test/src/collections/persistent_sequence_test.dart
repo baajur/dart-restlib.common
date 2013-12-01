@@ -15,115 +15,40 @@ persistentSequenceTests() {
     });
   });
   
-  group("get first", () {
-    test("with EMPTY", () =>
-        expect(() => PersistentSequence.EMPTY.first, throwsStateError));
-    test("with non-empty list", () => 
-        expect(new PersistentSequence.from(["a", "b", "c"]).first, equals("a")));
-  });
-  
-  group("get isEmpty", () {
-    test("with EMPTY", () => 
-        expect(PersistentSequence.EMPTY.isEmpty, isTrue));
-    test("with non-empty list", () => 
-        expect(new PersistentSequence.from(["a", "b", "c"]).isEmpty, isFalse));
-  });
-  
-  group("get iterator", () {
-  });
-  
-  group("get last", () {
-    test("with EMPTY" , () =>
-        expect(() => PersistentSequence.EMPTY.last, throwsStateError));
-    test("eith non-emptyList", () => 
-        expect(new PersistentSequence.from(["a", "b", "c"]).last, equals("c")));
-  });
-  
-  group("get reversed", () {
-    List<String> control = ["a", "b", "c"];
-    PersistentSequence<String> test = new PersistentSequence.from(control);
-    
-    expect(test.reversed, equals(control.reversed));
-  });
+  new PersistentSequenceTester(() => PersistentSequence.EMPTY)
+    ..testPersistentSequence();  
+}
 
-  group("get single", () {
-    test("with non-single list", () =>
-        expect(() => new PersistentSequence.from(["a", "b", "c"]).single, throwsStateError));
-    test("with EMPTY", () =>
-        expect(() => PersistentSequence.EMPTY.single, throwsStateError));
-    test("with single list", () =>
-        expect(PersistentSequence.EMPTY.add("a").single, equals("a")));
-  });
+class PersistentSequenceTester
+    extends Object
+    with 
+      PersistentAssociativeTester,
+      PersistentCollectionTester,
+      SequenceTester,
+      AssociativeTester,
+      IterableTester {
   
-  group("get tail", () { 
-    test("with Empty", () => 
-        expect(() => PersistentSequence.EMPTY.tail, throwsStateError));
-    test("with length = 1 list", () => 
-        expect(PersistentSequence.EMPTY.add("a").tail, equals(PersistentSequence.EMPTY)));
-    test("", () {
-      PersistentSequence previousList = PersistentSequence.EMPTY;
-      
-      for (int i = 0; i < 97; i++) {
-        final PersistentSequence newList = previousList.add(i);
-        expect(newList.tail, equals(previousList));
-        previousList = newList;
-      }
-    });
-  });
+  final PersistentSequence empty;
+  final PersistentSequence single;
+  final PersistentSequence big;
+  final int invalidKey;
   
-  group("operator[]", () {
-    test("index in range", () {
-      PersistentSequence test = PersistentSequence.EMPTY;
-      
-      for (int i = 0; i < 10000; i++) {
-        test = test.add(i);
-      }
-      
-      for (int i = 0; i < 10000; i++) {
-        expect(test.elementAt(i), equals(i));
-      } 
-    });
-    
-    test("index out of range", () =>
-        expect(PersistentSequence.EMPTY[1], equals(Option.NONE)));
-  });
+  final dynamic generator;
+  final PairGenerator pairGenerator = new SequencePairGenerator();
+  final ElementGenerator elementGenerator = new SequenceElementGenerator();
   
-  group("add()", () {
-    
-  });
+  PersistentSequenceTester(generator) :
+    empty = generator(),
+    single = generator().add(1),
+    big = (generator().addAll(new List.generate(1000, (i) => i))),
+    invalidKey = 1001,
+    generator = generator;
   
-  group("addAll()", () {
-    
-  });
-  
-  group("elementAt()", () {
-    
-  });
-  
-  group("insert()", () {
-    test("elements into existing indexes", () {
-      PersistentSequence test = PersistentSequence.EMPTY;
-      for (int i = 0; i < 1000; i++) {
-        test = test.add(0);
-      }
-      
-      for (int i = 0; i < 1000; i++) {
-        test = test.insert(i, i);
-      }
-      
-      for (int i = 0; i < 1000; i++) {
-        expect(test.elementAt(i), equals(i));
-      }
-    });
-    
-    test("element at list.length element", () =>
-        expect(PersistentSequence.EMPTY.insert(0, "a").elementAt(0), equals("a")));
-    
-    test("element at invalid index", () => 
-        expect(() => PersistentSequence.EMPTY.insert(100, "a"), throwsRangeError));
-  });
-
-  group("toString()", () {
-
-  });
+  testPersistentSequence() {
+    testIterable();
+    testAssociative();
+    testSequence();
+    testPersistentAssociative();
+    testPersistentCollection();
+  }
 }

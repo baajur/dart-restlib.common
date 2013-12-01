@@ -95,6 +95,8 @@ abstract class Sequence<E> implements Associative<int, E>, Iterable<E> {
   
   Option<E> operator[](int index);
   
+  int indexOf(E element, [int start=0]);
+  
   Sequence<E> subSequence(int start, int length);
 }
 

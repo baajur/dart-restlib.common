@@ -10,6 +10,8 @@ abstract class PersistentStack<E> implements Stack<E> {
   PersistentStack<E> get tail;    
   
   PersistentStack<E> push(E value);
+  
+  PersistentStack<E> pushAll(Iterable<E> value);
 }
 
 class _PersistentStackBase<E> extends IterableBase<E> implements PersistentStack<E> {  
@@ -67,6 +69,9 @@ class _PersistentStackBase<E> extends IterableBase<E> implements PersistentStack
   
   PersistentStack<E> push(final E value) =>
       new _PersistentStackBase._internal(value, this);
+  
+  PersistentStack<E> pushAll(Iterable<E> value) =>
+      value.fold(this, (final PersistentStack acc, E element) => acc.push(element));
   
   String toString() =>
       "[${join(", ")}]";

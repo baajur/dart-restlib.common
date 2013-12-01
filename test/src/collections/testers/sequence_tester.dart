@@ -36,6 +36,13 @@ abstract class SequenceTester {
       });
     });
     
+    test("indexOf()", (){
+      for (int i = 0; i < big.length; i++){
+        expect(big.indexOf(big.elementAt(i)), equals(i));
+        expect(big.indexOf(big.elementAt(i), i), equals(i));
+      }
+    });
+    
     group("subSequence()", () {
       test("with empty", () =>
           expect(empty.subSequence(0, 0), isEmpty));

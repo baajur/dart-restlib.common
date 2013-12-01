@@ -9,7 +9,10 @@ part "src/collections/testers/associative_tester.dart";
 part "src/collections/testers/iterable_tester.dart";
 part "src/collections/testers/mutable_associative_tester.dart";
 part "src/collections/testers/mutable_collection_tester.dart";
+part "src/collections/testers/persistent_associative_tester.dart";
+part "src/collections/testers/persistent_collection_tester.dart";
 part "src/collections/testers/sequence_tester.dart";
+part "src/collections/testers/stack_tester.dart";
 
 part "src/collections/either_test.dart";
 part "src/collections/iterables_test.dart";
@@ -19,6 +22,7 @@ part "src/collections/pair_test.dart";
 part "src/collections/persistent_bimap_test.dart";
 part "src/collections/persistent_dictionary_test.dart";
 part "src/collections/persistent_sequence_test.dart";
+part "src/collections/persistent_set_test.dart";
 part "src/collections/persistent_stack_test.dart";
 
 collectionsTestGroup() {
@@ -29,12 +33,23 @@ collectionsTestGroup() {
     group("class:Option", optionTests);
     group("class:Pair", pairTests);
     
-    mutableSequenceTests();
+    group("class:FixedSizeSequence", () {
+      new MutableSequenceTester((final int size) => new MutableFixedSizeSequence(size))
+        ..testMutableSequence();
+    });
+  
+    group("class:GrowableSequence", () {
+      new MutableSequenceTester((final int size) => new GrowableSequence())
+        ..testMutableSequence();  
+    });
     
-    // group("class:PersistentHashBiMap", persistentHashBiMapTests);
     group("class:PersistentDictionary", persistentDictionaryTests);
     group("class:PersistentSequence", persistentSequenceTests);
+    group("class:PersistentSet", persistentSetTests);
     group("class:PersistentStack", persistentStackTests);
+
+    
+    // group("class:PersistentHashBiMap", persistentHashBiMapTests);
   });
 }
 

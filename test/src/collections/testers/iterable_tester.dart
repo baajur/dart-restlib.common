@@ -1,9 +1,9 @@
 part of restlib.common.collections_test;
 
 abstract class IterableTester {
-  Iterable get empty;
-  Iterable get single;
-  Iterable get big;
+  dynamic get empty;
+  dynamic get single;
+  dynamic get big;
 
   void testIterable() {
     final int bigLength = big.length;
@@ -222,7 +222,7 @@ abstract class IterableTester {
       test("with single", () =>
           expect(single.reduce((a, e) => "a"), equals(singleValue)));     
       testBig("with big", () =>
-          expect(big.reduce((a, e) => "a"), equals("a"))); 
+          expect(big.reduce((a, e) => e), equals(big.last))); 
     });
     
     group("singleWhere()", () {

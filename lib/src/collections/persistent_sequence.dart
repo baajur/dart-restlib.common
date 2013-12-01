@@ -163,6 +163,16 @@ class _PersistentSequenceBase<E> extends IterableBase<E> implements PersistentSe
     throw new RangeError.range(index, 0, length - 1);
   }       
   
+  int indexOf(E element, [int start=0]) {
+    checkNotNull(element);
+    for (int i = start; i < length; i++) {
+      if (elementAt(i) == element) {
+        return i;
+      }
+    }
+    return -1;
+  }
+  
   // assocN
   PersistentSequence<E> insert(final int index, final E element) {
     checkNotNull(element);
@@ -189,15 +199,29 @@ class _PersistentSequenceBase<E> extends IterableBase<E> implements PersistentSe
           (final PersistentSequence<E> accumulator, final Pair<int, E> pair) => 
               accumulator.insert(pair.fst, pair.snd));
  
-  PersistentSequence<E> push(E element) =>
+  PersistentSequence<E> push(final E element) =>
       add(element);
   
-  // FIXME:
-  PersistentSequence<E> remove(E element) => null;
+  PersistentSequence<E> pushAll(final Iterable<E> elements) =>
+      addAll(elements);
   
+  PersistentSequence<E> remove(final E element) =>
+      removeAt(indexOf(element));
+  
+  // FIXME: Performance?
   PersistentSequence<E> removeAt(final int key) {
-    // FIXME:
-    return this;
+    checkRangeInclusive(key, 0, length);
+    PersistentSequence<E> retval = this;
+    
+    for (int i = length; i > key; i--) {
+      retval = retval.tail;
+    }
+    
+    for (int i = (key + 1); i < length; i++) {
+      retval = retval.add(elementAt(i));
+    }
+    
+    return retval;
   }
   
   Sequence subSequence(int start, int length) =>

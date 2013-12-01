@@ -49,9 +49,6 @@ class _PersistentDictionaryBase<K,V> extends IterableBase<Pair<K,V>> implements 
       this.map((final Pair<K,V> pair) => 
           pair.snd);
   
-  Pair<K,V> get single =>
-    (length == 1) ? (iterator..moveNext()..current) : throw new StateError("");
-  
   bool operator ==(final other) {
     if (identical(this, other)) {
       return true;
@@ -77,17 +74,23 @@ class _PersistentDictionaryBase<K,V> extends IterableBase<Pair<K,V>> implements 
     return isNotNull(_root) ? _root.find(0, key.hashCode, key) : Option.NONE;
   }
   
-  bool contains(final Pair<K,V> pair) =>
-    this[pair.fst]
-      .map((final V value) => 
-          value == pair.snd)
-      .orElse(false);
-  
+  bool contains(final Object pair) {
+    if (pair is Pair) {
+      return this[pair.fst]
+        .map((final V value) => 
+            value == pair.snd)
+        .orElse(false);
+    } else {
+      return false;
+    }
+  }
+    
   bool containsKey(final K key) =>
       this[key] != Option.NONE;
   
-  // FIXME:
-  bool containsValue(final V value) => null;
+  bool containsValue(final V value) => 
+      this.any((final Pair<K,V> pair) => 
+          pair.snd == value);
   
   PersistentDictionary<K,V> insert(final K key, final V value) {
     checkNotNull(key);
