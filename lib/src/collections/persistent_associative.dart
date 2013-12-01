@@ -1,6 +1,6 @@
 part of restlib.common.collections;
 
-abstract class PersistentAssociative<K,V> implements Associative<K,V> {
+abstract class PersistentAssociative<K,V> implements Associative<K,V>, Immutable {
   PersistentAssociative<K,V> insertAll(final Iterable<Pair<K, V>> pairs);
   
   PersistentAssociative<K,V> insert(final K key, final V value);

@@ -17,7 +17,17 @@ part "src/collections/forwarding_iterable.dart";
 part "src/collections/forwarding_multimap.dart";
 part "src/collections/forwarding_multiset.dart";
 part "src/collections/forwarding_sequence.dart";
+part "src/collections/forwarding_set.dart";
 part "src/collections/forwarding_stack.dart";
+part "src/collections/immutable.dart";
+part "src/collections/immutable_bimap.dart";
+part "src/collections/immutable_dictionary.dart";
+part "src/collections/immutable_multimap_multiset.dart";
+part "src/collections/immutable_multimap_sequence.dart";
+part "src/collections/immutable_multimap_set.dart";
+part "src/collections/immutable_multiset.dart";
+part "src/collections/immutable_sequence.dart";
+part "src/collections/immutable_set.dart";
 part "src/collections/iterables.dart";
 part "src/collections/mutable_associative.dart";
 part "src/collections/mutable_bimap.dart";
@@ -74,7 +84,7 @@ abstract class Dictionary<K,V> implements Associative<K,V>, Iterable<Pair<K,V>>{
 
 abstract class FiniteSet<E> implements Iterable<E> {
   FiniteSet<E> difference(FiniteSet<E> other);
-  FiniteSet<E> intersection(FiniteSet<Object> other);
+  FiniteSet<E> intersection(FiniteSet<E> other);
   FiniteSet<E> union(FiniteSet<E> other);
 }
 
@@ -82,11 +92,15 @@ abstract class Multimap<K,V, I extends Iterable<V>> implements Associative<K,V>,
   Dictionary<K, I> get dictionary;
 }
 
-abstract class SequenceMultimap<K,V, I extends Sequence<V>> extends Multimap<K,V,I> {
+abstract class SequenceMultimap<K,V, I extends Sequence<V>> implements Multimap<K,V,I> {
   
 }
 
-abstract class MultisetMultimap<K,V, I extends Multiset<V>> extends Multimap<K,V,I> {
+abstract class MultisetMultimap<K,V, I extends Multiset<V>> implements Multimap<K,V,I> {
+  
+}
+
+abstract class SetMultimap<K,V, I extends FiniteSet<V>> implements Multimap<K,V,I> {
   
 }
 

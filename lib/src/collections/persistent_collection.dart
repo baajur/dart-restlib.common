@@ -1,6 +1,6 @@
 part of restlib.common.collections;
 
-abstract class PersistentCollection<E> extends Iterable<E> {
+abstract class PersistentCollection<E> implements Iterable<E>, Immutable {
   PersistentCollection<E> add(E value);
   
   PersistentCollection<E> addAll(Iterable<E> elements);  

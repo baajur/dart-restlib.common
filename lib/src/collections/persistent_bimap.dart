@@ -66,7 +66,7 @@ class _PersistentBiMapBase<K,V>
       return true;
     } else if (other is _PersistentBiMapBase) {
       return this.delegate == other.delegate;
-    } else if (other is PersistentBiMap) {
+    } else if ((other is BiMap) && (other is Immutable)) {
       // FIXME:
       return false;
     } else {

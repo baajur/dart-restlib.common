@@ -98,7 +98,7 @@ class _PersistentSequenceBase<E> extends IterableBase<E> implements PersistentSe
   bool operator==(other) {
     if (identical(this, other)) {
       return true;
-    } else if (other is _PersistentSequenceBase) {
+    } else if ((other is Sequence) && (other is Immutable)) {
       return equal(this, other);
     } else {
       return false;

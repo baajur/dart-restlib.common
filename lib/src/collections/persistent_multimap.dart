@@ -38,7 +38,7 @@ abstract class _AbstractPersistentMultimap<K,V, I extends PersistentCollection<V
       return true;
     } else if (other is _AbstractPersistentMultimap) {
       return this.dictionary == other.dictionary;
-    } else if (other is PersistentMultimap) {
+    } else if ((other is Multimap) && (other is Immutable)) {
       // FIXME:
       return false;
     } else {
