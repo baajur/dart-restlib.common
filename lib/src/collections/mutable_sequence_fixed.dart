@@ -64,7 +64,7 @@ class _MutableFixedSizeSequenceBase<E> extends _AbstractMutableSequence<E> imple
       delegate.length;
   
   void operator[]=(final int index, final E value) {
-    checkArgument(index > 0);
+    checkArgument(index >= 0);
     checkNotNull(value);
     
     if (index >= 0 && index < length) {
@@ -87,15 +87,22 @@ class _MutableFixedSizeSequenceBase<E> extends _AbstractMutableSequence<E> imple
     }
   }
   
+  void clear() {
+      _length = 0;
+  }
+      
   Option<E> remove(E element) {
-    final int indexOfE = delegate.indexOf(E);
+    final int indexOfE = delegate.indexOf(element);
     
     if(indexOfE > -1) {
       _length--;
       
       for(int i = indexOfE; i < (delegate.length - 1); i++) {
         delegate[i] = delegate[i + 1];
+        
       }
+      delegate[delegate.length - 1] = null;
+      
       return new Option(element);
     } 
     
@@ -103,7 +110,7 @@ class _MutableFixedSizeSequenceBase<E> extends _AbstractMutableSequence<E> imple
   }
   
   E removeAt(int index) {
-    checkArgument(index > 0);
+    checkArgument(index >= 0);
     
     if (index < _length) {
       final E retVal = 
@@ -119,5 +126,5 @@ class _MutableFixedSizeSequenceBase<E> extends _AbstractMutableSequence<E> imple
   }
   
   String toString() => 
-      delegate.take(_length).toString();
+      delegate.take(_length).toList().toString();
 }

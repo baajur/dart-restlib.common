@@ -27,9 +27,6 @@ abstract class _AbstractMutableSequence<E>
           new Option(delegate[index]) : 
             Option.NONE;
   
-  void clear() =>
-      delegate.clear();
-  
   void insertAll(final Iterable<Pair<int, E>> other) =>
       other.forEach((final Pair<int, E> pair) => 
           this.insert(pair.fst, pair.snd));

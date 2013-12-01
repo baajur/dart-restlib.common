@@ -7,7 +7,7 @@ abstract class IterableTester {
 
   void testIterable() {
     final int bigLength = big.length;
-    final singleValue = (single.iterator..moveNext()).current;
+    final singleValue = single.first;
  
     void testBig(String spec, TestFunction body) =>
         (bigLength > 1) ? 
@@ -20,7 +20,7 @@ abstract class IterableTester {
           expect(single.first, equals(singleValue)));
       
       testBig("with big", () => 
-          expect(single.first, equals((big.iterator..moveNext()).current)));
+          expect(big.first, equals((big.iterator..moveNext()).current)));
     });
     
     group("get isEmpty", () {
@@ -61,7 +61,7 @@ abstract class IterableTester {
         expect(() {
           int testIndex = 0;
 
-          return single.any((e) {
+          return big.any((e) {
             testIndex++;
             return testIndex > (bigLength / 2);
           });
@@ -93,7 +93,7 @@ abstract class IterableTester {
       });
       testBig("with big", () {
         int index = 0;
-        single.forEach((e){   
+        big.forEach((e){   
           expect(big.elementAt(index), equals(e));
           index++;
         });
@@ -113,7 +113,7 @@ abstract class IterableTester {
         expect(() {
           int testIndex = 0;
 
-          return single.every((e) {
+          return big.every((e) {
             testIndex++;
             return testIndex < (bigLength / 2);
           });
@@ -154,7 +154,7 @@ abstract class IterableTester {
             testIndex++;
             return testIndex > (bigLength / 2);
           });
-        }(), equals(big.elementAt((bigLength ~/ 2) + 1)));
+        }(), equals(big.elementAt((bigLength ~/ 2))));
       });
     });
     
@@ -164,7 +164,7 @@ abstract class IterableTester {
       test("with single", () =>
           expect(single.fold(1, (i, e) => i + 1), equals(2))); 
       testBig("with big", () =>
-          expect(big.fold(1, (i, e) => i + 1), equals(bigLength)));
+          expect(big.fold(0, (i, e) => i + 1), equals(bigLength)));
     });
     
     group("forEach()", () {
@@ -178,7 +178,7 @@ abstract class IterableTester {
           expect(forEachTest(empty, 0), isTrue)); 
       test("with single", () =>
           expect(forEachTest(single, 1), isTrue)); 
-      test("with single", () =>
+      test("with big", () =>
           expect(forEachTest(big, bigLength), isTrue)); 
     });
     
@@ -203,14 +203,7 @@ abstract class IterableTester {
         expect(single.lastWhere((e) => true, orElse: () => null), equals(singleValue));
       }); 
       testBig("with big", () {
-        expect((() {
-          int testIndex = 0;
-
-          return single.lastWhere((e) {
-            testIndex++;
-            return testIndex > (bigLength / 2);
-          });
-        })(), equals(big.last));
+        expect(big.lastWhere((e) => e == big.last), equals(big.last));
       });
     });
     
@@ -229,7 +222,7 @@ abstract class IterableTester {
       test("with single", () =>
           expect(single.reduce((a, e) => "a"), equals(singleValue)));     
       testBig("with big", () =>
-          expect(single.reduce((a, e) => "a"), equals("a"))); 
+          expect(big.reduce((a, e) => "a"), equals("a"))); 
     });
     
     group("singleWhere()", () {
@@ -282,7 +275,7 @@ abstract class IterableTester {
         expect(single.take(1), equals(single));
       }); 
       testBig("with big", () {
-        expect(big.skip(bigLength), equals(big));
+        expect(big.take(bigLength), equals(big));
         
         final int taken = bigLength~/2;
         final Iterable bigHalf = big.take(taken);
@@ -332,7 +325,7 @@ abstract class IterableTester {
       });  
       testBig("with big", () {
         expect(big.where((e) => false), equals(empty));
-        expect(big.where((e) => true), equals(single));
+        expect(big.where((e) => true), equals(big));
       });  
     });
   }

@@ -1,11 +1,13 @@
 library restlib.common.collections;
 
 import "dart:collection";
+import "dart:math";
 import "dart:typed_data";
 
 import "objects.dart";
 import "preconditions.dart";
 
+part "src/collections/array.dart";
 part "src/collections/either.dart";
 part "src/collections/forwarding_associative.dart";
 part "src/collections/forwarding_bimap.dart";

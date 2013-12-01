@@ -2,11 +2,74 @@ part of restlib.common.collections_test;
 
 mutableSequenceTests() {
   group("class:FixedSizeSequence", () {
+    new MutableSequenceTester((final int size) => new MutableFixedSizeSequence(size))
+      ..testMutableSequence();
   });
   
   group("class:GrowableSequence", () {
-    
+    new MutableSequenceTester((final int size) => new GrowableSequence())
+    ..testMutableSequence();  
   });
 }
 
+class MutableSequenceTester
+    extends Object
+    with MutableAssociativeTester, 
+      MutableCollectionTester,
+      SequenceTester,
+      AssociativeTester,
+      IterableTester {
+  
+  final MutableSequence empty;
+  final MutableSequence single;
+  final MutableSequence big;
+  final int invalidKey;
+  
+  final dynamic generator;
+  final PairGenerator pairGenerator = new SequencePairGenerator();
+  final ElementGenerator elementGenerator = new SequenceElementGenerator();
+  
+  MutableSequenceTester(generator) :
+    empty = generator(0),
+    single = generator(1)..add(1),
+    big = (generator(1000)..addAll(new List.generate(1000, (i) => i))),
+    invalidKey = 1001,
+    generator = generator;
+  
+  testMutableSequence() {
+    testIterable();
+    testAssociative();
+    testMutableAssociative();
+    testMutableCollection();
+    testSequence();
+  }
+}
 
+class SequenceElementGenerator implements ElementGenerator {
+int _index = 0;
+  
+  void reset() {
+    _index = 0;
+  }
+  
+  int next() {
+    final int retval = _index;
+    _index++;
+    return retval;
+  }
+}
+
+class SequencePairGenerator implements PairGenerator {
+  int _index = 0;
+  
+  void reset() {
+    _index = 0;
+  }
+  
+  Pair next() {
+    final Pair retval = new Pair(_index, _index);
+    _index++;
+    return retval;
+  }
+}
+      
