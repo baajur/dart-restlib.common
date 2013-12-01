@@ -17,6 +17,9 @@ class Array<E> implements Iterable<E>, Forwarder {
     delegate[index] = value;
   }
   
+  Array<E> copy() =>
+      new Array.wrap(delegate.toList(growable: false));
+  
   void setAll(int index, Iterable<E> iterable) =>
       delegate.setAll(index, iterable);
   

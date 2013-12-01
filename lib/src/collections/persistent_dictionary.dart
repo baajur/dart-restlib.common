@@ -141,7 +141,7 @@ abstract class _INode<K,V> extends Iterable<Pair<K,V>> {
 
 class _ArrayNode<K,V> extends Object with IterableMixin<Pair<K,V>> implements _INode<K,V>{
   final int _count;
-  final List<_INode> _array;
+  final Array<_INode> _array;
   
   _ArrayNode(this._count, this._array);
   
@@ -189,7 +189,7 @@ class _ArrayNode<K,V> extends Object with IterableMixin<Pair<K,V>> implements _I
   }
   
   _INode<K,V> _pack(final int idx) {
-    final List newArray = new List(2*(_count - 1));
+    final Array newArray = new Array.ofSize(2*(_count - 1));
     int j = 1;
     int bitmap = 0;
     
@@ -214,10 +214,10 @@ class _ArrayNode<K,V> extends Object with IterableMixin<Pair<K,V>> implements _I
 }
 
 class _BitmapIndexedNode<K,V> extends IterableBase<Pair<K,V>> implements _INode<K,V> {
-  static const _BitmapIndexedNode EMPTY = const _BitmapIndexedNode(0, EMPTY_LIST);
+  static const _BitmapIndexedNode EMPTY = const _BitmapIndexedNode(0, Array.EMPTY);
   
   final int _bitmap;
-  final List _array;
+  final Array _array;
   
   const _BitmapIndexedNode(this._bitmap, this._array);
   
@@ -250,7 +250,7 @@ class _BitmapIndexedNode<K,V> extends IterableBase<Pair<K,V>> implements _INode<
       final int n = _bitCount32(_bitmap);
       
       if (n >= 16) {
-        final List<_INode> nodes = new List(32);
+        final Array<_INode> nodes = new Array.ofSize(32);
         final int jdx = _mask(hash, shift);
         nodes[jdx] = EMPTY.assoc(shift + 5, keyHash, key, value);  
         
@@ -268,8 +268,8 @@ class _BitmapIndexedNode<K,V> extends IterableBase<Pair<K,V>> implements _INode<
         
         return new _ArrayNode(n + 1, nodes);
       } else {
-        List newArray = 
-            new List(2*(n+1))..setAll(0, _array)
+        Array newArray = 
+            new Array.ofSize(2*(n+1))..setAll(0, _array)
               ..[2*idx] = key
               ..[2*idx+1] = value
               ..setAll(2*(idx+1), _array.skip(2*idx));
@@ -374,7 +374,7 @@ class _BitmapIndexedNodeIterator<K,V> implements Iterator<Pair<K,V>> {
 class _HashCollisionNode<K,V> extends Object with IterableMixin<Pair<K,V>> implements _INode<K,V> {
   final int _hash;
   final int _count;
-  final List _array;
+  final Array _array;
   
   _HashCollisionNode(this._hash, this._count, this._array);
   
@@ -386,12 +386,12 @@ class _HashCollisionNode<K,V> extends Object with IterableMixin<Pair<K,V>> imple
       if (idx != -1) {
         return (_array[idx + 1] == value) ? this : new _HashCollisionNode(_hash, _count, _cloneAndSetObject(_array, idx + 1, value));
       } else {
-        final List newArray = new List(_array.length + 2)..setAll(0, _array)..[_array.length] = key..[_array.length + 1] = value;
+        final Array newArray = new Array.ofSize(_array.length + 2)..setAll(0, _array)..[_array.length] = key..[_array.length + 1] = value;
         return new _HashCollisionNode(_hash, _count + 1, newArray);
       }
     }
     // nest it in a bitmap node
-    return new _BitmapIndexedNode(_bitpos(this._hash, shift), [null, this])
+    return new _BitmapIndexedNode(_bitpos(this._hash, shift), new Array.wrap([null, this]))
       .assoc(shift, keyHash, key, value);
   }
   
@@ -450,17 +450,17 @@ class _HashCollisionNodeIterator<K,V> implements Iterator<Pair<K,V>> {
   }
 }
 
-List _cloneAndSetObject(final List array, final int i, final Object a) =>
-  array.toList(growable: false)..[i] = a;
+Array _cloneAndSetObject(final Array array, final int i, final Object a) =>
+  array.copy()..[i] = a;
 
-List _cloneAndSetKeyValue(final List array, final int i, final Object a, final int j, final Object b) =>
-  array.toList(growable: false)..[i] = a..[j] = b;
+Array _cloneAndSetKeyValue(final Array array, final int i, final Object a, final int j, final Object b) =>
+  array.copy()..[i] = a..[j] = b;
 
 _INode _createNode(final int shift, final int key1hash, 
                    final Object key1, final Object val1, 
                    final int key2hash, final Object key2, final Object val2) =>
   (key1hash == key2hash) ? 
-      new _HashCollisionNode(key1hash, 2, [key1, val1, key2, val2]) :
+      new _HashCollisionNode(key1hash, 2, new Array.wrap([key1, val1, key2, val2])) :
         _BitmapIndexedNode.EMPTY
           .assoc(shift, key1hash, key1, val1)
           .assoc(shift, key2hash, key2, val2);
@@ -482,5 +482,5 @@ int _bitCount32(int n) {
    return count;
 }
 
-List _removePair(final List array, int i) =>
-  new List(array.length - 2)..setAll(0, array.take(2*i))..setAll(2*i, array.skip(2*(i+1)).take(array.length - 2 - 2*i));
+Array _removePair(final Array array, int i) =>
+  new Array.ofSize(array.length - 2)..setAll(0, array.take(2*i))..setAll(2*i, array.skip(2*(i+1)).take(array.length - 2 - 2*i));
