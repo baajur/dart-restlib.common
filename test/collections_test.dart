@@ -43,13 +43,11 @@ collectionsTestGroup() {
         ..testMutableSequence();  
     });
     
+    group("class:PersistenthBiMap", persistentBiMapTests);
     group("class:PersistentDictionary", persistentDictionaryTests);
     group("class:PersistentSequence", persistentSequenceTests);
     group("class:PersistentSet", persistentSetTests);
     group("class:PersistentStack", persistentStackTests);
-
-    
-    // group("class:PersistentHashBiMap", persistentHashBiMapTests);
   });
 }
 

@@ -10,7 +10,7 @@ abstract class ForwardingIterable<E> implements Forwarder, Iterable<E> {
   Iterable expand(Iterable f(E element)) => 
       delegate.expand(f);
 
-  bool contains(final E element) => 
+  bool contains(final Object element) => 
       delegate.contains(element);
 
   void forEach(void f(E element)) => 
