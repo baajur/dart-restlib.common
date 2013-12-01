@@ -7,6 +7,9 @@ abstract class ForwardingSequence<E> implements Forwarder, Sequence<E> {
   Option<E> operator[](int index) => 
       delegate[index];
   
+  List<E> asList() =>
+      delegate.asList();
+  
   int indexOf(E element, [int start=0]) =>
       delegate.indexOf(element);
   
