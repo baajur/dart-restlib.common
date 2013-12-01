@@ -34,6 +34,7 @@ part "src/collections/mutable_sequence_fixed.dart";
 part "src/collections/mutable_sequence_growable.dart";
 part "src/collections/mutable_set.dart";
 part "src/collections/option.dart";
+part "src/collections/option_array.dart";
 part "src/collections/pair.dart";
 part "src/collections/persistent_associative.dart";
 part "src/collections/persistent_bimap.dart";

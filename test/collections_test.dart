@@ -18,6 +18,7 @@ part "src/collections/array_test.dart";
 part "src/collections/either_test.dart";
 part "src/collections/iterables_test.dart";
 part "src/collections/mutable_sequence_test.dart";
+part "src/collections/option_array_test.dart";
 part "src/collections/option_test.dart";
 part "src/collections/pair_test.dart";
 part "src/collections/persistent_bimap_test.dart";
@@ -34,6 +35,7 @@ collectionsTestGroup() {
         new ArrayTester().testArray());
     group("class:Either", eitherTests);
     group("class:Option", optionTests);
+    group("class:OptionArray", () => new OptionArrayTester().testObjectArray());
     group("class:Pair", pairTests);
     
     group("class:FixedSizeSequence", () {
