@@ -24,22 +24,13 @@ abstract class ImmutableDictionary<K,V> implements Dictionary<K,V>, ImmutableAss
   ImmutableDictionary<K,V> putIfAbsent(final K key, final V value);
 }
 
-abstract class _ImmutableDictionaryBase<K,V> extends IterableBase<Pair<K,V>> implements ImmutableDictionary<K,V> {
+abstract class _ImmutableDictionaryBase<K,V> 
+    extends _DictionaryBase<K,V> implements ImmutableDictionary<K,V> {
   const _ImmutableDictionaryBase();
   
   int get hashCode =>
       fold(0, (final int accumulator, final Pair<K,V> pair) => 
           accumulator + (pair.fst.hashCode ^ pair.snd.hashCode));
-  
-  bool get isEmpty => length == 0;
-  
-  Iterable<K> get keys =>
-      this.map((final Pair<K,V> pair) => 
-          pair.fst);
-  
-  Iterable<V> get values =>
-      this.map((final Pair<K,V> pair) => 
-          pair.snd);
   
   bool operator ==(final other) {
     if (identical(this, other)) {
@@ -59,28 +50,7 @@ abstract class _ImmutableDictionaryBase<K,V> extends IterableBase<Pair<K,V>> imp
       return false;
     }
   }
-  
-  Map<K,V> asMap() =>
-      new _DictionaryAsMap(this);
-  
-  bool contains(final Object pair) {
-    if (pair is Pair) {
-      return this[pair.fst]
-        .map((final V value) => 
-            value == pair.snd)
-        .orElse(false);
-    } else {
-      return false;
-    }
-  }
-    
-  bool containsKey(final K key) =>
-      this[key] != Option.NONE;
-  
-  bool containsValue(final V value) => 
-      this.any((final Pair<K,V> pair) => 
-          pair.snd == value);
-  
+
   ImmutableDictionary<K,V> insertPair(final Pair<K,V> pair) =>
       insert(pair.fst, pair.snd);
   
@@ -90,7 +60,4 @@ abstract class _ImmutableDictionaryBase<K,V> extends IterableBase<Pair<K,V>> imp
             this)
         .orCompute(() => 
             this.insert(key, value));
-  
-  String toString() =>
-      "{" + map((pair) => "${pair.fst} : ${pair.snd}").join(", ") + "}";
 }

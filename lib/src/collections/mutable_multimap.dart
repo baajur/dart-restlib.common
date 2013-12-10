@@ -8,7 +8,9 @@ abstract class MutableMultimap<K, V, I extends MutableCollection<V>> implements 
   I removeAt(K key);
 }
 
-abstract class _AbstractMutableMultimap<K,V, I extends MutableCollection<V>> extends IterableBase<Pair<K,V>> implements MutableMultimap<K,V, I> {
+abstract class _AbstractMutableMultimap<K,V, I extends MutableCollection<V>> 
+    extends _MultimapBase<K,V,I>
+    implements MutableMultimap<K,V, I> {
   final MutableDictionary<K, I> _delegate;
   
   _AbstractMutableMultimap(this._delegate);
@@ -16,21 +18,6 @@ abstract class _AbstractMutableMultimap<K,V, I extends MutableCollection<V>> ext
   // FIXME: Maybe wrap MutableDictionary to prevent doing something dumb
   // like inserting non Sequence values
   MutableDictionary<K, I> get dictionary => _delegate;   
-    
-  bool get isEmpty => 
-      _delegate.isEmpty;
-  
-  Iterator<Pair<K,V>> get iterator =>
-      _delegate.expand((final Pair<K, Sequence<V>> pair) =>
-          pair.snd.map((final V value) =>
-              new Pair(pair.fst, value))).iterator;
-  
-  Iterable<K> get keys =>
-      _delegate.keys;
-  
-  Iterable<V> get values =>
-      this.map((final Pair<K,V> pair) => 
-          pair.snd);
   
   I operator[](final K key) =>
       _delegate[key]
@@ -49,13 +36,6 @@ abstract class _AbstractMutableMultimap<K,V, I extends MutableCollection<V>> ext
   void clear() =>
       _delegate.clear();
   
-  bool containsKey(final K key) =>
-      _delegate.containsKey(key);
-  
-  bool containsValue(final V value) =>
-      keys.any((final K key) => 
-          this[key].contains(value));
-  
   void insert(final K key, final V value) => 
       _delegate.insert(key, 
           _delegate[key]
@@ -73,7 +53,4 @@ abstract class _AbstractMutableMultimap<K,V, I extends MutableCollection<V>> ext
   
   I removeAt(final K key) =>
       _delegate.removeAt(key);
-  
-  String toString() => 
-      _delegate.toString();
 }

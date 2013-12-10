@@ -41,6 +41,7 @@ part "src/collections/immutable_sequence.dart";
 part "src/collections/immutable_set.dart";
 part "src/collections/immutable_stack.dart";
 part "src/collections/iterables.dart";
+part "src/collections/multimap.dart";
 part "src/collections/mutable_associative.dart";
 part "src/collections/mutable_bimap.dart";
 part "src/collections/mutable_collection.dart";

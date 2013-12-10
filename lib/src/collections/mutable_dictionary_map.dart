@@ -1,12 +1,10 @@
 part of restlib.common.collections;
 
-class _MutableDictionaryBase<K,V> extends IterableBase<Pair<K,V>> implements MutableDictionary<K,V> {
+class _MutableDictionaryBase<K,V> 
+    extends _DictionaryBase<K,V> implements MutableDictionary<K,V> {
   final Map<K,V> _delegate;
     
   _MutableDictionaryBase._internal(this._delegate);
-  
-  bool get isEmpty =>
-      _delegate.isEmpty;
   
   Iterator<Pair<K,V>> get iterator =>
       new _MapIterator(_delegate);
@@ -27,27 +25,12 @@ class _MutableDictionaryBase<K,V> extends IterableBase<Pair<K,V>> implements Mut
       _delegate[checkNotNull(key)] = checkNotNull(value);
   }
   
-  Map<K,V> asMap() =>
-      new _DictionaryAsMap(this);
-  
   void clear() =>
       _delegate.clear();
   
   void insertAll(final Iterable<Pair<K, V>> other) =>
       other.forEach((final Pair<K,V> pair) =>
           _delegate[pair.fst] = pair.snd);
-  
-  bool contains(final Pair<K,V> pair) =>
-      this[pair.fst]
-        .map((final V value) => 
-            value == pair.snd)
-        .orElse(false);
-  
-  bool containsKey(final K key) =>
-      _delegate.containsKey(key);
-  
-  bool containsValue(final V value) =>
-      _delegate.containsValue(value);
   
   void insert(final K key, final V value) {
       this[key] = value;
@@ -65,9 +48,6 @@ class _MutableDictionaryBase<K,V> extends IterableBase<Pair<K,V>> implements Mut
       return Option.NONE;
     }
   }
-  
-  String toString() => 
-      _delegate.toString();
 }
 
 class _MapIterator<K,V> implements Iterator<Pair<K,V>> {
