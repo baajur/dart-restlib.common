@@ -33,3 +33,7 @@ abstract class ImmutableBiMap<K,V> implements BiMap<K,V>, ImmutableDictionary<K,
   
   ImmutableBiMap<K,V> putIfAbsent(final K key, final V value);
 }
+
+abstract class _ImmutableBiMapBase<K,V> extends _ImmutableDictionaryBase<K,V> implements ImmutableBiMap<K,V> {
+  const _ImmutableBiMapBase();
+}

@@ -27,6 +27,7 @@ part "src/collections/forwarding_multiset.dart";
 part "src/collections/forwarding_sequence.dart";
 part "src/collections/forwarding_set.dart";
 part "src/collections/forwarding_stack.dart";
+part "src/collections/immutable.dart";
 part "src/collections/immutable_associative.dart";
 part "src/collections/immutable_bimap.dart";
 part "src/collections/immutable_collection.dart";
