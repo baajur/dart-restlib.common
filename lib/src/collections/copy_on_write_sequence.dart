@@ -24,6 +24,9 @@ class _CopyOnWriteSequence<E>
   ImmutableSequence<E> get tail =>
       new _CopyOnWriteSequence(delegate.subSequence(0, length - 1));
   
+  Option<E> operator[](int key) => 
+      delegate[key];
+  
   ImmutableSequence add(E element) =>
       new _CopyOnWriteSequence(
           new MutableFixedSizeSequence(length + 1)
@@ -36,10 +39,28 @@ class _CopyOnWriteSequence<E>
             ..addAll(this)
             ..addAll(elements));
   
-  ImmutableSequence<E> insert(final int key, final E value);
+  ImmutableSequence<E> insert(final int key, final E value) {
+    if (key < length) {
+      return new _CopyOnWriteSequence(
+          new MutableFixedSizeSequence(length)
+            ..addAll(this)
+            ..insert(key, value));
+    } else if (key == length) {
+      return add(value);
+    } 
+    
+    throw new RangeError.value(key);
+  }
   
-  ImmutableSequence<E> insertAll(final Iterable<Pair<int, E>> other);
+  ImmutableSequence<E> insertAll(final Iterable<Pair<int, E>> elements) =>
+      new _CopyOnWriteSequence(
+          new MutableFixedSizeSequence(length)
+            ..addAll(this)
+            ..insertAll(elements));  
   
-
-  
+  ImmutableSequence<E> removeAt(final int key) =>
+      new _CopyOnWriteSequence(
+          new MutableFixedSizeSequence(length)
+            ..addAll(this)
+            ..removeAt(key));  
 }

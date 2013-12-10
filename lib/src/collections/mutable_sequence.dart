@@ -4,30 +4,14 @@ abstract class MutableSequence<E> implements Sequence<E>, MutableCollection<E>, 
 }
 
 abstract class _AbstractMutableSequence<E> 
-    extends Object
-    with ForwardingIterable<E>, 
-      ToStringForwarder
-    implements MutableSequence<E>, Forwarder {
-  final List<E> delegate;
-  
-  _AbstractMutableSequence(this.delegate);
-  
-  Iterable<int> get keys =>
-      new List.generate(length, 
-          (final int index) => index);
-  
-  Iterable<E> get values =>
-      this;
-  
-  Iterable<E> get reversed =>
-      new _ReverseSequence(this);
+    extends _SequenceBase<E>
+    implements MutableSequence<E>, Forwarder {  
+  _AbstractMutableSequence();
   
   Option<E> operator[](final int index) =>
       (index >= 0 && index < length) ? 
           new Option(delegate[index]) : 
-            Option.NONE;
-  List<E> asList() =>
-      new _SequenceAsList(this);         
+            Option.NONE;        
           
   int indexOf(E element, [int start=0]) =>
       delegate.indexOf(checkNotNull(element), start);
@@ -47,17 +31,8 @@ abstract class _AbstractMutableSequence<E>
       elements.forEach((final E element) => 
           add(element));
   
-  bool containsKey(final int key) =>
-      (key >= 0) && (key < length);
-  
-  bool containsValue(final E element) =>
-      delegate.contains(element);
-  
   E elementAt(final int index) =>
       (index >= 0 && index < length) ?
         delegate[index] :
           throw new RangeError.range(index, 0, length - 1);   
-  
-  Sequence<E> subSequence(int start, int length) =>
-      new _SubSequence(this, start, length);
 }

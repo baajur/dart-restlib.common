@@ -47,15 +47,11 @@ abstract class MutableFixedSizeSequence<E> implements MutableSequence<E> {
 }
 
 class _MutableFixedSizeSequenceBase<E> extends _AbstractMutableSequence<E> implements MutableFixedSizeSequence<E> {
+  final List<E> delegate;
+  
   int _length = 0;
     
-  _MutableFixedSizeSequenceBase._internal(final List<E> delegate) : super(delegate);
-  
-  bool get isEmpty => 
-      _length == 0;
-  
-  Iterator<E> get iterator =>
-      delegate.take(_length).iterator;
+  _MutableFixedSizeSequenceBase._internal(this.delegate);
   
   int get length => 
       _length;
@@ -124,7 +120,4 @@ class _MutableFixedSizeSequenceBase<E> extends _AbstractMutableSequence<E> imple
       throw new RangeError.value(length);
     }
   }
-  
-  String toString() => 
-      delegate.take(_length).toList().toString();
 }

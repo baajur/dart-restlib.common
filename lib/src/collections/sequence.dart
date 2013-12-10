@@ -14,7 +14,7 @@ class _SequenceIterator<E> implements Iterator<E> {
       (++_currIndex) < _list.length; 
 }
 
-class _ReverseSequence<E> extends _AbstractSequence<E> { 
+class _ReverseSequence<E> extends _SequenceBase<E> { 
   final Sequence<E> reversed;
   
   _ReverseSequence(this.reversed);
@@ -29,7 +29,7 @@ class _ReverseSequence<E> extends _AbstractSequence<E> {
       (reversed.length - key) >= 0;
 }
 
-class _SubSequence<E> extends _AbstractSequence<E> { 
+class _SubSequence<E> extends _SequenceBase<E> { 
   final Sequence<E> _delegate;
   final int _start;
   final int length;
@@ -45,7 +45,15 @@ class _SubSequence<E> extends _AbstractSequence<E> {
       (_start + key) < length;
 }
 
-abstract class _AbstractSequence<E> extends IterableBase<E> implements Sequence<E> {
+abstract class _SequenceBase<E> extends IterableBase<E> implements Sequence<E> {
+  const _SequenceBase();
+  
+  E get first =>
+      isEmpty ? throw new StateError("List is empty") : this.elementAt(0);
+  
+  bool get isEmpty =>
+      length == 0;   
+  
   Iterator<E> get iterator =>
       new _SequenceIterator(this);
   
@@ -53,14 +61,23 @@ abstract class _AbstractSequence<E> extends IterableBase<E> implements Sequence<
       new List.generate(length, 
           (final int index) => index);
   
+  E get last =>
+      isEmpty ? throw new StateError("List is empty") : this.elementAt(length - 1);    
+      
+  Sequence<E> get reversed =>
+      new _ReverseSequence(this);    
+  
+  E get single =>
+      (length == 1) ? this.elementAt(0) : throw new StateError("List has $length elements");
+  
   Iterable<E> get values =>
       this;
   
-  Sequence<E> get reversed =>
-      new _ReverseSequence(this);
-  
   List<E> asList() =>
       new _SequenceAsList(this);
+  
+  bool containsKey(final int key) =>
+      (key >= 0) && (key < length);
   
   bool containsValue(final E value) =>
       contains(value);
@@ -68,7 +85,7 @@ abstract class _AbstractSequence<E> extends IterableBase<E> implements Sequence<
   int indexOf(E element, [int start=0]) {
     checkNotNull(element);
     for (int i = start; i < length; i++) {
-      if (this[i] == element) {
+      if (this.elementAt(i) == element) {
         return i;
       }
     }
@@ -77,6 +94,9 @@ abstract class _AbstractSequence<E> extends IterableBase<E> implements Sequence<
   
   Sequence<E> subSequence(int start, int length) =>
       new _SubSequence(this, start, length);
+  
+  String toString() =>
+      "[${join(", ")}]";
 }
 
 class _SequenceAsList<E> 

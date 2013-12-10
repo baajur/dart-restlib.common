@@ -32,37 +32,11 @@ abstract class ImmutableSequence<E> implements Sequence<E>, ImmutableCollection<
   ImmutableSequence<E> removeAt(final int key);
 }
 
-abstract class _ImmutableSequenceBase<E> extends IterableBase<E> implements ImmutableSequence<E> {
+abstract class _ImmutableSequenceBase<E> extends _SequenceBase<E> implements ImmutableSequence<E> {
   const _ImmutableSequenceBase();
   
-  E get first =>
-      isEmpty ? throw new StateError("List is empty") : this.elementAt(0);
-  
-  bool get isEmpty =>
-      length == 0;    
-      
   int get hashCode =>
       computeHashCode(this);
-  
-  Iterator<E> get iterator =>
-      new _SequenceIterator(this);
-  
-  // FIXME:
-  Iterable<int> get keys =>
-      new List.generate(length, 
-          (final int index) => index);
-  
-  Iterable<E> get values => this;
-  
-  E get last =>
-      isEmpty ? throw new StateError("List is empty") : this.elementAt(length - 1);    
-  
-  // rseq
-  Iterable<E> get reversed =>
-      new  _ReverseSequence(this);
-  
-  E get single =>
-      (length == 1) ? this.elementAt(0) : throw new StateError("List has $length elements");
   
   bool operator==(other) {
     if (identical(this, other)) {
@@ -72,25 +46,6 @@ abstract class _ImmutableSequenceBase<E> extends IterableBase<E> implements Immu
     } else {
       return false;
     }
-  }
-  
-  List<E> asList() =>
-      new _SequenceAsList(this);
-  
-  bool containsKey(final int key) =>
-      (key >= 0) && (key < length);
-  
-  bool containsValue(final E value) =>
-      contains(value);
-  
-  int indexOf(E element, [int start=0]) {
-    checkNotNull(element);
-    for (int i = start; i < length; i++) {
-      if (this.elementAt(i) == element) {
-        return i;
-      }
-    }
-    return -1;
   }
   
   ImmutableSequence<E> insertPair(final Pair<int,E> pair) =>
@@ -104,10 +59,5 @@ abstract class _ImmutableSequenceBase<E> extends IterableBase<E> implements Immu
   
   ImmutableSequence<E> remove(final E element) =>
       removeAt(indexOf(element));
-  
-  Sequence subSequence(int start, int length) =>
-      new _SubSequence(this, start, length);
-  
-  String toString() =>
-      "[${join(", ")}]";
+
 }

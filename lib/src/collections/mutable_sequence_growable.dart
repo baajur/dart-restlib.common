@@ -7,7 +7,13 @@ abstract class GrowableSequence<E> implements MutableSequence<E> {
 }
 
 class _GrowableSequenceBase<E> extends _AbstractMutableSequence<E> implements GrowableSequence<E> {
-  _GrowableSequenceBase() : super (new List());
+  final List<E> delegate;
+  
+  _GrowableSequenceBase() : 
+    delegate = new List();
+  
+  int get length =>
+      delegate.length;
   
   void operator[]=(final int index, final E value) {
     if (index == delegate.length) {
