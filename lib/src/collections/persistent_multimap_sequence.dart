@@ -1,6 +1,8 @@
 part of restlib.common.collections;
 
-class _PersistentSequenceMultimapBase<K,V> extends _PersistentMultimapBase<K,V,ImmutableSequence<V>> implements ImmutableSequenceMultimap<K,V> {    
+class _PersistentSequenceMultimapBase<K,V> 
+    extends _PersistentMultimapBase<K,V,ImmutableSequence<V>> 
+    implements ImmutableSequenceMultimap<K,V>, Persistent {    
   const _PersistentSequenceMultimapBase._internal(ImmutableDictionary<K, ImmutableSequence<V>> dictionary): super._internal(dictionary);
   
   ImmutableSequence _emptyValueContainer() =>

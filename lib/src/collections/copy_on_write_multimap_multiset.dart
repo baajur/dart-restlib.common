@@ -12,5 +12,5 @@ class CopyOnWriteMultisetMultimapBuilder<K,V> {
   void insertPair(final Pair<K,V> pair) =>
       _delegate.insertPair(pair);
   
-  ImmutableMultisetMultimap<K,V, dynamic> build() => null;
+  ImmutableMultisetMultimap<K,V> build() => null;
 }

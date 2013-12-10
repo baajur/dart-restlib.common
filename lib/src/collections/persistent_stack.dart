@@ -1,6 +1,8 @@
 part of restlib.common.collections;
 
-class _PersistentStackBase<E> extends IterableBase<E> implements ImmutableStack<E> {  
+class _PersistentStackBase<E> 
+    extends IterableBase<E> 
+    implements ImmutableStack<E>, Persistent {  
   final E _head;
   final E _last;
   final int length;

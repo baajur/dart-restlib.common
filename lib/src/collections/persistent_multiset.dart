@@ -1,6 +1,8 @@
 part of restlib.common.collections;
 
-class _PersistentMultisetBase<E> extends _ImmutableMultisetBase<E> implements ImmutableMultiset<E> {
+class _PersistentMultisetBase<E> 
+    extends _ImmutableMultisetBase<E> 
+    implements Persistent {
   final ImmutableDictionary<E,int> _delegate;
   
   const _PersistentMultisetBase(this._delegate);

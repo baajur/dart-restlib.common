@@ -3,6 +3,8 @@ part of restlib.common.collections;
 class OptionArray<E> 
     extends IterableBase<E>
     implements Associative<int, E>, Iterable<E> {
+  static const EMPTY = const OptionArray.wrap(Array.EMPTY);   
+      
   final Array<Option<E>> _delegate;
   
   const OptionArray.wrap(final Array<Option<E>> delegate) :

@@ -15,9 +15,13 @@ class CopyOnWriteSetBuilder<E> {
 }
 
 class _CopyOnWriteSet<E> 
-    extends _ImmutableSetBase<E> {
+    extends _ImmutableSetBase<E>
+    implements CopyOnWrite {
   final MutableSet<E> delegate;
   
   _CopyOnWriteSet(this.delegate);
+  
+  Iterator<E> get iterator =>
+      delegate.iterator;
   
 }

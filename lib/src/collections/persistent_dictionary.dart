@@ -1,6 +1,8 @@
 part of restlib.common.collections;
 
-class _PersistentDictionaryBase<K,V> extends  _ImmutableDictionaryBase<K,V> {
+class _PersistentDictionaryBase<K,V> 
+    extends  _ImmutableDictionaryBase<K,V> 
+    implements Persistent {
   final int length;
   final _INode _root;
   

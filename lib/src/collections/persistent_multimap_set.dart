@@ -1,6 +1,8 @@
 part of restlib.common.collections;
 
-class _PersistentSetMultimapBase<K,V> extends _PersistentMultimapBase<K,V,ImmutableSet<V>> implements ImmutableSetMultimap<K,V>{  
+class _PersistentSetMultimapBase<K,V> 
+    extends _PersistentMultimapBase<K,V,ImmutableSet<V>> 
+    implements ImmutableSetMultimap<K,V>, Persistent {  
   const _PersistentSetMultimapBase._internal(final ImmutableDictionary<K, ImmutableSet<V>> dictionary) :
     super._internal(dictionary);
   

@@ -1,6 +1,8 @@
 part of restlib.common.collections;
 
-class _PersistentSetBase<E> extends _ImmutableSetBase<E> {
+class _PersistentSetBase<E> 
+    extends _ImmutableSetBase<E>
+    implements Persistent {
   final ImmutableDictionary<E,E> _map;
   
   const _PersistentSetBase._internal(this._map);

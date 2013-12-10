@@ -15,8 +15,31 @@ class CopyOnWriteSequenceBuilder<E> {
 }
 
 class _CopyOnWriteSequence<E> 
-    extends _ImmutableSequenceBase<E> {
-  final MutableFixedSizeSequence<E> delegate;
+    extends _ImmutableSequenceBase<E> 
+    implements CopyOnWrite {
+  final Sequence<E> delegate;
   
   _CopyOnWriteSequence(this.delegate);
+  
+  ImmutableSequence<E> get tail =>
+      new _CopyOnWriteSequence(delegate.subSequence(0, length - 1));
+  
+  ImmutableSequence add(E element) =>
+      new _CopyOnWriteSequence(
+          new MutableFixedSizeSequence(length + 1)
+            ..addAll(this)
+            ..add(element));
+  
+  ImmutableSequence addAll(Iterable<E> elements) =>
+      new _CopyOnWriteSequence(
+          new MutableFixedSizeSequence(length + 1)
+            ..addAll(this)
+            ..addAll(elements));
+  
+  ImmutableSequence<E> insert(final int key, final E value);
+  
+  ImmutableSequence<E> insertAll(final Iterable<Pair<int, E>> other);
+  
+
+  
 }

@@ -1,7 +1,8 @@
 part of restlib.common.collections;
 
 class _PersistentSequenceBase<E> 
-    extends _ImmutableSequenceBase<E> {
+    extends _ImmutableSequenceBase<E> 
+    implements Persistent {
           
   static const ImmutableSequence EMPTY = const _PersistentSequenceBase._internal(0, 5, _EMPTY_ARRAY_32, Array.EMPTY);
   

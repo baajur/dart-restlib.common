@@ -17,31 +17,34 @@ class CopyOnWriteDictionaryBuilder<K,V> {
 }
 
 class _CopyOnWriteDictionary<K,V> 
-    extends _ImmutableDictionaryBase<K,V> {
+    extends _ImmutableDictionaryBase<K,V> 
+    implements CopyOnWrite {
   
-  final MutableDictionary delegate;
+  final Dictionary delegate;
   
-  _CopyOnWriteDictionary(this.delegate);
+  const _CopyOnWriteDictionary(this.delegate);
+
+  Iterator<Pair<K,V>> get iterator =>
+      delegate.iterator;
   
-  int get hashCode =>
-      computeHashCode(delegate);
+  Option<V> operator[](final K key) =>
+      delegate[key];
   
-  bool operator ==(final other) {
-    if (identical(this, other)) {
-      return true;
-    } else if ((other is Dictionary)) {
-      if (this.length != other.length) {
-        return false;
-      }
-      
-      return every((final Pair<K,V> pair) => 
-          other[pair.fst]
-            .map((final V value) => 
-                pair.snd == value)
-            .orElse(false));
-      
-    } else {
-      return false;
-    }
-  }
+  ImmutableDictionary<K,V> insert(final K key, final V value) =>
+      new _CopyOnWriteDictionary(
+          new MutableDictionary.hash()
+            ..insertAll(this)
+            ..insert(key, value));
+  
+  ImmutableDictionary<K,V> insertAll(final Iterable<Pair<K,V>> values) =>
+      new _CopyOnWriteDictionary(
+          new MutableDictionary.hash()
+            ..insertAll(this)
+            ..insertAll(values));
+  
+  ImmutableDictionary<K,V> removeAt(final K key) =>
+      new _CopyOnWriteDictionary(
+          new MutableDictionary.hash()
+            ..insertAll(this)
+            ..removeAt(key));
 }
