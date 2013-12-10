@@ -2,25 +2,25 @@ part of restlib.common.collections_test;
 
 persistentSetTests() {
   new EqualsTester()
-    ..addEqualityGroup([PersistentSet.EMPTY, new PersistentSet.from([]), PersistentSet.EMPTY.add("a").remove("a")])
-    ..addEqualityGroup([new PersistentSet.from(["a", "b", "c"]), new PersistentSet.from(["a", "b", "c"]), new PersistentSet.from(["a", "b", "c", "d"]).remove("d")])
+    ..addEqualityGroup([ImmutableSet.EMPTY, new ImmutableSet.from([]), ImmutableSet.EMPTY.add("a").remove("a")])
+    ..addEqualityGroup([new ImmutableSet.from(["a", "b", "c"]), new ImmutableSet.from(["a", "b", "c"]), new ImmutableSet.from(["a", "b", "c", "d"]).remove("d")])
     ..executeTestCase();
   
-  new PersistentSetTester().testPersistentSet();
+  new ImmutableSetTester().testImmutableSet();
 }
 
-class PersistentSetTester
+class ImmutableSetTester
     extends Object
     with PersistentCollectionTester,
       IterableTester {
-  final PersistentSet empty = PersistentSet.EMPTY;
-  final PersistentSet single = PersistentSet.EMPTY.add(1);
-  final PersistentSet big = PersistentSet.EMPTY.addAll(new List.generate(1000, (i) => i));
+  final ImmutableSet empty = ImmutableSet.EMPTY;
+  final ImmutableSet single = ImmutableSet.EMPTY.add(1);
+  final ImmutableSet big = ImmutableSet.EMPTY.addAll(new List.generate(1000, (i) => i));
   
   final ElementGenerator elementGenerator = new SequenceElementGenerator();
-  final dynamic generator = () => PersistentSet.EMPTY;
+  final dynamic generator = () => ImmutableSet.EMPTY;
   
-  testPersistentSet() {
+  testImmutableSet() {
     testIterable();
     testPersistentCollection();
   }

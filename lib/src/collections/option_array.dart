@@ -1,10 +1,12 @@
 part of restlib.common.collections;
 
 class OptionArray<E> 
-    extends Object
-    with IterableMixin<E>
+    extends IterableBase<E>
     implements Associative<int, E>, Iterable<E> {
   final Array<Option<E>> _delegate;
+  
+  const OptionArray.wrap(final Array<Option<E>> delegate) :
+    this._delegate = delegate;
   
   OptionArray.ofSize(int size) :
     _delegate = new Array.wrap(new List.filled(size, Option.NONE));

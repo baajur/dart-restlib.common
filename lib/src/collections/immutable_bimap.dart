@@ -1,16 +1,35 @@
 part of restlib.common.collections;
 
-class ImmutableBiMapBuilder<K,V> {
-  final MutableBiMap _delegate = new MutableBiMap.hash();
+abstract class ImmutableBiMap<K,V> implements BiMap<K,V>, ImmutableDictionary<K,V> {
+  // FIXME: Ideally this would const, but dart doesn't yet allow using mixins with const
+  // see: https://code.google.com/p/dart/issues/detail?id=9745   
+  static final ImmutableBiMap EMPTY = _PersistentBiMapBase.EMPTY;
   
-  void insert(final K key, final V value) =>
-      _delegate.insert(key, value);
+  factory ImmutableBiMap.fromMap(final Map<K,V> map) {
+    ImmutableBiMap<K,V> result = EMPTY;
+    map.forEach((k,v) => result = result.insert(k, v));
+    return result;
+  }
   
-  void insertAll(final Iterable<Pair<K,V>> pairs) =>
-      _delegate.insertAll(pairs);
+  factory ImmutableBiMap.fromPairs(final Iterable<Pair<K,V>> pairs) {
+    if (pairs is ImmutableBiMap) {
+      return pairs;
+    } else if (pairs.isEmpty) {
+      return EMPTY;
+    } else { 
+      return pairs.fold(EMPTY, 
+          (final ImmutableDictionary<K,V> previousValue, final Pair<K,V> element) 
+            => previousValue.insert(element.fst, element.snd));
+    }
+  }
   
-  void insertPair(final Pair<K,V> pair) =>
-      _delegate.insertPair(pair);
+  ImmutableBiMap<K,V> insertAll(final Iterable<Pair<K, V>> other);
   
-  BiMap<K,V> build() => null;
+  ImmutableBiMap<K,V> insert(final K key, final V value);
+  
+  ImmutableBiMap<K,V> insertPair(final Pair<K,V> pair);
+  
+  ImmutableBiMap<K,V> removeAt(final K key);
+  
+  ImmutableBiMap<K,V> putIfAbsent(final K key, final V value);
 }

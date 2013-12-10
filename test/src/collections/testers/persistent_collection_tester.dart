@@ -7,7 +7,7 @@ abstract class PersistentCollectionTester {
   testPersistentCollection() {
     test("add()", () {
       final int size = 1000;
-      PersistentCollection collection = generator();
+      ImmutableCollection collection = generator();
       
       elementGenerator.reset();
       
@@ -20,7 +20,7 @@ abstract class PersistentCollectionTester {
     });
     test("addAll()", () {
       final int size = 1000;
-      PersistentCollection collection = generator();
+      ImmutableCollection collection = generator();
       
       elementGenerator.reset();
       
@@ -38,7 +38,7 @@ abstract class PersistentCollectionTester {
     });
     test("remove()", () {
       final int size = 1000;
-      PersistentCollection collection = generator();
+      ImmutableCollection collection = generator();
       
       elementGenerator.reset();
       

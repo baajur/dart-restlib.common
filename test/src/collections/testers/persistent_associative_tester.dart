@@ -7,7 +7,7 @@ abstract class PersistentAssociativeTester {
   testPersistentAssociative() { 
     group("insert()", (){
       final int size = 1000;
-      PersistentAssociative assoc = generator();
+      ImmutableAssociative assoc = generator();
       
       pairGenerator.reset();
       
@@ -21,7 +21,7 @@ abstract class PersistentAssociativeTester {
     });
     group("insertAll()", () {
       final int size = 1000;
-      PersistentAssociative assoc = generator();
+      ImmutableAssociative assoc = generator();
       
       pairGenerator.reset();
       
@@ -39,7 +39,7 @@ abstract class PersistentAssociativeTester {
     });
     group("insertPair()", () {
       final int size = 1000;
-      PersistentAssociative assoc = generator();
+      ImmutableAssociative assoc = generator();
       
       pairGenerator.reset();
       
@@ -53,7 +53,7 @@ abstract class PersistentAssociativeTester {
     });
     test("removeAt", () {
       final int size = 1000;
-      PersistentAssociative assoc = generator();
+      ImmutableAssociative assoc = generator();
       
       pairGenerator.reset();
       for (int i = 0; i < size; i++) {

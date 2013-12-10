@@ -2,24 +2,24 @@ part of restlib.common.collections_test;
 
 persistentSequenceTests() {
   new EqualsTester()
-    ..addEqualityGroup([PersistentSequence.EMPTY, new PersistentSequence.from([]), PersistentSequence.EMPTY.add("a").tail])
-    ..addEqualityGroup([new PersistentSequence.from(["a", "b", "c"]), new PersistentSequence.from(["a", "b", "c"]), new PersistentSequence.from(["a", "b", "c", "d"]).tail])
+    ..addEqualityGroup([ImmutableSequence.EMPTY, new ImmutableSequence.from([]), ImmutableSequence.EMPTY.add("a").tail])
+    ..addEqualityGroup([new ImmutableSequence.from(["a", "b", "c"]), new ImmutableSequence.from(["a", "b", "c"]), new ImmutableSequence.from(["a", "b", "c", "d"]).tail])
     ..executeTestCase();
   
-  group("PersistentSequence.from()", () {
+  group("ImmutableSequence.from()", () {
     test("with empty Iterable", () =>
-        expect(identical(PersistentSequence.EMPTY, new PersistentSequence.from([])), isTrue));
-    test("with PersistentSequence", () {
-      final PersistentSequence<String> test = PersistentSequence.EMPTY.add("a").add("b");
-      expect(identical(test, new PersistentSequence.from(test)), isTrue);
+        expect(identical(ImmutableSequence.EMPTY, new ImmutableSequence.from([])), isTrue));
+    test("with ImmutableSequence", () {
+      final ImmutableSequence<String> test = ImmutableSequence.EMPTY.add("a").add("b");
+      expect(identical(test, new ImmutableSequence.from(test)), isTrue);
     });
   });
   
-  new PersistentSequenceTester(() => PersistentSequence.EMPTY)
-    ..testPersistentSequence();  
+  new ImmutableSequenceTester(() => ImmutableSequence.EMPTY)
+    ..testImmutableSequence();  
 }
 
-class PersistentSequenceTester
+class ImmutableSequenceTester
     extends Object
     with 
       PersistentAssociativeTester,
@@ -28,23 +28,23 @@ class PersistentSequenceTester
       AssociativeTester,
       IterableTester {
   
-  final PersistentSequence empty;
-  final PersistentSequence single;
-  final PersistentSequence big;
+  final ImmutableSequence empty;
+  final ImmutableSequence single;
+  final ImmutableSequence big;
   final int invalidKey;
   
   final dynamic generator;
   final PairGenerator pairGenerator = new SequencePairGenerator();
   final ElementGenerator elementGenerator = new SequenceElementGenerator();
   
-  PersistentSequenceTester(generator) :
+  ImmutableSequenceTester(generator) :
     empty = generator(),
     single = generator().add(1),
     big = (generator().addAll(new List.generate(1000, (i) => i))),
     invalidKey = 1001,
     generator = generator;
   
-  testPersistentSequence() {
+  testImmutableSequence() {
     testIterable();
     testAssociative();
     testSequence();

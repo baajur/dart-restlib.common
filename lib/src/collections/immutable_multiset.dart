@@ -1,36 +1,26 @@
 part of restlib.common.collections;
 
-class ImmutableMultisetBuilder<E> {
-  final MutableMultiset<E> _set = new MutableMultiset.hash();
+abstract class ImmutableMultiset<E> implements ImmutableCollection<E>, Multiset<E> {
+  static const ImmutableMultiset EMPTY = const _PersistentMultisetBase(ImmutableDictionary.EMPTY);
   
-  void add(final E element) =>
-      _set.add(element);
+  ImmutableMultiset<E> add(E value);
   
-  void addAll(final Iterable<E> elements) =>
-      _set.addAll(elements);
+  ImmutableMultiset<E> addAll(Iterable<E> elements);  
   
-  FiniteSet<E> build() => 
-      new _ImmutableSet(
-          new MutableSet.hash(elements: _set));
+  ImmutableMultiset<E> remove(E element);
+  
+  ImmutableMultiset<E> removeAll(final E element);
 }
 
-class _ImmutableMultiset<E> 
-    extends Object
-    with ForwardingMultiset<E>,
-      ForwardingIterable<E>
-    implements Multiset<E>, Immutable {
-  final MutableMultiset<E> delegate;
+
+abstract class _ImmutableMultisetBase<E> extends IterableBase<E> implements ImmutableMultiset<E> {
+  const _ImmutableMultisetBase();
   
-  _ImmutableMultiset(this.delegate);
-  
-  int get hashCode =>
-      computeHashCode(delegate);
-  
-  bool operator==(Object other) {
-    if (identical(this, other)) {
+  bool operator==(other) {
+    if (identical(this,other)) {
       return true;
-    } else if ((other is FiniteSet) && (other is Immutable)) {
-      return equal(this, other);
+    } else if (other is ImmutableMultiset) {
+      // FIXME:
     } else {
       return false;
     }

@@ -1,38 +1,47 @@
 part of restlib.common.collections;
 
-class ImmutableSetBuilder<E> {
-  final MutableSet<E> _set = new MutableSet.hash();
+abstract class ImmutableSet<E> extends ImmutableCollection<E> implements FiniteSet<E>{
+  static const ImmutableSet EMPTY = 
+      const _PersistentSetBase._internal(
+          ImmutableDictionary.EMPTY);
   
-  void add(final E element) =>
-      _set.add(element);
+  factory ImmutableSet.from(Iterable<E> elements) =>
+    (elements is _PersistentSetBase) ? elements :
+      elements.fold(EMPTY, (final _PersistentSetBase<E> accumulator, final E element) => 
+          accumulator.add(element));
   
-  void addAll(final Iterable<E> elements) =>
-      _set.addAll(elements);
+  ImmutableSet<E> add(E value);
+  ImmutableSet<E> addAll(Iterable<E> elements);
+  ImmutableSet<E> remove(E element);
   
-  FiniteSet<E> build() => 
-      new _ImmutableSet(
-          new MutableSet.hash(elements: _set));
+
+  ImmutableSet<E> difference(FiniteSet<E> other);
+  ImmutableSet<E> intersection(FiniteSet<Object> other);
+  ImmutableSet<E> union(FiniteSet<E> other);
 }
 
-class _ImmutableSet<E> 
-    extends Object
-    with ForwardingSet<E>,
-      ForwardingIterable<E>
-    implements FiniteSet<E>, Immutable {
-  final MutableSet<E> delegate;
-  
-  _ImmutableSet(this.delegate);
+abstract class _ImmutableSetBase<E> extends IterableBase<E> implements ImmutableSet<E> {
+  const _ImmutableSetBase();
   
   int get hashCode =>
-      computeHashCode(delegate);
+      computeHashCode(this);
   
-  bool operator==(Object other) {
+  bool operator==(other) {
     if (identical(this, other)) {
       return true;
-    } else if ((other is FiniteSet) && (other is Immutable)) {
-      return equal(this, other);
+    } else if (other is ImmutableSet) {
+      if (this.length == other.length) {
+        return every((final E element) => 
+            other.contains(element));
+      } else {
+        return false;
+      }
     } else {
       return false;
     }
   }
+  
+  
+  String toString() =>
+      "[" + join(", ") + "]";
 }

@@ -1,39 +1,50 @@
 part of restlib.common.collections;
 
-class ImmutableDictionaryBuilder<K,V> {
-  final MutableDictionary _delegate = new MutableDictionary.hash();
+abstract class ImmutableDictionary<K,V> implements Dictionary<K,V>, ImmutableAssociative<K,V> {
+  static const ImmutableDictionary EMPTY = const _PersistentDictionaryBase._internal(0, null);
   
-  void insert(final K key, final V value) =>
-      _delegate.insert(key, value);
+  factory ImmutableDictionary.fromMap(final Map<K,V> map) {
+    ImmutableDictionary<K,V> result = EMPTY;
+    map.forEach((final K k, final V v) => 
+        result = result.insert(k, v));
+    return result;
+  }
   
-  void insertAll(final Iterable<Pair<K,V>> pairs) =>
-      _delegate.insertAll(pairs);
+  factory ImmutableDictionary.fromPairs(final Iterable<Pair<K,V>> pairs) => 
+      (pairs is ImmutableDictionary) ? pairs : EMPTY.insertAll(pairs);
   
-  void insertPair(final Pair<K,V> pair) =>
-      _delegate.insertPair(pair);
+  ImmutableDictionary<K,V> insertAll(final Iterable<Pair<K, V>> other);
   
-  Dictionary<K,V> build() =>
-      new _ImmutableDictionary(new MutableDictionary.hash(pairs:_delegate));
+  ImmutableDictionary<K,V> insert(final K key, final V value);
+  
+  ImmutableDictionary<K,V> insertPair(final Pair<K,V> pair);
+  
+  ImmutableDictionary<K,V> removeAt(final K key);
+  
+  ImmutableDictionary<K,V> putIfAbsent(final K key, final V value);
 }
 
-class _ImmutableDictionary<K,V> 
-    extends Object
-    with ForwardingIterable<Pair<K,V>>,
-      ForwardingAssociative<K,V>,
-      ForwardingDictionary<K,V>
-    implements Dictionary<K,V>, Immutable {
-  
-  final MutableDictionary delegate;
-  
-  _ImmutableDictionary(this.delegate);
+abstract class _ImmutableDictionaryBase<K,V> extends IterableBase<Pair<K,V>> implements ImmutableDictionary<K,V> {
+  const _ImmutableDictionaryBase();
   
   int get hashCode =>
-      computeHashCode(delegate);
+      fold(0, (final int accumulator, final Pair<K,V> pair) => 
+          accumulator + (pair.fst.hashCode ^ pair.snd.hashCode));
+  
+  bool get isEmpty => length == 0;
+  
+  Iterable<K> get keys =>
+      this.map((final Pair<K,V> pair) => 
+          pair.fst);
+  
+  Iterable<V> get values =>
+      this.map((final Pair<K,V> pair) => 
+          pair.snd);
   
   bool operator ==(final other) {
     if (identical(this, other)) {
       return true;
-    } else if ((other is Dictionary) && (other is Immutable)) {
+    } else if (other is ImmutableDictionary) {
       if (this.length != other.length) {
         return false;
       }
@@ -48,4 +59,38 @@ class _ImmutableDictionary<K,V>
       return false;
     }
   }
+  
+  Map<K,V> asMap() =>
+      new _DictionaryAsMap(this);
+  
+  bool contains(final Object pair) {
+    if (pair is Pair) {
+      return this[pair.fst]
+        .map((final V value) => 
+            value == pair.snd)
+        .orElse(false);
+    } else {
+      return false;
+    }
+  }
+    
+  bool containsKey(final K key) =>
+      this[key] != Option.NONE;
+  
+  bool containsValue(final V value) => 
+      this.any((final Pair<K,V> pair) => 
+          pair.snd == value);
+  
+  ImmutableDictionary<K,V> insertPair(final Pair<K,V> pair) =>
+      insert(pair.fst, pair.snd);
+  
+  ImmutableDictionary<K,V> putIfAbsent(final K key, final V value) =>
+      this[key]
+        .map((final V value) => 
+            this)
+        .orCompute(() => 
+            this.insert(key, value));
+  
+  String toString() =>
+      "{" + map((pair) => "${pair.fst} : ${pair.snd}").join(", ") + "}";
 }

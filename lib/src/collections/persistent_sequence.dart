@@ -1,35 +1,9 @@
 part of restlib.common.collections;
 
-abstract class PersistentSequence<E> implements Sequence<E>, PersistentCollection<E>, PersistentStack<E>, PersistentAssociative<int, E> {
-  static const PersistentSequence EMPTY = _PersistentSequenceBase.EMPTY;
-  
-  factory PersistentSequence.from(final Iterable<E> elements) =>
-    (elements is _PersistentSequenceBase) ? elements :
-      elements.fold(EMPTY,
-          (final _PersistentSequenceBase<E> accumulator, final E element) => 
-              accumulator.add(element));
-  
-  PersistentSequence<E> add(E value);
-  
-  PersistentSequence<E> addAll(Iterable<E> elements);  
-  
-  PersistentSequence<E> remove(E element);
-  
-  PersistentSequence<E> get tail;    
-  
-  PersistentSequence<E> push(E value);
-  
-  PersistentSequence<E> insertAll(final Iterable<Pair<int, E>> other);
-  
-  PersistentSequence<E> insert(final int key, final E value);
-  
-  PersistentSequence<E> insertPair(final Pair<int,E> pair);
-  
-  PersistentSequence<E> removeAt(final int key);
-}
-
-class _PersistentSequenceBase<E> extends IterableBase<E> implements PersistentSequence<E> {
-  static const PersistentSequence EMPTY = const _PersistentSequenceBase._internal(0, 5, _EMPTY_ARRAY_32, Array.EMPTY);
+class _PersistentSequenceBase<E> 
+    extends _ImmutableSequenceBase<E> {
+          
+  static const ImmutableSequence EMPTY = const _PersistentSequenceBase._internal(0, 5, _EMPTY_ARRAY_32, Array.EMPTY);
   
   static const Array _EMPTY_ARRAY_32 = 
       const Array.wrap(const [null, null, null, null, null, null, null, null,
@@ -44,36 +18,8 @@ class _PersistentSequenceBase<E> extends IterableBase<E> implements PersistentSe
   
   const _PersistentSequenceBase._internal(this.length, this._shift, this._root, this._tail);
   
-  E get first =>
-      isEmpty ? throw new StateError("List is empty") : this.elementAt(0);
-  
-  int get hashCode =>
-      computeHashCode(this);
-      
-  bool get isEmpty =>
-      length == 0;
-  
-  Iterator<E> get iterator =>
-      new _SequenceIterator(this);
-  
-  Iterable<int> get keys =>
-      new List.generate(length, 
-          (final int index) => index);
-  
-  Iterable<E> get values => this;
-  
-  E get last =>
-      isEmpty ? throw new StateError("List is empty") : this.elementAt(length - 1);    
-  
-  // rseq
-  Iterable<E> get reversed =>
-      new  _ReverseSequence(this);
-  
-  E get single =>
-      (length == 1) ? elementAt(0) : throw new StateError("List has $length elements");
-  
   // pop
-  PersistentSequence<E> get tail {
+  ImmutableSequence<E> get tail {
     if (length == 0) {
       throw new StateError("Empty list does not have a tail.");
     } else if (length == 1) {
@@ -95,16 +41,6 @@ class _PersistentSequenceBase<E> extends IterableBase<E> implements PersistentSe
     }
   }
   
-  bool operator==(other) {
-    if (identical(this, other)) {
-      return true;
-    } else if ((other is Sequence) && (other is Immutable)) {
-      return equal(this, other);
-    } else {
-      return false;
-    }
-  }
-  
   // nth
   Option<E> operator[](final int index) {
     if(index >= 0 && index < length) {
@@ -115,7 +51,7 @@ class _PersistentSequenceBase<E> extends IterableBase<E> implements PersistentSe
   }
   
   // cons
-  PersistentSequence<E> add(final E element) {
+  ImmutableSequence<E> add(final E element) {
     checkNotNull(element);
     
     // room in tail?
@@ -145,18 +81,9 @@ class _PersistentSequenceBase<E> extends IterableBase<E> implements PersistentSe
     }
   }
   
-  PersistentSequence<E> addAll(final Iterable<E> elements) =>
+  ImmutableSequence<E> addAll(final Iterable<E> elements) =>
       elements.fold(this, (final _PersistentSequenceBase<E> accumulator, final E element) => 
           accumulator.add(element));
-  
-  List<E> asList() =>
-      new _SequenceAsList(this);
-  
-  bool containsKey(final int key) =>
-      (key >= 0) && (key < length);
-  
-  bool containsValue(final E value) =>
-      contains(value);
   
   E elementAt(final int index) {
     if(index >= 0 && index < length) {
@@ -166,18 +93,8 @@ class _PersistentSequenceBase<E> extends IterableBase<E> implements PersistentSe
     throw new RangeError.range(index, 0, length - 1);
   }       
   
-  int indexOf(E element, [int start=0]) {
-    checkNotNull(element);
-    for (int i = start; i < length; i++) {
-      if (elementAt(i) == element) {
-        return i;
-      }
-    }
-    return -1;
-  }
-  
   // assocN
-  PersistentSequence<E> insert(final int index, final E element) {
+  ImmutableSequence<E> insert(final int index, final E element) {
     checkNotNull(element);
     
     if (index >= 0 && index < length) {
@@ -194,27 +111,15 @@ class _PersistentSequenceBase<E> extends IterableBase<E> implements PersistentSe
     throw new RangeError.value(index);
   }
   
-  PersistentSequence<E> insertPair(final Pair<int,E> pair) =>
-      insert(pair.fst, pair.snd);
-  
-  PersistentSequence<E> insertAll(final Iterable<Pair<int, E>> pairs) =>
+  ImmutableSequence<E> insertAll(final Iterable<Pair<int, E>> pairs) =>
       pairs.fold(this, 
-          (final PersistentSequence<E> accumulator, final Pair<int, E> pair) => 
+          (final ImmutableSequence<E> accumulator, final Pair<int, E> pair) => 
               accumulator.insert(pair.fst, pair.snd));
- 
-  PersistentSequence<E> push(final E element) =>
-      add(element);
-  
-  PersistentSequence<E> pushAll(final Iterable<E> elements) =>
-      addAll(elements);
-  
-  PersistentSequence<E> remove(final E element) =>
-      removeAt(indexOf(element));
   
   // FIXME: Performance?
-  PersistentSequence<E> removeAt(final int key) {
+  ImmutableSequence<E> removeAt(final int key) {
     checkRangeInclusive(key, 0, length);
-    PersistentSequence<E> retval = this;
+    ImmutableSequence<E> retval = this;
     
     for (int i = length; i > key; i--) {
       retval = retval.tail;
@@ -226,12 +131,6 @@ class _PersistentSequenceBase<E> extends IterableBase<E> implements PersistentSe
     
     return retval;
   }
-  
-  Sequence subSequence(int start, int length) =>
-      new _SubSequence(this, start, length);
-  
-  String toString() =>
-      "[${join(", ")}]";
   
   Array _arrayFor(final int index) {
     if (index >= _tailoff()) {

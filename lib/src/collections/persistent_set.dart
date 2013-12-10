@@ -1,27 +1,7 @@
 part of restlib.common.collections;
 
-abstract class PersistentSet<E> extends PersistentCollection<E> implements FiniteSet<E>{
-  static const PersistentSet EMPTY = 
-      const _PersistentSetBase._internal(
-          PersistentDictionary.EMPTY);
-  
-  factory PersistentSet.from(Iterable<E> elements) =>
-    (elements is _PersistentSetBase) ? elements :
-      elements.fold(EMPTY, (final _PersistentSetBase<E> accumulator, final E element) => 
-          accumulator.add(element));
-  
-  PersistentSet<E> add(E value);
-  PersistentSet<E> addAll(Iterable<E> elements);
-  PersistentSet<E> remove(E element);
-  
-
-  PersistentSet<E> difference(FiniteSet<E> other);
-  PersistentSet<E> intersection(FiniteSet<Object> other);
-  PersistentSet<E> union(FiniteSet<E> other);
-}
-
-class _PersistentSetBase<E> extends IterableBase<E> implements PersistentSet<E> {
-  final PersistentDictionary<E,E> _map;
+class _PersistentSetBase<E> extends _ImmutableSetBase<E> {
+  final ImmutableDictionary<E,E> _map;
   
   const _PersistentSetBase._internal(this._map);
   
@@ -47,24 +27,14 @@ class _PersistentSetBase<E> extends IterableBase<E> implements PersistentSet<E> 
   E get single =>
       _map.single.fst;
   
-  bool operator==(other) {
-    if (identical(this, other)) {
-      return true;
-    } else if (other is _PersistentSetBase) {
-      return this._map == other._map;
-    } else {
-      return false;
-    }
-  }
-  
-  PersistentSet<E> add(final E element) =>
+  ImmutableSet<E> add(final E element) =>
       new _PersistentSetBase._internal(
         _map.insert(element, element));
   
-  PersistentSet<E> addAll(Iterable<E> elements) =>
+  ImmutableSet<E> addAll(Iterable<E> elements) =>
       elements.fold(
           this, 
-          (final PersistentSet<E> accumulator, final E element) => 
+          (final ImmutableSet<E> accumulator, final E element) => 
               accumulator.add(element));
   
   bool contains(final Object element) =>
@@ -73,26 +43,23 @@ class _PersistentSetBase<E> extends IterableBase<E> implements PersistentSet<E> 
             true)
         .orElse(false);
   
-  PersistentSet<E> difference(FiniteSet<E> other) =>
-      PersistentSet.EMPTY.addAll(
+  ImmutableSet<E> difference(FiniteSet<E> other) =>
+      ImmutableSet.EMPTY.addAll(
           this.where((final E element) => 
               !other.contains(element)));
   
-  PersistentSet<E> intersection(FiniteSet<Object> other) =>
-      PersistentSet.EMPTY.addAll(
+  ImmutableSet<E> intersection(FiniteSet<Object> other) =>
+      ImmutableSet.EMPTY.addAll(
           this.where((final E element) => 
               other.contains(element)));
     
-  PersistentSet<E> union(FiniteSet<E> other) =>
-      PersistentSet.EMPTY.addAll(this).addAll(other);
+  ImmutableSet<E> union(FiniteSet<E> other) =>
+      ImmutableSet.EMPTY.addAll(this).addAll(other);
   
-  PersistentSet<E> remove(final E element) {
-    final PersistentDictionary<E,E> newMap =
+  ImmutableSet<E> remove(final E element) {
+    final ImmutableDictionary<E,E> newMap =
         _map.removeAt(element);
     return (newMap.isEmpty) ? 
-        PersistentSet.EMPTY : new _PersistentSetBase._internal(newMap);
+        ImmutableSet.EMPTY : new _PersistentSetBase._internal(newMap);
   }
-  
-  String toString() =>
-      "[" + join(", ") + "]";
 }

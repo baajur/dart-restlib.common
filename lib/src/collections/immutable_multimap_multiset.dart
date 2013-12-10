@@ -1,16 +1,24 @@
 part of restlib.common.collections;
 
-class ImmutableMultisetMultimapBuilder<K,V> {
-  final MutableMultisetMultimap<K,V> _delegate = new MutableMultisetMultimap.hashMultisetHashDictionary();
+abstract class ImmutableMultisetMultimap<K,V> extends IterableBase<Pair<K,V>> implements ImmutableMultimap<K,V,ImmutableMultiset<V>> {
+  static const ImmutableMultisetMultimap EMPTY = 
+      const _PersistentMultisetMultimapBase._internal(ImmutableDictionary.EMPTY);
   
-  void insert(final K key, final V value) =>
-      _delegate.insert(key, value);
+  factory ImmutableMultisetMultimap.fromMap(final Map<K,V> map) {    
+    ImmutableMultisetMultimap<K,V> retval = EMPTY;
+    map.forEach((final K k, final V v) => 
+        retval = retval.insert(k, v));
+    return retval;
+  }
   
-  void insertAll(final Iterable<Pair<K,V>> pairs) =>
-      _delegate.insertAll(pairs);
+  factory ImmutableMultisetMultimap.fromPairs(final Iterable<Pair<K,V>> pairs) => 
+      (pairs is ImmutableMultisetMultimap) ? pairs : EMPTY.insertAll(pairs);
+
+  ImmutableDictionary<K, ImmutableMultiset<V>> get dictionary;
   
-  void insertPair(final Pair<K,V> pair) =>
-      _delegate.insertPair(pair);
+  ImmutableMultisetMultimap<K,V> insertAll(final Iterable<Pair<K, V>> other);
   
-  MultisetMultimap<K,V, dynamic> build() => null;
+  ImmutableMultisetMultimap<K,V> insert(final K key, final V value);
+  
+  ImmutableMultisetMultimap<K,V> removeAt(final K key);
 }
