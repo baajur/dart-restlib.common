@@ -19,32 +19,27 @@ abstract class MutableBiMap<K,V> implements BiMap<K,V>, MutableDictionary<K,V> {
 }
 
 class _MutableBiMapBase<K,V> 
-    extends Object
-    with ForwardingDictionary<K,V>, 
-      ForwardingIterable<Pair<K,V>>, 
-      ForwardingAssociative<K,V>,
-      ToStringForwarder
-    implements MutableBiMap<K,V>, Forwarder {   
+    extends _DictionaryBase<K,V>
+    implements MutableBiMap<K,V> {   
   
-  final MutableDictionary<K,V> delegate;    
+  final MutableDictionary<K,V> _delegate;    
   final MutableDictionary<V,K> _inverse;
  
-  _MutableBiMapBase._internal(this.delegate, this._inverse);
+  _MutableBiMapBase._internal(this._delegate, this._inverse);
   
   BiMap<V,K> get inverse =>
-      new _MutableBiMapBase._internal(_inverse, delegate);
+      new _MutableBiMapBase._internal(_inverse, _delegate);
+  
+  Iterator<Pair<K,V>> get iterator => _delegate.iterator;
       
   Option<V> operator[](final K key) => 
-      delegate[key];
+      _delegate[key];
   
   void operator[]=(final K key, final V value) => 
       insert(key, value);
   
-  Map<K,V> asMap() =>
-      new _DictionaryAsMap(this);
-  
   void clear() {
-      delegate.clear();
+      _delegate.clear();
       _inverse.clear;
   }
   
@@ -57,10 +52,10 @@ class _MutableBiMapBase<K,V>
     checkNotNull(value);
     
     _inverse[value].map((final K key) => 
-        delegate.take(key));  
+        _delegate.take(key));  
     
     _inverse.insert(value, key);
-    delegate.insert(key, value);
+    _delegate.insert(key, value);
   }
   
   void insertPair(final Pair<K,V> pair) =>
@@ -69,9 +64,9 @@ class _MutableBiMapBase<K,V>
   Option<V> removeAt(final K key) {
     checkNotNull(key);
     
-    delegate[key]
+    _delegate[key]
       .map((final V value) => 
           _inverse.removeAt(value));
-    delegate.removeAt(key);
+    _delegate.removeAt(key);
   }
 }
