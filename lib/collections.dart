@@ -70,6 +70,7 @@ part "src/collections/persistent_sequence.dart";
 part "src/collections/persistent_set.dart";
 part "src/collections/persistent_stack.dart";
 part "src/collections/sequence.dart";
+part "src/collections/set.dart";
 
 const List EMPTY_LIST = const [];
 

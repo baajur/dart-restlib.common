@@ -1,6 +1,8 @@
 part of restlib.common.collections;
 
-abstract class ImmutableSet<E> extends ImmutableCollection<E> implements FiniteSet<E>{
+abstract class ImmutableSet<E> 
+    extends ImmutableCollection<E> 
+    implements FiniteSet<E>{
   static const ImmutableSet EMPTY = 
       const _PersistentSetBase._internal(
           ImmutableDictionary.EMPTY);
@@ -20,7 +22,9 @@ abstract class ImmutableSet<E> extends ImmutableCollection<E> implements FiniteS
   ImmutableSet<E> union(FiniteSet<E> other);
 }
 
-abstract class _ImmutableSetBase<E> extends IterableBase<E> implements ImmutableSet<E> {
+abstract class _ImmutableSetBase<E> 
+    extends _DictionaryBackedSet<E> 
+    implements ImmutableSet<E> {
   const _ImmutableSetBase();
   
   int get hashCode =>
@@ -40,8 +44,4 @@ abstract class _ImmutableSetBase<E> extends IterableBase<E> implements Immutable
       return false;
     }
   }
-  
-  
-  String toString() =>
-      "[" + join(", ") + "]";
 }

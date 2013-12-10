@@ -22,45 +22,22 @@ abstract class MutableSet<E> extends MutableCollection<E> implements FiniteSet<E
   MutableSet<E> union(FiniteSet<E> other);
 }
 
-class _MutableDictionaryBackedSet<E> extends IterableBase<E> implements MutableSet<E> {   
-  final MutableDictionary<E,E> _map;
+class _MutableDictionaryBackedSet<E> 
+    extends _DictionaryBackedSet 
+    implements MutableSet<E> {   
+  final MutableDictionary<E,E> delegate;
   
-  _MutableDictionaryBackedSet(this._map);
-  
-  E get first =>
-      _map.first.fst;
-  
-  bool get isEmpty =>
-      _map.isEmpty;
-  
-  Iterator<E> get iterator =>
-      _map.map((final Pair<E,E> pair) => 
-          pair.fst).iterator;
-  
-  E get last =>
-      _map.last.fst;
-  
-  int get length =>
-      _map.length;
-  
-  E get single =>
-      _map.single.fst;
+  _MutableDictionaryBackedSet(this.delegate);
   
   void add(final E element) =>
-      _map.insert(element, element);
+      delegate.insert(element, element);
   
   void addAll(final Iterable<E> elements) =>
       elements.forEach((final E element) => 
           add(element));
   
   void clear() =>
-      _map.clear();
-  
-  bool contains(final E element) =>
-      _map[element]
-        .map((final E v) => 
-            true)
-        .orElse(false);
+      delegate.clear();
   
   MutableSet<E> difference(FiniteSet<E> other) =>
     // FIXME: Probaly should make the return type implementation specific
@@ -79,5 +56,5 @@ class _MutableDictionaryBackedSet<E> extends IterableBase<E> implements MutableS
     new MutableSet.hash()..addAll(this)..addAll(other);
   
   Option<E> remove(final E element) =>
-      _map.removeAt(element);
+      delegate.removeAt(element);
 }

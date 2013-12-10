@@ -15,14 +15,34 @@ class CopyOnWriteSetBuilder<E> {
 }
 
 class _CopyOnWriteSet<E> 
-    extends _ImmutableSetBase<E>
-    implements CopyOnWrite {
+    extends IterableBase<E>
+    implements ImmutableSet<E>, CopyOnWrite {
   final MutableSet<E> delegate;
   
   _CopyOnWriteSet(this.delegate);
   
   Iterator<E> get iterator =>
       delegate.iterator;
+  
+  // FIXME: Ideally ImmutableSetBase would be mixinable here instead of 
+  // having to copy code.
+  int get hashCode =>
+      computeHashCode(this);
+  
+  bool operator==(other) {
+    if (identical(this, other)) {
+      return true;
+    } else if (other is ImmutableSet) {
+      if (this.length == other.length) {
+        return every((final E element) => 
+            other.contains(element));
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
   
   ImmutableSet add(E element) =>
       new _CopyOnWriteSet(
