@@ -34,11 +34,16 @@ class _CopyOnWriteMultiset<E>
             ..addAll(this)
             ..add(object));
 
-  ImmutableMultiset<E> addAll(final Iterable<E> elements) =>
-      new _CopyOnWriteMultiset(
+  ImmutableMultiset<E> addAll(final Iterable<E> elements) {
+    if (this.isEmpty && (elements is _CopyOnWriteMultiset)) {
+      return elements;
+    } else {
+      return new _CopyOnWriteMultiset(
           new MutableMultiset.hash()
             ..addAll(this)
             ..addAll(elements));
+    }
+  }
   
   ImmutableMultiset<E> remove(final E object) =>
       new _CopyOnWriteMultiset(

@@ -36,11 +36,16 @@ class _CopyOnWriteDictionary<K,V>
             ..insertAll(this)
             ..insert(key, value));
   
-  ImmutableDictionary<K,V> insertAll(final Iterable<Pair<K,V>> values) =>
-      new _CopyOnWriteDictionary(
+  ImmutableDictionary<K,V> insertAll(final Iterable<Pair<K,V>> values) {
+    if (this.isEmpty && values is _CopyOnWriteDictionary) {
+      return values;
+    } else {
+      return new _CopyOnWriteDictionary(
           new MutableDictionary.hash()
             ..insertAll(this)
             ..insertAll(values));
+    }
+  }
   
   ImmutableDictionary<K,V> insertAllFromMap(final Map<K,V> map) =>
       new _CopyOnWriteDictionary(

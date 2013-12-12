@@ -50,11 +50,15 @@ class _CopyOnWriteSet<E>
             ..addAll(this)
             ..add(element));
   
-  ImmutableSet addAll(Iterable<E> elements) =>
-      new _CopyOnWriteSet(
+  ImmutableSet addAll(Iterable<E> elements) {
+    if (this.isEmpty && (elements is _CopyOnWriteSet)) {
+      return elements;
+    } else   
+      return new _CopyOnWriteSet(
           new MutableSet.hash()
             ..addAll(this)
             ..addAll(elements));
+  }
   
   ImmutableSet<E> difference(FiniteSet<E> other) =>
       new _CopyOnWriteSet(

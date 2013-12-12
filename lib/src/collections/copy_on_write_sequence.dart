@@ -33,11 +33,16 @@ class _CopyOnWriteSequence<E>
             ..addAll(this)
             ..add(element));
   
-  ImmutableSequence addAll(Iterable<E> elements) =>
-      new _CopyOnWriteSequence(
-          new MutableFixedSizeSequence(length + 1)
+  ImmutableSequence addAll(Iterable<E> elements) {
+    if (this.isEmpty && elements is _CopyOnWriteSequence) {
+      return elements;
+    } else {
+     return new _CopyOnWriteSequence(
+         new MutableFixedSizeSequence(length + 1)
             ..addAll(this)
             ..addAll(elements));
+    }
+  }
   
   ImmutableSequence<E> insert(final int key, final E value) {
     if (key < length) {
