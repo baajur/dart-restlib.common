@@ -32,6 +32,10 @@ class _MutableDictionaryBase<K,V>
       other.forEach((final Pair<K,V> pair) =>
           _delegate[pair.fst] = pair.snd);
   
+  void insertAllFromMap(final Map<K,V> map) =>
+      map.forEach((final K key, final V value) => 
+          insert (key, value));
+  
   void insert(final K key, final V value) {
       this[key] = value;
   }

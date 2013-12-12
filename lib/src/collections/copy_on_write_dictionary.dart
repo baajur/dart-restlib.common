@@ -42,6 +42,12 @@ class _CopyOnWriteDictionary<K,V>
             ..insertAll(this)
             ..insertAll(values));
   
+  ImmutableDictionary<K,V> insertAllFromMap(final Map<K,V> map) =>
+      new _CopyOnWriteDictionary(
+          new MutableDictionary.hash()
+            ..insertAll(this)
+            ..insertAllFromMap(map));
+  
   ImmutableDictionary<K,V> removeAt(final K key) =>
       new _CopyOnWriteDictionary(
           new MutableDictionary.hash()

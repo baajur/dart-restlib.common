@@ -23,7 +23,7 @@ abstract class MutableSet<E> extends MutableCollection<E> implements FiniteSet<E
 }
 
 class _MutableDictionaryBackedSet<E> 
-    extends _DictionaryBackedSet 
+    extends _DictionaryBackedSet<E> 
     implements MutableSet<E> {   
   final MutableDictionary<E,E> delegate;
   

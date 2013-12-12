@@ -2,16 +2,7 @@ part of restlib.common.collections;
 
 abstract class ImmutableSet<E> 
     extends ImmutableCollection<E> 
-    implements FiniteSet<E>{
-  static const ImmutableSet EMPTY = 
-      const _PersistentSetBase._internal(
-          ImmutableDictionary.EMPTY);
-  
-  factory ImmutableSet.from(Iterable<E> elements) =>
-    (elements is _PersistentSetBase) ? elements :
-      elements.fold(EMPTY, (final _PersistentSetBase<E> accumulator, final E element) => 
-          accumulator.add(element));
-  
+    implements FiniteSet<E>{  
   ImmutableSet<E> add(E value);
   ImmutableSet<E> addAll(Iterable<E> elements);
   ImmutableSet<E> remove(E element);

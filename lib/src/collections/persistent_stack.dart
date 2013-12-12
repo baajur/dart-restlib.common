@@ -1,20 +1,23 @@
 part of restlib.common.collections;
 
-class _PersistentStackBase<E> 
+class _PersistentStack<E> 
     extends IterableBase<E> 
     implements ImmutableStack<E>, Persistent {  
+  
+  static const ImmutableStack EMPTY = const _PersistentStack._empty();
+      
   final E _head;
   final E _last;
   final int length;
   final ImmutableStack _tail;
       
-  _PersistentStackBase._internal(final E head, final ImmutableStack<E> tail):
+  _PersistentStack._internal(final E head, final ImmutableStack<E> tail):
     this._head = checkNotNull(head),
     this._tail = checkNotNull(tail),
     this._last = (tail.isEmpty ? head : tail.last),
     this.length = 1 + tail.length;
   
-  const _PersistentStackBase._empty() :
+  const _PersistentStack._empty() :
     this._head = null,
     this._last = null,
     this.length = 0,
@@ -56,7 +59,7 @@ class _PersistentStackBase<E>
   }
   
   ImmutableStack<E> push(final E value) =>
-      new _PersistentStackBase._internal(value, this);
+      new _PersistentStack._internal(value, this);
   
   ImmutableStack<E> pushAll(Iterable<E> value) =>
       value.fold(this, (final ImmutableStack acc, E element) => acc.push(element));

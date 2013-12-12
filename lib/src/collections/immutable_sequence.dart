@@ -1,14 +1,6 @@
 part of restlib.common.collections;
 
-abstract class ImmutableSequence<E> implements Sequence<E>, ImmutableCollection<E>, ImmutableStack<E>, ImmutableAssociative<int, E> {  
-  static const ImmutableSequence EMPTY = _PersistentSequenceBase.EMPTY;
-  
-  factory ImmutableSequence.from(final Iterable<E> elements) =>
-    (elements is _PersistentSequenceBase) ? elements :
-      elements.fold(EMPTY,
-          (final _PersistentSequenceBase<E> accumulator, final E element) => 
-              accumulator.add(element));
-  
+abstract class ImmutableSequence<E> implements Sequence<E>, ImmutableCollection<E>, ImmutableStack<E>, ImmutableAssociative<int, E> {    
   int get hashCode;
   
   bool operator==(other);

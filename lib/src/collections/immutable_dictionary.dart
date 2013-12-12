@@ -1,21 +1,11 @@
 part of restlib.common.collections;
 
 abstract class ImmutableDictionary<K,V> implements Dictionary<K,V>, ImmutableAssociative<K,V> {
-  static const ImmutableDictionary EMPTY = const _PersistentDictionaryBase._internal(0, null);
-  
-  factory ImmutableDictionary.fromMap(final Map<K,V> map) {
-    ImmutableDictionary<K,V> result = EMPTY;
-    map.forEach((final K k, final V v) => 
-        result = result.insert(k, v));
-    return result;
-  }
-  
-  factory ImmutableDictionary.fromPairs(final Iterable<Pair<K,V>> pairs) => 
-      (pairs is ImmutableDictionary) ? pairs : EMPTY.insertAll(pairs);
-  
   ImmutableDictionary<K,V> insertAll(final Iterable<Pair<K, V>> other);
   
   ImmutableDictionary<K,V> insert(final K key, final V value);
+  
+  ImmutableDictionary<K,V> insertAllFromMap(final Map<K,V> map);
   
   ImmutableDictionary<K,V> insertPair(final Pair<K,V> pair);
   
@@ -50,7 +40,7 @@ abstract class _ImmutableDictionaryBase<K,V>
       return false;
     }
   }
-
+      
   ImmutableDictionary<K,V> insertPair(final Pair<K,V> pair) =>
       insert(pair.fst, pair.snd);
   

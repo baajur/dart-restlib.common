@@ -3,6 +3,9 @@ part of restlib.common.collections;
 class _PersistentMultisetBase<E> 
     extends _ImmutableMultisetBase<E> 
     implements Persistent {
+      
+  static const ImmutableMultiset EMPTY = const _PersistentMultisetBase(Persistent.EMPTY_DICTIONARY);    
+  
   final ImmutableDictionary<E,int> _delegate;
   
   const _PersistentMultisetBase(this._delegate);
@@ -20,10 +23,15 @@ class _PersistentMultisetBase<E>
           new _PersistentMultisetBase(_delegate.insert(element, i + 1)))
         .orElse(new _PersistentMultisetBase(_delegate.insert(element, 1)));
   
-  ImmutableMultiset<E> addAll(final Iterable<E> elements) =>
-      elements.fold(this, 
-          (final ImmutableMultiset<E> accumulator, final E element) => 
+  ImmutableMultiset<E> addAll(final Iterable<E> elements) {
+    if (identical(this, EMPTY) && (elements is _PersistentMultisetBase)) {
+      return elements;
+    } else {
+      return elements.fold(this, 
+          (final ImmutableMultiset<E> accumulator,  final E element) => 
               accumulator.add(element));
+    }
+  }
   
   bool contains(final E element) =>
       _delegate.containsKey(element);

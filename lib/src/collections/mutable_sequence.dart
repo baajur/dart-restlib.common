@@ -31,6 +31,10 @@ abstract class _AbstractMutableSequence<E>
       elements.forEach((final E element) => 
           add(element));
   
+  void insertAllFromMap(final Map<int,E> map) =>
+      map.forEach((final int key, final E value) => 
+          insert (key, value));
+  
   E elementAt(final int index) =>
       (index >= 0 && index < length) ?
         delegate[index] :

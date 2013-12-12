@@ -3,6 +3,9 @@ part of restlib.common.collections;
 class _PersistentSetBase<E> 
     extends _ImmutableSetBase<E>
     implements Persistent {
+  static const ImmutableSet EMPTY = 
+      const _PersistentSetBase._internal(Persistent.EMPTY_DICTIONARY);  
+  
   final ImmutableDictionary<E,E> delegate;
   
   const _PersistentSetBase._internal(this.delegate);
@@ -18,22 +21,22 @@ class _PersistentSetBase<E>
               accumulator.add(element));
   
   ImmutableSet<E> difference(FiniteSet<E> other) =>
-      ImmutableSet.EMPTY.addAll(
+      EMPTY.addAll(
           this.where((final E element) => 
               !other.contains(element)));
   
   ImmutableSet<E> intersection(FiniteSet<Object> other) =>
-      ImmutableSet.EMPTY.addAll(
+      EMPTY.addAll(
           this.where((final E element) => 
               other.contains(element)));
     
   ImmutableSet<E> union(FiniteSet<E> other) =>
-      ImmutableSet.EMPTY.addAll(this).addAll(other);
+      EMPTY.addAll(this).addAll(other);
   
   ImmutableSet<E> remove(final E element) {
     final ImmutableDictionary<E,E> newMap =
         delegate.removeAt(element);
     return (newMap.isEmpty) ? 
-        ImmutableSet.EMPTY : new _PersistentSetBase._internal(newMap);
+        EMPTY : new _PersistentSetBase._internal(newMap);
   }
 }

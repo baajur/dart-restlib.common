@@ -47,6 +47,10 @@ class _MutableBiMapBase<K,V>
       other.forEach((final Pair<K,V> pair) =>
           insert(pair.fst, pair.snd));
   
+  void insertAllFromMap(final Map<K,V> map) =>
+      map.forEach((final K key, final V value) => 
+          insert (key, value));
+  
   void insert(final K key, final V value) {
     checkNotNull(key);
     checkNotNull(value);

@@ -18,4 +18,11 @@ abstract class _PersistentMultimapBase<K,V, I extends ImmutableCollection<V>>
   ImmutableMultimap<K,V,I> insertAll(final Iterable<Pair<K,V>> pairs) =>
       pairs.fold(this, (final ImmutableMultimap<K,V,I> accumulator, final Pair<K,V> pair) =>
           accumulator.insertPair(pair));
+  
+  ImmutableMultimap<K,V,I> insertAllFromMap(final Map<K,V> map) {
+    ImmutableMultimap<K,V,I> result = this;
+    map.forEach((k,v) => 
+        result = result.insert(k, v));
+    return result;
+  }
 }

@@ -48,6 +48,10 @@ abstract class _AbstractMutableMultimap<K,V, I extends MutableCollection<V>>
       pairs.forEach((final Pair<K, V> pair) => 
           insert(pair.fst, pair.snd));
   
+  void insertAllFromMap(final Map<K,V> map) =>
+      map.forEach((final K key, final V value) => 
+          insert (key, value));
+  
   void insertPair(final Pair<K,V> pair) =>
       insert(pair.fst, pair.snd);
   

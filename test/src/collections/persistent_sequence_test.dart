@@ -2,20 +2,11 @@ part of restlib.common.collections_test;
 
 persistentSequenceTests() {
   new EqualsTester()
-    ..addEqualityGroup([ImmutableSequence.EMPTY, new ImmutableSequence.from([]), ImmutableSequence.EMPTY.add("a").tail])
-    ..addEqualityGroup([new ImmutableSequence.from(["a", "b", "c"]), new ImmutableSequence.from(["a", "b", "c"]), new ImmutableSequence.from(["a", "b", "c", "d"]).tail])
+    ..addEqualityGroup([Persistent.EMPTY_SEQUENCE, Persistent.EMPTY_SEQUENCE.add("a").tail])
+    ..addEqualityGroup([Persistent.EMPTY_SEQUENCE.addAll(["a", "b", "c"]), Persistent.EMPTY_SEQUENCE.addAll(["a", "b", "c"]), Persistent.EMPTY_SEQUENCE.addAll(["a", "b", "c", "d"]).tail])
     ..executeTestCase();
   
-  group("ImmutableSequence.from()", () {
-    test("with empty Iterable", () =>
-        expect(identical(ImmutableSequence.EMPTY, new ImmutableSequence.from([])), isTrue));
-    test("with ImmutableSequence", () {
-      final ImmutableSequence<String> test = ImmutableSequence.EMPTY.add("a").add("b");
-      expect(identical(test, new ImmutableSequence.from(test)), isTrue);
-    });
-  });
-  
-  new ImmutableSequenceTester(() => ImmutableSequence.EMPTY)
+  new ImmutableSequenceTester(() => Persistent.EMPTY_SEQUENCE)
     ..testImmutableSequence();  
 }
 

@@ -3,13 +3,13 @@ part of restlib.common.collections_test;
 persistentBiMapTests() {
   new EqualsTester()
   ..addEqualityGroup(
-      [ImmutableBiMap.EMPTY,
-      ImmutableBiMap.EMPTY.insert("a", "a").removeAt("a")])
+      [Persistent.EMPTY_BIMAP,
+      Persistent.EMPTY_BIMAP.insert("a", "a").removeAt("a")])
   ..addEqualityGroup(
-      [ImmutableBiMap.EMPTY.insert("a", "a").insert("b", "b"),
-       ImmutableBiMap.EMPTY.insert("b", "b").insert("a", "a"),
-       new ImmutableBiMap.fromMap({"a" : "a", "b" : "b"}),
-       ImmutableBiMap.EMPTY.insert("b", "b").insert("c", "c").insert("a", "a").removeAt("c")
+      [Persistent.EMPTY_BIMAP.insert("a", "a").insert("b", "b"),
+       Persistent.EMPTY_BIMAP.insert("b", "b").insert("a", "a"),
+       Persistent.EMPTY_DICTIONARY.insertAllFromMap({"a" : "a", "b" : "b"}),
+       Persistent.EMPTY_BIMAP.insert("b", "b").insert("c", "c").insert("a", "a").removeAt("c")
       ])
   ..executeTestCase();
   
@@ -33,12 +33,12 @@ class PersistentBiMapTester
       AssociativeTester,
       IterableTester {
   
-  final ImmutableBiMap empty = ImmutableBiMap.EMPTY;
-  final ImmutableBiMap single = ImmutableBiMap.EMPTY.insert(1, 1);
-  final ImmutableBiMap big = ImmutableBiMap.EMPTY.insertAll(new List.generate(1000, (i) => new Pair(i,i)));
+  final ImmutableBiMap empty = Persistent.EMPTY_BIMAP;
+  final ImmutableBiMap single = Persistent.EMPTY_BIMAP.insert(1, 1);
+  final ImmutableBiMap big = Persistent.EMPTY_BIMAP.insertAll(new List.generate(1000, (i) => new Pair(i,i)));
   final int invalidKey = 1001;
   
-  final dynamic generator = () => ImmutableBiMap.EMPTY;
+  final dynamic generator = () => Persistent.EMPTY_BIMAP;
   final PairGenerator pairGenerator = new SequencePairGenerator();
   
   PersistentBiMapTester();

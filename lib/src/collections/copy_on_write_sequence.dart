@@ -58,6 +58,12 @@ class _CopyOnWriteSequence<E>
             ..addAll(this)
             ..insertAll(elements));  
   
+  ImmutableSequence<E> insertAllFromMap(final Map<int,E> map) =>
+      new _CopyOnWriteSequence(
+          new MutableFixedSizeSequence(length)
+            ..addAll(this)
+            ..insertAllFromMap(map));
+  
   ImmutableSequence<E> removeAt(final int key) =>
       new _CopyOnWriteSequence(
           new MutableFixedSizeSequence(length)

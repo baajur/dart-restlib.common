@@ -1,12 +1,15 @@
 part of restlib.common.collections;
 
-class _PersistentDictionaryBase<K,V> 
+class _PersistentDictionary<K,V> 
     extends  _ImmutableDictionaryBase<K,V> 
     implements Persistent {
+  static const ImmutableDictionary EMPTY = 
+      const _PersistentDictionary._internal(0, null);    
+      
   final int length;
   final _INode _root;
   
-  const _PersistentDictionaryBase._internal(this.length, this._root);
+  const _PersistentDictionary._internal(this.length, this._root);
   
   Iterator<Pair<K,V>> get iterator =>
       isNotNull(_root) ? _root.iterator : EMPTY_LIST.iterator;
@@ -17,7 +20,6 @@ class _PersistentDictionaryBase<K,V>
     return isNotNull(_root) ? _root.find(0, key.hashCode, key) : Option.NONE;
   }
   
-  
   ImmutableDictionary<K,V> insert(final K key, final V value) {
     checkNotNull(key);
     checkNotNull(value);
@@ -25,12 +27,26 @@ class _PersistentDictionaryBase<K,V>
     final _INode newroot = firstNotNull(_root, _BitmapIndexedNode.EMPTY).assoc(0, key.hashCode, key, value);
     
     return (identical(newroot, _root)) ? this :
-      new _PersistentDictionaryBase._internal(length + 1, newroot);
+      new _PersistentDictionary._internal(length + 1, newroot);
   }
   
-  ImmutableAssociative<K,V> insertAll(final Iterable<Pair<K, V>> pairs) =>
-      pairs.fold(this, (final ImmutableDictionary accumulator, final Pair<K,V> element) => 
-          accumulator.putIfAbsent(element.fst, element.snd));
+  ImmutableDictionary<K,V> insertAll(final Iterable<Pair<K, V>> pairs) {
+    if (identical(this, EMPTY) && pairs is _PersistentDictionary) {
+      return pairs;
+    } else {
+      return pairs.fold(this, 
+          (final ImmutableDictionary accumulator, final Pair<K,V> element) => 
+              accumulator.putIfAbsent(element.fst, element.snd));
+    }
+  }
+      
+  
+  ImmutableDictionary<K,V> insertAllFromMap(final Map<K,V> map) {
+    ImmutableDictionary<K,V> result = this;
+    map.forEach((k,v) => 
+        result = result.insert(k, v));
+    return result;
+  }
   
   ImmutableDictionary<K,V> removeAt(final K key) {
     checkNotNull(key);
@@ -39,7 +55,7 @@ class _PersistentDictionaryBase<K,V>
       return this;
     } else { 
       final _INode newroot = _root.without(0, key.hashCode, key);
-      return identical(newroot, _root) ? this : new _PersistentDictionaryBase._internal(length - 1, newroot); 
+      return identical(newroot, _root) ? this : new _PersistentDictionary._internal(length - 1, newroot); 
     }
   }
 }

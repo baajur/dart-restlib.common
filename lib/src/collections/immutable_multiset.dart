@@ -1,8 +1,6 @@
 part of restlib.common.collections;
 
-abstract class ImmutableMultiset<E> implements ImmutableCollection<E>, Multiset<E> {
-  static const ImmutableMultiset EMPTY = const _PersistentMultisetBase(ImmutableDictionary.EMPTY);
-  
+abstract class ImmutableMultiset<E> implements ImmutableCollection<E>, Multiset<E> {  
   ImmutableMultiset<E> add(E value);
   
   ImmutableMultiset<E> addAll(Iterable<E> elements);  

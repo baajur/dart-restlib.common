@@ -1,10 +1,10 @@
 part of restlib.common.collections;
 
-class _PersistentSequenceBase<E> 
+class _PersistentSequence<E> 
     extends _ImmutableSequenceBase<E> 
     implements Persistent {
           
-  static const ImmutableSequence EMPTY = const _PersistentSequenceBase._internal(0, 5, _EMPTY_ARRAY_32, Array.EMPTY);
+  static const ImmutableSequence EMPTY = const _PersistentSequence._internal(0, 5, _EMPTY_ARRAY_32, Array.EMPTY);
   
   static const Array _EMPTY_ARRAY_32 = 
       const Array.wrap(const [null, null, null, null, null, null, null, null,
@@ -17,7 +17,7 @@ class _PersistentSequenceBase<E>
   final Array _root;
   final Array _tail;
   
-  const _PersistentSequenceBase._internal(this.length, this._shift, this._root, this._tail);
+  const _PersistentSequence._internal(this.length, this._shift, this._root, this._tail);
   
   // pop
   ImmutableSequence<E> get tail {
@@ -27,7 +27,7 @@ class _PersistentSequenceBase<E>
       return EMPTY;
     } else if (length - _tailoff() > 1) {
       final Array newTail = new Array.ofSize(_tail.length - 1)..setAll(0, _tail.subArray(0, _tail.length - 1));
-      return new _PersistentSequenceBase._internal(length - 1, _shift, _root, newTail);
+      return new _PersistentSequence._internal(length - 1, _shift, _root, newTail);
     } else {
       final Array newtail = _arrayFor(length - 2);
       Array newroot = firstNotNull(_popTail(_shift, _root), Array.EMPTY);
@@ -38,7 +38,7 @@ class _PersistentSequenceBase<E>
         newshift -= 5;
       }
     
-      return new _PersistentSequenceBase._internal(length - 1, newshift, newroot, newtail);
+      return new _PersistentSequence._internal(length - 1, newshift, newroot, newtail);
     }
   }
   
@@ -61,7 +61,7 @@ class _PersistentSequenceBase<E>
           new Array.ofSize(_tail.length + 1)
             ..setAll(0, _tail)
             ..[_tail.length] = element;
-      return new _PersistentSequenceBase._internal(length + 1, _shift, _root, newTail);
+      return new _PersistentSequence._internal(length + 1, _shift, _root, newTail);
     } else {
       //full tail, push into tree
       Array newroot;
@@ -78,12 +78,12 @@ class _PersistentSequenceBase<E>
       } else {
         newroot = _pushTail(_shift, _root, tailnode);
       }
-      return new _PersistentSequenceBase._internal(length + 1, newshift, newroot, new Array.ofSize(1)..[0] = element);
+      return new _PersistentSequence._internal(length + 1, newshift, newroot, new Array.ofSize(1)..[0] = element);
     }
   }
   
   ImmutableSequence<E> addAll(final Iterable<E> elements) =>
-      elements.fold(this, (final _PersistentSequenceBase<E> accumulator, final E element) => 
+      elements.fold(this, (final _PersistentSequence<E> accumulator, final E element) => 
           accumulator.add(element));
   
   E elementAt(final int index) {
@@ -101,9 +101,9 @@ class _PersistentSequenceBase<E>
     if (index >= 0 && index < length) {
       if (index >= _tailoff()) {
         final Array newTail = new Array.ofSize(_tail.length)..setAll(0, _tail)..[index & 0x01f] = element;
-        return new _PersistentSequenceBase._internal(length, _shift, _root, newTail);
+        return new _PersistentSequence._internal(length, _shift, _root, newTail);
       } else {
-        return new _PersistentSequenceBase._internal(length, _shift, _doInsert(_shift, _root, index, element), _tail);
+        return new _PersistentSequence._internal(length, _shift, _doInsert(_shift, _root, index, element), _tail);
       }
     } else if(index == length) {
       return add(element);
@@ -116,6 +116,13 @@ class _PersistentSequenceBase<E>
       pairs.fold(this, 
           (final ImmutableSequence<E> accumulator, final Pair<int, E> pair) => 
               accumulator.insert(pair.fst, pair.snd));
+  
+  ImmutableSequence<E> insertAllFromMap(final Map<int,E> map) {
+    ImmutableSequence<E> result = this;
+    map.forEach((final int k,final E v) => 
+        result = result.insert(k, v));
+    return result;
+  }
   
   // FIXME: Performance?
   ImmutableSequence<E> removeAt(final int key) {
