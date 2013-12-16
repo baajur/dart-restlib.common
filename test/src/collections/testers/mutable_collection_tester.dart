@@ -96,8 +96,3 @@ abstract class MutableCollectionTester {
     testRemove();    
   }
 }
-
-abstract class ElementGenerator {
-  void reset();
-  dynamic next();
-}

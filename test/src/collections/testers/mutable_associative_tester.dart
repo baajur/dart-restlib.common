@@ -134,8 +134,3 @@ abstract class MutableAssociativeTester {
     testRemoveAt(); 
   }
 }
-
-abstract class PairGenerator {
-  void reset();
-  Pair next();
-}

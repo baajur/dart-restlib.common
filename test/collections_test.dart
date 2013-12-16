@@ -6,6 +6,7 @@ import "package:restlib_common/collections.dart";
 import "package:restlib_testing/testing.dart";
 
 part "src/collections/testers/associative_tester.dart";
+part "src/collections/testers/generators.dart";
 part "src/collections/testers/immutable_associative_tester.dart";
 part "src/collections/testers/immutable_collection_tester.dart";
 part "src/collections/testers/iterable_tester.dart";
