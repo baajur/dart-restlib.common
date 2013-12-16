@@ -21,16 +21,16 @@ part "src/collections/testers/stack_tester.dart";
 
 part "src/collections/array_test.dart";
 part "src/collections/either_test.dart";
+part "src/collections/immutable_bimap_test.dart";
+part "src/collections/immutable_dictionary_test.dart";
+part "src/collections/immutable_sequence_test.dart";
+part "src/collections/immutable_set_test.dart";
+part "src/collections/immutable_stack_test.dart";
 part "src/collections/iterables_test.dart";
 part "src/collections/mutable_sequence_test.dart";
 part "src/collections/option_array_test.dart";
 part "src/collections/option_test.dart";
 part "src/collections/pair_test.dart";
-part "src/collections/persistent_bimap_test.dart";
-part "src/collections/persistent_dictionary_test.dart";
-part "src/collections/persistent_sequence_test.dart";
-part "src/collections/persistent_set_test.dart";
-part "src/collections/persistent_stack_test.dart";
 
 collectionsTestGroup() {
   group("package:collections", () {
@@ -53,11 +53,11 @@ collectionsTestGroup() {
         ..testMutableSequence();  
     });
     
-    group("class:PersistenthBiMap", persistentBiMapTests);
-    group("class:PersistentDictionary", persistentDictionaryTests);
-    group("class:PersistentSequence", persistentSequenceTests);
-    group("class:PersistentSet", persistentSetTests);
-    group("class:PersistentStack", persistentStackTests);
+    group("class:ImmutableBiMap", immutableBiMapTests);
+    group("class:ImmutableDictionary", immutableDictionaryTests);
+    group("class:ImmutableSequence", immutableSequenceTests);
+    group("class:ImmutableSet", immutableSetTests);
+    group("class:ImmutableStack", immutableStackTests);
   });
 }
 

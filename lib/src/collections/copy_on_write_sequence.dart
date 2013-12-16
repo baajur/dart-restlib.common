@@ -17,9 +17,12 @@ class CopyOnWriteSequenceBuilder<E> {
 class _CopyOnWriteSequence<E> 
     extends _ImmutableSequenceBase<E> 
     implements CopyOnWrite {
-  final Sequence<E> delegate;
+  final MutableSequence<E> delegate;
   
   _CopyOnWriteSequence(this.delegate);
+  
+  int get length =>
+      delegate.length;
   
   ImmutableSequence<E> get tail =>
       new _CopyOnWriteSequence(delegate.subSequence(0, length - 1));
@@ -38,11 +41,14 @@ class _CopyOnWriteSequence<E>
       return elements;
     } else {
      return new _CopyOnWriteSequence(
-         new MutableFixedSizeSequence(length + 1)
+         new MutableFixedSizeSequence(length + 1 + elements.length)
             ..addAll(this)
             ..addAll(elements));
     }
   }
+  
+  E elementAt(final int index) =>
+        delegate.elementAt(index);
   
   ImmutableSequence<E> insert(final int key, final E value) {
     if (key < length) {
@@ -59,7 +65,7 @@ class _CopyOnWriteSequence<E>
   
   ImmutableSequence<E> insertAll(final Iterable<Pair<int, E>> elements) =>
       new _CopyOnWriteSequence(
-          new MutableFixedSizeSequence(length)
+          new MutableFixedSizeSequence(length + elements.length)
             ..addAll(this)
             ..insertAll(elements));  
   
