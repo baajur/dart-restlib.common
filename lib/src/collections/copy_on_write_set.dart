@@ -24,11 +24,6 @@ class _CopyOnWriteSet<E>
   Iterator<E> get iterator =>
       delegate.iterator;
   
-  // FIXME: Ideally ImmutableSetBase would be mixinable here instead of 
-  // having to copy code.
-  int get hashCode =>
-      computeHashCode(this);
-  
   bool operator==(other) {
     if (identical(this, other)) {
       return true;

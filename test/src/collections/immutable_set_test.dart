@@ -2,8 +2,16 @@ part of restlib.common.collections_test;
 
 immutableSetTests() {
   new EqualsTester()
-    ..addEqualityGroup([Persistent.EMPTY_SET, Persistent.EMPTY_SET.addAll([]), Persistent.EMPTY_SET.add("a").remove("a")])
-    ..addEqualityGroup([Persistent.EMPTY_SET.addAll(["a", "b", "c"]), Persistent.EMPTY_SET.addAll(["a", "b", "c"]), Persistent.EMPTY_SET.addAll(["a", "b", "c", "d"]).remove("d")])
+    ..addEqualityGroup([Persistent.EMPTY_SET, 
+                        Persistent.EMPTY_SET.addAll([]), 
+                        Persistent.EMPTY_SET.add("a").remove("a"),
+                        new CopyOnWriteSetBuilder().build()])
+    ..addEqualityGroup([Persistent.EMPTY_SET.addAll(["a", "b", "c"]), 
+                        Persistent.EMPTY_SET.addAll(["a", "b", "c"]), 
+                        Persistent.EMPTY_SET.addAll(["a", "b", "c", "d"]).remove("d"),
+                        (new CopyOnWriteSetBuilder()
+                          ..addAll(["a", "b", "c"]))
+                          .build()])
     ..executeTestCase();
   
   group("persistent", () =>
@@ -14,7 +22,7 @@ immutableSetTests() {
         ..testSizes = [0, 1, 1000]
         ..testImmutableSet());
   
-  group("copy on write", () =>
+  group("copyonwrite", () =>
       new ImmutableSetTester()
         ..elementGenerator = new SequenceElementGenerator()
         ..generator =((final int size) => 

@@ -2,11 +2,17 @@ part of restlib.common.collections_test;
 
 immutableSequenceTests() {  
   new EqualsTester()
-    ..addEqualityGroup([Persistent.EMPTY_SEQUENCE, Persistent.EMPTY_SEQUENCE.add("a").tail])
-    ..addEqualityGroup([Persistent.EMPTY_SEQUENCE.addAll(["a", "b", "c"]), Persistent.EMPTY_SEQUENCE.addAll(["a", "b", "c"]), Persistent.EMPTY_SEQUENCE.addAll(["a", "b", "c", "d"]).tail])
+    ..addEqualityGroup([Persistent.EMPTY_SEQUENCE, 
+                        Persistent.EMPTY_SEQUENCE.add("a").tail,
+                        new CopyOnWriteSequenceBuilder().build()])
+    ..addEqualityGroup([Persistent.EMPTY_SEQUENCE.addAll(["a", "b", "c"]), 
+                        Persistent.EMPTY_SEQUENCE.addAll(["a", "b", "c"]), 
+                        Persistent.EMPTY_SEQUENCE.addAll(["a", "b", "c", "d"]).tail,
+                        (new CopyOnWriteSequenceBuilder()
+                          ..addAll(["a", "b", "c"]))
+                          .build()])
     ..executeTestCase();
     
-  
   group("persistent", () => 
       new ImmutableSequenceTester()
         ..elementGenerator = new SequenceElementGenerator()
