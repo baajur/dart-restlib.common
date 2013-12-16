@@ -16,6 +16,7 @@ part "src/collections/testers/immutable_stack_tester.dart";
 part "src/collections/testers/iterable_tester.dart";
 part "src/collections/testers/mutable_associative_tester.dart";
 part "src/collections/testers/mutable_collection_tester.dart";
+part "src/collections/testers/mutable_dictionary_tester.dart";
 part "src/collections/testers/mutable_sequence_tester.dart";
 part "src/collections/testers/sequence_tester.dart";
 part "src/collections/testers/stack_tester.dart";
@@ -66,6 +67,15 @@ collectionsTestGroup() {
     group("class:ImmutableSequence", immutableSequenceTests);
     group("class:ImmutableSet", immutableSetTests);
     group("class:ImmutableStack", immutableStackTests);
+    
+    group("class:MutableDictionary", () => 
+        new MutableDictionaryTester()
+          ..generator = ((final int size) => 
+              new MutableDictionary.hash()..insertAll(new List.generate(size, (i) => new Pair(i,i))))
+          ..invalidKey = 1001
+          ..pairGenerator = new SequencePairGenerator()
+          ..testSizes = [0, 1, 1000]
+          ..testMutableDictionary());
   });
 }
 
