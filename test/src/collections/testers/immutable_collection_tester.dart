@@ -1,10 +1,10 @@
 part of restlib.common.collections_test;
 
-abstract class PersistentCollectionTester {
+abstract class ImmutableCollectionTester {
   dynamic get generator;
   ElementGenerator get elementGenerator;
   
-  testPersistentCollection() {
+  void testAdd() {
     test("add()", () {
       final int size = 1000;
       ImmutableCollection collection = generator();
@@ -18,6 +18,9 @@ abstract class PersistentCollectionTester {
         expect(collection.length, equals(i + 1));
       }
     });
+  }
+  
+  void testAddAll() {
     test("addAll()", () {
       final int size = 1000;
       ImmutableCollection collection = generator();
@@ -36,6 +39,9 @@ abstract class PersistentCollectionTester {
           expect(collection.contains(element), isTrue));
       
     });
+  }
+  
+  void testRemove() {
     test("remove()", () {
       final int size = 1000;
       ImmutableCollection collection = generator();
@@ -56,5 +62,11 @@ abstract class PersistentCollectionTester {
         expect(collection.contains(element), isFalse);
       });
     });
+  }
+  
+  void testPersistentCollection() {
+    testAdd();
+    testAddAll();
+    testRemove();
   }
 }

@@ -13,8 +13,8 @@ persistentSequenceTests() {
 class ImmutableSequenceTester
     extends Object
     with 
-      PersistentAssociativeTester,
-      PersistentCollectionTester,
+      ImmutableAssociativeTester,
+      ImmutableCollectionTester,
       SequenceTester,
       AssociativeTester,
       IterableTester {
@@ -28,6 +28,12 @@ class ImmutableSequenceTester
   final PairGenerator pairGenerator = new SequencePairGenerator();
   final ElementGenerator elementGenerator = new SequenceElementGenerator();
   
+  Iterable<int> get testSizes =>
+      [0,1,1000];
+  
+  Iterable generateTestData(int size) =>
+      Persistent.EMPTY_SEQUENCE.addAll(new List.generate(size, (i) => i));
+  
   ImmutableSequenceTester(generator) :
     empty = generator(),
     single = generator().add(1),
@@ -39,7 +45,7 @@ class ImmutableSequenceTester
     testIterable();
     testAssociative();
     testSequence();
-    testPersistentAssociative();
+    testImmutableAssociative();
     testPersistentCollection();
   }
 }

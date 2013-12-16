@@ -6,11 +6,11 @@ import "package:restlib_common/collections.dart";
 import "package:restlib_testing/testing.dart";
 
 part "src/collections/testers/associative_tester.dart";
+part "src/collections/testers/immutable_associative_tester.dart";
+part "src/collections/testers/immutable_collection_tester.dart";
 part "src/collections/testers/iterable_tester.dart";
 part "src/collections/testers/mutable_associative_tester.dart";
 part "src/collections/testers/mutable_collection_tester.dart";
-part "src/collections/testers/persistent_associative_tester.dart";
-part "src/collections/testers/persistent_collection_tester.dart";
 part "src/collections/testers/sequence_tester.dart";
 part "src/collections/testers/stack_tester.dart";
 

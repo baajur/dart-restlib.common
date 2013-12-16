@@ -6,7 +6,7 @@ abstract class MutableAssociativeTester {
   dynamic get generator;
   PairGenerator get pairGenerator;
   
-  testMutableAssociative() {
+  void testOperatorListAccessAssignment() {
     test("operator [](K,V)", () {
       final int size = 1000;
       final MutableAssociative assoc = generator(size);
@@ -21,7 +21,9 @@ abstract class MutableAssociativeTester {
         expect(assoc[next.fst].first, next.snd);
       }
     });
-    
+  }
+  
+  void testClear() {
     group("clear()", () {
       final int size = 1000;
       final MutableAssociative assoc = generator(size);
@@ -40,6 +42,9 @@ abstract class MutableAssociativeTester {
       expect(assoc.keys, isEmpty);
       expect(assoc.values, isEmpty);
     });
+  }
+  
+  void testInsert() {
     group("insert()", (){
       final int size = 1000;
       final MutableAssociative assoc = generator(size);
@@ -54,6 +59,9 @@ abstract class MutableAssociativeTester {
         expect(assoc[next.fst].contains(next.snd), isTrue);
       }     
     });
+  }
+  
+  void testInsertAll() {
     group("insertAll()", () {
       final int size = 1000;
       final MutableAssociative assoc = generator(size);
@@ -72,6 +80,9 @@ abstract class MutableAssociativeTester {
           expect(assoc[pair.fst].contains(pair.snd), isTrue));
       
     });
+  }
+  
+  void testInsertPair() {
     group("insertPair()", () {
       final int size = 1000;
       final MutableAssociative assoc = generator(size);
@@ -86,6 +97,9 @@ abstract class MutableAssociativeTester {
         expect(assoc[next.fst].contains(next.snd), isTrue);
       }     
     });
+  }
+  
+  void testRemoveAt() {
     group("removeAt", () {
       final int size = 1000;
       final MutableAssociative assoc = generator(size);
@@ -104,6 +118,14 @@ abstract class MutableAssociativeTester {
         expect(assoc[key].contains(value), isFalse);
       }
     });
+  }
+  
+  void testMutableAssociative() {
+    testOperatorListAccessAssignment();
+    testInsert();
+    testInsertAll();
+    testInsertPair();
+    testRemoveAt(); 
   }
 }
 

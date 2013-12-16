@@ -5,7 +5,7 @@ abstract class StackTester {
   Stack get single;
   Stack get big;
   
-  testStack() {
+  void testGetTail() {
     group("get tail", () {
       test("with empty", () => 
           expect(() => empty.tail, throwsStateError));
@@ -19,5 +19,9 @@ abstract class StackTester {
         }
       });
     });
+  }
+  
+  testStack() {
+    testGetTail();
   }
 }

@@ -1,10 +1,10 @@
 part of restlib.common.collections_test;
 
-abstract class PersistentAssociativeTester {
+abstract class ImmutableAssociativeTester {
   dynamic get generator;
   PairGenerator get pairGenerator;
   
-  testPersistentAssociative() { 
+  void testInsert() {
     group("insert()", (){
       final int size = 1000;
       ImmutableAssociative assoc = generator();
@@ -19,6 +19,9 @@ abstract class PersistentAssociativeTester {
         expect(assoc[next.fst].contains(next.snd), isTrue);
       }     
     });
+  }
+  
+  void testInsertAll() {
     group("insertAll()", () {
       final int size = 1000;
       ImmutableAssociative assoc = generator();
@@ -37,6 +40,9 @@ abstract class PersistentAssociativeTester {
           expect(assoc[pair.fst].contains(pair.snd), isTrue));
       
     });
+  }
+  
+  void testInsertPair() {
     group("insertPair()", () {
       final int size = 1000;
       ImmutableAssociative assoc = generator();
@@ -51,6 +57,9 @@ abstract class PersistentAssociativeTester {
         expect(assoc[next.fst].contains(next.snd), isTrue);
       }     
     });
+  }
+  
+  void testRemoveAt() {
     test("removeAt", () {
       final int size = 1000;
       ImmutableAssociative assoc = generator();
@@ -69,5 +78,12 @@ abstract class PersistentAssociativeTester {
         expect(assoc[key].contains(value), isFalse);
       }
     });
+  }
+  
+  void testImmutableAssociative() { 
+    testInsert();
+    testInsertAll();
+    testInsertPair();
+    testRemoveAt();
   }
 }

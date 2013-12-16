@@ -17,6 +17,12 @@ class MutableSequenceTester
   final PairGenerator pairGenerator = new SequencePairGenerator();
   final ElementGenerator elementGenerator = new SequenceElementGenerator();
   
+  Iterable<int> get testSizes =>
+      [0,1,1000];
+  
+  Iterable generateTestData(int size) =>
+      generator(size)..addAll(new List.generate(size, (i) => i));
+  
   MutableSequenceTester(generator) :
     empty = generator(0),
     single = generator(1)..add(1),

@@ -17,6 +17,12 @@ class OptionTester
   final Option single = new Option(1);
   final Option big = new Option(1);
   
+  Iterable<int> get testSizes =>
+      [0,1];
+  
+  Iterable generateTestData(int size) =>
+      size == 0 ? Option.NONE : new Option(1); 
+  
   void testOption() {
     testIterable();
     

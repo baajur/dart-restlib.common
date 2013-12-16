@@ -11,7 +11,7 @@ persistentSetTests() {
 
 class ImmutableSetTester
     extends Object
-    with PersistentCollectionTester,
+    with ImmutableCollectionTester,
       IterableTester {
   final ImmutableSet empty = Persistent.EMPTY_SET;
   final ImmutableSet single = Persistent.EMPTY_SET.add(1);
@@ -19,6 +19,12 @@ class ImmutableSetTester
   
   final ElementGenerator elementGenerator = new SequenceElementGenerator();
   final dynamic generator = () => Persistent.EMPTY_SET;
+  
+  Iterable<int> get testSizes =>
+      [0,1,1000];
+  
+  Iterable generateTestData(int size) =>
+      Persistent.EMPTY_SET.addAll(new List.generate(size, (i) => i));
   
   testImmutableSet() {
     testIterable();

@@ -18,6 +18,12 @@ class PersistentStackTester
   final ImmutableStack single = Persistent.EMPTY_STACK.push(1);
   final ImmutableStack big = Persistent.EMPTY_STACK.pushAll(new List.generate(1000, (i) => 1000 - (i + 1)));
 
+  Iterable<int> get testSizes =>
+      [0,1,1000];
+  
+  Iterable generateTestData(int size) =>
+      Persistent.EMPTY_STACK.pushAll(new List.generate(size, (i) => i));
+  
   testPersistentStack() {
     testIterable();
     testStack();

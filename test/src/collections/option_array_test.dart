@@ -6,10 +6,18 @@ class OptionArrayTester
       AssociativeTester,
       IterableTester {
   
-  final dynamic empty = new OptionArray.ofSize(0);
-  final dynamic single = new OptionArray.ofSize(1)..[0] = 1;
-  final dynamic big = new OptionArray.ofSize(1000);
   final dynamic invalidKey = 1001;
+  
+  Iterable<int> get testSizes =>
+      [0,1,1000];
+  
+  Iterable generateTestData(int size) {
+    final OptionArray retval = new OptionArray.ofSize(size);
+    for (int i = 0; i < size; i++) {
+      retval[i] = i;
+    }
+    return retval;
+  }
   
   testObjectArray() {
     testAssociative();

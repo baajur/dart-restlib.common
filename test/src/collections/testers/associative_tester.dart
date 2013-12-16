@@ -1,52 +1,39 @@
 part of restlib.common.collections_test;
 
 abstract class AssociativeTester {
-  dynamic get empty;
-  dynamic get single;
-  dynamic get big;
-  
+  Iterable<int> get testSizes;
+  dynamic generateTestData(int size);  
   dynamic get invalidKey;
   
-  testAssociative () {
-    group("containsKey()", () {
-      testContainsKey(final Associative testCase) {
-        testCase.keys.forEach((key) =>
-            expect(testCase.containsKey(key), isTrue));
-        expect(testCase.containsKey(invalidKey), isFalse);
-      }
-      
-      test("with empty", () =>
-          testContainsKey(empty));
-      test("with single", () =>
-          testContainsKey(single));
-      test("with big", () =>
-          testContainsKey(big));
-    });
-    
-    group("containsValue()", () {
-      testContainsValue(final Associative testCase) {
+  void _doAssociativeTest(String testDescription, func(Associative testData)) => 
+      group(testDescription, () => 
+          testSizes.forEach((final int size) => 
+              test("with Associative of size $size", () => func(generateTestData(size)))));
+  
+  void testContainsKey() =>
+      _doAssociativeTest("containsKey()", (final Associative testData) {
+        testData.keys.forEach((key) =>
+            expect(testData.containsKey(key), isTrue));
+        expect(testData.containsKey(invalidKey), isFalse);
+      });
+  
+  void testContainValues() =>
+      _doAssociativeTest("containsValue()" ,(final Associative testCase) {
         testCase.values.forEach((value) =>
             expect(testCase.containsValue(value), isTrue));
         expect(testCase.containsValue(invalidKey), isFalse);
-      }
-      
-      test("with empty", () =>
-          testContainsValue(empty));
-      test("with single", () =>
-          testContainsValue(single));
-      test("with big", () =>
-          testContainsValue(big));
-    });
-   
-    group("operator []", () {
-      test("with empty", () =>
-          expect(empty[invalidKey], isEmpty));
-      test("with single", () {
-        expect(single[invalidKey], isEmpty);
-        expect(single[single.keys.first].first, equals(single.values.first));
       });
-      test("with big", () =>
-          expect(big[invalidKey], isEmpty));
-    });
+  
+  void testOperatorListAccess() => 
+      _doAssociativeTest("operator []", (final Associative testCase) {
+        expect(testCase[invalidKey], isEmpty);
+        testCase.keys.forEach((final dynamic key) => 
+            expect(testCase[key].isEmpty, isFalse)); 
+      });
+  
+  void testAssociative () {
+    testContainsKey();
+    testContainValues();
+    testOperatorListAccess();
   }
 }

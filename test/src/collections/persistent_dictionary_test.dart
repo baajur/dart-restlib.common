@@ -29,7 +29,7 @@ persistentDictionaryTests() {
 class PersistentDictionaryTester
     extends Object
     with 
-      PersistentAssociativeTester,
+      ImmutableAssociativeTester,
       AssociativeTester,
       IterableTester {
   
@@ -41,11 +41,17 @@ class PersistentDictionaryTester
   final dynamic generator = () => Persistent.EMPTY_DICTIONARY;
   final PairGenerator pairGenerator = new SequencePairGenerator();
   
+  Iterable<int> get testSizes =>
+      [0,1,1000];
+  
+  Iterable generateTestData(int size) =>
+      Persistent.EMPTY_DICTIONARY.insertAll(new List.generate(size, (i) => new Pair(i,i)));
+  
   PersistentDictionaryTester();
   
   testPersistentDictionary() {
     testIterable();
     testAssociative();
-    testPersistentAssociative();
+    testImmutableAssociative();
   }
 }

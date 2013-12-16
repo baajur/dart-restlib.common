@@ -29,7 +29,7 @@ persistentBiMapTests() {
 class PersistentBiMapTester
     extends Object
     with 
-      PersistentAssociativeTester,
+      ImmutableAssociativeTester,
       AssociativeTester,
       IterableTester {
   
@@ -41,11 +41,17 @@ class PersistentBiMapTester
   final dynamic generator = () => Persistent.EMPTY_BIMAP;
   final PairGenerator pairGenerator = new SequencePairGenerator();
   
+  Iterable<int> get testSizes =>
+      [0,1,1000];
+  
+  Iterable generateTestData(int size) =>
+      Persistent.EMPTY_BIMAP.insertAll(new List.generate(size, (i) => new Pair(i,i)));
+  
   PersistentBiMapTester();
   
   testPersistentBiMap() {
     testIterable();
     testAssociative();
-    testPersistentAssociative();
+    testImmutableAssociative();
   }
 }

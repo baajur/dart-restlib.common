@@ -4,8 +4,8 @@ abstract class SequenceTester {
   Sequence get empty;
   Sequence get single;
   Sequence get big;
-
-  testSequence() {
+  
+  void testGetReversed() {
     group("get reversed", () {
       test("with empty", () =>
           expect(empty.reversed, isEmpty));
@@ -18,7 +18,9 @@ abstract class SequenceTester {
         }
       });
     });
-    
+  }
+
+  void testOperatorListAccess() {
     group("operator []", () {
       test("with empty", () =>
           expect(empty[1], equals(Option.NONE)));
@@ -35,14 +37,18 @@ abstract class SequenceTester {
         expect(big[big.length], equals(Option.NONE));
       });
     });
-    
+  }
+  
+  void testIndexOf() {
     test("indexOf()", (){
       for (int i = 0; i < big.length; i++){
         expect(big.indexOf(big.elementAt(i)), equals(i));
         expect(big.indexOf(big.elementAt(i), i), equals(i));
       }
     });
-    
+  }
+  
+  void testSubSequence() {
     group("subSequence()", () {
       test("with empty", () =>
           expect(empty.subSequence(0, 0), isEmpty));
@@ -59,5 +65,12 @@ abstract class SequenceTester {
         }
       });
     });
+  }
+  
+  void testSequence() {
+    testGetReversed();
+    testOperatorListAccess();
+    testIndexOf();
+    testSubSequence();
   }
 }

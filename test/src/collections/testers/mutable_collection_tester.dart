@@ -6,7 +6,7 @@ abstract class MutableCollectionTester {
   dynamic get generator;
   ElementGenerator get elementGenerator;
   
-  testMutableCollection() {
+  void testAdd() {
     test("add()", () {
       final int size = 1000;
       final MutableCollection collection = generator(size);
@@ -20,6 +20,9 @@ abstract class MutableCollectionTester {
         expect(collection.length, equals(i + 1));
       }
     });
+  }
+  
+  void testAddAll() {
     test("addAll()", () {
       final int size = 1000;
       final MutableCollection collection = generator(size);
@@ -38,6 +41,9 @@ abstract class MutableCollectionTester {
           expect(collection.contains(element), isTrue));
       
     });
+  }
+  
+  void testClear() {
     test("clear()", () {
       final int size = 1000;
       final MutableCollection collection = generator(size);
@@ -53,6 +59,9 @@ abstract class MutableCollectionTester {
       expect(collection, isEmpty);
       expect(collection.length, equals(0));
     });
+  }
+  
+  void testRemove() {
     test("remove()", () {
       final int size = 1000;
       final MutableCollection collection = generator(size);
@@ -74,6 +83,13 @@ abstract class MutableCollectionTester {
         expect(e.first, equals(element));
       });
     });
+  }
+  
+  void testMutableCollection() {
+    testAdd();
+    testAddAll();
+    testClear();
+    testRemove();    
   }
 }
 

@@ -1,332 +1,276 @@
 part of restlib.common.collections_test;
 
-abstract class IterableTester {
-  dynamic get empty;
-  dynamic get single;
-  dynamic get big;
-
-  void testIterable() {
-    final int bigLength = big.length;
-    final singleValue = single.first;
- 
-    void testBig(String spec, TestFunction body) =>
-        (bigLength > 1) ? 
-            test(spec, body) : null;
-      
-    group("get first", () {
-      test("with empty", () => 
-          expect(() => empty.first, throwsStateError));
-      test("with single", () => 
-          expect(single.first, equals(singleValue)));
-      
-      testBig("with big", () => 
-          expect(big.first, equals((big.iterator..moveNext()).current)));
-    });
-    
-    group("get isEmpty", () {
-      test("with empty", () => 
-          expect(empty.isEmpty, isTrue));
-      test("with single", () => 
-          expect(single.isEmpty, isFalse));
-      testBig("with big", () => 
-          expect(big.isEmpty, isFalse));
-    });
-    
-    group("get length", () {
-      test("with empty", () => 
-          expect(empty.length, equals(0)));
-      test("with single", () => 
-          expect(single.length, equals(1)));
-      testBig("with big", () => 
-          expect(bigLength, equals(big.fold(0, (i,e) => (i+1)))));
-    });
-    
-    group("get single", () {
-      test("with empty", () => 
-          expect(() => empty.single, throwsStateError));
-      test("with single", () => 
-          expect(single.single, equals(singleValue)));
-      testBig("with big", () => 
-          expect(() => big.single, throwsStateError));
-    });
-    
-    group("any()", () {
-      test("with empty", () =>
-          expect(empty.any((e) => true), isFalse)); 
-      test("with single", () {
-        expect(single.any((e) => true), isTrue);
-        expect(single.any((e) => false), isFalse);
-      });    
-      testBig("with big", () {
-        expect(() {
-          int testIndex = 0;
-
-          return big.any((e) {
-            testIndex++;
-            return testIndex > (bigLength / 2);
-          });
-        }(), isTrue);
-        expect(big.any((e) => false), isFalse);
-      });
-    });
+abstract class IterableTester {  
+  Iterable<int> get testSizes;
+  dynamic generateTestData(int size);
   
-    group("contains()", () {
-      test("with empty", () =>
-          expect(empty.contains(new Object()), isFalse)); 
-      test("with single", () {
-        expect(single.contains(singleValue), isTrue);
-        expect(single.contains(new Object()), isFalse);
+  void _doIterableTest(String testDescription, func(Iterable testData, int size)) => 
+      group(testDescription, () => 
+          testSizes.forEach((final int size) => 
+              test("with Iterable of size $size", () => func(generateTestData(size), size))));
+  
+  void testGetFirst() =>
+      _doIterableTest("get first", (final Iterable testData, final int size) {
+          if (size == 0) {
+            expect(() => testData.first, throwsStateError);
+          } else {
+            expect(testData.first, equals((testData.iterator..moveNext()).current));
+          }
+        });
+  
+  void testGetIsEmpty() =>
+      _doIterableTest("get isEmpty", (final Iterable testData, final int size) {
+        if (size == 0) {
+          expect(testData.isEmpty, isTrue);
+        } else {
+          expect(testData.isEmpty, isFalse);
+        }
       });
-      testBig("with big", () {
-        big.forEach((e) => 
-            expect(big.contains(e), isTrue));
-        expect(big.contains(new Object()), isFalse);
+  
+  void testGetLength() =>
+      _doIterableTest("get length", (final Iterable testData, final int size) {
+        expect(testData.length, equals(size));
       });
-    });
-    
-    group("elementAt()", () {
-      test("with empty", () =>
-          expect(() => empty.elementAt(0), throwsRangeError)); 
-      test("with single", () {
-        expect(single.elementAt(0), equals(singleValue));
-        expect(() => single.elementAt(1), throwsRangeError);
+  
+  void testGetSingle() =>
+      _doIterableTest("get single", (final Iterable testData, final int size) {
+        if (size != 1) {
+          expect(() => testData.single, throwsStateError);
+        } else {
+          expect(testData.single, equals((testData.iterator..moveNext()).current));
+        }
       });
-      testBig("with big", () {
+
+  void testAny() =>
+      _doIterableTest("any()", (final Iterable testData, final int size) {
+        if (size > 0) {
+          expect(() {
+            int testIndex = 0;
+
+            return testData.any((e) {
+              testIndex++;
+              return testIndex > (size / 2);
+            });
+          }(), isTrue);
+        } else {
+          expect(testData.any((e) => true), isFalse);
+        }
+          
+        expect(testData.any((e) => false), isFalse); 
+      });
+
+  void testContains() => 
+      _doIterableTest("contains()", (final Iterable testData, final int size) {
+        expect(testData.contains(new Object()), isFalse); 
+        testData.forEach((e) => 
+            expect(testData.contains(e), isTrue));
+      });
+  
+  void testElementAt() =>
+      _doIterableTest("elementAt()", (final Iterable testData, final int size) {
         int index = 0;
-        big.forEach((e){   
-          expect(big.elementAt(index), equals(e));
+        testData.forEach((e){  
+          expect(testData.elementAt(index), equals(e));
           index++;
         });
+          
+        expect(() => testData.elementAt(size), throwsRangeError);
       });
-    });
-    
-    group("every()", () {
-      test("with empty", () =>
-          expect(empty.every((e) => true), isTrue)); 
-      test("with single", () {
-        expect(single.every((e) => true), isTrue);
-        expect(single.every((e) => false), isFalse);
-      });    
-      testBig("with big", () {
-        expect(big.every((e) => true), isTrue);
-        
-        expect(() {
-          int testIndex = 0;
+  
+  void testEvery() =>
+      _doIterableTest("every()", (final Iterable testData, final int size) {
+        expect(testData.every((e) => true), isTrue);
+         
+        if (size > 0) {
+          expect(() {
+            int testIndex = 0;
 
-          return big.every((e) {
-            testIndex++;
-            return testIndex < (bigLength / 2);
-          });
-        }(), isFalse);
+            return testData.every((e) {
+              testIndex++;
+              return testIndex < (size / 2);
+            });
+          }(), isFalse);
+        }
       });
-    });
-    
-    group("expand()", () {
-      test("with empty", () =>
-          expect(empty.expand((e) => [1,2,3]), equals(empty))); 
-      test("with single", () =>
-          expect(single.expand((e) => [1,2,3]), equals([1,2,3])));
-      testBig("with big", () {
-        final Iterable bigExpanded = big.expand((e) => [1,2,3]);
-        expect(bigExpanded.length, equals(3 * bigLength));
+  
+  void testExpand() =>
+      _doIterableTest("expand()", (final Iterable testData, final int size) {
+        final Iterable expanded = testData.expand((e) => [1,2,3]);
+        expect(expanded.length, equals(3 * size));
         // FIXME: Verify the contents of the iterable.
       });
-    });
-    
-    group("firstWhere()", () {
-      test("with empty", () {
-        expect(() => empty.firstWhere((e) => true), throwsStateError); 
-        expect(empty.firstWhere((e) => true, orElse: () => 1), equals(1));
-      });
-      test("with single", () {
-        final Object other = new Object();
-        
-        expect(single.firstWhere((e) => true), equals(singleValue));
-        expect(() => single.firstWhere((e) => false), throwsStateError);    
-        expect(single.firstWhere((e) => true, orElse: () => 2), equals(singleValue));
-        expect(single.firstWhere((e) => false, orElse: () => other), equals(other));
-      });
-      testBig("with big", () {
-        expect(() {
-          int testIndex = 0;
+  
+  void testFirstWhere() =>
+      _doIterableTest("firstWhere()", (final Iterable testData, final int size) {
+        final Object dummy = new Object();
+       
+        expect(() => testData.firstWhere((e) => false), throwsStateError);
+        expect(testData.firstWhere((e) => false, orElse: () => dummy), equals(dummy));
+          
+        if (size > 0) { 
+          expect(() {
+            int testIndex = 0;
 
-          return big.firstWhere((e) {
-            testIndex++;
-            return testIndex > (bigLength / 2);
-          });
-        }(), equals(big.elementAt((bigLength ~/ 2))));
+            return testData.firstWhere((e) {
+              testIndex++;
+              return testIndex > (size / 2);
+            });
+          }(), equals(testData.elementAt((size ~/ 2))));
+        }
       });
-    });
-    
-    group("fold()", () {
-      test("with empty", () =>
-          expect(empty.fold(1, (i, e) => 1 + 1), equals(1))); 
-      test("with single", () =>
-          expect(single.fold(1, (i, e) => i + 1), equals(2))); 
-      testBig("with big", () =>
-          expect(big.fold(0, (i, e) => i + 1), equals(bigLength)));
-    });
-    
-    group("forEach()", () {
-      bool forEachTest(final Iterable e, final int length) {
-        int i = 0;
-        e.forEach((e) => i++);
-        return i == length;
-      }
-      
-      test("with empty", () =>
-          expect(forEachTest(empty, 0), isTrue)); 
-      test("with single", () =>
-          expect(forEachTest(single, 1), isTrue)); 
-      test("with big", () =>
-          expect(forEachTest(big, bigLength), isTrue)); 
-    });
-    
-    group("join()", () {
-      test("with empty", () =>
-          expect(empty.join(), equals(""))); 
-      test("with single", () {
-        expect(single.join(), equals(singleValue.toString()));
-        expect(single.join(","), equals(singleValue.toString()));
+  
+  void testFold() =>
+      _doIterableTest("fold()", (final Iterable testData, final int size) =>
+            expect(testData.fold(0, (i, e) => i + 1), equals(size)));
+  
+  void testForEach() {
+    bool forEachTest(final Iterable e, final int length) {
+      int i = 0;
+      e.forEach((e) => i++);
+      return i == length;
+    }
+
+    _doIterableTest("forEach()", (final Iterable testData, final int size) =>
+          expect(forEachTest(testData, size), isTrue));
+  }
+  
+  void testJoin() =>
+      _doIterableTest("join()", (final Iterable testData, final int size) {    
+        if (size == 0) {
+          expect(testData.join(), equals("")); 
+        } else if (size == 1) {
+            
+          expect(testData.join(), equals(testData.single.toString()));
+          expect(testData.join(","), equals(testData.single.toString()));
+        } else {
+          // FIXME: Implement me.
+        }
       });
-      // FIXME: Test for big
-    });
-    
-    group("lastWhere()", () {
-      test("with empty", () {
-        expect(() => empty.lastWhere((e) => true), throwsStateError);
-        expect(empty.lastWhere((e) => true, orElse: () => 1), equals(1));
-      }); 
-      test("with single", () {
-        expect(single.lastWhere((e) => true), equals(singleValue));
-        expect(() => single.lastWhere((e) => false), throwsStateError);  
-        expect(single.lastWhere((e) => true, orElse: () => null), equals(singleValue));
-      }); 
-      testBig("with big", () {
-        expect(big.lastWhere((e) => e == big.last), equals(big.last));
+  
+  void testLastWhere() =>
+      _doIterableTest("lastWhere()", (final Iterable testData, final int size) {    
+        final Object dummy = new Object();
+        expect(() => testData.lastWhere((e) => false), throwsStateError);  
+        expect(testData.lastWhere((e) => false, orElse: () => dummy), equals(dummy));
+          
+        if (size > 0) {
+          expect(testData.lastWhere((e) => e == testData.last), equals(testData.last));
+        }
       });
-    });
-    
-    group("map()", () {
-      test("with empty", () =>
-          expect(empty.map((e) => e), equals(empty))); 
-      test("with single", () =>
-          expect(single.map((e) => "a"), equals(["a"])));
-      testBig("with big", () => 
-          expect(big.map((e) => "a"), equals(new List.filled(bigLength, "a"))));
-    });
-    
-    group("reduce()", () {
-      test("with empty", () =>
-          expect(() => empty.reduce((a, e) => "a"), throwsStateError)); 
-      test("with single", () =>
-          expect(single.reduce((a, e) => "a"), equals(singleValue)));     
-      testBig("with big", () =>
-          expect(big.reduce((a, e) => e), equals(big.last))); 
-    });
-    
-    group("singleWhere()", () {
-      test("with empty", () =>
-          expect(() => empty.singleWhere((e) => true), throwsStateError)); 
-      test("with single", () {
-        expect(single.singleWhere((e) => true), equals(singleValue));
-        expect(() => single.singleWhere((e) => false), throwsStateError);
-      });    
-      
-      // FIXME: Test big
-    });
-    
-    group("skip()", () {
-      test("with empty", () =>
-          expect(empty.skip(0), equals(empty))); 
-      test("with single", () {
-        expect(single.skip(0), equals(single));
-        expect(single.skip(1), isEmpty);
+  
+  void testMap() =>
+      _doIterableTest("map()", (final Iterable testData, final int size) => 
+          expect(testData.map((e) => "a"), equals(new List.filled(size, "a"))));
+
+  void testReduce() =>
+      _doIterableTest("reduce()", (final Iterable testData, final int size) {
+        if (size > 0) {
+          expect(testData.reduce((a, e) => e), equals(testData.last)); 
+        } else {
+          expect(() => testData.reduce((a, e) => "a"), throwsStateError); 
+        }
       });
-      testBig("with big", () {
-        expect(big.skip(0), equals(big));
+  
+  void testSingleWhere() =>
+      _doIterableTest("singleWhere()", (final Iterable testData, final int size) {
+        expect(() => testData.singleWhere((e) => false), throwsStateError);
+          
+        if (size == 0) {
+          expect(() => testData.singleWhere((e) => true), throwsStateError);
+        } else if (size == 1) {
+          expect(testData.singleWhere((e) => true), equals((testData.iterator..moveNext()).current));
+        } else {
+          // FIXME:
+        }
+      });
+  
+  void testSkip() =>
+      _doIterableTest("skip()", (final Iterable testData, final int size) {
+        expect(testData.skip(0), equals(testData));
+        expect(testData.skip(size), isEmpty);
+          
+        if (size > 0) {
+          final int skipped = size~/2;
+          final Iterable bigHalf = testData.skip(skipped);
         
-        final int skipped = bigLength~/2;
-        final Iterable bigHalf = big.skip(skipped);
-        
-        expect(bigHalf.length, equals(bigLength - skipped));
-        expect(bigHalf.first, equals(big.elementAt(skipped)));
+          expect(bigHalf.length, equals(size - skipped));
+          expect(bigHalf.first, equals(testData.elementAt(skipped)));
+        }
       });
-    });
-    
-    group("skipWhile()", () {
-      test("with empty", () =>
-          expect(empty.skipWhile((e) => false), equals(empty))); 
-      test("with single", () {
-        expect(single.skipWhile((e) => false), equals(single));
-        expect(single.skipWhile((e) => true), equals(empty));
-      });   
-      testBig("with big", () {
-        expect(big.skipWhile((e) => false), equals(big));
-        expect(big.skipWhile((e) => true), equals(empty));
+  
+  void testSkipWhile() =>
+      _doIterableTest("skipWhile()", (final Iterable testData, final int size) {
+        expect(testData.skipWhile((e) => false), equals(testData));
+        expect(testData.skipWhile((e) => true), isEmpty);
       });
-    });
-    
-    group("take()", () {
-      test("with empty", () =>
-          expect(empty.take(0), equals(empty))); 
-      test("with single", () {
-        expect(single.take(0), equals(empty));
-        expect(single.take(1), equals(single));
-      }); 
-      testBig("with big", () {
-        expect(big.take(bigLength), equals(big));
-        
-        final int taken = bigLength~/2;
-        final Iterable bigHalf = big.take(taken);
-        
-        expect(bigHalf.length, equals(taken));
-        expect(bigHalf.first, equals(big.first));
-        expect(bigHalf.last, equals(big.elementAt(taken - 1)));
+  
+  void testTake() =>
+      _doIterableTest("take()", (final Iterable testData, final int size) {
+        expect(testData.take(0), isEmpty);
+        expect(testData.take(size), equals(testData));
+          
+        if (size > 1) {
+          final int taken = size~/2;
+          final Iterable bigHalf = testData.take(taken);
+          
+          expect(bigHalf.length, equals(taken));
+          expect(bigHalf.first, equals(testData.first));
+          expect(bigHalf.last, equals(testData.elementAt(taken - 1)));
+        }
       });
-    });
-    
-    group("takeWhile()", () {
-      test("with empty", () =>
-          expect(empty.takeWhile((e) => false), equals(empty))); 
-      test("with single", () {
-        expect(single.takeWhile((e) => false), equals(empty));
-        expect(single.takeWhile((e) => true), equals(single));
+
+  
+  void testTakeWhile() =>
+      _doIterableTest("takeWhile()", (final Iterable testData, final int size) {
+        expect(testData.takeWhile((e) => false), isEmpty);
+        expect(testData.takeWhile((e) => true), equals(testData));
       });
-      testBig("with big", () {
-        expect(big.takeWhile((e) => false), equals(empty));
-        expect(big.takeWhile((e) => true), equals(big));
+  
+  void testToList() =>
+      _doIterableTest("toList()", (final Iterable testData, final int size) =>
+          expect(testData.toList(), equals(testData)));
+  
+  void testToSet() =>
+      _doIterableTest("toSet()", (final Iterable testData, final int size) {
+        if (size == 0) {
+          expect(testData.toSet(), isEmpty);
+        } else if (size == 1) {
+          expect(testData.toSet(), equals(testData));
+        } else {
+          //FIXME:
+        }
       });
-    });
-    
-    group("toList()", () {
-      test("with empty", () =>
-          expect(empty.toList(), isEmpty)); 
-      test("with single", () =>
-          expect(single.toList(), equals([singleValue])));    
-      testBig("with big", () =>
-          expect(big.toList(), equals(big)));
-    });
-    
-    group("toSet()", () {
-      test("with empty", () =>
-          expect(empty.toSet(), isEmpty)); 
-      test("with single", () =>
-          expect(single.toSet(), equals([singleValue].toSet())));     
-      // FIXME: test with big
-    });
-    
-    group("where()", () {
-      test("with empty", () =>
-          expect(empty.where((e) => true), equals(empty))); 
-      test("with single", () {
-        expect(single.where((e) => false), equals(empty));
-        expect(single.where((e) => true), equals(single));
-      });  
-      testBig("with big", () {
-        expect(big.where((e) => false), equals(empty));
-        expect(big.where((e) => true), equals(big));
-      });  
-    });
+  
+  void testWhere() =>
+      _doIterableTest("where()", (final Iterable testData, final int size) {
+        expect(testData .where((e) => true), equals(testData)); 
+        expect(testData.where((e) => false), isEmpty);
+      });
+  
+  void testIterable() {
+    testGetFirst();
+    testGetIsEmpty();
+    testGetLength();
+    testGetSingle();
+    testAny();
+    testContains();
+    testElementAt();
+    testEvery();
+    testExpand();
+    testFirstWhere();
+    testFold();
+    testForEach();
+    testJoin();
+    testLastWhere();
+    testMap();
+    testReduce();
+    testSingleWhere();
+    testSkip();
+    testSkipWhile();
+    testTake();
+    testTakeWhile();
+    testToList();
+    testToSet();
+    testWhere();
   }
 }
