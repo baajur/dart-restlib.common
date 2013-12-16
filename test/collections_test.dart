@@ -16,6 +16,7 @@ part "src/collections/testers/immutable_stack_tester.dart";
 part "src/collections/testers/iterable_tester.dart";
 part "src/collections/testers/mutable_associative_tester.dart";
 part "src/collections/testers/mutable_collection_tester.dart";
+part "src/collections/testers/mutable_sequence_tester.dart";
 part "src/collections/testers/sequence_tester.dart";
 part "src/collections/testers/stack_tester.dart";
 
@@ -27,7 +28,6 @@ part "src/collections/immutable_sequence_test.dart";
 part "src/collections/immutable_set_test.dart";
 part "src/collections/immutable_stack_test.dart";
 part "src/collections/iterables_test.dart";
-part "src/collections/mutable_sequence_test.dart";
 part "src/collections/option_array_test.dart";
 part "src/collections/option_test.dart";
 part "src/collections/pair_test.dart";
@@ -43,15 +43,23 @@ collectionsTestGroup() {
     group("class:OptionArray", () => new OptionArrayTester().testObjectArray());
     group("class:Pair", pairTests);
     
-    group("class:FixedSizeSequence", () {
-      new MutableSequenceTester((final int size) => new MutableFixedSizeSequence(size))
-        ..testMutableSequence();
-    });
+    group("class:MutableFixedSizeSequence", () =>
+        new MutableSequenceTester()
+          ..elementGenerator = new SequenceElementGenerator()
+          ..generator = ((final int size) => new MutableFixedSizeSequence(size))
+          ..invalidKey = 1001
+          ..pairGenerator = new SequencePairGenerator()
+          ..testSizes = [0, 1, 1000]
+          ..testMutableSequence());
   
-    group("class:GrowableSequence", () {
-      new MutableSequenceTester((final int size) => new GrowableSequence())
-        ..testMutableSequence();  
-    });
+    group("class:GrowableSequence", () =>
+        new MutableSequenceTester()
+          ..elementGenerator = new SequenceElementGenerator()
+          ..generator = ((final int size) => new GrowableSequence())
+          ..invalidKey = 1001
+          ..pairGenerator = new SequencePairGenerator()
+          ..testSizes = [0, 1, 1000]
+          ..testMutableSequence());
     
     group("class:ImmutableBiMap", immutableBiMapTests);
     group("class:ImmutableDictionary", immutableDictionaryTests);

@@ -7,21 +7,16 @@ class MutableSequenceTester
       SequenceTester,
       AssociativeTester,
       IterableTester {
-  final int invalidKey;
   
-  final dynamic generator;
-  final PairGenerator pairGenerator = new SequencePairGenerator();
-  final ElementGenerator elementGenerator = new SequenceElementGenerator();
-  
-  Iterable<int> get testSizes =>
-      [0,1,1000];
+  ElementGenerator elementGenerator;
+  dynamic generator;
+  int invalidKey;
+  PairGenerator pairGenerator;
+
+  Iterable<int> testSizes;
   
   Iterable generateTestData(int size) =>
       generator(size)..addAll(new List.generate(size, (i) => i));
-  
-  MutableSequenceTester(generator) :
-    invalidKey = 1001,
-    generator = generator;
   
   testMutableSequence() {
     testIterable();
