@@ -24,16 +24,16 @@ class _CopyOnWriteSet<E>
   Iterator<E> get iterator =>
       delegate.iterator;
   
+  // FIXME: Ideally ImmutableSetBase would be mixinable here instead of 
+  // having to copy code.
+  int get hashCode =>
+      ImmutableSet.computeHashCode(this);
+  
   bool operator==(other) {
     if (identical(this, other)) {
       return true;
     } else if (other is ImmutableSet) {
-      if (this.length == other.length) {
-        return every((final E element) => 
-            other.contains(element));
-      } else {
-        return false;
-      }
+      return ImmutableSet.setsEqual(this, other);
     } else {
       return false;
     }
