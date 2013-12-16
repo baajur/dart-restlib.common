@@ -13,41 +13,11 @@ persistentBiMapTests() {
       ])
   ..executeTestCase();
   
-
-  group("PersistentHashMap.fromMap()", () {
-    
-  });
-  
-  group("PersistentHashMap.fromPairs()", () {
-    
-  });
-  
-  new PersistentBiMapTester().testPersistentBiMap();
-  
-}
-
-class PersistentBiMapTester
-    extends Object
-    with 
-      ImmutableAssociativeTester,
-      AssociativeTester,
-      IterableTester {
-  final int invalidKey = 1001;
-  
-  final dynamic generator = () => Persistent.EMPTY_BIMAP;
-  final PairGenerator pairGenerator = new SequencePairGenerator();
-  
-  Iterable<int> get testSizes =>
-      [0,1,1000];
-  
-  Iterable generateTestData(int size) =>
-      Persistent.EMPTY_BIMAP.insertAll(new List.generate(size, (i) => new Pair(i,i)));
-  
-  PersistentBiMapTester();
-  
-  testPersistentBiMap() {
-    testIterable();
-    testAssociative();
-    testImmutableAssociative();
-  }
+  new ImmutableDictionaryTester()
+    ..generator = ((final int size) => 
+        Persistent.EMPTY_BIMAP.insertAll(new List.generate(size, (i) => new Pair(i,i))))
+    ..invalidKey = 1001
+    ..pairGenerator = new SequencePairGenerator()
+    ..testSizes = [0,1,1000]
+    ..testImmutableDictionary();
 }

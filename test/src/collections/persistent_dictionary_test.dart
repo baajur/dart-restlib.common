@@ -13,41 +13,12 @@ persistentDictionaryTests() {
       ])
   ..executeTestCase();
   
-
-  group("PersistentHashMap.fromMap()", () {
-    
-  });
+  new ImmutableDictionaryTester()
+    ..generator = ((final int size) => 
+        Persistent.EMPTY_DICTIONARY.insertAll(new List.generate(size, (i) => new Pair(i,i))))
+    ..invalidKey = 1001
+    ..pairGenerator = new SequencePairGenerator()
+    ..testSizes = [0,1,1000]
+    ..testImmutableDictionary();
   
-  group("PersistentHashMap.fromPairs()", () {
-    
-  });
-  
-  new PersistentDictionaryTester().testPersistentDictionary();
-  
-}
-
-class PersistentDictionaryTester
-    extends Object
-    with 
-      ImmutableAssociativeTester,
-      AssociativeTester,
-      IterableTester {
-  final int invalidKey = 1001;
-  
-  final dynamic generator = () => Persistent.EMPTY_DICTIONARY;
-  final PairGenerator pairGenerator = new SequencePairGenerator();
-  
-  Iterable<int> get testSizes =>
-      [0,1,1000];
-  
-  Iterable generateTestData(int size) =>
-      Persistent.EMPTY_DICTIONARY.insertAll(new List.generate(size, (i) => new Pair(i,i)));
-  
-  PersistentDictionaryTester();
-  
-  testPersistentDictionary() {
-    testIterable();
-    testAssociative();
-    testImmutableAssociative();
-  }
 }

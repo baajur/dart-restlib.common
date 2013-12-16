@@ -31,32 +31,3 @@ class MutableSequenceTester
     testMutableCollection();
   }
 }
-
-class SequenceElementGenerator implements ElementGenerator {
-int _index = 0;
-  
-  void reset() {
-    _index = 0;
-  }
-  
-  int next() {
-    final int retval = _index;
-    _index++;
-    return retval;
-  }
-}
-
-class SequencePairGenerator implements PairGenerator {
-  int _index = 0;
-  
-  void reset() {
-    _index = 0;
-  }
-  
-  Pair next() {
-    final Pair retval = new Pair(_index, _index);
-    _index++;
-    return retval;
-  }
-}
-      
