@@ -12,16 +12,14 @@ optionTests() {
 
 class OptionTester 
     extends Object
-    with IterableTester {
-  final Option empty = Option.NONE;
-  final Option single = new Option(1);
-  final Option big = new Option(1);
-  
+    with IterableTester {  
   Iterable<int> get testSizes =>
       [0,1];
   
+  final Option some = new Option(1);
+  
   Iterable generateTestData(int size) =>
-      size == 0 ? Option.NONE : new Option(1); 
+      size == 0 ? Option.NONE : some; 
   
   void testOption() {
     testIterable();
@@ -30,21 +28,21 @@ class OptionTester
       test("with NONE", () =>
           expect(Option.NONE.flatMap((T) => new Option(1)), equals(Option.NONE))); 
       test("with some", () =>
-          expect(single.flatMap((T) => new Option(2)), equals(new Option(2))));     
+          expect(some.flatMap((T) => new Option(2)), equals(new Option(2))));     
     });
 
     group("orCompute()", () {
       test("with NONE", () =>
           expect(Option.NONE.orCompute(() => 1), equals(1))); 
       test("with some", () =>
-          expect(single.orCompute(() => 2), equals(1)));     
+          expect(some.orCompute(() => 2), equals(1)));     
     });
     
     group("orElse()", () {
       test("with NONE", () =>
           expect(Option.NONE.orElse(1), equals(1))); 
       test("with some", () =>
-          expect(single.orElse(2), equals(1)));     
+          expect(some.orElse(2), equals(1)));     
     });
   }
 }

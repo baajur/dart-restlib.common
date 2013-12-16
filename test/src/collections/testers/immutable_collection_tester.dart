@@ -1,13 +1,14 @@
 part of restlib.common.collections_test;
 
 abstract class ImmutableCollectionTester {
-  dynamic get generator;
+  dynamic generateTestData(int size);
+  
   ElementGenerator get elementGenerator;
   
   void testAdd() {
     test("add()", () {
       final int size = 1000;
-      ImmutableCollection collection = generator();
+      ImmutableCollection collection = generateTestData(0);
       
       elementGenerator.reset();
       
@@ -23,7 +24,7 @@ abstract class ImmutableCollectionTester {
   void testAddAll() {
     test("addAll()", () {
       final int size = 1000;
-      ImmutableCollection collection = generator();
+      ImmutableCollection collection = generateTestData(0);
       
       elementGenerator.reset();
       
@@ -44,7 +45,7 @@ abstract class ImmutableCollectionTester {
   void testRemove() {
     test("remove()", () {
       final int size = 1000;
-      ImmutableCollection collection = generator();
+      ImmutableCollection collection = generateTestData(0);
       
       elementGenerator.reset();
       

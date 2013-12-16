@@ -3,13 +3,14 @@ part of restlib.common.collections_test;
 typedef MutableAssociative MutableAssociativeGenerator(int size);
 
 abstract class MutableAssociativeTester {
-  dynamic get generator;
+  dynamic generateTestData(int size);
   PairGenerator get pairGenerator;
   
   void testOperatorListAccessAssignment() {
     test("operator [](K,V)", () {
       final int size = 1000;
-      final MutableAssociative assoc = generator(size);
+      final MutableAssociative assoc = generateTestData(size);
+      assoc.clear();
       
       pairGenerator.reset();
       
@@ -26,7 +27,8 @@ abstract class MutableAssociativeTester {
   void testClear() {
     group("clear()", () {
       final int size = 1000;
-      final MutableAssociative assoc = generator(size);
+      final MutableAssociative assoc = generateTestData(size);
+      assoc.clear();
       
       pairGenerator.reset();
       
@@ -47,7 +49,8 @@ abstract class MutableAssociativeTester {
   void testInsert() {
     group("insert()", (){
       final int size = 1000;
-      final MutableAssociative assoc = generator(size);
+      final MutableAssociative assoc = generateTestData(size);
+      assoc.clear();
       
       pairGenerator.reset();
       
@@ -64,7 +67,8 @@ abstract class MutableAssociativeTester {
   void testInsertAll() {
     group("insertAll()", () {
       final int size = 1000;
-      final MutableAssociative assoc = generator(size);
+      final MutableAssociative assoc = generateTestData(size);
+      assoc.clear();
       
       pairGenerator.reset();
       
@@ -85,7 +89,8 @@ abstract class MutableAssociativeTester {
   void testInsertPair() {
     group("insertPair()", () {
       final int size = 1000;
-      final MutableAssociative assoc = generator(size);
+      final MutableAssociative assoc = generateTestData(size);
+      assoc.clear();
       
       pairGenerator.reset();
       
@@ -102,7 +107,8 @@ abstract class MutableAssociativeTester {
   void testRemoveAt() {
     group("removeAt", () {
       final int size = 1000;
-      final MutableAssociative assoc = generator(size);
+      final MutableAssociative assoc = generateTestData(size);
+      assoc.clear();
       
       pairGenerator.reset();
       for (int i = 0; i < size; i++) {

@@ -32,10 +32,6 @@ class PersistentDictionaryTester
       ImmutableAssociativeTester,
       AssociativeTester,
       IterableTester {
-  
-  final ImmutableDictionary empty = Persistent.EMPTY_DICTIONARY;
-  final ImmutableDictionary single = Persistent.EMPTY_DICTIONARY.insert(1, 1);
-  final ImmutableDictionary big = Persistent.EMPTY_DICTIONARY.insertAll(new List.generate(1000, (i) => new Pair(i,i)));
   final int invalidKey = 1001;
   
   final dynamic generator = () => Persistent.EMPTY_DICTIONARY;

@@ -1,71 +1,58 @@
 part of restlib.common.collections_test;
 
 abstract class SequenceTester {
-  Sequence get empty;
-  Sequence get single;
-  Sequence get big;
+  Iterable<int> get testSizes;
+  dynamic generateTestData(int size); 
   
-  void testGetReversed() {
-    group("get reversed", () {
-      test("with empty", () =>
-          expect(empty.reversed, isEmpty));
-      test("with single", () =>
-          expect(single.reversed, equals(single)));
-      test("with big", () {
-        Sequence bigReversed = big.reversed;
-        for (int i = 0; i < big.length; i++) {
-          expect(bigReversed[i], big[big.length - (1 + i)]);
+  void _doSequenceTest(String testDescription, func(Sequence testData, int size)) =>
+      group(testDescription, () =>
+          testSizes.forEach((final int size) => 
+              test("with Sequence of size $size", () => func(generateTestData(size), size))));   
+  
+  void testGetReversed() =>
+      _doSequenceTest("get reversed", (final Sequence testData, final int size) {
+        final Sequence reversed = testData.reversed;
+        for (int i = 0; i < testData.length; i++) {
+          expect(reversed[i], testData[testData.length - (1 + i)]);
+        }
+      
+        if (testData.isEmpty) {
+          expect(reversed, isEmpty);
         }
       });
-    });
-  }
 
-  void testOperatorListAccess() {
-    group("operator []", () {
-      test("with empty", () =>
-          expect(empty[1], equals(Option.NONE)));
-      test("with single", () {
-        expect(single[2], equals(Option.NONE));
-        expect(single[single.keys.first].first, single.values.first);
-      });
-      test("with big", () {
+  void testOperatorListAccess() =>
+      _doSequenceTest("operator []", (final Sequence testData, final int size) {
+        expect(testData[size], equals(Option.NONE));
+      
+        testData.keys.forEach((final key) =>
+            expect(testData[key].value, equals(testData.elementAt(key))));
+      
         int index = 0;
-        big.forEach((e) {
-          expect(big[index].first, equals(e));
+        testData.forEach((final value) {
+          expect(testData[index].first, equals(value));
           index++;
         });
-        expect(big[big.length], equals(Option.NONE));
       });
-    });
-  }
   
-  void testIndexOf() {
-    test("indexOf()", (){
-      for (int i = 0; i < big.length; i++){
-        expect(big.indexOf(big.elementAt(i)), equals(i));
-        expect(big.indexOf(big.elementAt(i), i), equals(i));
-      }
-    });
-  }
-  
-  void testSubSequence() {
-    group("subSequence()", () {
-      test("with empty", () =>
-          expect(empty.subSequence(0, 0), isEmpty));
-      test("with single", () { 
-        expect(single.subSequence(0, 1), equals(single));
-        expect(single.subSequence(0, 0), isEmpty);
-      });
-      test("with big", () {
-        expect(big.subSequence(0, 0), isEmpty);
-        
-        final Sequence subSequence = big.subSequence(1, big.length -1);
-        for (int i = 1; i < big.length - 1; i++) {
-          expect(big[i], equals(subSequence[i -1]));
+  void testIndexOf() =>
+      _doSequenceTest("operator []", (final Sequence testData, final int size) {
+        for (int i = 0; i < size; i++){
+          expect(testData.indexOf(testData.elementAt(i)), equals(i));
+          expect(testData.indexOf(testData.elementAt(i), i), equals(i));
         }
       });
-    });
-  }
+  
+  void testSubSequence() =>
+      _doSequenceTest("subSequence()", (final Sequence testData, final int size) {
+        expect(testData.subSequence(0, 0), isEmpty);
+        expect(testData.subSequence(0, size), equals(testData));
+        
+        final Sequence subSequence = testData.subSequence(1, size -1);
+        for (int i = 1; i < size - 1; i++) {
+          expect(testData[i], equals(subSequence[i -1]));
+        }
+      });
   
   void testSequence() {
     testGetReversed();

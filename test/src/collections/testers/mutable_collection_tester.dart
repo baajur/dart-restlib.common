@@ -3,13 +3,14 @@ part of restlib.common.collections_test;
 typedef MutableCollection MutableCollectionGenerator(int size);
 
 abstract class MutableCollectionTester {
-  dynamic get generator;
+  dynamic generateTestData(int size);
   ElementGenerator get elementGenerator;
   
   void testAdd() {
     test("add()", () {
       final int size = 1000;
-      final MutableCollection collection = generator(size);
+      final MutableCollection collection = generateTestData(size);
+      collection.clear();
       
       elementGenerator.reset();
       
@@ -25,7 +26,8 @@ abstract class MutableCollectionTester {
   void testAddAll() {
     test("addAll()", () {
       final int size = 1000;
-      final MutableCollection collection = generator(size);
+      final MutableCollection collection = generateTestData(size);
+      collection.clear();
       
       elementGenerator.reset();
       
@@ -46,7 +48,8 @@ abstract class MutableCollectionTester {
   void testClear() {
     test("clear()", () {
       final int size = 1000;
-      final MutableCollection collection = generator(size);
+      final MutableCollection collection = generateTestData(size);
+      collection.clear();
       
       elementGenerator.reset();
       
@@ -64,7 +67,8 @@ abstract class MutableCollectionTester {
   void testRemove() {
     test("remove()", () {
       final int size = 1000;
-      final MutableCollection collection = generator(size);
+      final MutableCollection collection = generateTestData(size);
+      collection.clear();
       
       elementGenerator.reset();
       

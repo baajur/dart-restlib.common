@@ -18,10 +18,6 @@ class ImmutableSequenceTester
       SequenceTester,
       AssociativeTester,
       IterableTester {
-  
-  final ImmutableSequence empty;
-  final ImmutableSequence single;
-  final ImmutableSequence big;
   final int invalidKey;
   
   final dynamic generator;
@@ -35,9 +31,6 @@ class ImmutableSequenceTester
       Persistent.EMPTY_SEQUENCE.addAll(new List.generate(size, (i) => i));
   
   ImmutableSequenceTester(generator) :
-    empty = generator(),
-    single = generator().add(1),
-    big = (generator().addAll(new List.generate(1000, (i) => i))),
     invalidKey = 1001,
     generator = generator;
   

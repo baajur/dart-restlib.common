@@ -7,10 +7,6 @@ class MutableSequenceTester
       SequenceTester,
       AssociativeTester,
       IterableTester {
-  
-  final MutableSequence empty;
-  final MutableSequence single;
-  final MutableSequence big;
   final int invalidKey;
   
   final dynamic generator;
@@ -24,9 +20,6 @@ class MutableSequenceTester
       generator(size)..addAll(new List.generate(size, (i) => i));
   
   MutableSequenceTester(generator) :
-    empty = generator(0),
-    single = generator(1)..add(1),
-    big = (generator(1000)..addAll(new List.generate(1000, (i) => i))),
     invalidKey = 1001,
     generator = generator;
   

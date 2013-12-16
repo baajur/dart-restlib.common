@@ -13,10 +13,6 @@ class PersistentStackTester
     extends Object
     with IterableTester,
       StackTester {
-  
-  final ImmutableStack empty = Persistent.EMPTY_STACK;
-  final ImmutableStack single = Persistent.EMPTY_STACK.push(1);
-  final ImmutableStack big = Persistent.EMPTY_STACK.pushAll(new List.generate(1000, (i) => 1000 - (i + 1)));
 
   Iterable<int> get testSizes =>
       [0,1,1000];

@@ -1,13 +1,14 @@
 part of restlib.common.collections_test;
 
 abstract class ImmutableAssociativeTester {
-  dynamic get generator;
+  dynamic generateTestData(int size);
+  
   PairGenerator get pairGenerator;
   
   void testInsert() {
     group("insert()", (){
       final int size = 1000;
-      ImmutableAssociative assoc = generator();
+      ImmutableAssociative assoc = generateTestData(0);
       
       pairGenerator.reset();
       
@@ -24,7 +25,7 @@ abstract class ImmutableAssociativeTester {
   void testInsertAll() {
     group("insertAll()", () {
       final int size = 1000;
-      ImmutableAssociative assoc = generator();
+      ImmutableAssociative assoc = generateTestData(0);
       
       pairGenerator.reset();
       
@@ -45,7 +46,7 @@ abstract class ImmutableAssociativeTester {
   void testInsertPair() {
     group("insertPair()", () {
       final int size = 1000;
-      ImmutableAssociative assoc = generator();
+      ImmutableAssociative assoc = generateTestData(0);
       
       pairGenerator.reset();
       
@@ -62,7 +63,7 @@ abstract class ImmutableAssociativeTester {
   void testRemoveAt() {
     test("removeAt", () {
       final int size = 1000;
-      ImmutableAssociative assoc = generator();
+      ImmutableAssociative assoc = generateTestData(0);
       
       pairGenerator.reset();
       for (int i = 0; i < size; i++) {

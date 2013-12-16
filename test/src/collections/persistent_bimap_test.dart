@@ -32,10 +32,6 @@ class PersistentBiMapTester
       ImmutableAssociativeTester,
       AssociativeTester,
       IterableTester {
-  
-  final ImmutableBiMap empty = Persistent.EMPTY_BIMAP;
-  final ImmutableBiMap single = Persistent.EMPTY_BIMAP.insert(1, 1);
-  final ImmutableBiMap big = Persistent.EMPTY_BIMAP.insertAll(new List.generate(1000, (i) => new Pair(i,i)));
   final int invalidKey = 1001;
   
   final dynamic generator = () => Persistent.EMPTY_BIMAP;

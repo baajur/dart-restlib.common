@@ -13,9 +13,6 @@ class ImmutableSetTester
     extends Object
     with ImmutableCollectionTester,
       IterableTester {
-  final ImmutableSet empty = Persistent.EMPTY_SET;
-  final ImmutableSet single = Persistent.EMPTY_SET.add(1);
-  final ImmutableSet big = Persistent.EMPTY_SET.addAll(new List.generate(1000, (i) => i));
   
   final ElementGenerator elementGenerator = new SequenceElementGenerator();
   final dynamic generator = () => Persistent.EMPTY_SET;
