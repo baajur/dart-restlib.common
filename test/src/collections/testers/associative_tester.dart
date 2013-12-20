@@ -5,35 +5,32 @@ abstract class AssociativeTester {
   dynamic generateTestData(int size);  
   dynamic get invalidKey;
   
-  void _doAssociativeTest(String testDescription, func(Associative testData)) => 
+  void _doAssociativeTest(final String testDescription, func(Associative testData)) => 
       group(testDescription, () => 
           testSizes.forEach((final int size) => 
               test("with Associative of size $size", () => func(generateTestData(size)))));
   
-  void testContainsKey() =>
-      _doAssociativeTest("containsKey()", (final Associative testData) {
-        testData.keys.forEach((key) =>
-            expect(testData.containsKey(key), isTrue));
-        expect(testData.containsKey(invalidKey), isFalse);
-      });
+  void testContainsKey(final Associative testData) {
+    testData.keys.forEach((final key) => 
+        expect(testData.containsKey(key), isTrue));
+    expect(testData.containsKey(invalidKey), isFalse);
+  }
   
-  void testContainValues() =>
-      _doAssociativeTest("containsValue()" ,(final Associative testCase) {
-        testCase.values.forEach((value) =>
-            expect(testCase.containsValue(value), isTrue));
-        expect(testCase.containsValue(invalidKey), isFalse);
-      });
+  void testContainValues(final Associative testCase) {
+    testCase.values.forEach((final value) =>
+        expect(testCase.containsValue(value), isTrue));
+    expect(testCase.containsValue(invalidKey), isFalse);
+  }
   
-  void testOperatorListAccess() => 
-      _doAssociativeTest("operator []", (final Associative testCase) {
-        expect(testCase[invalidKey], isEmpty);
-        testCase.keys.forEach((final dynamic key) => 
-            expect(testCase[key].isEmpty, isFalse)); 
-      });
+  void testOperatorListAccess(final Associative testCase) {
+    expect(testCase[invalidKey], isEmpty);
+    testCase.keys.forEach((final dynamic key) => 
+        expect(testCase[key].isEmpty, isFalse)); 
+  }
   
   void testAssociative () {
-    testContainsKey();
-    testContainValues();
-    testOperatorListAccess();
+    _doAssociativeTest("containsKey()", testContainsKey);
+    _doAssociativeTest("containsValue()", testContainValues);
+    _doAssociativeTest("operator []", testOperatorListAccess);
   }
 }

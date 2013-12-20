@@ -1,9 +1,11 @@
 part of restlib.common.collections_test;
 
-class ImmutableSetTester
+class ImmutableMultisetTester
     extends Object
     with ImmutableCollectionTester, 
+      MultisetTester,
       IterableTester {
+  
   ElementGenerator elementGenerator;
   dynamic generator;
   Iterable<int> testSizes;
@@ -11,8 +13,23 @@ class ImmutableSetTester
   dynamic generateTestData(final int size) =>
       generator(size);
   
-  testImmutableSet() {
+  
+  void testAdd() {
+    super.testAdd();
+    
+  }
+  
+  void testRemove() {
+    super.testRemove();
+  }
+  
+  void testRemoveAll() {
+    
+  }
+  
+  void testImmutableMultiset() {
     testIterable();
     testImmutableCollection();
+    testMultiset();
   }
 }

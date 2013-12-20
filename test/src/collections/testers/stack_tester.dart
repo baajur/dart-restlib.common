@@ -9,22 +9,21 @@ abstract class StackTester {
           testSizes.forEach((final int size) => 
               test("with Stack of size $size", () => func(generateTestData(size), size))));   
   
-  void testGetTail() =>
-      _doStackTest("get tail", (final Stack testData, final int size) {
-        if (size == 0) {
-          expect(() => testData.tail, throwsStateError);
-        } else if (size == 1) {
-          expect(testData.tail, isEmpty);
-        } else {
-          Stack tail = testData;
-          for (int i = (size - 1); i >= 0; i--) {
-            tail = tail.tail;
-            expect(tail.length, equals(i));
-          }
-        }
-      });
+  void testGetTail(final Stack testData, final int size) {
+    if (size == 0) {
+      expect(() => testData.tail, throwsStateError);
+    } else if (size == 1) {
+      expect(testData.tail, isEmpty);
+    } else {
+      Stack tail = testData;
+      for (int i = (size - 1); i >= 0; i--) {
+        tail = tail.tail;
+        expect(tail.length, equals(i));
+      }
+    }
+  }
   
   testStack() {
-    testGetTail();
+    _doStackTest("get tail", testGetTail);
   }
 }

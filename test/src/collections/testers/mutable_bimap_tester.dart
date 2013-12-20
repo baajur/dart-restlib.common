@@ -1,15 +1,12 @@
 part of restlib.common.collections_test;
 
-class ImmutableSequenceTester
+class MutableBiMapTester 
     extends Object
-    with 
-      ImmutableAssociativeTester,
-      ImmutableCollectionTester,
-      SequenceTester,
+    with MutableAssociativeTester,
       AssociativeTester,
+      BiMapTester,
       IterableTester {
   
-  ElementGenerator elementGenerator;
   dynamic generator;
   dynamic invalidKey;
   PairGenerator pairGenerator;
@@ -18,11 +15,10 @@ class ImmutableSequenceTester
   dynamic generateTestData(final int size) =>
       generator(size);
   
-  testImmutableSequence() {
+  testMutableBiMap() {
     testIterable();
     testAssociative();
-    testSequence();
-    testImmutableAssociative();
-    testImmutableCollection();
+    testBiMap();
+    testMutableAssociative();
   }
 }

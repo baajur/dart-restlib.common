@@ -18,9 +18,15 @@ class CopyOnWriteMultisetBuilder<E> {
 class _CopyOnWriteMultiset<E> 
     extends _ImmutableMultisetBase<E>
     implements CopyOnWrite {
-  final Multiset<E> delegate;
+  final MutableMultiset<E> delegate;
   
   _CopyOnWriteMultiset(this.delegate);
+  
+  Iterable<E> get elements =>
+      delegate.elements;
+  
+  Dictionary<E, int> get entries =>
+      delegate.entries;
   
   Iterator<E> get iterator =>
       delegate.iterator;

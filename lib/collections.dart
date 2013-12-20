@@ -117,6 +117,9 @@ abstract class SetMultimap<K,V, I extends FiniteSet<V>> implements Multimap<K,V,
 }
 
 abstract class Multiset<E> implements Iterable<E> {
+  Iterable<E> get elements;
+  Dictionary<E, int> get entries;
+  
   int count(E element);
 }
 

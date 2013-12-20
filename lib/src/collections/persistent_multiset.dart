@@ -10,6 +10,12 @@ class _PersistentMultisetBase<E>
   
   const _PersistentMultisetBase(this._delegate);
   
+  Iterable<E> get elements =>
+      _delegate.map((final Pair<E,int> pair) => pair.fst);
+  
+  Dictionary<E, int> get entries =>
+      _delegate;
+  
   Iterator<E> get iterator => 
       _delegate.expand((final Pair<E, int> pair) =>
           new List.filled(pair.snd, pair.fst)).iterator;
