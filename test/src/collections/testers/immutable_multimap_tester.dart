@@ -1,22 +1,37 @@
 part of restlib.common.collections_test;
 
 abstract class ImmutableMultimapTester {
-  void testInsertAll() {
-    
-  }
-
-  void testInsert() {
-    
-  }
+  PairGenerator get pairGenerator;
+  int get removeAtCount;
+  
+  dynamic generateTestData(int size);
 
   void testRemoveAt() {
+    ImmutableMultimap assoc = generateTestData(0);
     
+    pairGenerator.reset();
+    for (int i = 0; i < removeAtCount; i++) {
+      final Pair next = pairGenerator.next();
+      for (int j = 0; j < removeAtCount; j++) {
+        assoc = assoc.insertPair(next);
+      }
+    }
+    
+    while (assoc.keys.isNotEmpty) {
+      final key = assoc.keys.first;
+      final value = assoc[key].first;
+        
+      assoc = assoc.removeAt(key);
+        
+      expect(assoc[key].contains(value), isFalse);
+    }
   }
 
   void testImmutableMultimap() {
-    testInsertAll();
-    testInsert();
-    testRemoveAt();
+    checkNotNull(pairGenerator);
+    checkNotNull(removeAtCount);
+    
+    test("multimap removeAt()", testRemoveAt);
   }
 }
 
