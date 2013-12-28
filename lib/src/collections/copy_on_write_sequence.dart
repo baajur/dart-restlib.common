@@ -17,9 +17,12 @@ class CopyOnWriteSequenceBuilder<E> {
 class _CopyOnWriteSequence<E> 
     extends _ImmutableSequenceBase<E> 
     implements CopyOnWrite {
-  final MutableSequence<E> delegate;
   
-  _CopyOnWriteSequence(this.delegate);
+  static final _CopyOnWriteSequence EMPTY = new _CopyOnWriteSequence(new MutableFixedSizeSequence(0));    
+      
+  final Sequence<E> delegate;
+  
+  const _CopyOnWriteSequence(this.delegate);
   
   int get length =>
       delegate.length;

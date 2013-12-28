@@ -19,16 +19,19 @@ class CopyOnWriteDictionaryBuilder<K,V> {
 class _CopyOnWriteDictionary<K,V> 
     extends _ImmutableDictionaryBase<K,V> 
     implements CopyOnWrite {
+      
+  static final _CopyOnWriteDictionary EMPTY = 
+      new CopyOnWriteDictionaryBuilder().build();
   
-  final Dictionary delegate;
+  final Dictionary _delegate;
   
-  const _CopyOnWriteDictionary(this.delegate);
+  const _CopyOnWriteDictionary(this._delegate);
 
   Iterator<Pair<K,V>> get iterator =>
-      delegate.iterator;
+      _delegate.iterator;
   
   Option<V> operator[](final K key) =>
-      delegate[key];
+      _delegate[key];
   
   ImmutableDictionary<K,V> insert(final K key, final V value) =>
       new _CopyOnWriteDictionary(

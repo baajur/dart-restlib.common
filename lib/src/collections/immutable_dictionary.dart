@@ -34,8 +34,7 @@ abstract class _ImmutableDictionaryBase<K,V>
           other[pair.fst]
             .map((final V value) => 
                 pair.snd == value)
-            .orElse(false));
-      
+            .orElse(false));      
     } else {
       return false;
     }

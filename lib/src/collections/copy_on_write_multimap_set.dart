@@ -1,16 +1,24 @@
 part of restlib.common.collections;
 
-class CopyOnWriteSetMultimapBuilder<K,V> {
+class CopyOnWriteSetMultimapBuilder<K,V> extends _CopyOnWriteMultimapBuilder<K,V, FiniteSet<V>> {
   final MutableSetMultimap<K,V> _delegate = new MutableSetMultimap.hashSetHashDictionary();
   
-  void insert(final K key, final V value) =>
-      _delegate.insert(key, value);
+  dynamic _newValueBuilder() =>
+      new CopyOnWriteSetBuilder();
+}
+
+class _CopyOnWriteSetMultimap<K,V>
+    extends _CopyOnWriteMultimap<K,V,FiniteSet<V>>
+    implements ImmutableSetMultimap<K,V>, CopyOnWrite {
   
-  void insertAll(final Iterable<Pair<K,V>> pairs) =>
-      _delegate.insertAll(pairs);
+  static final _CopyOnWriteSetMultimap EMPTY = new _CopyOnWriteSetMultimap(CopyOnWrite.EMPTY_DICTIONARY);    
   
-  void insertPair(final Pair<K,V> pair) =>
-      _delegate.insertPair(pair);
+  const _CopyOnWriteSetMultimap(final ImmutableDictionary<K,FiniteSet<V>> delegate) :
+    super(delegate);
   
-  ImmutableSetMultimap<K,V> build() => null;
+  FiniteSet<V> get _emptyValueContainer =>
+      CopyOnWrite.EMPTY_SET;
+  
+  CopyOnWriteSetMultimapBuilder<K,V> _newBuilder() =>
+      new CopyOnWriteSetMultimapBuilder<K,V>();
 }

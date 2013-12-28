@@ -1,16 +1,24 @@
 part of restlib.common.collections;
 
-class CopyOnWriteSequenceMultimapBuilder<K,V> {
+class CopyOnWriteSequenceMultimapBuilder<K,V> extends _CopyOnWriteMultimapBuilder<K,V, Sequence<V>> {
   final MutableSequenceMultimap<K,V> _delegate = new MutableSequenceMultimap.hash();
   
-  void insert(final K key, final V value) =>
-      _delegate.insert(key, value);
+  dynamic _newValueBuilder() =>
+      new CopyOnWriteSequenceBuilder();
+}
+
+class _CopyOnWriteSequenceMultimap<K,V>
+    extends _CopyOnWriteMultimap<K,V,Sequence<V>>
+    implements ImmutableSequenceMultimap<K,V>, CopyOnWrite {
   
-  void insertAll(final Iterable<Pair<K,V>> pairs) =>
-      _delegate.insertAll(pairs);
+  static final _CopyOnWriteSequenceMultimap EMPTY = new _CopyOnWriteSequenceMultimap(CopyOnWrite.EMPTY_DICTIONARY);            
+      
+  const _CopyOnWriteSequenceMultimap(final ImmutableDictionary<K,Sequence<V>> delegate) :
+    super(delegate);
   
-  void insertPair(final Pair<K,V> pair) =>
-      _delegate.insertPair(pair);
+  Sequence<V> get _emptyValueContainer =>
+      CopyOnWrite.EMPTY_SEQUENCE;
   
-  ImmutableSequenceMultimap<K,V> build() => null;
+  CopyOnWriteSequenceMultimapBuilder<K,V> _newBuilder() =>
+      new CopyOnWriteSequenceMultimapBuilder<K,V>();
 }

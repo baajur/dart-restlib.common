@@ -10,6 +10,7 @@ import "preconditions.dart";
 part "src/collections/array.dart";
 part "src/collections/copy_on_write_bimap.dart";
 part "src/collections/copy_on_write_dictionary.dart";
+part "src/collections/copy_on_write_multimap.dart";
 part "src/collections/copy_on_write_multimap_multiset.dart";
 part "src/collections/copy_on_write_multimap_sequence.dart";
 part "src/collections/copy_on_write_multimap_set.dart";
@@ -102,18 +103,20 @@ abstract class FiniteSet<E> implements Iterable<E> {
 
 abstract class Multimap<K,V, I extends Iterable<V>> implements Associative<K,V>, Iterable<Pair<K,V>> {  
   Dictionary<K, I> get dictionary;
+  I operator[](K key);
 }
 
-abstract class SequenceMultimap<K,V, I extends Sequence<V>> implements Multimap<K,V,I> {
+abstract class SequenceMultimap<K,V> implements Multimap<K,V,Sequence<V>> {
+  Dictionary<K, Sequence<V>> get dictionary;
+}
+
+abstract class MultisetMultimap<K,V> implements Multimap<K,V,Multiset<V>> {
+  Dictionary<K, Multiset<V>> get dictionary;
   
 }
 
-abstract class MultisetMultimap<K,V, I extends Multiset<V>> implements Multimap<K,V,I> {
-  
-}
-
-abstract class SetMultimap<K,V, I extends FiniteSet<V>> implements Multimap<K,V,I> {
-  
+abstract class SetMultimap<K,V> implements Multimap<K,V,FiniteSet<V>> {
+  Dictionary<K, FiniteSet<V>> get dictionary;
 }
 
 abstract class Multiset<E> implements Iterable<E> {

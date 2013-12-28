@@ -18,6 +18,8 @@ class CopyOnWriteMultisetBuilder<E> {
 class _CopyOnWriteMultiset<E> 
     extends _ImmutableMultisetBase<E>
     implements CopyOnWrite {
+  static final _CopyOnWriteMultiset EMPTY = new _CopyOnWriteMultiset(new MutableMultiset.hash());     
+      
   final MutableMultiset<E> delegate;
   
   _CopyOnWriteMultiset(this.delegate);

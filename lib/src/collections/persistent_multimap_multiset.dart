@@ -1,7 +1,7 @@
 part of restlib.common.collections;
 
 class _PersistentMultisetMultimapBase<K,V> 
-    extends _PersistentMultimapBase<K,V,ImmutableMultiset<V>> 
+    extends _PersistentMultimapBase<K,V, Multiset<V>> 
     implements ImmutableMultisetMultimap<K,V>, Persistent {  
   
   static const ImmutableMultisetMultimap EMPTY = 
@@ -10,12 +10,12 @@ class _PersistentMultisetMultimapBase<K,V>
   const _PersistentMultisetMultimapBase._internal(final ImmutableDictionary<K, ImmutableMultiset<V>> dictionary) :
     super._internal(dictionary);
   
-  ImmutableMultiset _emptyValueContainer() =>
+  ImmutableMultiset get _emptyValueContainer =>
       Persistent.EMPTY_MULTISET;
   
   ImmutableMultisetMultimap<K,V> insert(final K key, final V value) =>
       new _PersistentMultisetMultimapBase._internal(
-          dictionary.insert(key, this[key].add(value)));
+          dictionary.insert(key, (this[key] as ImmutableMultiset).add(value)));
   
   ImmutableMultisetMultimap<K,V> removeAt(final K key) =>
       new _PersistentMultisetMultimapBase._internal(

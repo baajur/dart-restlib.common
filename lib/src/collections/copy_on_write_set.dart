@@ -17,6 +17,8 @@ class CopyOnWriteSetBuilder<E> {
 class _CopyOnWriteSet<E> 
     extends IterableBase<E>
     implements ImmutableSet<E>, CopyOnWrite {
+      
+  static final _CopyOnWriteSet EMPTY = new _CopyOnWriteSet(new MutableSet.hash());    
   final MutableSet<E> delegate;
   
   _CopyOnWriteSet(this.delegate);

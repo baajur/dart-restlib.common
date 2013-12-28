@@ -1,16 +1,24 @@
 part of restlib.common.collections;
 
-class CopyOnWriteMultisetMultimapBuilder<K,V> {
+class CopyOnWriteMultisetMultimapBuilder<K,V> extends _CopyOnWriteMultimapBuilder<K,V, Multiset<V>> {
   final MutableMultisetMultimap<K,V> _delegate = new MutableMultisetMultimap.hashMultisetHashDictionary();
   
-  void insert(final K key, final V value) =>
-      _delegate.insert(key, value);
+  dynamic _newValueBuilder() =>
+      new CopyOnWriteMultisetBuilder();
+}
+
+class _CopyOnWriteMultisetMultimap<K,V>
+    extends _CopyOnWriteMultimap<K,V,Multiset<V>>
+    implements ImmutableMultisetMultimap<K,V>, CopyOnWrite {
+      
+  static final _CopyOnWriteMultisetMultimap EMPTY = new _CopyOnWriteMultisetMultimap(CopyOnWrite.EMPTY_DICTIONARY);        
   
-  void insertAll(final Iterable<Pair<K,V>> pairs) =>
-      _delegate.insertAll(pairs);
+  const _CopyOnWriteMultisetMultimap(final ImmutableDictionary<K, Multiset<V>> delegate) :
+    super(delegate);
   
-  void insertPair(final Pair<K,V> pair) =>
-      _delegate.insertPair(pair);
+  Multiset<V> get _emptyValueContainer =>
+      CopyOnWrite.EMPTY_MULTISET;
   
-  ImmutableMultisetMultimap<K,V> build() => null;
+  CopyOnWriteMultisetMultimapBuilder<K,V> _newBuilder() =>
+      new CopyOnWriteMultisetMultimapBuilder<K,V>();
 }

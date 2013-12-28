@@ -1,7 +1,7 @@
 part of restlib.common.collections;
 
 class _PersistentSetMultimapBase<K,V> 
-    extends _PersistentMultimapBase<K,V,ImmutableSet<V>> 
+    extends _PersistentMultimapBase<K,V,FiniteSet<V>> 
     implements ImmutableSetMultimap<K,V>, Persistent {  
   
   static const ImmutableSetMultimap EMPTY = 
@@ -10,12 +10,12 @@ class _PersistentSetMultimapBase<K,V>
   const _PersistentSetMultimapBase._internal(final ImmutableDictionary<K, ImmutableSet<V>> dictionary) :
     super._internal(dictionary);
   
-  ImmutableSet _emptyValueContainer() =>
+  ImmutableSet get _emptyValueContainer =>
       Persistent.EMPTY_SET;
   
   ImmutableSetMultimap<K,V> insert(final K key, final V value) =>
       new _PersistentSetMultimapBase._internal(
-          dictionary.insert(key, this[key].add(value)));
+          dictionary.insert(key, (this[key] as ImmutableSet).add(value)));
   
   ImmutableSetMultimap<K,V> removeAt(final K key) =>
       new _PersistentSetMultimapBase._internal(

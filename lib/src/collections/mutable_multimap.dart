@@ -1,16 +1,14 @@
 part of restlib.common.collections;
 
-abstract class MutableMultimap<K, V, I extends MutableCollection<V>> implements Multimap<K, V, I>, MutableAssociative<K,V> {
-  MutableDictionary<K, I> get dictionary;
-  
+abstract class MutableMultimap<K, V, I extends Iterable<V>> implements Multimap<K, V, I>, MutableAssociative<K,V> {  
   I operator[](final K key);
   
   I removeAt(K key);
 }
 
-abstract class _AbstractMutableMultimap<K,V, I extends MutableCollection<V>> 
+abstract class _AbstractMutableMultimap<K,V, I extends Iterable<V>> 
     extends _MultimapBase<K,V,I>
-    implements MutableMultimap<K,V, I> {
+    implements MutableMultimap<K, V, I> {
   final MutableDictionary<K, I> _delegate;
   
   _AbstractMutableMultimap(this._delegate);
@@ -22,11 +20,7 @@ abstract class _AbstractMutableMultimap<K,V, I extends MutableCollection<V>>
   I operator[](final K key) =>
       _delegate[key]
         .map((final I container) => container)
-        .orCompute(() {
-          final I value = _newValueContainer();
-          _delegate.insert(key, value);
-          return value;
-        });
+        .orElse(_emptyValueContainer);
   
   void operator[]=(final K key, final V value) =>
       insert(key, value);
@@ -40,9 +34,9 @@ abstract class _AbstractMutableMultimap<K,V, I extends MutableCollection<V>>
       _delegate.insert(key, 
           _delegate[key]
             .map((final I container) => 
-                container.add(value))
+                (container as MutableCollection).add(value))
             .orCompute(() =>  
-                _newValueContainer().add(value)));
+                (_newValueContainer() as MutableCollection).add(value)));
   
   void insertAll(final Iterable<Pair<K, V>> pairs) =>
       pairs.forEach((final Pair<K, V> pair) => 
