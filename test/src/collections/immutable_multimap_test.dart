@@ -1,6 +1,19 @@
 part of restlib.common.collections_test;
 
 void immutableMultisetMultimapTests() { 
+  new EqualsTester()
+  ..addEqualityGroup(
+      [Persistent.EMPTY_MULTISET_MULTIMAP,
+       CopyOnWrite.EMPTY_MULTISET_MULTIMAP
+      ])
+  ..addEqualityGroup(
+      [Persistent.EMPTY_MULTISET_MULTIMAP.insert("a", "a").insert("a", "b").insert("c", "d"),
+       Persistent.EMPTY_MULTISET_MULTIMAP.insert("a", "a").insert("a", "b").insert("c", "d"),
+       CopyOnWrite.EMPTY_MULTISET_MULTIMAP.insert("a", "a").insert("a", "b").insert("c", "d"),
+       (new CopyOnWriteMultisetMultimapBuilder()..insert("a", "a")..insert("a", "b")..insert("c", "d")).build()
+      ])
+  ..executeTestCase();
+  
   group("copyonwrite", () =>
       new ImmutableMultisetMultimapTester()
         ..generator = ((final int size) => 
@@ -29,6 +42,19 @@ void immutableMultisetMultimapTests() {
 }
 
 void immutableSequenceMultimapTests() { 
+  new EqualsTester()
+  ..addEqualityGroup(
+      [Persistent.EMPTY_SEQUENCE_MULTIMAP,
+       CopyOnWrite.EMPTY_SEQUENCE_MULTIMAP
+      ])
+  ..addEqualityGroup(
+      [Persistent.EMPTY_SEQUENCE_MULTIMAP.insert("a", "a").insert("a", "b").insert("c", "d"),
+       Persistent.EMPTY_SEQUENCE_MULTIMAP.insert("a", "a").insert("a", "b").insert("c", "d"),
+       CopyOnWrite.EMPTY_SEQUENCE_MULTIMAP.insert("a", "a").insert("a", "b").insert("c", "d"),
+       (new CopyOnWriteSequenceMultimapBuilder()..insert("a", "a")..insert("a", "b")..insert("c", "d")).build()
+      ])
+  ..executeTestCase();
+  
   group("copyonwrite", () =>
       new ImmutableSequenceMultimapTester()
         ..generator = ((final int size) => 
@@ -57,6 +83,19 @@ void immutableSequenceMultimapTests() {
 }
 
 void immutableSetMultimapTests() { 
+  new EqualsTester()
+  ..addEqualityGroup(
+      [Persistent.EMPTY_SET_MULTIMAP,
+       CopyOnWrite.EMPTY_SET_MULTIMAP
+      ])
+  ..addEqualityGroup(
+      [Persistent.EMPTY_SET_MULTIMAP.insert("a", "a").insert("a", "b").insert("c", "d"),
+       Persistent.EMPTY_SET_MULTIMAP.insert("a", "a").insert("a", "b").insert("c", "d"),
+       CopyOnWrite.EMPTY_SET_MULTIMAP.insert("a", "a").insert("a", "b").insert("c", "d"),
+       (new CopyOnWriteSetMultimapBuilder()..insert("a", "a")..insert("a", "b")..insert("c", "d")).build()
+      ])
+  ..executeTestCase();
+  
   group("copyonwrite", () =>
       new ImmutableSetMultimapTester()
         ..generator = ((final int size) => 

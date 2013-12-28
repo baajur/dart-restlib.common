@@ -13,7 +13,7 @@ abstract class Persistent {
 }
 
 abstract class CopyOnWrite {
-  //static final ImmutableBiMap EMPTY_BIMAP = _CopyOnWriteBiMap.EMPTY;
+  static final ImmutableBiMap EMPTY_BIMAP = _CopyOnWriteBiMap.EMPTY;
   static final ImmutableDictionary EMPTY_DICTIONARY = _CopyOnWriteDictionary.EMPTY;
   static final ImmutableMultisetMultimap EMPTY_MULTISET_MULTIMAP = _CopyOnWriteMultisetMultimap.EMPTY;
   static final ImmutableSequenceMultimap EMPTY_SEQUENCE_MULTIMAP = _CopyOnWriteSequenceMultimap.EMPTY;

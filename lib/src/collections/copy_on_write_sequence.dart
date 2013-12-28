@@ -1,6 +1,6 @@
 part of restlib.common.collections;
 
-class CopyOnWriteSequenceBuilder<E> {
+class CopyOnWriteSequenceBuilder<E> implements CopyOnWriteCollectionBuilder<E> {
   final MutableSequence<E> _sequence = new GrowableSequence();
   
   void add(final E element) =>

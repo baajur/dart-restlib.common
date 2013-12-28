@@ -12,7 +12,7 @@ abstract class _CopyOnWriteMultimapBuilder<K,V, I extends Iterable<V>> {
   void insertPair(final Pair<K,V> pair) =>
       _delegate.insertPair(pair);
   
-  dynamic _newValueBuilder();
+  CopyOnWriteCollectionBuilder<V> _newValueBuilder();
   
   ImmutableMultimap<K,V,I> _doBuild(final ImmutableDictionary<K,I> dictionary);
   

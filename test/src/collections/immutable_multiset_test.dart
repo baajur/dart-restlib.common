@@ -5,11 +5,15 @@ void immutableMultisetTests() {
   ..addEqualityGroup(
       [Persistent.EMPTY_MULTISET,
        Persistent.EMPTY_MULTISET.add("a").remove("a"),
-       (new CopyOnWriteMultisetBuilder()).build()])
+       (new CopyOnWriteMultisetBuilder()).build(),
+       CopyOnWrite.EMPTY_MULTISET
+      ])
   ..addEqualityGroup(
       [Persistent.EMPTY_MULTISET.add("a"),
        Persistent.EMPTY_MULTISET.add("a"),
-       (new CopyOnWriteMultisetBuilder()..add("a")).build()])     
+       (new CopyOnWriteMultisetBuilder()..add("a")).build(),
+       CopyOnWrite.EMPTY_MULTISET.add("a"),
+      ])     
   ..executeTestCase();
   
   group("persistent", () => 

@@ -5,15 +5,15 @@ immutableDictionaryTests() {
   ..addEqualityGroup(
       [Persistent.EMPTY_DICTIONARY,
       Persistent.EMPTY_DICTIONARY.insert("a", "a").removeAt("a"),
-      new CopyOnWriteDictionaryBuilder().build()])
+      new CopyOnWriteDictionaryBuilder().build(),
+      CopyOnWrite.EMPTY_DICTIONARY])
   ..addEqualityGroup(
       [Persistent.EMPTY_DICTIONARY.insert("a", "a").insert("b", "b"),
        Persistent.EMPTY_DICTIONARY.insert("b", "b").insert("a", "a"),
        Persistent.EMPTY_DICTIONARY.insertAllFromMap({"a" : "a", "b" : "b"}),
        Persistent.EMPTY_DICTIONARY.insert("b", "b").insert("c", "c").insert("a", "a").removeAt("c"),
-       (new CopyOnWriteDictionaryBuilder()
-        ..insert("a", "a")
-        ..insert("b", "b")).build()
+       CopyOnWrite.EMPTY_DICTIONARY.insert("a", "a").insert("b", "b"),
+       (new CopyOnWriteDictionaryBuilder()..insert("a", "a")..insert("b", "b")).build()
       ])
   ..executeTestCase();
   

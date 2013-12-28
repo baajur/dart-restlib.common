@@ -3,7 +3,7 @@ part of restlib.common.collections;
 class CopyOnWriteSequenceMultimapBuilder<K,V> extends _CopyOnWriteMultimapBuilder<K,V, Sequence<V>> {
   final MutableSequenceMultimap<K,V> _delegate = new MutableSequenceMultimap.hash();
   
-  dynamic _newValueBuilder() =>
+  CopyOnWriteCollectionBuilder<V> _newValueBuilder() =>
       new CopyOnWriteSequenceBuilder();
   
   ImmutableSequenceMultimap<K,V> _doBuild(final ImmutableDictionary<K,Sequence<V>> dictionary) =>

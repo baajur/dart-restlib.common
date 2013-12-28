@@ -3,7 +3,7 @@ part of restlib.common.collections;
 class CopyOnWriteMultisetMultimapBuilder<K,V> extends _CopyOnWriteMultimapBuilder<K,V, Multiset<V>> {
   final MutableMultisetMultimap<K,V> _delegate = new MutableMultisetMultimap.hashMultisetHashDictionary();
   
-  dynamic _newValueBuilder() =>
+  CopyOnWriteCollectionBuilder<V> _newValueBuilder() =>
       new CopyOnWriteMultisetBuilder();
   
   ImmutableMultisetMultimap<K,V> _doBuild(final ImmutableDictionary<K,Multiset<V>> dictionary) =>

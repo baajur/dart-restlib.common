@@ -1,6 +1,6 @@
 part of restlib.common.collections;
 
-class CopyOnWriteMultisetBuilder<E> {
+class CopyOnWriteMultisetBuilder<E> implements CopyOnWriteCollectionBuilder<E> {
   final MutableMultiset<E> _set = new MutableMultiset.hash();
   
   void add(final E element) =>

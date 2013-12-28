@@ -3,32 +3,30 @@ part of restlib.common.collections;
 class _PersistentBiMap<K,V> 
     extends _ImmutableBiMapBase<K,V>
     implements Persistent {
-      
-  // FIXME: Ideally this would const, but dart doesn't yet allow using mixins with const
-  // see: https://code.google.com/p/dart/issues/detail?id=9745    
+
   static const ImmutableBiMap EMPTY = 
       const _PersistentBiMap._internal(
           Persistent.EMPTY_DICTIONARY, Persistent.EMPTY_DICTIONARY);
 
-  final ImmutableDictionary<K,V> delegate;
+  final ImmutableDictionary<K,V> _delegate;
   final ImmutableDictionary<V,K> _inverse;
   
-  const _PersistentBiMap._internal(this.delegate, this._inverse);
+  const _PersistentBiMap._internal(this._delegate, this._inverse);
   
   BiMap<V,K> get inverse =>
-      isEmpty ? EMPTY : new _PersistentBiMap._internal(_inverse, delegate);
+      isEmpty ? EMPTY : new _PersistentBiMap._internal(_inverse, _delegate);
   
   Iterator<Pair<K,V>> get iterator =>
-      delegate.iterator;
+      _delegate.iterator;
       
   Option<V> operator[](final K key) => 
-      delegate[key];
+      _delegate[key];
   
   ImmutableBiMap<K,V> insert(final K key, final V value) {
     checkNotNull(key);
     checkNotNull(value);
     
-    ImmutableDictionary newMap = delegate;
+    ImmutableDictionary newMap = _delegate;
     ImmutableDictionary newInverse = _inverse;
     
     newInverse[value].map((final K key) => 
@@ -37,7 +35,7 @@ class _PersistentBiMap<K,V>
     newInverse = newInverse.insert(value, key);
     newMap = newMap.insert(key, value);
     
-    return newMap == delegate ? this : new _PersistentBiMap._internal(newMap, newInverse);
+    return newMap == _delegate ? this : new _PersistentBiMap._internal(newMap, newInverse);
   }
   
   ImmutableBiMap<K, V> insertAll(final Iterable<Pair<K,V>> pairs) {
@@ -60,13 +58,13 @@ class _PersistentBiMap<K,V>
   ImmutableBiMap<K,V> removeAt(final K key) {
     checkNotNull(key);
     
-    ImmutableDictionary newMap = delegate;
+    ImmutableDictionary newMap = _delegate;
     ImmutableDictionary newInverse = _inverse;
     
     newMap[key].map((final V value) => 
         newInverse = newInverse.removeAt(value));
     newMap = newMap.removeAt (key);
     
-    return newMap == delegate ? this : new _PersistentBiMap._internal(newMap, newInverse);
+    return newMap == _delegate ? this : new _PersistentBiMap._internal(newMap, newInverse);
   }
 }

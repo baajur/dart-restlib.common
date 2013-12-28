@@ -1,6 +1,6 @@
 part of restlib.common.collections;
 
-class CopyOnWriteSetBuilder<E> {
+class CopyOnWriteSetBuilder<E> implements CopyOnWriteCollectionBuilder<E> {
   final MutableSet<E> _set = new MutableSet.hash();
   
   void add(final E element) =>

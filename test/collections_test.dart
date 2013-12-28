@@ -107,4 +107,14 @@ collectionsTestGroup() {
 
 main() {  
   collectionsTestGroup();
+  /*
+  Multimap persistent = 
+      Persistent.EMPTY_MULTISET_MULTIMAP.insert("a", "a").insert("a", "b").insert("c", "d");
+  Multimap copyOnWrite = 
+      CopyOnWrite.EMPTY_MULTISET_MULTIMAP.insert("a", "a").insert("a", "b").insert("c", "d");
+  
+  print("${persistent.length}, ${copyOnWrite.length}");
+  print("${persistent.dictionary.length}, ${copyOnWrite.dictionary.length}");
+  */
+  
 }

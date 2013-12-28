@@ -9,6 +9,7 @@ import "preconditions.dart";
 
 part "src/collections/array.dart";
 part "src/collections/copy_on_write_bimap.dart";
+part "src/collections/copy_on_write_collection.dart";
 part "src/collections/copy_on_write_dictionary.dart";
 part "src/collections/copy_on_write_multimap.dart";
 part "src/collections/copy_on_write_multimap_multiset.dart";

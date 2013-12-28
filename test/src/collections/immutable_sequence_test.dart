@@ -2,15 +2,18 @@ part of restlib.common.collections_test;
 
 immutableSequenceTests() {  
   new EqualsTester()
-    ..addEqualityGroup([Persistent.EMPTY_SEQUENCE, 
-                        Persistent.EMPTY_SEQUENCE.add("a").tail,
-                        new CopyOnWriteSequenceBuilder().build()])
-    ..addEqualityGroup([Persistent.EMPTY_SEQUENCE.addAll(["a", "b", "c"]), 
-                        Persistent.EMPTY_SEQUENCE.addAll(["a", "b", "c"]), 
-                        Persistent.EMPTY_SEQUENCE.addAll(["a", "b", "c", "d"]).tail,
-                        (new CopyOnWriteSequenceBuilder()
-                          ..addAll(["a", "b", "c"]))
-                          .build()])
+    ..addEqualityGroup(
+        [Persistent.EMPTY_SEQUENCE, 
+         Persistent.EMPTY_SEQUENCE.add("a").tail,
+         new CopyOnWriteSequenceBuilder().build(),
+         CopyOnWrite.EMPTY_SEQUENCE])
+    ..addEqualityGroup(
+        [Persistent.EMPTY_SEQUENCE.addAll(["a", "b", "c"]), 
+         Persistent.EMPTY_SEQUENCE.addAll(["a", "b", "c"]), 
+         Persistent.EMPTY_SEQUENCE.addAll(["a", "b", "c", "d"]).tail,
+         (new CopyOnWriteSequenceBuilder()..addAll(["a", "b", "c"])).build(),
+         CopyOnWrite.EMPTY_SEQUENCE.addAll(["a", "b", "c"]), 
+        ])
     ..executeTestCase();
     
   group("persistent", () => 

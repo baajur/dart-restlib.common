@@ -25,9 +25,10 @@ class _PersistentDictionary<K,V>
     checkNotNull(value);
     
     final _INode newroot = firstNotNull(_root, _BitmapIndexedNode.EMPTY).assoc(0, key.hashCode, key, value);
+    final int newLength = containsKey(key) ? length : length + 1;
     
     return (identical(newroot, _root)) ? this :
-      new _PersistentDictionary._internal(length + 1, newroot);
+      new _PersistentDictionary._internal(newLength, newroot);
   }
   
   ImmutableDictionary<K,V> insertAll(final Iterable<Pair<K, V>> pairs) {
