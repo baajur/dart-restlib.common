@@ -30,15 +30,20 @@ class ImmutableMultisetMultimapTester
       AssociativeTester,
       IterableTester {
   
+  int insertCount;
+  int insertAllCount;
   dynamic generator;
   dynamic invalidKey;
   PairGenerator pairGenerator;
+  int removeAtCount;
   Iterable<int> testSizes;
   
   dynamic generateTestData(final int size) =>
       generator(size);
 
   void testImmutableMultisetMultimap() {
+    checkNotNull(generator);
+    
     testIterable();
     testAssociative();
     testImmutableAssociative();
@@ -56,6 +61,9 @@ class ImmutableSequenceMultimapTester
       AssociativeTester,
       IterableTester {  
   
+  int insertCount;
+  int insertAllCount;
+  int removeAtCount;
   dynamic generator;
   dynamic invalidKey;
   PairGenerator pairGenerator;
@@ -82,6 +90,9 @@ class ImmutableSetMultimapTester
       AssociativeTester,
       IterableTester {  
   
+  int insertCount;
+  int insertAllCount;
+  int removeAtCount;
   dynamic generator;
   dynamic invalidKey;
   PairGenerator pairGenerator;

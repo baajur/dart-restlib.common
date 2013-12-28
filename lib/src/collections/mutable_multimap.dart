@@ -34,9 +34,9 @@ abstract class _AbstractMutableMultimap<K,V, I extends Iterable<V>>
       _delegate.insert(key, 
           _delegate[key]
             .map((final I container) => 
-                (container as MutableCollection).add(value))
+                (container as MutableCollection)..add(value))
             .orCompute(() =>  
-                (_newValueContainer() as MutableCollection).add(value)));
+                (_newValueContainer() as MutableCollection)..add(value)));
   
   void insertAll(final Iterable<Pair<K, V>> pairs) =>
       pairs.forEach((final Pair<K, V> pair) => 

@@ -17,7 +17,10 @@ immutableBiMapTests() {
       new ImmutableBiMapTester()
         ..generator = ((final int size) => 
             Persistent.EMPTY_BIMAP.insertAll(new List.generate(size, (i) => new Pair(i,i))))
+        ..insertAllCount = 1000
+        ..insertCount = 1000
         ..invalidKey = 1001
+        ..removeAtCount = 1000
         ..pairGenerator = new SequencePairGenerator()
         ..testSizes = [0,1,1000]
         ..testImmutableBiMap());

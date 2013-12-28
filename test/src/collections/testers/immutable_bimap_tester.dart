@@ -8,6 +8,9 @@ class ImmutableBiMapTester
       IterableTester {
   
   dynamic generator;
+  int insertCount;
+  int insertAllCount;
+  int removeAtCount;
   dynamic invalidKey;
   PairGenerator pairGenerator;
   Iterable<int> testSizes;
@@ -16,6 +19,8 @@ class ImmutableBiMapTester
       generator(size);
   
   testImmutableBiMap() {
+    checkNotNull(generator);
+    
     testIterable();
     testAssociative();
     testBiMap();

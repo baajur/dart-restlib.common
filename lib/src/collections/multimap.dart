@@ -27,11 +27,16 @@ abstract class _MultimapBase<K,V,I extends Iterable<V>>
             value)
         .orElse(_emptyValueContainer);
   
-  bool contains(final Pair<K, V> pair) =>
-      dictionary[pair.fst]
+  bool contains(final Object pair) {
+    if (pair is Pair) {
+      return dictionary[pair.fst]
         .map((final I values) =>
             values.contains(pair.snd))
         .orElse(false);
+    } else {
+      return false;
+    }
+  }
   
   bool containsKey(final K key) =>
       dictionary.containsKey(key);

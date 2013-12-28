@@ -2,12 +2,13 @@ part of restlib.common.collections_test;
 
 abstract class MultisetTester {
   Iterable<int> get testSizes;
-  dynamic generateTestData(int size);  
   
   void _doMultisetTest(String testDescription, func(Multiset testData, int size)) => 
       group(testDescription, () => 
           testSizes.forEach((final int size) => 
               test("with Multiset of size $size", () => func(generateTestData(size), size))));
+  
+  dynamic generateTestData(int size);  
   
   void testGetElements(final Multiset testData, final int size) =>
       testData.forEach((final dynamic element) =>
@@ -21,6 +22,8 @@ abstract class MultisetTester {
           expect(testData.count(pair.fst), equals(pair.snd)));
   
   void testMultiset() {
+    checkNotNull(testSizes);
+    
     _doMultisetTest("get elements", testGetElements);
     _doMultisetTest("get entries", testGetEntries);
     _doMultisetTest("count()", testCount);

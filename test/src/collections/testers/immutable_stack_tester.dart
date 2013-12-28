@@ -12,6 +12,8 @@ class ImmutableStackTester
       generator(size);
   
   testImmutabletStack() {
+    checkNotNull(generator);
+    
     testIterable();
     testStack();
   }

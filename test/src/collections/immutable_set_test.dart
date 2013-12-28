@@ -16,19 +16,25 @@ immutableSetTests() {
   
   group("persistent", () =>
       new ImmutableSetTester()
+        ..addAllCount = 1000
+        ..addCount = 1000
         ..elementGenerator = new SequenceElementGenerator()
         ..generator =((final int size) => 
             Persistent.EMPTY_SET.addAll(new List.generate(size, (i) => i)))
+        ..removeCount = 1000
         ..testSizes = [0, 1, 1000]
         ..testImmutableSet());
   
   group("copyonwrite", () =>
       new ImmutableSetTester()
+        ..addCount = 10
+        ..addAllCount = 10
         ..elementGenerator = new SequenceElementGenerator()
         ..generator =((final int size) => 
             (new CopyOnWriteSetBuilder()
               ..addAll(new List.generate(size, (i) => i)))
               .build())
-        ..testSizes = [0, 1, 1000]
+        ..removeCount = 10
+        ..testSizes = [0, 1, 10]
         ..testImmutableSet());  
 }

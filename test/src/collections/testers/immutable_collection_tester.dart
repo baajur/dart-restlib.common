@@ -1,17 +1,19 @@
 part of restlib.common.collections_test;
 
 abstract class ImmutableCollectionTester {
+  int get addCount;
+  int get addAllCount;
+  ElementGenerator get elementGenerator;
+  int get removeCount;
+  
   dynamic generateTestData(int size);
   
-  ElementGenerator get elementGenerator;
-  
   void testAdd() {
-    final int size = 1000;
     ImmutableCollection collection = generateTestData(0);
       
     elementGenerator.reset();
       
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < addCount; i++) {
       final next = elementGenerator.next();
       collection = collection.add(next);
       expect(collection.contains(next), isTrue);
@@ -20,14 +22,13 @@ abstract class ImmutableCollectionTester {
   }
   
   void testAddAll() {
-    final int size = 1000;
     ImmutableCollection collection = generateTestData(0);
       
     elementGenerator.reset();
       
-    Array<Pair> array = new Array.ofSize(size);
+    Array<Pair> array = new Array.ofSize(addAllCount);
       
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < addAllCount; i++) {
       final next = elementGenerator.next();
       array[i] = next;
     }
@@ -38,14 +39,13 @@ abstract class ImmutableCollectionTester {
   }
   
   void testRemove() {
-    final int size = 1000;
     ImmutableCollection collection = generateTestData(0);
       
     elementGenerator.reset();
       
-    Array<Pair> array = new Array.ofSize(size);
+    Array<Pair> array = new Array.ofSize(removeCount);
       
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < removeCount; i++) {
       final next = elementGenerator.next();
       array[i] = next;
     }
@@ -59,6 +59,11 @@ abstract class ImmutableCollectionTester {
   }
   
   void testImmutableCollection() {
+    checkNotNull(addCount);
+    checkNotNull(addAllCount);
+    checkNotNull(elementGenerator);
+    checkNotNull(removeCount);
+    
     test("add()", testAdd);
     test("addAll()", testAddAll);
     test("remove()", testRemove);

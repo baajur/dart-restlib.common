@@ -3,6 +3,7 @@ library restlib.common.collections_test;
 import "package:unittest/unittest.dart";
 
 import "package:restlib_common/collections.dart";
+import "package:restlib_common/preconditions.dart";
 import "package:restlib_testing/testing.dart";
 
 part "src/collections/testers/associative_tester.dart";

@@ -2,12 +2,13 @@ part of restlib.common.collections_test;
 
 abstract class StackTester {
   Iterable<int> get testSizes;
-  dynamic generateTestData(int size); 
   
   void _doStackTest(String testDescription, func(Stack testData, int size)) =>
       group(testDescription, () =>
           testSizes.forEach((final int size) => 
               test("with Stack of size $size", () => func(generateTestData(size), size))));   
+  
+  dynamic generateTestData(int size); 
   
   void testGetTail(final Stack testData, final int size) {
     if (size == 0) {
@@ -24,6 +25,8 @@ abstract class StackTester {
   }
   
   testStack() {
+    checkNotNull(testSizes);
+    
     _doStackTest("get tail", testGetTail);
   }
 }

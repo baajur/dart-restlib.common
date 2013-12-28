@@ -2,12 +2,13 @@ part of restlib.common.collections_test;
 
 abstract class SequenceTester {
   Iterable<int> get testSizes;
-  dynamic generateTestData(int size); 
   
   void _doSequenceTest(String testDescription, func(Sequence testData, int size)) =>
       group(testDescription, () =>
           testSizes.forEach((final int size) => 
               test("with Sequence of size $size", () => func(generateTestData(size), size))));   
+  
+  dynamic generateTestData(int size);
   
   void testGetReversed(final Sequence testData, final int size) {
     final Sequence reversed = testData.reversed;
@@ -38,6 +39,8 @@ abstract class SequenceTester {
   }
   
   void testSequence() {
+    checkNotNull(testSizes);
+    
     _doSequenceTest("get reversed", testGetReversed);
     _doSequenceTest("indexOf()", testIndexOf);
     _doSequenceTest("subSequence()", testSubSequence);

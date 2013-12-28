@@ -2,16 +2,19 @@ part of restlib.common.collections_test;
 
 abstract class MultimapTester {
   Iterable<int> get testSizes;
-  dynamic generateTestData(int size); 
-  
+
   void _doMultimapTest(final String testDescription, func(Multimap testData)) => 
       group(testDescription, () => 
           testSizes.forEach((final int size) => 
               test("with Multimap of size $size", () => func(generateTestData(size)))));
   
+  dynamic generateTestData(int size); 
+  
   void testGetDictionary(final Multimap multimap);
 
   void testMultimap() {
+    checkNotNull(testSizes);
+    
     _doMultimapTest("get dictionary", testGetDictionary);
   }
 }

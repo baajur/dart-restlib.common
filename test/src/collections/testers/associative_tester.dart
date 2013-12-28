@@ -1,14 +1,15 @@
 part of restlib.common.collections_test;
 
 abstract class AssociativeTester {
-  Iterable<int> get testSizes;
-  dynamic generateTestData(int size);  
   dynamic get invalidKey;
+  Iterable<int> get testSizes;
   
   void _doAssociativeTest(final String testDescription, func(Associative testData)) => 
       group(testDescription, () => 
           testSizes.forEach((final int size) => 
               test("with Associative of size $size", () => func(generateTestData(size)))));
+  
+  dynamic generateTestData(int size);  
   
   void testContainsKey(final Associative testData) {
     testData.keys.forEach((final key) => 
@@ -29,6 +30,9 @@ abstract class AssociativeTester {
   }
   
   void testAssociative () {
+    checkNotNull(invalidKey);
+    checkNotNull(testSizes);
+    
     _doAssociativeTest("containsKey()", testContainsKey);
     _doAssociativeTest("containsValue()", testContainValues);
     _doAssociativeTest("operator []", testOperatorListAccess);

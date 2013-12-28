@@ -1,17 +1,19 @@
 part of restlib.common.collections_test;
 
-abstract class ImmutableAssociativeTester {
+abstract class ImmutableAssociativeTester {  
+  int get insertCount;
+  int get insertAllCount;
+  PairGenerator get pairGenerator;
+  int get removeAtCount;
+  
   dynamic generateTestData(int size);
   
-  PairGenerator get pairGenerator;
-  
   void testInsert() {
-    final int size = 1000;
     ImmutableAssociative assoc = generateTestData(0);
       
     pairGenerator.reset();
       
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < insertCount; i++) {
       final Pair next = pairGenerator.next();
         
       expect(assoc[next.fst], isEmpty);
@@ -21,14 +23,13 @@ abstract class ImmutableAssociativeTester {
   }
   
   void testInsertAll() {
-    final int size = 1000;
     ImmutableAssociative assoc = generateTestData(0);
       
     pairGenerator.reset();
       
-    Array<Pair> array = new Array.ofSize(size);
+    Array<Pair> array = new Array.ofSize(insertAllCount);
       
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < insertAllCount; i++) {
       final Pair next = pairGenerator.next();
       array[i] = next;
     }
@@ -39,12 +40,11 @@ abstract class ImmutableAssociativeTester {
   }
   
   void testInsertPair() {
-    final int size = 1000;
     ImmutableAssociative assoc = generateTestData(0);
       
     pairGenerator.reset();
       
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < insertCount; i++) {
       final Pair next = pairGenerator.next();
         
       expect(assoc[next.fst], isEmpty);
@@ -54,11 +54,10 @@ abstract class ImmutableAssociativeTester {
   }
   
   void testRemoveAt() {
-    final int size = 1000;
     ImmutableAssociative assoc = generateTestData(0);
       
     pairGenerator.reset();
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < removeAtCount; i++) {
       assoc = assoc.insertPair(pairGenerator.next());
     }
       
@@ -72,7 +71,12 @@ abstract class ImmutableAssociativeTester {
     }
   }
   
-  void testImmutableAssociative() { 
+  void testImmutableAssociative() {
+    checkNotNull(insertCount);
+    checkNotNull(insertAllCount);
+    checkNotNull(pairGenerator);
+    checkNotNull(removeAtCount);
+    
     test("insert()", testInsert);
     test("insertAll()", testInsertAll);
     test("insertPair()", testInsertPair);

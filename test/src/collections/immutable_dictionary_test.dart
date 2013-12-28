@@ -21,8 +21,11 @@ immutableDictionaryTests() {
       new ImmutableDictionaryTester()
         ..generator = ((final int size) => 
             Persistent.EMPTY_DICTIONARY.insertAll(new List.generate(size, (i) => new Pair(i,i))))
+        ..insertCount = 1000
+        ..insertAllCount = 1000
         ..invalidKey = 1001
         ..pairGenerator = new SequencePairGenerator()
+        ..removeAtCount = 1000
         ..testSizes = [0,1,1000]
         ..testImmutableDictionary());
   
@@ -32,8 +35,11 @@ immutableDictionaryTests() {
             (new CopyOnWriteDictionaryBuilder()
               ..insertAll(new List.generate(size, (i) => new Pair(i,i))))
               .build())
+        ..insertCount = 10
+        ..insertAllCount = 10
         ..invalidKey = 1001
         ..pairGenerator = new SequencePairGenerator()
-        ..testSizes = [0,1,1000]
+        ..removeAtCount = 10
+        ..testSizes = [0,1,10]
         ..testImmutableDictionary());
 }
