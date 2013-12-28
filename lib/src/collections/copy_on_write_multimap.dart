@@ -14,12 +14,14 @@ abstract class _CopyOnWriteMultimapBuilder<K,V, I extends Iterable<V>> {
   
   dynamic _newValueBuilder();
   
+  ImmutableMultimap<K,V,I> _doBuild(final ImmutableDictionary<K,I> dictionary);
+  
   ImmutableMultimap<K,V,I> build() { 
     final CopyOnWriteDictionaryBuilder builder = new CopyOnWriteDictionaryBuilder();
     
     _delegate.dictionary.forEach((final Pair<K,I> pair) =>
         builder.insert(pair.fst, (_newValueBuilder()..addAll(pair.snd)).build()));
-    return new _CopyOnWriteMultisetMultimap(builder.build());
+    return _doBuild(builder.build());
   }
 }
 

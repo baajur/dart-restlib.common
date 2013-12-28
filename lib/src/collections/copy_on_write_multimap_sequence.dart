@@ -5,6 +5,9 @@ class CopyOnWriteSequenceMultimapBuilder<K,V> extends _CopyOnWriteMultimapBuilde
   
   dynamic _newValueBuilder() =>
       new CopyOnWriteSequenceBuilder();
+  
+  ImmutableSequenceMultimap<K,V> _doBuild(final ImmutableDictionary<K,Sequence<V>> dictionary) =>
+      new _CopyOnWriteSequenceMultimap(dictionary);
 }
 
 class _CopyOnWriteSequenceMultimap<K,V>

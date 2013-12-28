@@ -5,6 +5,9 @@ class CopyOnWriteMultisetMultimapBuilder<K,V> extends _CopyOnWriteMultimapBuilde
   
   dynamic _newValueBuilder() =>
       new CopyOnWriteMultisetBuilder();
+  
+  ImmutableMultisetMultimap<K,V> _doBuild(final ImmutableDictionary<K,Multiset<V>> dictionary) =>
+      new _CopyOnWriteMultisetMultimap(dictionary);
 }
 
 class _CopyOnWriteMultisetMultimap<K,V>

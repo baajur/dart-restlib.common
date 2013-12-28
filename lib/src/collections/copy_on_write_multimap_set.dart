@@ -5,6 +5,9 @@ class CopyOnWriteSetMultimapBuilder<K,V> extends _CopyOnWriteMultimapBuilder<K,V
   
   dynamic _newValueBuilder() =>
       new CopyOnWriteSetBuilder();
+  
+  ImmutableSetMultimap<K,V> _doBuild(final ImmutableDictionary<K,FiniteSet<V>> dictionary) =>
+      new _CopyOnWriteSetMultimap(dictionary);
 }
 
 class _CopyOnWriteSetMultimap<K,V>
