@@ -45,7 +45,7 @@ part "src/collections/option_array_test.dart";
 part "src/collections/option_test.dart";
 part "src/collections/pair_test.dart";
 
-collectionsTestGroup() {
+void collectionsTestGroup() {
   group("package:collections", () {
     iterablesTests();
     
@@ -100,21 +100,10 @@ collectionsTestGroup() {
           ..invalidKey = 1001
           ..pairGenerator = new SequencePairGenerator()
           ..testSizes = [0, 1, 1000]
-          ..testMutableSequence());
-    
+          ..testMutableSequence());  
   });
 }
 
-main() {  
+void main() {  
   collectionsTestGroup();
-  /*
-  Multimap persistent = 
-      Persistent.EMPTY_MULTISET_MULTIMAP.insert("a", "a").insert("a", "b").insert("c", "d");
-  Multimap copyOnWrite = 
-      CopyOnWrite.EMPTY_MULTISET_MULTIMAP.insert("a", "a").insert("a", "b").insert("c", "d");
-  
-  print("${persistent.length}, ${copyOnWrite.length}");
-  print("${persistent.dictionary.length}, ${copyOnWrite.dictionary.length}");
-  */
-  
 }

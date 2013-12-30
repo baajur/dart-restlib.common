@@ -1,7 +1,7 @@
 import "package:unittest/unittest.dart";
 import "package:restlib_common/preconditions.dart";
 
-preconditionsTests() {
+void preconditionsTests() {
   group("checkArgument", () {
     test("with true", () => 
         expect(checkArgument(true), isNull));
@@ -43,9 +43,9 @@ preconditionsTests() {
   });
 }
 
-preconditionsTestGroup() =>
+void preconditionsTestGroup() =>
     group("package:preconditions", preconditionsTests);
 
-main() {
+void main() {
   preconditionsTestGroup();
 }

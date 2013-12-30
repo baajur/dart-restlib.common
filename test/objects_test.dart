@@ -7,7 +7,7 @@ import "package:restlib_common/objects.dart" as objects;
 
 part "src/objects/forwarder_test.dart";
 
-objectsTests() {
+void objectsTests() {
   group("computeHashCode", () {    
     test("with two iterables containing the same values", () {
       final Iterable<String> fst = ["a", "b", "c"];
@@ -97,7 +97,7 @@ objectsTests() {
   });
 }
 
-objectTestGroup() {
+void objectTestGroup() {
   group("package:object", () {
     group("class:NoSuchMethodForwarder", noSuchMethodForwarderTests);
     group("class:ToStringForwarder", toStringForwarderTests);
@@ -105,6 +105,6 @@ objectTestGroup() {
   });
 }
 
-main() {
+void main() {
   objectTestGroup();
 }
