@@ -15,18 +15,6 @@ class ImmutableMultisetTester
   dynamic generateTestData(final int size) =>
       generator(size);
   
-  void testAdd() {
-    super.testAdd();
-  }
-  
-  void testRemove() {
-    super.testRemove();
-  }
-  
-  void testRemoveAll() {
-    
-  }
-  
   void testImmutableMultiset() {
     checkNotNull(generator);
     

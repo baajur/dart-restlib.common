@@ -52,7 +52,7 @@ class _MutableMultisetBase<E> extends IterableBase<E> implements MutableMultiset
           if (i > 1) {
             _delegate.insert(element, i - 1);
           } else {
-            _delegate.take(element);
+            _delegate.removeAt(element);
           }
           return new Option(element);
         }).orElse(Option.NONE);
