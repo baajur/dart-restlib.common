@@ -35,5 +35,8 @@ bool isNull(final value) =>
 bool isTrue(final bool value) => 
     value == true;
 
+String nullToEmpty(final String string) =>
+    firstNotNull(string, "");
+
 String objectToString(final dynamic obj) => 
     obj.toString();

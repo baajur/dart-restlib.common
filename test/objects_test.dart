@@ -91,6 +91,11 @@ void objectsTests() {
         expect(objects.isTrue(false), isFalse));
   });
   
+  test("nullToEmpty", () {
+    expect(objects.nullToEmpty(null), equals(""));
+    expect(objects.nullToEmpty("a"), equals("a"));
+  });
+  
   test("objectToString", () {
     String test = "test";
     expect(objects.objectToString(test), equals(test));
