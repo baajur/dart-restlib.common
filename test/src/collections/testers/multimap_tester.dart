@@ -6,7 +6,8 @@ abstract class MultimapTester {
   void _doMultimapTest(final String testDescription, func(Multimap testData)) => 
       group(testDescription, () => 
           testSizes.forEach((final int size) => 
-              test("with Multimap of size $size", () => func(generateTestData(size)))));
+              test("with Multimap of size $size", () => 
+                  func(generateTestData(size)))));
   
   dynamic generateTestData(int size); 
   

@@ -7,7 +7,8 @@ abstract class AssociativeTester {
   void _doAssociativeTest(final String testDescription, func(Associative testData)) => 
       group(testDescription, () => 
           testSizes.forEach((final int size) => 
-              test("with Associative of size $size", () => func(generateTestData(size)))));
+              test("with Associative of size $size", () => 
+                  func(generateTestData(size)))));
   
   dynamic generateTestData(int size);  
   

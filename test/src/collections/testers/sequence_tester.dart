@@ -6,7 +6,8 @@ abstract class SequenceTester {
   void _doSequenceTest(String testDescription, func(Sequence testData, int size)) =>
       group(testDescription, () =>
           testSizes.forEach((final int size) => 
-              test("with Sequence of size $size", () => func(generateTestData(size), size))));   
+              test("with Sequence of size $size", () => 
+                  func(generateTestData(size), size))));   
   
   dynamic generateTestData(int size);
   

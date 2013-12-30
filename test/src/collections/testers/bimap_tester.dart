@@ -6,7 +6,8 @@ abstract class BiMapTester {
   void _doBiMapTest(final String testDescription, func(BiMap testData, int size)) =>
       group(testDescription, () =>
           testSizes.forEach((final int size) => 
-              test("with BiMap of size $size", () => func(generateTestData(size), size))));  
+              test("with BiMap of size $size", () => 
+                  func(generateTestData(size), size))));  
 
   dynamic generateTestData(int size);
 

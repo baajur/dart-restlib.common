@@ -6,7 +6,8 @@ abstract class IterableTester {
   void _doIterableTest(final String testDescription, func(Iterable testData, int size)) => 
       group(testDescription, () => 
           testSizes.forEach((final int size) => 
-              test("with Iterable of size $size", () => func(generateTestData(size), size))));
+              test("with Iterable of size $size", () => 
+                  func(generateTestData(size), size))));
   
   dynamic generateTestData(int size);
   

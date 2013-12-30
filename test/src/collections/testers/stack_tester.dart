@@ -6,7 +6,8 @@ abstract class StackTester {
   void _doStackTest(String testDescription, func(Stack testData, int size)) =>
       group(testDescription, () =>
           testSizes.forEach((final int size) => 
-              test("with Stack of size $size", () => func(generateTestData(size), size))));   
+              test("with Stack of size $size", () => 
+                  func(generateTestData(size), size))));   
   
   dynamic generateTestData(int size); 
   

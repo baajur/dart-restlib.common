@@ -6,7 +6,8 @@ abstract class MultisetTester {
   void _doMultisetTest(String testDescription, func(Multiset testData, int size)) => 
       group(testDescription, () => 
           testSizes.forEach((final int size) => 
-              test("with Multiset of size $size", () => func(generateTestData(size), size))));
+              test("with Multiset of size $size", () => 
+                  func(generateTestData(size), size))));
   
   dynamic generateTestData(int size);  
   
