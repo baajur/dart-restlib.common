@@ -40,8 +40,10 @@ void objectsTests() {
   group("computeIfNotNull", () {
     test("with non-null object", () { 
       bool result = false;
-      objects.computeIfNotNull(new Object(), () {
+      final testCase = new Object();
+      objects.computeIfNotNull(testCase, (final value) {
         result = true;
+        expect(value, equals(testCase));
       });
       
       expect(result, isTrue);
@@ -49,7 +51,7 @@ void objectsTests() {
     
     test("with null", () {
       bool result = false;
-      objects.computeIfNotNull(null, () {
+      objects.computeIfNotNull(null, (final value) {
         result = true;
       });
       

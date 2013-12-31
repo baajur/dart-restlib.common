@@ -14,9 +14,9 @@ int computeHashCode(final Iterable items) =>
 /*<T>*/ computeIfNull(final /*<T>*/first, /*<T>*/second()) => 
     isNotNull(first) ? first : second();
 
-void computeIfNotNull(final value, compute())  {
+void computeIfNotNull(final value, compute(value))  {
   if(value != null) {
-    compute();
+    compute(value);
   }
 }
 
