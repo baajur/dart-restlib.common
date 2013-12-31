@@ -1,5 +1,17 @@
 part of restlib.common.collections;
 
+void computeIfEmpty(final Iterable/*<T>*/ itr, void compute()) {
+    if (itr.isEmpty) {
+      compute();
+    }
+}
+
+void computeIfNotEmpty(final Iterable/*<T>*/ itr, void compute(Iterable/*<T>*/)) {
+    if (itr.isNotEmpty) {
+      compute(itr);
+    }
+}
+
 Iterable/*<T>*/ concat(final Iterable/*<T>*/ fst, final Iterable/*<T>*/ snd) {
     if (fst.isEmpty) {
       return snd;

@@ -1,6 +1,44 @@
 part of restlib.common.collections_test;
 
-iterablesTests() {    
+iterablesTests() {
+  group("computeIfEmpty()", () {
+    test("with empty iterable", () {
+      bool result = false;
+      computeIfEmpty(Option.NONE, () {
+        result = true;
+      });
+      expect(result, isTrue);
+    });
+    
+    test("with non-empty iterable", () {
+      bool result = false;
+      computeIfEmpty(new Option("a"), () {
+        result = true;
+      });
+      expect(result, isFalse);
+    });
+  });
+  
+  group("computeIfNotEmpty()", () {
+    test("with empty iterable", () {
+      bool result = false;
+      computeIfNotEmpty(Option.NONE, (final Iterable itr) {
+        result = true;
+      });
+      expect(result, isFalse);
+    });
+    
+    test("with non-empty iterable", () {
+      bool result = false;
+      final Option testCase = new Option("a");
+      computeIfNotEmpty(testCase, (final Iterable itr) {
+        expect(itr, equals(testCase));
+        result = true;
+      });
+      expect(result, isTrue);
+    });
+  });
+  
   group("concat()", () {
     test("with empty first list", () => 
         expect(concat([], ["a", "b", "c"]), equals(["a", "b", "c"])));
