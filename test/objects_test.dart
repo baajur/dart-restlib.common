@@ -37,6 +37,26 @@ void objectsTests() {
     });
   });
   
+  group("computeIfNotNull", () {
+    test("with non-null object", () { 
+      bool result = false;
+      objects.computeIfNotNull(new Object(), () {
+        result = true;
+      });
+      
+      expect(result, isTrue);
+    });
+    
+    test("with null", () {
+      bool result = false;
+      objects.computeIfNotNull(null, () {
+        result = true;
+      });
+      
+      expect(result, isFalse);  
+    });
+  });
+  
   group("firstNotNull", () {
     test("with non-null first object and null second object", () { 
       final Object fst = new Object();

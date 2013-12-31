@@ -14,6 +14,12 @@ int computeHashCode(final Iterable items) =>
 /*<T>*/ computeIfNull(final /*<T>*/first, /*<T>*/second()) => 
     isNotNull(first) ? first : second();
 
+void computeIfNotNull(final value, compute())  {
+  if(value != null) {
+    compute();
+  }
+}
+
 /*<T>*/ firstNotNull(final /*<T>*/first, final /*<T>*/second) {
   if (isNotNull(first)) {
     return first;
