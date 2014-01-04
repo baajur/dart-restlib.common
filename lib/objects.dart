@@ -6,6 +6,7 @@ part "src/objects/forwarder.dart";
 
 const int _HASH_INITIAL_VALUE = 17;
 const int _HASH_MULTIPLIER_VALUE = 31;
+const Object visibleForTesting = const _VisibleForTesting();
 
 int computeHashCode(final Iterable items) =>
     items.fold(_HASH_INITIAL_VALUE, (int prev, var ele) => 
@@ -46,3 +47,7 @@ String nullToEmpty(final String string) =>
 
 String objectToString(final dynamic obj) => 
     obj.toString();
+
+class _VisibleForTesting {
+  const _VisibleForTesting();
+}
