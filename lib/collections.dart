@@ -4,6 +4,8 @@ import "dart:collection";
 import "dart:math";
 import "dart:typed_data";
 
+import "package:collection/wrappers.dart";
+
 import "objects.dart";
 import "preconditions.dart";
 
@@ -75,6 +77,9 @@ part "src/collections/sequence.dart";
 part "src/collections/set.dart";
 
 const List EMPTY_LIST = const [];
+
+Dictionary mapAsDictionary(final Map map) =>
+    new _MapAsDictionary(map);
 
 abstract class Associative<K,V> {
   Iterable<K> get keys;

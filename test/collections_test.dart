@@ -8,6 +8,7 @@ import "package:restlib_testing/testing.dart";
 
 part "src/collections/testers/associative_tester.dart";
 part "src/collections/testers/bimap_tester.dart";
+part "src/collections/testers/dictionary_tester.dart";
 part "src/collections/testers/generators.dart";
 part "src/collections/testers/immutable_associative_tester.dart";
 part "src/collections/testers/immutable_bimap_tester.dart";
@@ -41,6 +42,7 @@ part "src/collections/immutable_sequence_test.dart";
 part "src/collections/immutable_set_test.dart";
 part "src/collections/immutable_stack_test.dart";
 part "src/collections/iterables_test.dart";
+part "src/collections/map_as_dictionary_test.dart";
 part "src/collections/option_array_test.dart";
 part "src/collections/option_test.dart";
 part "src/collections/pair_test.dart";
@@ -74,6 +76,19 @@ void collectionsTestGroup() {
     group("class:ImmutableSequence", immutableSequenceTests);
     group("class:ImmutableSet", immutableSetTests);
     group("class:ImmutableStack", immutableStackTests);
+    
+    group("function:mapAsDictionary", () => 
+        new _MapAsDictionaryTester()
+          ..generator = ((final int size) => 
+              mapAsDictionary((new List.generate(size, (final int i) => 
+                  i))
+              .fold({}, (final Map map, final int next) {
+                map[next] = next;
+                return map;
+              })))
+          ..invalidKey = 1001
+          ..testSizes = [0, 1, 1000]
+          ..testMapAsDictionary());
     
     group("class:MutableBiMap", () => 
         new MutableBiMapTester()

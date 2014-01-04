@@ -1,10 +1,8 @@
 name: restlib_common
 description: A sample application
+dependencies:
+  unmodifiable_collection: any
 dev_dependencies:
   restlib_testing:
     git: https://bordoley@code.google.com/p/dart-restlib.testing/
   unittest: any
-
-#dependencies:
-#  js: any
-#  unittest: any

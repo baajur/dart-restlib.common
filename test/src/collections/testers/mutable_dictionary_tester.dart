@@ -4,6 +4,7 @@ class MutableDictionaryTester
     extends Object
     with MutableAssociativeTester,
       AssociativeTester,
+      DictionaryTester,
       IterableTester {
   
   dynamic generator;

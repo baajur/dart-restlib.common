@@ -84,4 +84,39 @@ class _DictionaryAsMap<K,V> implements Forwarder, Map<K,V> {
   
   V remove(Object key) =>
       throw new UnsupportedError("Map is read only");
+  
+  String toString() =>
+      delegate.toString();
+}
+
+class _MapAsDictionary<K,V> extends _DictionaryBase<K,V> {
+  final Map<K,V> _delegate;
+  
+  _MapAsDictionary(delegate) :
+    _delegate = new UnmodifiableMapView(delegate);
+  
+  Iterator<Pair<K,V>> get iterator =>
+      _delegate.keys.map((final K key) => 
+          new Pair(key, _delegate[key])).iterator;
+  
+  Iterable<K> get keys =>
+      _delegate.keys;
+  
+  int get length =>
+      _delegate.length;
+  
+  Iterable<V> get values =>
+      _delegate.values;
+  
+  Option<V> operator[](final K key) =>
+      new Option(_delegate[key]);
+  
+  Map<K,V> asMap() =>
+      _delegate;
+  
+  bool containsKey(Object key) =>
+      _delegate.containsKey(key);
+
+  bool containsValue(Object value) =>
+      _delegate.containsValue(value);
 }

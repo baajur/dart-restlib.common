@@ -4,6 +4,7 @@ class ImmutableDictionaryTester
     extends Object
     with ImmutableAssociativeTester,
       AssociativeTester,
+      DictionaryTester,
       IterableTester {
   
   dynamic generator;
