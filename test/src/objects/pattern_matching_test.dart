@@ -3,7 +3,7 @@ part of restlib.common.objects_test;
 void patternMatchingTests() {
   test("patternMatch()", () {
     final objects.PatternMatcher matcher =
-        objects.patternMatch(
+        new objects.PatternMatcher(
           [objects.inCaseOf(new objects.IsInstanceOf<String>(), (_) => 1),
            objects.inCaseOf((final obj) => obj == 1, (_) => 2),
            objects.otherwise((_) => 3)

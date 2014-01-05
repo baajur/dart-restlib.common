@@ -1,17 +1,18 @@
 part of restlib.common.objects;
 
 typedef Predicate(dynamic object);
-typedef Option PatternMatcher(dynamic object);
 
-PatternMatcher patternMatch(final Iterable<Pattern> patterns) {
-  final ImmutableSequence<Pattern> _patterns =
-      Persistent.EMPTY_SEQUENCE.addAll(patterns);
+class PatternMatcher<T> implements Function {
+  final ImmutableSequence<Pattern> _patterns;
   
-  return (final item) =>
+  PatternMatcher(final Iterable<Pattern> patterns) :
+    _patterns = Persistent.EMPTY_SEQUENCE.addAll(patterns);
+
+  Option<T> call(final obj) =>
       firstWhere(_patterns, (final Pattern p) => 
-          p.matches(item))
+          p.matches(obj))
         .map((final Pattern p) => 
-            p.apply(item));        
+            p.apply(obj));    
 }
 
 Pattern inCaseOf(final Predicate matcher, apply(obj)) =>
