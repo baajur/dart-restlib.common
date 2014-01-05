@@ -23,6 +23,10 @@ void computeIfNotNull(final value, compute(value))  {
   }
 }
 
+Predicate equals(final obj) =>
+    (final other) =>
+        obj == other;
+
 /*<T>*/ firstNotNull(final /*<T>*/first, final /*<T>*/second) {
   if (isNotNull(first)) {
     return first;

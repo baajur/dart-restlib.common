@@ -60,6 +60,16 @@ void objectsTests() {
     });
   });
   
+  group("equals()", () {
+    test("with eaual objects", () {
+      final Object obj = "";
+      expect(objects.equals(obj)(obj), isTrue);
+    });
+    
+    test("with unequal objects", () =>
+        expect(objects.equals(new Object())(new Object()), isFalse));
+  });
+  
   group("firstNotNull", () {
     test("with non-null first object and null second object", () { 
       final Object fst = new Object();
