@@ -6,6 +6,7 @@ import "package:unittest/unittest.dart";
 import "package:restlib_common/objects.dart" as objects;
 
 part "src/objects/forwarder_test.dart";
+part "src/objects/pattern_matching_test.dart";
 
 void objectsTests() {
   group("computeHashCode", () {    
@@ -128,6 +129,7 @@ void objectTestGroup() {
   group("package:object", () {
     group("class:NoSuchMethodForwarder", noSuchMethodForwarderTests);
     group("class:ToStringForwarder", toStringForwarderTests);
+    patternMatchingTests();
     objectsTests();
   });
 }

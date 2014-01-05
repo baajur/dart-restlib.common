@@ -1,8 +1,10 @@
 library restlib.common.objects;
 
 import "dart:mirrors";
+import "collections.dart";
 
 part "src/objects/forwarder.dart";
+part "src/objects/pattern_matching.dart";
 
 const int _HASH_INITIAL_VALUE = 17;
 const int _HASH_MULTIPLIER_VALUE = 31;
@@ -50,4 +52,11 @@ String objectToString(final dynamic obj) =>
 
 class _VisibleForTesting {
   const _VisibleForTesting();
+}
+
+class IsInstanceOf<T> implements Function {
+  const IsInstanceOf();
+  
+  bool call(obj) =>
+      obj is T;
 }
