@@ -54,8 +54,8 @@ class _MappedDictionary extends _DictionaryBase implements Forwarder {
   int get length =>
       delegate.length;
   
-  Option operator[](final int index) =>
-      delegate[index].map(mapFunc);
+  Option operator[](final key) =>
+      delegate[key].map(mapFunc);
 }
 
 class _DictionaryAsMap<K,V> implements Forwarder, Map<K,V> {
