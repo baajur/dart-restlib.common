@@ -39,4 +39,32 @@ class OptionArray<E>
   
   bool containsValue(E value) =>
       _delegate.contains(new Option(value));
+  
+  Associative mapValues(mapFunc(E value)) =>
+      new _MappedAssociative(this, mapFunc);
+}
+    
+class _MappedAssociative implements Associative{
+  final Associative delegate;
+  final mapFunc;
+  
+  _MappedAssociative(this.delegate, this.mapFunc);
+  
+  Iterable get keys =>
+      delegate.keys;
+  
+  Iterable get values =>
+      delegate.values.map(mapFunc);
+  
+  Iterable operator[](key) =>
+      delegate[key].map(mapFunc);
+  
+  bool containsKey(key) =>
+      delegate.containsKey(key);
+  
+  bool containsValue(value) =>
+      values.contains(value);
+  
+  Associative mapValues(mapFunc(value)) =>
+      new _MappedAssociative(this, mapFunc);
 }

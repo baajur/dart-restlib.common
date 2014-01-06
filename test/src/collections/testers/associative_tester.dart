@@ -24,6 +24,35 @@ abstract class AssociativeTester {
     expect(testCase.containsValue(invalidKey), isFalse);
   }
   
+  void testMapValues(final Associative testCase) {
+    final Object mappedObject = new Object();
+    final Associative mapped = testCase.mapValues((value) => mappedObject);
+    
+    // Verify get values
+    mapped.values.forEach((final value) =>
+        expect(value, equals(mappedObject)));
+    
+    // Verify get keys
+    expect(Persistent.EMPTY_SET.addAll(testCase.keys), equals(Persistent.EMPTY_SET.addAll(mapped.keys)));
+    
+    // Verify operator[]
+    testCase.keys.forEach((final key) => 
+        mapped[key].forEach((final value) =>
+            expect(value, equals(mappedObject)))); 
+    
+    // Verify containsKey()
+    testCase.keys.forEach((final key) =>
+        expect(mapped.containsKey(key), isTrue));
+    expect(mapped.containsKey(invalidKey), isFalse);
+    
+    // Verify containsValue()
+    testCase.values.forEach((final value) =>
+        expect(mapped.containsValue(value), isFalse));
+    if (testCase.values.length > 0) {
+      expect(mapped.containsValue(mappedObject), isTrue);
+    }
+  }
+  
   void testOperatorListAccess(final Associative testCase) {
     expect(testCase[invalidKey], isEmpty);
     testCase.keys.forEach((final dynamic key) => 
@@ -36,6 +65,7 @@ abstract class AssociativeTester {
     
     _doAssociativeTest("containsKey()", testContainsKey);
     _doAssociativeTest("containsValue()", testContainValues);
+    _doAssociativeTest("mapValues()", testMapValues);
     _doAssociativeTest("operator []", testOperatorListAccess);
   }
 }

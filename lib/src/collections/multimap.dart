@@ -45,6 +45,21 @@ abstract class _MultimapBase<K,V,I extends Iterable<V>>
       keys.any((final K key) => 
           this[key].contains(value));  
   
+  Multimap<K, dynamic, dynamic> mapValues(mapFunc(V value)) =>
+      new _MappedMultimap(this, mapFunc);
+  
   String toString() => 
       dictionary.toString();
 }
+    
+class _MappedMultimap extends _MultimapBase {
+  final Dictionary<dynamic, Iterable> dictionary;
+  final Option _emptyValueContainer = Option.NONE;
+  final mapFunc;
+  
+  _MappedMultimap(final Multimap delegate, final mapFunc) :
+    dictionary = delegate.dictionary.mapValues((final Iterable itr) => 
+        itr.map(mapFunc)),
+    this.mapFunc = mapFunc;
+}
+    

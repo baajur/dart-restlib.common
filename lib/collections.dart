@@ -89,6 +89,8 @@ abstract class Associative<K,V> {
   
   bool containsKey(K key);
   bool containsValue(V value);
+  
+  Associative<K,dynamic> mapValues(mapFunc(V value));
 }
 
 abstract class BiMap<K,V> implements Dictionary<K,V> {  
@@ -99,6 +101,8 @@ abstract class Dictionary<K,V> implements Associative<K,V>, Iterable<Pair<K,V>>{
   Option<V> operator[](K key);
   
   Map<K,V> asMap();
+  
+  Dictionary<K, dynamic> mapValues(mapFunc(V value));
 }
 
 abstract class FiniteSet<E> implements Iterable<E> {
@@ -110,6 +114,8 @@ abstract class FiniteSet<E> implements Iterable<E> {
 abstract class Multimap<K,V, I extends Iterable<V>> implements Associative<K,V>, Iterable<Pair<K,V>> {  
   Dictionary<K, I> get dictionary;
   I operator[](K key);
+  
+  Multimap<K, dynamic, dynamic> mapValues(mapFunc(V value));
 }
 
 abstract class SequenceMultimap<K,V> implements Multimap<K,V,Sequence<V>> {
@@ -118,7 +124,6 @@ abstract class SequenceMultimap<K,V> implements Multimap<K,V,Sequence<V>> {
 
 abstract class MultisetMultimap<K,V> implements Multimap<K,V,Multiset<V>> {
   Dictionary<K, Multiset<V>> get dictionary;
-  
 }
 
 abstract class SetMultimap<K,V> implements Multimap<K,V,FiniteSet<V>> {
@@ -142,6 +147,8 @@ abstract class Sequence<E> implements Associative<int, E>, Iterable<E> {
   Sequence<E> subSequence(int start, int length);
   
   List<E> asList();
+  
+  Sequence mapValues(mapFunc(E value));
 }
 
 abstract class Stack<E> implements Iterable<E> {

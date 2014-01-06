@@ -31,11 +31,31 @@ abstract class _DictionaryBase<K,V> extends IterableBase<Pair<K,V>> implements D
       this.any((final Pair<K,V> pair) => 
           pair.snd == value);
   
+  Dictionary<K, dynamic> mapValues(mapFunc(V value)) =>
+      new _MappedDictionary(this, mapFunc);
+  
   Map<K,V> asMap() =>
       new _DictionaryAsMap(this);
   
   String toString() =>
       "{" + map((pair) => "${pair.fst} : ${pair.snd}").join(", ") + "}";
+}
+
+class _MappedDictionary extends _DictionaryBase implements Forwarder {
+  final Dictionary delegate;
+  final mapFunc;
+  
+  _MappedDictionary(this.delegate, this.mapFunc);
+  
+  Iterator<Pair> get iterator =>
+      delegate.map((final Pair pair) =>
+          new Pair(pair.fst, mapFunc(pair.snd))).iterator;
+  
+  int get length =>
+      delegate.length;
+  
+  Option operator[](final int index) =>
+      delegate[index].map(mapFunc);
 }
 
 class _DictionaryAsMap<K,V> implements Forwarder, Map<K,V> {

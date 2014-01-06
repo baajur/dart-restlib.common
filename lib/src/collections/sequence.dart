@@ -92,6 +92,9 @@ abstract class _SequenceBase<E> extends IterableBase<E> implements Sequence<E> {
     return -1;
   }
   
+  Sequence mapValues(mapFunc(E value)) =>
+      new _MappedSequence(this, mapFunc);
+  
   Sequence<E> subSequence(int start, int length) =>
       new _SubSequence(this, start, length);
   
@@ -121,3 +124,15 @@ class _SequenceAsList<E>
       throw new UnsupportedError("List is readonly");
 }    
   
+class _MappedSequence extends _SequenceBase implements Forwarder {
+  final Sequence delegate;
+  final mapFunc;
+  
+  _MappedSequence(this.delegate, this.mapFunc);
+  
+  int get length =>
+      delegate.length;
+  
+  Option operator[](final int index) =>
+      delegate[index].map(mapFunc);
+}
