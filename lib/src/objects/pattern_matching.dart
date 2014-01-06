@@ -9,37 +9,40 @@ class PatternMatcher<T> implements Function {
     _patterns = Persistent.EMPTY_SEQUENCE.addAll(patterns);
 
   Option<T> call(final obj) =>
-      firstWhere(_patterns, (final Pattern p) => 
+      firstWhere(_patterns, (final Pattern<T> p) => 
           p.matches(obj))
-        .map((final Pattern p) => 
+        .map((final Pattern<T> p) => 
             p.apply(obj));    
 }
 
-Pattern inCaseOf(final Predicate matcher, apply(obj)) =>
-    new _PatternImpl(matcher, apply);
+Pattern inCaseOf(final Predicate matcher, /*<T>*/ apply(obj)) =>
+    new Pattern.inCaseOf(matcher, apply);
 
 Pattern otherwise(apply(obj)) =>
-    new _PatternImpl((_) => true, apply);
+    new Pattern.otherwise(apply);
 
-abstract class Pattern {
+abstract class Pattern<T> {  
+  factory Pattern.inCaseOf(final Predicate matcher, T apply(obj)) =>
+      new _PatternImpl<T>(matcher, apply);
+  
+  factory Pattern.otherwise(T apply(obj)) =>
+      new _PatternImpl<T>((_) => true, apply);    
+      
   bool matches(obj);
-  dynamic apply(e);
+  T apply(e);
 }
 
-
-
-      
-
-class _PatternImpl implements Pattern {
+class _PatternImpl<T> implements Pattern<T> {
   final Predicate _matches;
   final Function _apply;
 
-  _PatternImpl(this._matches, this._apply);
+  _PatternImpl(this._matches, T apply(obj)) :
+    this._apply = apply;
   
   bool matches(final obj) =>
       _matches(obj);
   
-  dynamic apply(final e) =>
+  T apply(final e) =>
       _apply(e);
 }
 
