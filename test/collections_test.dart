@@ -77,10 +77,10 @@ void collectionsTestGroup() {
     group("class:ImmutableSet", immutableSetTests);
     group("class:ImmutableStack", immutableStackTests);
     
-    group("function:mapAsDictionary", () => 
+    group("class:Dictionary() factory:wrapMap()", () => 
         new _MapAsDictionaryTester()
           ..generator = ((final int size) => 
-              mapAsDictionary((new List.generate(size, (final int i) => 
+              new Dictionary.wrapMap((new List.generate(size, (final int i) => 
                   i))
               .fold({}, (final Map map, final int next) {
                 map[next] = next;

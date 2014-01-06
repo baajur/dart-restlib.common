@@ -78,9 +78,6 @@ part "src/collections/set.dart";
 
 const List EMPTY_LIST = const [];
 
-Dictionary mapAsDictionary(final Map map) =>
-    new _MapAsDictionary(map);
-
 abstract class Associative<K,V> {
   Iterable<K> get keys;
   Iterable<V> get values;
@@ -98,6 +95,9 @@ abstract class BiMap<K,V> implements Dictionary<K,V> {
 }
 
 abstract class Dictionary<K,V> implements Associative<K,V>, Iterable<Pair<K,V>>{
+  factory Dictionary.wrapMap(final Map<K,V> map) =>
+      new _MapAsDictionary(map);
+  
   Option<V> operator[](K key);
   
   Map<K,V> asMap();
