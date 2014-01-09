@@ -14,6 +14,9 @@ int computeHashCode(final Iterable items) =>
     items.fold(_HASH_INITIAL_VALUE, (int prev, var ele) => 
       _HASH_MULTIPLIER_VALUE * prev + ele.hashCode);
 
+Iterable computeIfEmpty(final Iterable itr1, Iterable compute()) =>
+    itr1.isNotEmpty ? itr1 : compute();
+
 /*<T>*/ computeIfNull(final /*<T>*/first, /*<T>*/second()) => 
     isNotNull(first) ? first : second();
 
@@ -22,6 +25,9 @@ void computeIfNotNull(final value, compute(value))  {
     compute(value);
   }
 }
+
+dynamic computeIfNotNullOtherwise(first, second, compute(dyanmic)) =>
+    isNull(first) ? second : compute(first);
 
 Predicate equals(final obj) =>
     (final other) =>
