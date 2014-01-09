@@ -1,10 +1,7 @@
 part of restlib.common.collections;
 
-void computeIfEmpty(final Iterable/*<T>*/ itr, void compute()) {
-    if (itr.isEmpty) {
-      compute();
-    }
-}
+Iterable computeIfEmpty(final Iterable itr1, Iterable compute()) =>
+    itr1.isNotEmpty ? itr1 : compute();
 
 void computeIfNotEmpty(final Iterable/*<T>*/ itr, void compute(Iterable/*<T>*/)) {
     if (itr.isNotEmpty) {
