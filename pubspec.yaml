@@ -4,5 +4,5 @@ dependencies:
   unmodifiable_collection: any
 dev_dependencies:
   restlib_testing:
-    git: https://bordoley@code.google.com/p/dart-restlib.testing/
+    git: https://code.google.com/p/dart-restlib.testing/
   unittest: any
