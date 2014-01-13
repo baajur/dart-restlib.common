@@ -27,6 +27,9 @@ abstract class _MultimapBase<K,V,I extends Iterable<V>>
             value)
         .orElse(_emptyValueContainer);
   
+  I call(final K key) =>
+      this[key];
+  
   bool contains(final Object pair) {
     if (pair is Pair) {
       return dictionary[pair.fst]

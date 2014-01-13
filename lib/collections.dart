@@ -84,6 +84,8 @@ abstract class Associative<K,V> {
   
   Iterable<V> operator[](K key);
   
+  Iterable<V> call(K key);
+  
   bool containsKey(K key);
   bool containsValue(V value);
   
@@ -102,6 +104,8 @@ abstract class Dictionary<K,V> implements Associative<K,V>, Iterable<Pair<K,V>>{
   
   Map<K,V> asMap();
   
+  Option<V> call(K key);
+  
   Dictionary<K, dynamic> mapValues(mapFunc(V value));
 }
 
@@ -114,6 +118,8 @@ abstract class FiniteSet<E> implements Iterable<E> {
 abstract class Multimap<K,V, I extends Iterable<V>> implements Associative<K,V>, Iterable<Pair<K,V>> {  
   Dictionary<K, I> get dictionary;
   I operator[](K key);
+  
+  I call(K key);
   
   Multimap<K, dynamic, dynamic> mapValues(mapFunc(V value));
 }
@@ -141,6 +147,8 @@ abstract class Sequence<E> implements Associative<int, E>, Iterable<E> {
   Sequence<E> get reversed;
   
   Option<E> operator[](int index);
+  
+  Option<E> call(int index);
   
   int indexOf(E element, [int start=0]);
   

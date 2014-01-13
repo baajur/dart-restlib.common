@@ -76,6 +76,9 @@ abstract class _SequenceBase<E> extends IterableBase<E> implements Sequence<E> {
   List<E> asList() =>
       new _SequenceAsList(this);
   
+  Option<E> call(final int index) =>
+      this[index];
+  
   bool containsKey(final int key) =>
       (key >= 0) && (key < length);
   

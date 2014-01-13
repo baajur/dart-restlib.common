@@ -13,6 +13,9 @@ abstract class _DictionaryBase<K,V> extends IterableBase<Pair<K,V>> implements D
       this.map((final Pair<K,V> pair) => 
           pair.snd);
   
+  Option<V> call(final K key) =>
+      this[key];
+  
   bool contains(final Object pair) {
     if (pair is Pair) {
       return this[pair.fst]

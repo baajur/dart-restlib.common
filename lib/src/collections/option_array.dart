@@ -34,6 +34,9 @@ class OptionArray<E>
     _delegate[key] = new Option(value);
   }
   
+  Option<E> call(int key) =>
+      this[key];
+  
   bool containsKey(int key) =>
     (key >= 0 ) && (key < length);  
   
@@ -44,7 +47,7 @@ class OptionArray<E>
       new _MappedAssociative(this, mapFunc);
 }
     
-class _MappedAssociative implements Associative{
+class _MappedAssociative implements Associative {
   final Associative delegate;
   final mapFunc;
   
@@ -58,6 +61,9 @@ class _MappedAssociative implements Associative{
   
   Iterable operator[](key) =>
       delegate[key].map(mapFunc);
+  
+  Iterable call(key) =>
+      this[key];
   
   bool containsKey(key) =>
       delegate.containsKey(key);
