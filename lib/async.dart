@@ -2,10 +2,6 @@ library restlib.common.async;
 
 import "dart:async";
 
-abstract class ByteStreamable {
-  Stream<List<int>> asByteStream();
-}
-
 Stream valueAsStream(dynamic value) =>
     new Stream.fromFuture(new Future.value(value));
 
