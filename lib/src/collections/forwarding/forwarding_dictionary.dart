@@ -6,4 +6,13 @@ abstract class ForwardingDictionary<K,V> implements Forwarder, Dictionary<K,V> {
   
   Map<K,V> asMap() =>
       delegate.asMap();
+  
+  Option<V> call(K key) =>
+      delegate.call(key);
+  
+  Dictionary<K,V> filterKeys(bool filterFunc(K key)) =>
+      delegate.filterKeys(filterFunc);
+  
+  Dictionary<K, dynamic> mapValues(mapFunc(V value)) =>
+      delegate.mapValue(mapFunc);
 }

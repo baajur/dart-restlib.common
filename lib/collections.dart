@@ -44,6 +44,8 @@ abstract class Dictionary<K,V> implements Associative<K,V>, Iterable<Pair<K,V>>{
   
   Option<V> call(K key);
   
+  Dictionary<K,V> filterKeys(bool filterFunc(K key));
+  
   Dictionary<K, dynamic> mapValues(mapFunc(V value));
 }
 
@@ -58,6 +60,8 @@ abstract class Multimap<K,V, I extends Iterable<V>> implements Associative<K,V>,
   I operator[](K key);
   
   I call(K key);
+  
+  Multimap<K,V,I> filterKeys(bool filterFunc(K key));
   
   Multimap<K, dynamic, dynamic> mapValues(mapFunc(V value));
 }

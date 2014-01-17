@@ -48,6 +48,9 @@ abstract class MultimapBase<K,V,I extends Iterable<V>>
       keys.any((final K key) => 
           this[key].contains(value));  
   
+  Multimap<K,V,I> filterKeys(bool filterFunc(K key)) =>
+      new _KeyFilteredMultimap(this.dictionary, filterFunc);
+  
   Multimap<K, dynamic, dynamic> mapValues(mapFunc(V value)) =>
       new _MappedMultimap(this, mapFunc);
   
@@ -58,11 +61,19 @@ abstract class MultimapBase<K,V,I extends Iterable<V>>
 class _MappedMultimap extends MultimapBase {
   final Dictionary<dynamic, Iterable> dictionary;
   final Option emptyValueContainer = Option.NONE;
-  final mapFunc;
   
   _MappedMultimap(final Multimap delegate, final mapFunc) :
     dictionary = delegate.dictionary.mapValues((final Iterable itr) => 
-        itr.map(mapFunc)),
-    this.mapFunc = mapFunc;
+        itr.map(mapFunc));
 }
+
+class _KeyFilteredMultimap<K,V,I extends Iterable<V>> extends MultimapBase<K,V,I> {
+  final Dictionary<K,I> dictionary;
+  final Option emptyValueContainer = Option.NONE;
+  
+  _KeyFilteredMultimap(final Dictionary<K,I> delegate, final _KeyFilterFunc keyFilterFunc) :
+    this.dictionary = delegate.filterKeys(keyFilterFunc);
+}
+
+
     

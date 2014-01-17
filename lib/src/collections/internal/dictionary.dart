@@ -34,6 +34,9 @@ abstract class DictionaryBase<K,V> extends IterableBase<Pair<K,V>> implements Di
       this.any((final Pair<K,V> pair) => 
           pair.snd == value);
   
+  Dictionary<K,V> filterKeys(bool filterFunc(K key)) =>
+      new _KeyFilteredDictionary(this, filterFunc);
+  
   Dictionary<K, dynamic> mapValues(mapFunc(V value)) =>
       new _MappedDictionary(this, mapFunc);
   
@@ -110,6 +113,43 @@ class _DictionaryAsMap<K,V> implements Forwarder, Map<K,V> {
   
   String toString() =>
       delegate.toString();
+}
+
+typedef bool _KeyFilterFunc(dynamic key);
+class _KeyFilteredDictionary<K,V> 
+    extends DictionaryBase<K,V>
+    with ForwardingDictionary<K,V>
+    implements Dictionary<K,V> {
+  final Dictionary<K,V> delegate;
+  final _KeyFilterFunc keyFilterFunc;
+  
+  _KeyFilteredDictionary(this.delegate, this.keyFilterFunc);
+  
+  Iterator<Pair<K,V>> get iterator =>
+      delegate.where((final Pair<K,V> pair) => keyFilterFunc(pair.fst)).iterator;
+  
+  Iterable<K> get keys =>
+      delegate.keys.where((keyFilterFunc));
+  
+  Iterable<V> get values =>
+      delegate.where((final Pair<K,V> pair) => keyFilterFunc(pair.fst)).map((final Pair<K, V> pair) => pair.snd);
+  
+  Option<V> operator[](K key) {
+    if (keyFilterFunc(key)) {
+      return delegate(key);
+    } else {
+      return Option.NONE;
+    }
+  }
+  
+  Option<V> call(K key) =>
+      this[key];
+  
+  bool containsKey(K key) =>
+      keyFilterFunc(key) ? delegate.contains(key) : false;
+      
+  bool containsValue(V value) =>
+      values.contains(value);
 }
 
 class MapAsDictionary<K,V> extends DictionaryBase<K,V> {
