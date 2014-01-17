@@ -139,3 +139,16 @@ class _MappedSequence extends SequenceBase implements Forwarder {
   Option operator[](final int index) =>
       delegate[index].map(mapFunc);
 }
+
+class ListAsSequence<T> extends SequenceBase<T> {
+  final List<T> delegate;
+  
+  ListAsSequence(this.delegate);
+  
+  Option<T> operator[](int index) {
+    if (index < delegate.length) {
+      return new Option(delegate[index]);
+    }
+    return Option.NONE;
+  }
+}
