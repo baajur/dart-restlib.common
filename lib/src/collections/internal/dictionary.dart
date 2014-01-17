@@ -117,9 +117,7 @@ class _DictionaryAsMap<K,V> implements Forwarder, Map<K,V> {
 
 typedef bool _KeyFilterFunc(dynamic key);
 class _KeyFilteredDictionary<K,V> 
-    extends DictionaryBase<K,V>
-    with ForwardingDictionary<K,V>
-    implements Dictionary<K,V> {
+    extends DictionaryBase<K,V> {
   final Dictionary<K,V> delegate;
   final _KeyFilterFunc keyFilterFunc;
   
