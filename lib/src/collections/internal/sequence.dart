@@ -145,6 +145,8 @@ class ListAsSequence<T> extends SequenceBase<T> {
   
   ListAsSequence(this.delegate);
   
+  int get length => delegate.length;
+  
   Option<T> operator[](int index) {
     if (index < delegate.length) {
       return new Option(delegate[index]);
