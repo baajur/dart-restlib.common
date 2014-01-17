@@ -2,6 +2,7 @@ library restlib.common.objects;
 
 import "dart:mirrors";
 import "collections.dart";
+import "collections.immutable.dart";
 
 part "src/objects/forwarder.dart";
 part "src/objects/pattern_matching.dart";

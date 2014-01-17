@@ -1,0 +1,43 @@
+library restlib.common.collections.immutable;
+
+import "dart:collection";
+
+import "collections.dart";
+import "collections.internal.dart";
+import "collections.mutable.dart";
+import "objects.dart";
+import "preconditions.dart";
+
+part "src/collections/immutable/copy_on_write_bimap.dart";
+part "src/collections/immutable/copy_on_write_collection.dart";
+part "src/collections/immutable/copy_on_write_dictionary.dart";
+part "src/collections/immutable/copy_on_write_multimap.dart";
+part "src/collections/immutable/copy_on_write_multimap_multiset.dart";
+part "src/collections/immutable/copy_on_write_multimap_sequence.dart";
+part "src/collections/immutable/copy_on_write_multimap_set.dart";
+part "src/collections/immutable/copy_on_write_multiset.dart";
+part "src/collections/immutable/copy_on_write_sequence.dart";
+part "src/collections/immutable/copy_on_write_set.dart";
+part "src/collections/immutable/immutable.dart";
+part "src/collections/immutable/immutable_associative.dart";
+part "src/collections/immutable/immutable_bimap.dart";
+part "src/collections/immutable/immutable_collection.dart";
+part "src/collections/immutable/immutable_dictionary.dart";
+part "src/collections/immutable/immutable_multimap.dart";
+part "src/collections/immutable/immutable_multimap_multiset.dart";
+part "src/collections/immutable/immutable_multimap_sequence.dart";
+part "src/collections/immutable/immutable_multimap_set.dart";
+part "src/collections/immutable/immutable_multiset.dart";
+part "src/collections/immutable/immutable_sequence.dart";
+part "src/collections/immutable/immutable_set.dart";
+part "src/collections/immutable/immutable_stack.dart";
+part "src/collections/immutable/persistent_bimap.dart";
+part "src/collections/immutable/persistent_dictionary.dart";
+part "src/collections/immutable/persistent_multimap.dart";
+part "src/collections/immutable/persistent_multimap_multiset.dart";
+part "src/collections/immutable/persistent_multimap_sequence.dart";
+part "src/collections/immutable/persistent_multimap_set.dart";
+part "src/collections/immutable/persistent_multiset.dart";
+part "src/collections/immutable/persistent_sequence.dart";
+part "src/collections/immutable/persistent_set.dart";
+part "src/collections/immutable/persistent_stack.dart";
