@@ -1,10 +1,10 @@
 part of restlib.common.collections.immutable;
 
 abstract class ImmutableMultimap<K,V, I extends Iterable<V>> implements Multimap<K,V,I>, ImmutableAssociative<K,V> {  
-  ImmutableMultimap<K,V,I> insertAll(final Iterable<Pair<K, V>> other);
-  
   ImmutableMultimap<K,V,I> insert(final K key, final V value);
-  
+  ImmutableMultimap<K,V,I> insertAll(final Iterable<Pair<K, V>> other);
+  ImmutableMultimap<K,V,I> insertAllFromMap(Map<K, V> map);
+  ImmutableMultimap<K,V,I> insertPair(Pair<K, V> pair);
   ImmutableMultimap<K,V,I> removeAt(final K key);
 }
 
