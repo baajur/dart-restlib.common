@@ -9,7 +9,9 @@ part "src/objects/pattern_matching.dart";
 
 const int _HASH_INITIAL_VALUE = 17;
 const int _HASH_MULTIPLIER_VALUE = 31;
+
 const Object visibleForTesting = const _VisibleForTesting();
+const Object internal = const _Internal();
 
 int computeHashCode(final Iterable items) =>
     items.fold(_HASH_INITIAL_VALUE, (int prev, var ele) => 
@@ -40,6 +42,9 @@ Predicate equals(final obj) =>
   throw new ArgumentError("both arguments are null");
 }
 
+dynamic identity(final obj) =>
+    obj;
+
 bool isFalse(final bool value) => 
     value == false;
 
@@ -60,6 +65,10 @@ String objectToString(final dynamic obj) =>
 
 class _VisibleForTesting {
   const _VisibleForTesting();
+}
+
+class _Internal {
+  const _Internal();
 }
 
 class IsInstanceOf<T> implements Function {
