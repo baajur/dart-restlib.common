@@ -20,7 +20,7 @@ class _PersistentDictionary<K,V>
     return isNotNull(_root) ? _root.find(0, key.hashCode, key) : Option.NONE;
   }
   
-  ImmutableDictionary<K,V> insert(final K key, final V value) {
+  ImmutableDictionary<K,V> put(final K key, final V value) {
     checkNotNull(key);
     checkNotNull(value);
     
@@ -31,7 +31,7 @@ class _PersistentDictionary<K,V>
       new _PersistentDictionary._internal(newLength, newroot);
   }
   
-  ImmutableDictionary<K,V> insertAll(final Iterable<Pair<K, V>> pairs) {
+  ImmutableDictionary<K,V> putAll(final Iterable<Pair<K, V>> pairs) {
     if (identical(this, EMPTY) && pairs is _PersistentDictionary) {
       return pairs;
     } else {
@@ -42,10 +42,10 @@ class _PersistentDictionary<K,V>
   }
       
   
-  ImmutableDictionary<K,V> insertAllFromMap(final Map<K,V> map) {
+  ImmutableDictionary<K,V> putAllFromMap(final Map<K,V> map) {
     ImmutableDictionary<K,V> result = this;
     map.forEach((k,v) => 
-        result = result.insert(k, v));
+        result = result.put(k, v));
     return result;
   }
   

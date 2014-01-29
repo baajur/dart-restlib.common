@@ -95,7 +95,7 @@ class _PersistentSequence<E>
   }       
   
   // assocN
-  ImmutableSequence<E> insert(final int index, final E element) {
+  ImmutableSequence<E> put(final int index, final E element) {
     checkNotNull(element);
     
     if (index >= 0 && index < length) {
@@ -112,15 +112,15 @@ class _PersistentSequence<E>
     throw new RangeError.value(index);
   }
   
-  ImmutableSequence<E> insertAll(final Iterable<Pair<int, E>> pairs) =>
+  ImmutableSequence<E> putAll(final Iterable<Pair<int, E>> pairs) =>
       pairs.fold(this, 
           (final ImmutableSequence<E> accumulator, final Pair<int, E> pair) => 
-              accumulator.insert(pair.fst, pair.snd));
+              accumulator.put(pair.fst, pair.snd));
   
-  ImmutableSequence<E> insertAllFromMap(final Map<int,E> map) {
+  ImmutableSequence<E> putAllFromMap(final Map<int,E> map) {
     ImmutableSequence<E> result = this;
     map.forEach((final int k,final E v) => 
-        result = result.insert(k, v));
+        result = result.put(k, v));
     return result;
   }
   

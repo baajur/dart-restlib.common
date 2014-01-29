@@ -12,7 +12,7 @@ class _PersistentSetBase<E>
   
   ImmutableSet<E> add(final E element) =>
       new _PersistentSetBase._internal(
-        delegate.insert(element, element));
+        delegate.put(element, element));
   
   ImmutableSet<E> addAll(Iterable<E> elements) =>
       elements.fold(

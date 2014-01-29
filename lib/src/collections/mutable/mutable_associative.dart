@@ -5,13 +5,13 @@ abstract class MutableAssociative<K,V> implements Associative<K,V> {
   
   void clear();
   
-  void insertAll(final Iterable<Pair<K, V>> other);
+  void putAll(final Iterable<Pair<K, V>> other);
   
-  void insert(final K key, final V value);
+  void put(final K key, final V value);
   
-  void insertAllFromMap(final Map<K, V> map);
+  void putAllFromMap(final Map<K, V> map);
   
-  void insertPair(final Pair<K,V> pair);
+  void putPair(final Pair<K,V> pair);
  
   Iterable<V> removeAt(final K key);
 }

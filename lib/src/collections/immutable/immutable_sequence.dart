@@ -15,11 +15,11 @@ abstract class ImmutableSequence<E> implements Sequence<E>, ImmutableCollection<
   
   ImmutableSequence<E> push(E value);
   
-  ImmutableSequence<E> insertAll(final Iterable<Pair<int, E>> other);
+  ImmutableSequence<E> putAll(final Iterable<Pair<int, E>> other);
   
-  ImmutableSequence<E> insert(final int key, final E value);
+  ImmutableSequence<E> put(final int key, final E value);
   
-  ImmutableSequence<E> insertPair(final Pair<int,E> pair);
+  ImmutableSequence<E> putPair(final Pair<int,E> pair);
   
   ImmutableSequence<E> removeAt(final int key);
 }
@@ -40,8 +40,8 @@ abstract class _ImmutableSequenceBase<E> extends SequenceBase<E> implements Immu
     }
   }
   
-  ImmutableSequence<E> insertPair(final Pair<int,E> pair) =>
-      insert(pair.fst, pair.snd);  
+  ImmutableSequence<E> putPair(final Pair<int,E> pair) =>
+      put(pair.fst, pair.snd);  
  
   ImmutableSequence<E> push(final E element) =>
       add(element);

@@ -16,24 +16,24 @@ abstract class _AbstractMutableSequence<E>
   int indexOf(E element, [int start=0]) =>
       delegate.indexOf(checkNotNull(element), start);
   
-  void insertAll(final Iterable<Pair<int, E>> other) =>
+  void putAll(final Iterable<Pair<int, E>> other) =>
       other.forEach((final Pair<int, E> pair) => 
-          this.insert(pair.fst, pair.snd));
+          this.put(pair.fst, pair.snd));
   
-  void insert(final int key, final E value) {
+  void put(final int key, final E value) {
       this[key] = value;
   }
   
-  void insertPair(final Pair<int, E> pair) =>
-      insert(pair.fst, pair.snd);
+  void putPair(final Pair<int, E> pair) =>
+      put(pair.fst, pair.snd);
           
   void addAll(final Iterable<E> elements) =>
       elements.forEach((final E element) => 
           add(element));
   
-  void insertAllFromMap(final Map<int,E> map) =>
+  void putAllFromMap(final Map<int,E> map) =>
       map.forEach((final int key, final E value) => 
-          insert (key, value));
+          put (key, value));
   
   E elementAt(final int index) =>
       (index >= 0 && index < length) ?

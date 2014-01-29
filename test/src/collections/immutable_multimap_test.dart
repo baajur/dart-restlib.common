@@ -7,9 +7,9 @@ void immutableMultisetMultimapTests() {
        CopyOnWrite.EMPTY_MULTISET_MULTIMAP
       ])
   ..addEqualityGroup(
-      [Persistent.EMPTY_MULTISET_MULTIMAP.insert("a", "a").insert("a", "b").insert("c", "d"),
-       Persistent.EMPTY_MULTISET_MULTIMAP.insert("a", "a").insert("a", "b").insert("c", "d"),
-       CopyOnWrite.EMPTY_MULTISET_MULTIMAP.insert("a", "a").insert("a", "b").insert("c", "d"),
+      [Persistent.EMPTY_MULTISET_MULTIMAP.put("a", "a").put("a", "b").put("c", "d"),
+       Persistent.EMPTY_MULTISET_MULTIMAP.put("a", "a").put("a", "b").put("c", "d"),
+       CopyOnWrite.EMPTY_MULTISET_MULTIMAP.put("a", "a").put("a", "b").put("c", "d"),
        (new CopyOnWriteMultisetMultimapBuilder()..insert("a", "a")..insert("a", "b")..insert("c", "d")).build()
       ])
   ..executeTestCase();
@@ -31,7 +31,7 @@ void immutableMultisetMultimapTests() {
   group("persistent", () =>
       new ImmutableMultisetMultimapTester()
           ..generator = ((final int size) => 
-              Persistent.EMPTY_MULTISET_MULTIMAP.insertAll(new List.generate(size, (i) => new Pair(i,i))))
+              Persistent.EMPTY_MULTISET_MULTIMAP.putAll(new List.generate(size, (i) => new Pair(i,i))))
           ..insertCount = 1000
           ..insertAllCount = 1000
           ..invalidKey = 1001
@@ -48,9 +48,9 @@ void immutableSequenceMultimapTests() {
        CopyOnWrite.EMPTY_SEQUENCE_MULTIMAP
       ])
   ..addEqualityGroup(
-      [Persistent.EMPTY_SEQUENCE_MULTIMAP.insert("a", "a").insert("a", "b").insert("c", "d"),
-       Persistent.EMPTY_SEQUENCE_MULTIMAP.insert("a", "a").insert("a", "b").insert("c", "d"),
-       CopyOnWrite.EMPTY_SEQUENCE_MULTIMAP.insert("a", "a").insert("a", "b").insert("c", "d"),
+      [Persistent.EMPTY_SEQUENCE_MULTIMAP.put("a", "a").put("a", "b").put("c", "d"),
+       Persistent.EMPTY_SEQUENCE_MULTIMAP.put("a", "a").put("a", "b").put("c", "d"),
+       CopyOnWrite.EMPTY_SEQUENCE_MULTIMAP.put("a", "a").put("a", "b").put("c", "d"),
        (new CopyOnWriteSequenceMultimapBuilder()..insert("a", "a")..insert("a", "b")..insert("c", "d")).build()
       ])
   ..executeTestCase();
@@ -72,7 +72,7 @@ void immutableSequenceMultimapTests() {
   group("persistent", () =>
       new ImmutableSequenceMultimapTester()
         ..generator = ((final int size) => 
-            Persistent.EMPTY_SEQUENCE_MULTIMAP.insertAll(new List.generate(size, (i) => new Pair(i,i))))
+            Persistent.EMPTY_SEQUENCE_MULTIMAP.putAll(new List.generate(size, (i) => new Pair(i,i))))
         ..insertCount = 1000
         ..insertAllCount = 1000
         ..invalidKey = 1001
@@ -89,9 +89,9 @@ void immutableSetMultimapTests() {
        CopyOnWrite.EMPTY_SET_MULTIMAP
       ])
   ..addEqualityGroup(
-      [Persistent.EMPTY_SET_MULTIMAP.insert("a", "a").insert("a", "b").insert("c", "d"),
-       Persistent.EMPTY_SET_MULTIMAP.insert("a", "a").insert("a", "b").insert("c", "d"),
-       CopyOnWrite.EMPTY_SET_MULTIMAP.insert("a", "a").insert("a", "b").insert("c", "d"),
+      [Persistent.EMPTY_SET_MULTIMAP.put("a", "a").put("a", "b").put("c", "d"),
+       Persistent.EMPTY_SET_MULTIMAP.put("a", "a").put("a", "b").put("c", "d"),
+       CopyOnWrite.EMPTY_SET_MULTIMAP.put("a", "a").put("a", "b").put("c", "d"),
        (new CopyOnWriteSetMultimapBuilder()..insert("a", "a")..insert("a", "b")..insert("c", "d")).build()
       ])
   ..executeTestCase();
@@ -113,7 +113,7 @@ void immutableSetMultimapTests() {
   group("persistent", () =>
       new ImmutableSetMultimapTester()
         ..generator = ((final int size) => 
-            Persistent.EMPTY_SET_MULTIMAP.insertAll(new List.generate(size, (i) => new Pair(i,i))))
+            Persistent.EMPTY_SET_MULTIMAP.putAll(new List.generate(size, (i) => new Pair(i,i))))
         ..insertCount = 1000
         ..insertAllCount = 1000
         ..invalidKey = 1001

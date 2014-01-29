@@ -6,7 +6,7 @@ abstract class MutableBiMap<K,V> implements BiMap<K,V>, MutableDictionary<K,V> {
           pairs.fold(
               new _MutableBiMapBase._internal(new MutableDictionary.hash(), new MutableDictionary.hash()),  
               (final MutableBiMap<K,V> accumulator, final Pair<K,V> pair) => 
-                  accumulator..insert(pair.fst, pair.snd)) :
+                  accumulator..put(pair.fst, pair.snd)) :
                     new _MutableBiMapBase._internal(new MutableDictionary.hash(), new MutableDictionary.hash());      
   
   factory MutableBiMap.splayTree({final Iterable<Pair<K,V>> pairs}) =>
@@ -14,7 +14,7 @@ abstract class MutableBiMap<K,V> implements BiMap<K,V>, MutableDictionary<K,V> {
           pairs.fold(
               new _MutableBiMapBase._internal(new MutableDictionary.splayTree(), new MutableDictionary.splayTree()),  
               (final MutableBiMap<K,V> accumulator, final Pair<K,V> pair) => 
-                  accumulator..insert(pair.fst, pair.snd)) :
+                  accumulator..put(pair.fst, pair.snd)) :
                     new _MutableBiMapBase._internal(new MutableDictionary.splayTree(), new MutableDictionary.splayTree()); 
 }
 
@@ -36,34 +36,34 @@ class _MutableBiMapBase<K,V>
       _delegate[key];
   
   void operator[]=(final K key, final V value) => 
-      insert(key, value);
+      put(key, value);
   
   void clear() {
       _delegate.clear();
       _inverse.clear;
   }
   
-  void insertAll(final Iterable<Pair<K, V>> other) =>
+  void putAll(final Iterable<Pair<K, V>> other) =>
       other.forEach((final Pair<K,V> pair) =>
-          insert(pair.fst, pair.snd));
+          put(pair.fst, pair.snd));
   
-  void insertAllFromMap(final Map<K,V> map) =>
+  void putAllFromMap(final Map<K,V> map) =>
       map.forEach((final K key, final V value) => 
-          insert (key, value));
+          put (key, value));
   
-  void insert(final K key, final V value) {
+  void put(final K key, final V value) {
     checkNotNull(key);
     checkNotNull(value);
     
     _inverse[value].map((final K key) => 
         _delegate.take(key));  
     
-    _inverse.insert(value, key);
-    _delegate.insert(key, value);
+    _inverse.put(value, key);
+    _delegate.put(key, value);
   }
   
-  void insertPair(final Pair<K,V> pair) =>
-      insert(pair.fst, pair.snd);
+  void putPair(final Pair<K,V> pair) =>
+      put(pair.fst, pair.snd);
  
   Option<V> removeAt(final K key) {
     checkNotNull(key);

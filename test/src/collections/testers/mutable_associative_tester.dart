@@ -42,7 +42,7 @@ abstract class MutableAssociativeTester {
     expect(assoc.values, isEmpty);
   }
   
-  void testInsert() {
+  void testPut() {
     final int size = 1000;
     final MutableAssociative assoc = generateTestData(size);
     assoc.clear();
@@ -53,12 +53,12 @@ abstract class MutableAssociativeTester {
       final Pair next = pairGenerator.next();
         
       expect(assoc[next.fst], isEmpty);
-      assoc.insert(next.fst, next.snd);
+      assoc.put(next.fst, next.snd);
       expect(assoc[next.fst].contains(next.snd), isTrue);
     }     
   }
   
-  void testInsertAll() {
+  void testPutAll() {
     final int size = 1000;
     final MutableAssociative assoc = generateTestData(size);
     assoc.clear();
@@ -72,12 +72,12 @@ abstract class MutableAssociativeTester {
       array[i] = next;
     }
       
-    assoc.insertAll(array);
+    assoc.putAll(array);
     array.forEach((final Pair pair) =>
         expect(assoc[pair.fst].contains(pair.snd), isTrue));
   }
   
-  void testInsertPair() {
+  void testPutPair() {
     final int size = 1000;
     final MutableAssociative assoc = generateTestData(size);
     assoc.clear();
@@ -88,7 +88,7 @@ abstract class MutableAssociativeTester {
       final Pair next = pairGenerator.next();
         
       expect(assoc[next.fst], isEmpty);
-      assoc.insertPair(next);
+      assoc.putPair(next);
       expect(assoc[next.fst].contains(next.snd), isTrue);
     }     
   }
@@ -100,7 +100,7 @@ abstract class MutableAssociativeTester {
       
     pairGenerator.reset();
     for (int i = 0; i < size; i++) {
-      assoc.insertPair(pairGenerator.next());
+      assoc.putPair(pairGenerator.next());
     }
       
     while (assoc.keys.isNotEmpty) {
@@ -116,9 +116,9 @@ abstract class MutableAssociativeTester {
   void testMutableAssociative() {
     test("operator [](K,V)", testOperatorListAccessAssignment);
     test("clear()", testClear);
-    test("insert()", testInsert);
-    test("insertAll()", testInsertAll);
-    test("insertPair()", testInsertPair);
+    test("put()", testPut);
+    test("putAll()", testPutAll);
+    test("putPair()", testPutPair);
     test("removeAt", testRemoveAt); 
   }
 }

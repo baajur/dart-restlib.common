@@ -4,13 +4,13 @@ class CopyOnWriteBiMapBuilder<K,V> {
   final MutableBiMap _delegate = new MutableBiMap.hash();
   
   void insert(final K key, final V value) =>
-      _delegate.insert(key, value);
+      _delegate.put(key, value);
   
   void insertAll(final Iterable<Pair<K,V>> pairs) =>
-      _delegate.insertAll(pairs);
+      _delegate.putAll(pairs);
   
   void insertPair(final Pair<K,V> pair) =>
-      _delegate.insertPair(pair);
+      _delegate.putPair(pair);
   
   ImmutableBiMap<K,V> build() => 
       new _CopyOnWriteBiMap._internal(
@@ -40,7 +40,7 @@ class _CopyOnWriteBiMap<K,V>
   Option<V> operator[](final K key) => 
       _delegate[key];
   
-  ImmutableBiMap<K,V> insert(final K key, final V value) {
+  ImmutableBiMap<K,V> put(final K key, final V value) {
     checkNotNull(key);
     checkNotNull(value);
     
@@ -50,17 +50,17 @@ class _CopyOnWriteBiMap<K,V>
     newInverse[value].map((final K key) => 
         newMap = newMap.removeAt(key));  
     
-    newInverse = newInverse.insert(value, key);
-    newMap = newMap.insert(key, value);
+    newInverse = newInverse.put(value, key);
+    newMap = newMap.put(key, value);
     
     return newMap == _delegate ? this : new _CopyOnWriteBiMap._internal(newMap, newInverse);
   }
   
-  ImmutableBiMap<K, V> insertAll(final Iterable<Pair<K,V>> pairs) {
+  ImmutableBiMap<K, V> putAll(final Iterable<Pair<K,V>> pairs) {
     return (new CopyOnWriteBiMapBuilder()..insertAll(this)..insertAll(pairs)).build();
   }
   
-  ImmutableBiMap<K,V> insertAllFromMap(final Map<K,V> map) {
+  ImmutableBiMap<K,V> putAllFromMap(final Map<K,V> map) {
     final CopyOnWriteBiMapBuilder<K,V> builder = new CopyOnWriteBiMapBuilder();
     map.forEach((final K key, final V value) => 
         builder.insert(key, value));

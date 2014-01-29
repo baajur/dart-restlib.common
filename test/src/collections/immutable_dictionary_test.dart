@@ -4,15 +4,15 @@ immutableDictionaryTests() {
   new EqualsTester()
   ..addEqualityGroup(
       [Persistent.EMPTY_DICTIONARY,
-      Persistent.EMPTY_DICTIONARY.insert("a", "a").removeAt("a"),
+      Persistent.EMPTY_DICTIONARY.put("a", "a").removeAt("a"),
       new CopyOnWriteDictionaryBuilder().build(),
       CopyOnWrite.EMPTY_DICTIONARY])
   ..addEqualityGroup(
-      [Persistent.EMPTY_DICTIONARY.insert("a", "a").insert("b", "b"),
-       Persistent.EMPTY_DICTIONARY.insert("b", "b").insert("a", "a"),
-       Persistent.EMPTY_DICTIONARY.insertAllFromMap({"a" : "a", "b" : "b"}),
-       Persistent.EMPTY_DICTIONARY.insert("b", "b").insert("c", "c").insert("a", "a").removeAt("c"),
-       CopyOnWrite.EMPTY_DICTIONARY.insert("a", "a").insert("b", "b"),
+      [Persistent.EMPTY_DICTIONARY.put("a", "a").put("b", "b"),
+       Persistent.EMPTY_DICTIONARY.put("b", "b").put("a", "a"),
+       Persistent.EMPTY_DICTIONARY.putAllFromMap({"a" : "a", "b" : "b"}),
+       Persistent.EMPTY_DICTIONARY.put("b", "b").put("c", "c").put("a", "a").removeAt("c"),
+       CopyOnWrite.EMPTY_DICTIONARY.put("a", "a").put("b", "b"),
        (new CopyOnWriteDictionaryBuilder()..insert("a", "a")..insert("b", "b")).build()
       ])
   ..executeTestCase();
@@ -20,7 +20,7 @@ immutableDictionaryTests() {
   group("persistent", () =>
       new ImmutableDictionaryTester()
         ..generator = ((final int size) => 
-            Persistent.EMPTY_DICTIONARY.insertAll(new List.generate(size, (i) => new Pair(i,i))))
+            Persistent.EMPTY_DICTIONARY.putAll(new List.generate(size, (i) => new Pair(i,i))))
         ..insertCount = 1000
         ..insertAllCount = 1000
         ..invalidKey = 1001

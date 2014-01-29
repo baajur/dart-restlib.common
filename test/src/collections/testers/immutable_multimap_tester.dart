@@ -13,7 +13,7 @@ abstract class ImmutableMultimapTester {
     for (int i = 0; i < removeAtCount; i++) {
       final Pair next = pairGenerator.next();
       for (int j = 0; j < removeAtCount; j++) {
-        assoc = assoc.insertPair(next);
+        assoc = assoc.putPair(next);
       }
     }
     

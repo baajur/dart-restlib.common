@@ -13,9 +13,9 @@ class _PersistentSetMultimapBase<K,V>
   ImmutableSet get emptyValueContainer =>
       Persistent.EMPTY_SET;
   
-  ImmutableSetMultimap<K,V> insert(final K key, final V value) =>
+  ImmutableSetMultimap<K,V> put(final K key, final V value) =>
       new _PersistentSetMultimapBase._internal(
-          dictionary.insert(key, (this[key] as ImmutableSet).add(value)));
+          dictionary.put(key, (this[key] as ImmutableSet).add(value)));
   
   ImmutableSetMultimap<K,V> removeAt(final K key) =>
       new _PersistentSetMultimapBase._internal(

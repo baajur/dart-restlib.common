@@ -12,9 +12,9 @@ class _PersistentSequenceMultimapBase<K,V>
   ImmutableSequence get emptyValueContainer =>
       Persistent.EMPTY_SEQUENCE;
   
-  ImmutableSequenceMultimap<K,V> insert(final K key, final V value) =>
+  ImmutableSequenceMultimap<K,V> put(final K key, final V value) =>
       new _PersistentSequenceMultimapBase._internal(
-          dictionary.insert(key, (this[key] as ImmutableSequence).add(value)));
+          dictionary.put(key, (this[key] as ImmutableSequence).add(value)));
   
   ImmutableSequenceMultimap<K,V> removeAt(final K key) =>
       new _PersistentSequenceMultimapBase._internal(

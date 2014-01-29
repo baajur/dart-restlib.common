@@ -22,7 +22,7 @@ class _PersistentBiMap<K,V>
   Option<V> operator[](final K key) => 
       _delegate[key];
   
-  ImmutableBiMap<K,V> insert(final K key, final V value) {
+  ImmutableBiMap<K,V> put(final K key, final V value) {
     checkNotNull(key);
     checkNotNull(value);
     
@@ -32,26 +32,26 @@ class _PersistentBiMap<K,V>
     newInverse[value].map((final K key) => 
         newMap = newMap.removeAt(key));  
     
-    newInverse = newInverse.insert(value, key);
-    newMap = newMap.insert(key, value);
+    newInverse = newInverse.put(value, key);
+    newMap = newMap.put(key, value);
     
     return newMap == _delegate ? this : new _PersistentBiMap._internal(newMap, newInverse);
   }
   
-  ImmutableBiMap<K, V> insertAll(final Iterable<Pair<K,V>> pairs) {
+  ImmutableBiMap<K, V> putAll(final Iterable<Pair<K,V>> pairs) {
     if (identical(this, EMPTY) && (pairs is _PersistentBiMap)) {
       return pairs;
     } else {
       return pairs.fold(this,
           (final ImmutableBiMap<K,V> previousValue, final Pair<K,V> element) => 
-              previousValue.insert(element.fst, element.snd));
+              previousValue.put(element.fst, element.snd));
     }
   }
   
-  ImmutableBiMap<K,V> insertAllFromMap(final Map<K,V> map) {
+  ImmutableBiMap<K,V> putAllFromMap(final Map<K,V> map) {
     ImmutableBiMap<K,V> result = this;
     map.forEach((k,v) => 
-        result = result.insert(k, v));
+        result = result.put(k, v));
     return result;
   }
   

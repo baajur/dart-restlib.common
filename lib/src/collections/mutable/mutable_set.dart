@@ -30,7 +30,7 @@ class _MutableDictionaryBackedSet<E>
   _MutableDictionaryBackedSet(this.delegate);
   
   void add(final E element) =>
-      delegate.insert(element, element);
+      delegate.put(element, element);
   
   void addAll(final Iterable<E> elements) =>
       elements.forEach((final E element) => 

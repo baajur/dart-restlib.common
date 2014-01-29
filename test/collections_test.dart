@@ -95,7 +95,7 @@ void collectionsTestGroup() {
     group("class:MutableBiMap", () => 
         new MutableBiMapTester()
           ..generator = ((final int size) => 
-              new MutableBiMap.hash()..insertAll(new List.generate(size, (i) => new Pair(i,i))))
+              new MutableBiMap.hash()..putAll(new List.generate(size, (i) => new Pair(i,i))))
         ..invalidKey = 1001
         ..pairGenerator = new SequencePairGenerator()
         ..testSizes = [0, 1, 1000]
@@ -104,7 +104,7 @@ void collectionsTestGroup() {
     group("class:MutableDictionary", () => 
         new MutableDictionaryTester()
           ..generator = ((final int size) => 
-              new MutableDictionary.hash()..insertAll(new List.generate(size, (i) => new Pair(i,i))))
+              new MutableDictionary.hash()..putAll(new List.generate(size, (i) => new Pair(i,i))))
           ..invalidKey = 1001
           ..pairGenerator = new SequencePairGenerator()
           ..testSizes = [0, 1, 1000]

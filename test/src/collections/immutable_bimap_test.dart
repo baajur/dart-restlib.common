@@ -4,23 +4,23 @@ immutableBiMapTests() {
   new EqualsTester()
   ..addEqualityGroup(
       [Persistent.EMPTY_BIMAP,
-      Persistent.EMPTY_BIMAP.insert("a", "a").removeAt("a"),
+      Persistent.EMPTY_BIMAP.put("a", "a").removeAt("a"),
       CopyOnWrite.EMPTY_BIMAP,
       new CopyOnWriteBiMapBuilder().build()])
   ..addEqualityGroup(
-      [Persistent.EMPTY_BIMAP.insert("a", "a").insert("b", "b"),
-       Persistent.EMPTY_BIMAP.insert("b", "b").insert("a", "a"),
-       Persistent.EMPTY_BIMAP.insertAllFromMap({"a" : "a", "b" : "b"}),
-       Persistent.EMPTY_BIMAP.insert("b", "b").insert("c", "c").insert("a", "a").removeAt("c"),
+      [Persistent.EMPTY_BIMAP.put("a", "a").put("b", "b"),
+       Persistent.EMPTY_BIMAP.put("b", "b").put("a", "a"),
+       Persistent.EMPTY_BIMAP.putAllFromMap({"a" : "a", "b" : "b"}),
+       Persistent.EMPTY_BIMAP.put("b", "b").put("c", "c").put("a", "a").removeAt("c"),
        (new CopyOnWriteBiMapBuilder()..insert("a", "a")..insert("b", "b")).build(),
-       CopyOnWrite.EMPTY_BIMAP.insert("a", "a").insert("b", "b"),
+       CopyOnWrite.EMPTY_BIMAP.put("a", "a").put("b", "b"),
       ])
   ..executeTestCase();
   
   group("persistent", () => 
       new ImmutableBiMapTester()
         ..generator = ((final int size) => 
-            Persistent.EMPTY_BIMAP.insertAll(new List.generate(size, (i) => new Pair(i,i))))
+            Persistent.EMPTY_BIMAP.putAll(new List.generate(size, (i) => new Pair(i,i))))
         ..insertAllCount = 1000
         ..insertCount = 1000
         ..invalidKey = 1001

@@ -53,12 +53,12 @@ class _CopyOnWriteSequence<E>
   E elementAt(final int index) =>
         delegate.elementAt(index);
   
-  ImmutableSequence<E> insert(final int key, final E value) {
+  ImmutableSequence<E> put(final int key, final E value) {
     if (key < length) {
       return new _CopyOnWriteSequence(
           new MutableFixedSizeSequence(length)
             ..addAll(this)
-            ..insert(key, value));
+            ..put(key, value));
     } else if (key == length) {
       return add(value);
     } 
@@ -66,17 +66,17 @@ class _CopyOnWriteSequence<E>
     throw new RangeError.value(key);
   }
   
-  ImmutableSequence<E> insertAll(final Iterable<Pair<int, E>> elements) =>
+  ImmutableSequence<E> putAll(final Iterable<Pair<int, E>> elements) =>
       new _CopyOnWriteSequence(
           new MutableFixedSizeSequence(length + elements.length)
             ..addAll(this)
-            ..insertAll(elements));  
+            ..putAll(elements));  
   
-  ImmutableSequence<E> insertAllFromMap(final Map<int,E> map) =>
+  ImmutableSequence<E> putAllFromMap(final Map<int,E> map) =>
       new _CopyOnWriteSequence(
           new MutableFixedSizeSequence(length)
             ..addAll(this)
-            ..insertAllFromMap(map));
+            ..putAllFromMap(map));
   
   ImmutableSequence<E> removeAt(final int key) =>
       new _CopyOnWriteSequence(

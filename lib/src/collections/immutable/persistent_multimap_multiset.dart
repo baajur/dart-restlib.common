@@ -13,9 +13,9 @@ class _PersistentMultisetMultimapBase<K,V>
   ImmutableMultiset get emptyValueContainer =>
       Persistent.EMPTY_MULTISET;
   
-  ImmutableMultisetMultimap<K,V> insert(final K key, final V value) =>
+  ImmutableMultisetMultimap<K,V> put(final K key, final V value) =>
       new _PersistentMultisetMultimapBase._internal(
-          dictionary.insert(key, (this[key] as ImmutableMultiset).add(value)));
+          dictionary.put(key, (this[key] as ImmutableMultiset).add(value)));
   
   ImmutableMultisetMultimap<K,V> removeAt(final K key) =>
       new _PersistentMultisetMultimapBase._internal(

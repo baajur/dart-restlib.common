@@ -28,20 +28,20 @@ class _MutableDictionaryBase<K,V>
   void clear() =>
       _delegate.clear();
   
-  void insertAll(final Iterable<Pair<K, V>> other) =>
+  void putAll(final Iterable<Pair<K, V>> other) =>
       other.forEach((final Pair<K,V> pair) =>
           _delegate[pair.fst] = pair.snd);
   
-  void insertAllFromMap(final Map<K,V> map) =>
+  void putAllFromMap(final Map<K,V> map) =>
       map.forEach((final K key, final V value) => 
-          insert (key, value));
+          put (key, value));
   
-  void insert(final K key, final V value) {
+  void put(final K key, final V value) {
       this[key] = value;
   }
   
-  void insertPair(final Pair<K,V> pair) =>
-      insert(pair.fst, pair.snd);
+  void putPair(final Pair<K,V> pair) =>
+      put(pair.fst, pair.snd);
   
   Option<V> removeAt(final K key) {
     if (containsKey(key)) {

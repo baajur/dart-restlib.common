@@ -4,13 +4,13 @@ class CopyOnWriteDictionaryBuilder<K,V> {
   final MutableDictionary _delegate = new MutableDictionary.hash();
   
   void insert(final K key, final V value) =>
-      _delegate.insert(key, value);
+      _delegate.put(key, value);
   
   void insertAll(final Iterable<Pair<K,V>> pairs) =>
-      _delegate.insertAll(pairs);
+      _delegate.putAll(pairs);
   
   void insertPair(final Pair<K,V> pair) =>
-      _delegate.insertPair(pair);
+      _delegate.putPair(pair);
   
   ImmutableDictionary<K,V> build() =>
       new _CopyOnWriteDictionary(new MutableDictionary.hash(pairs:_delegate));
@@ -33,32 +33,32 @@ class _CopyOnWriteDictionary<K,V>
   Option<V> operator[](final K key) =>
       _delegate[key];
   
-  ImmutableDictionary<K,V> insert(final K key, final V value) =>
+  ImmutableDictionary<K,V> put(final K key, final V value) =>
       new _CopyOnWriteDictionary(
           new MutableDictionary.hash()
-            ..insertAll(this)
-            ..insert(key, value));
+            ..putAll(this)
+            ..put(key, value));
   
-  ImmutableDictionary<K,V> insertAll(final Iterable<Pair<K,V>> values) {
+  ImmutableDictionary<K,V> putAll(final Iterable<Pair<K,V>> values) {
     if (this.isEmpty && values is _CopyOnWriteDictionary) {
       return values;
     } else {
       return new _CopyOnWriteDictionary(
           new MutableDictionary.hash()
-            ..insertAll(this)
-            ..insertAll(values));
+            ..putAll(this)
+            ..putAll(values));
     }
   }
   
-  ImmutableDictionary<K,V> insertAllFromMap(final Map<K,V> map) =>
+  ImmutableDictionary<K,V> putAllFromMap(final Map<K,V> map) =>
       new _CopyOnWriteDictionary(
           new MutableDictionary.hash()
-            ..insertAll(this)
-            ..insertAllFromMap(map));
+            ..putAll(this)
+            ..putAllFromMap(map));
   
   ImmutableDictionary<K,V> removeAt(final K key) =>
       new _CopyOnWriteDictionary(
           new MutableDictionary.hash()
-            ..insertAll(this)
+            ..putAll(this)
             ..removeAt(key));
 }

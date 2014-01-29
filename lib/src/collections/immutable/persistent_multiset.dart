@@ -26,8 +26,8 @@ class _PersistentMultisetBase<E>
   ImmutableMultiset<E> add(final E element) =>
       _delegate[element]
         .map((final int i) =>
-          new _PersistentMultisetBase(_delegate.insert(element, i + 1)))
-        .orElse(new _PersistentMultisetBase(_delegate.insert(element, 1)));
+          new _PersistentMultisetBase(_delegate.put(element, i + 1)))
+        .orElse(new _PersistentMultisetBase(_delegate.put(element, 1)));
   
   ImmutableMultiset<E> addAll(final Iterable<E> elements) {
     if (identical(this, EMPTY) && (elements is _PersistentMultisetBase)) {
@@ -46,7 +46,7 @@ class _PersistentMultisetBase<E>
       _delegate[element]
         .map((final int i) =>
             (i > 1) ? 
-                new _PersistentMultisetBase(_delegate.insert(element, i - 1)) : 
+                new _PersistentMultisetBase(_delegate.put(element, i - 1)) : 
                   new _PersistentMultisetBase(_delegate.removeAt(element)))
         .orElse(this);
   
