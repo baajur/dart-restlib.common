@@ -68,14 +68,20 @@ abstract class Multimap<K,V, I extends Iterable<V>> implements Associative<K,V>,
 
 abstract class SequenceMultimap<K,V> implements Multimap<K,V,Sequence<V>> {
   Dictionary<K, Sequence<V>> get dictionary;
+  
+  SequenceMultimap<K,V> filterKeys(bool filterFunc(K key));
 }
 
 abstract class MultisetMultimap<K,V> implements Multimap<K,V,Multiset<V>> {
   Dictionary<K, Multiset<V>> get dictionary;
+  
+  MultisetMultimap<K,V> filterKeys(bool filterFunc(K key));
 }
 
 abstract class SetMultimap<K,V> implements Multimap<K,V,FiniteSet<V>> {
   Dictionary<K, FiniteSet<V>> get dictionary;
+  
+  SetMultimap<K,V> filterKeys(bool filterFunc(K key));
 }
 
 abstract class Multiset<E> implements Iterable<E> {
