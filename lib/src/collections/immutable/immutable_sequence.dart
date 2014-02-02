@@ -15,7 +15,7 @@ abstract class ImmutableSequence<E> implements Sequence<E>, ImmutableCollection<
   
   ImmutableSequence<E> push(E value);
   
-  ImmutableSequence<E> pushAll(final Iterable<Pair<int, E>> other);
+  ImmutableSequence<E> pushAll(final Iterable<E> other);
   
   ImmutableSequence<E> putAll(final Iterable<Pair<int, E>> other);
   
