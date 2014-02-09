@@ -76,6 +76,9 @@ Option/*<T>*/ lastWhere(final Iterable/*<T>*/ itr, bool test(value)) {
   }
 }
 
+Iterable<Pair/*<T1,T2>*/> zip(final Iterable/*<T1>*/ fst, final Iterable/*<T2>*/ snd) =>
+    new _ZippedIterable(fst, snd);
+
 Iterable<Pair<Option/*<T1>*/, Option/*<T2>*/>> zipOptionally(
     final Iterable/*<T1>*/ fst, final Iterable/*<T2>*/ snd) =>
         new _ZippedOptionalIterable(fst, snd);
@@ -101,6 +104,38 @@ class _ConcatIterator<T> implements Iterator<T> {
     _fst.moveNext() ? true : _snd.moveNext();
 }
 
+class _ZippedIterable<T1,T2> extends IterableBase<Pair<T1,T2>> {
+  final Iterable<T1> _fst;
+  final Iterable<T2> _snd;
+  
+  _ZippedIterable(this._fst, this._snd);
+  
+  Iterator<Pair<T1,T2>> get iterator =>
+      new _ZippedIterator(_fst.iterator, _snd.iterator);
+}
+
+class _ZippedIterator<T1,T2> implements Iterator<Pair<T1, T2>> {
+  final Iterator<T1> _fst;
+  final Iterator<T2> _snd;
+  
+  Pair<T1, T2> _current = null;
+  
+  _ZippedIterator(this._fst, this._snd);
+    
+  Pair<T1, T2> get current =>
+      _current;
+    
+  bool moveNext() {
+    if (_fst.moveNext() && _snd.moveNext()) {
+      _current = new Pair(_fst.current, _snd.current);
+      return true;
+    } else {
+      _current = null;
+      return false;
+    } 
+  }
+}
+
 class _ZippedOptionalIterable<T1,T2> extends IterableBase<Pair<Option<T1>, Option<T2>>> {
   final Iterable<T1> _fst;
   final Iterable<T2> _snd;
@@ -119,9 +154,8 @@ class _ZippedOptionalIterator<T1,T2> implements Iterator<Pair<Option<T1>, Option
   
   _ZippedOptionalIterator(this._fst, this._snd);
   
-  Pair<Option<T1>, Option<T2>> get current {
-    return _current;
-  }
+  Pair<Option<T1>, Option<T2>> get current =>
+      _current;
   
   bool moveNext() {
     final Option<T1> fst = (_fst.moveNext()) ? new Option(_fst.current) : Option.NONE;
