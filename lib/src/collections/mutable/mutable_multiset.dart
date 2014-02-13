@@ -57,10 +57,9 @@ class _MutableMultisetBase<E> extends IterableBase<E> implements MutableMultiset
           return new Option(element);
         }).orElse(Option.NONE);
   
-  Iterable<E> removeAll(final E element) {
-    _delegate[element]
-      .map((final int i) => 
-          new List.filled(i, element))
-      .orElse(EMPTY_LIST);
-  }
+  Iterable<E> removeAll(final E element) =>
+      _delegate[element]
+        .map((final int i) => 
+            new List.filled(i, element))
+        .orElse(EMPTY_LIST);
 }

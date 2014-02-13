@@ -65,12 +65,10 @@ class _MutableBiMapBase<K,V>
   void putPair(final Pair<K,V> pair) =>
       put(pair.fst, pair.snd);
  
-  Option<V> removeAt(final K key) {
-    checkNotNull(key);
-    
-    _delegate[key]
-      .map((final V value) => 
-          _inverse.removeAt(value));
-    _delegate.removeAt(key);
-  }
+  Option<V> removeAt(final K key) =>
+      _delegate[key]
+        .flatMap((final V value) {
+          _inverse.removeAt(value);
+          return _delegate.removeAt(key);
+        });
 }

@@ -109,12 +109,13 @@ class _MutableFixedSizeSequenceBase<E> extends _AbstractMutableSequence<E> imple
     checkArgument(index >= 0);
     
     if (index < _length) {
-      final E retVal = 
+      final E retVal = delegate[index];
       _length--;
       
       for(int i = index; i < (delegate.length - 1); i++) {
         delegate[i] = delegate[i + 1];
       }
+      return retVal;
       
     } else {
       throw new RangeError.value(length);
