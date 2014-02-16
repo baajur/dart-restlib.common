@@ -46,9 +46,14 @@ abstract class _ImmutableSequenceBase<E> extends SequenceBase<E> implements Immu
     }
   }
   
-  ImmutableSequence<E> addAll(final Iterable<E> elements) =>
-      elements.fold(this, (final ImmutableSequence<E> accumulator, final E element) => 
+  ImmutableSequence<E> addAll(final Iterable<E> elements) {
+    if (this.isEmpty && elements is ImmutableSequence) {
+      return elements;
+    } else {
+      return elements.fold(this, (final ImmutableSequence<E> accumulator, final E element) => 
           accumulator.add(element));
+    }
+  }
   
   E elementAt(final int index) {
     if(index >= 0 && index < length) {
