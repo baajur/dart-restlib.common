@@ -1,7 +1,7 @@
 part of restlib.common.collections;
 
 class Array<E> implements Iterable<E>, Forwarder {
-  static const Array EMPTY = const Array.wrap(const []);
+  static const Array EMPTY = const Array.wrap(EMPTY_LIST);
   
   final List<E> delegate;
   
