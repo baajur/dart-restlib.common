@@ -114,43 +114,4 @@ iterablesTests() {
     testLastWhereAlwaysFalse([1, 2, 3]);
     testLastWhereAlwaysTrue([1, 2, 3], new Option(3));
   });
-  
-  group("zipOptionally()", () {
-    test("with two empty lists", () => 
-        expect(zipOptionally([], []), equals([])));
-    test("with two equal length lists", () {
-      final Iterable<String> first = ["a", "b", "c"];
-      final Iterable<String> second = ["A", "B", "C"];
-      final Iterable<Pair<Option<String>, Option<String>>> result =
-          [new Pair(new Option("a"), new Option("A")),
-           new Pair(new Option("b"), new Option("B")),
-           new Pair(new Option("c"), new Option("C"))];
-      
-      expect(zipOptionally(first, second), equals(result));
-    });
-    
-    test("with first list longer than second list", () {
-      final Iterable<String> first = ["a", "b", "c", "d"];
-      final Iterable<String> second = ["A", "B", "C"];
-      final Iterable<Pair<Option<String>, Option<String>>> result =
-          [new Pair(new Option("a"), new Option("A")),
-           new Pair(new Option("b"), new Option("B")),
-           new Pair(new Option("c"), new Option("C")),
-           new Pair(new Option("d"), Option.NONE)];
-      
-      expect(zipOptionally(first, second), equals(result));
-    });
-    
-    test("with second list longer than first list", () {
-      final Iterable<String> first = ["a", "b", "c"];
-      final Iterable<String> second = ["A", "B", "C", "D"];
-      final Iterable<Pair<Option<String>, Option<String>>> result =
-          [new Pair(new Option("a"), new Option("A")),
-           new Pair(new Option("b"), new Option("B")),
-           new Pair(new Option("c"), new Option("C")),
-           new Pair(Option.NONE, new Option("D"))];
-      
-      expect(zipOptionally(first, second), equals(result));
-    });
-  });
 }
