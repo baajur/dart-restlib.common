@@ -45,7 +45,7 @@ class _PersistentSequence<E>
   Option<E> operator[](final int index) {
     if(index >= 0 && index < length) {
       final Array node = _arrayFor(index);
-      return new Option(node[index & 0x01f]);
+      return node[index & 0x01f];
     }
     return Option.NONE;
   }
