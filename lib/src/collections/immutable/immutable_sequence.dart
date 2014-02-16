@@ -26,6 +26,8 @@ abstract class ImmutableSequence<E> implements Sequence<E>, ImmutableCollection<
   ImmutableSequence<E> putPair(final Pair<int,E> pair);
   
   ImmutableSequence<E> removeAt(final int key);
+  
+  ImmutableSequence<E> subSequence(int start, int length);
 }
 
 abstract class _ImmutableSequenceBase<E> extends SequenceBase<E> implements ImmutableSequence<E> {
@@ -44,6 +46,17 @@ abstract class _ImmutableSequenceBase<E> extends SequenceBase<E> implements Immu
     }
   }
   
+  ImmutableSequence<E> addAll(final Iterable<E> elements) =>
+      elements.fold(this, (final ImmutableSequence<E> accumulator, final E element) => 
+          accumulator.add(element));
+  
+  E elementAt(final int index) {
+    if(index >= 0 && index < length) {
+      return this[index].value;
+    }
+    throw new RangeError.range(index, 0, length - 1);
+  } 
+  
   ImmutableSequence<E> putPair(final Pair<int,E> pair) =>
       put(pair.fst, pair.snd);  
  
@@ -53,7 +66,89 @@ abstract class _ImmutableSequenceBase<E> extends SequenceBase<E> implements Immu
   ImmutableSequence<E> pushAll(final Iterable<E> elements) =>
       addAll(elements);
   
+  ImmutableSequence<E> putAll(final Iterable<Pair<int, E>> pairs) =>
+      pairs.fold(this, 
+          (final ImmutableSequence<E> accumulator, final Pair<int, E> pair) => 
+              accumulator.put(pair.fst, pair.snd));
+  
+  ImmutableSequence<E> putAllFromMap(final Map<int,E> map) {
+    ImmutableSequence<E> result = this;
+    map.forEach((final int k,final E v) => 
+        result = result.put(k, v));
+    return result;
+  }
+  
   ImmutableSequence<E> remove(final E element) =>
       removeAt(indexOf(element));
+  
+  // FIXME: Performance?
+  ImmutableSequence<E> removeAt(final int key) {
+    checkRangeInclusive(key, 0, length);
+    ImmutableSequence<E> retval = this;
+    
+    for (int i = length; i > key; i--) {
+      retval = retval.tail;
+    }
+    
+    for (int i = (key + 1); i < length; i++) {
+      retval = retval.add(elementAt(i));
+    }
+    
+    return retval;
+  }
 
+  ImmutableSequence<E> subSequence(int start, int length) {
+    checkArgument(start + length <= this.length);
+    
+    if (this is _ImmutableSubSequence) {
+      
+    }
+    
+    return new _ImmutableSubSequence(this, start, length);
+  }
+}
+
+class _ImmutableSubSequence<E> extends _ImmutableSequenceBase<E> implements ImmutableSequence<E> {
+  final ImmutableSequence delegate;
+  final int start;
+  final int length;
+  
+  _ImmutableSubSequence(this.delegate, this.start, this.length);
+  
+  Iterator<E> get iterator =>
+      delegate.skip(start).take(length).iterator;
+  
+  ImmutableSequence<E> get tail {
+    if ((length - 1) == 0) {
+      return EMPTY_SEQUENCE;
+    }
+    return new _ImmutableSubSequence(this.delegate, this.start, this.length - 1);
+  }
+  
+  Option<E> operator[](final int index) {
+    checkIndex(index);
+    return delegate[start + index];
+  }
+  
+  checkIndex(final int index) =>
+      checkArgument((start + index) < (length + start));
+  
+  ImmutableSequence<E> put(final int index, final E element) {
+    checkIndex(index);
+    
+    if((start + index) == (start + length)) {
+      return add(element);
+    } else {
+      return new _ImmutableSubSequence(
+          this.delegate.put(start + index, element), 
+              this.start,
+              this.length);
+    }
+  }
+  
+  ImmutableSequence<E> add(final E element) =>
+      new _ImmutableSubSequence(
+          this.delegate.put(start + length, element),
+          start,
+          length + 1);
 }

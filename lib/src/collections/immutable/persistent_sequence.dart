@@ -52,14 +52,14 @@ class _PersistentSequence<E>
   
   // cons
   ImmutableSequence<E> add(final E element) {
-    checkNotNull(element);
+    final Option<E> boxed = new Option(checkNotNull(element));
     
     // room in tail?
     if (length - _tailoff() < 32) {
       final Array newTail = 
           new Array.ofSize(_tail.length + 1)
             ..setAll(0, _tail)
-            ..[_tail.length] = element;
+            ..[_tail.length] = boxed;
       return new _PersistentSequence._internal(length + 1, _shift, _root, newTail);
     } else {
       //full tail, push into tree
@@ -77,66 +77,26 @@ class _PersistentSequence<E>
       } else {
         newroot = _pushTail(_shift, _root, tailnode);
       }
-      return new _PersistentSequence._internal(length + 1, newshift, newroot, new Array.ofSize(1)..[0] = element);
+      return new _PersistentSequence._internal(length + 1, newshift, newroot, new Array.ofSize(1)..[0] = boxed);
     }
-  }
-  
-  ImmutableSequence<E> addAll(final Iterable<E> elements) =>
-      elements.fold(this, (final _PersistentSequence<E> accumulator, final E element) => 
-          accumulator.add(element));
-  
-  E elementAt(final int index) {
-    if(index >= 0 && index < length) {
-      final Array node = _arrayFor(index);
-      return node[index & 0x01f];
-    }
-    throw new RangeError.range(index, 0, length - 1);
-  }       
+  }      
   
   // assocN
   ImmutableSequence<E> put(final int index, final E element) {
-    checkNotNull(element);
+    final Option<E> boxed = new Option(checkNotNull(element));
     
     if (index >= 0 && index < length) {
       if (index >= _tailoff()) {
-        final Array newTail = new Array.ofSize(_tail.length)..setAll(0, _tail)..[index & 0x01f] = element;
+        final Array newTail = new Array.ofSize(_tail.length)..setAll(0, _tail)..[index & 0x01f] = boxed;
         return new _PersistentSequence._internal(length, _shift, _root, newTail);
       } else {
-        return new _PersistentSequence._internal(length, _shift, _doInsert(_shift, _root, index, element), _tail);
+        return new _PersistentSequence._internal(length, _shift, _doInsert(_shift, _root, index, boxed), _tail);
       }
     } else if(index == length) {
       return add(element);
     }
     
     throw new RangeError.value(index);
-  }
-  
-  ImmutableSequence<E> putAll(final Iterable<Pair<int, E>> pairs) =>
-      pairs.fold(this, 
-          (final ImmutableSequence<E> accumulator, final Pair<int, E> pair) => 
-              accumulator.put(pair.fst, pair.snd));
-  
-  ImmutableSequence<E> putAllFromMap(final Map<int,E> map) {
-    ImmutableSequence<E> result = this;
-    map.forEach((final int k,final E v) => 
-        result = result.put(k, v));
-    return result;
-  }
-  
-  // FIXME: Performance?
-  ImmutableSequence<E> removeAt(final int key) {
-    checkRangeInclusive(key, 0, length);
-    ImmutableSequence<E> retval = this;
-    
-    for (int i = length; i > key; i--) {
-      retval = retval.tail;
-    }
-    
-    for (int i = (key + 1); i < length; i++) {
-      retval = retval.add(elementAt(i));
-    }
-    
-    return retval;
   }
   
   Array _arrayFor(final int index) {
