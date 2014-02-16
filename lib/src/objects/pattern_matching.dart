@@ -1,6 +1,6 @@
 part of restlib.common.objects;
 
-class PatternMatcher<T> implements Function {
+class PatternMatcher<T> {
   final ImmutableSequence<Pattern> _patterns;
   
   PatternMatcher(final Iterable<Pattern> patterns) :

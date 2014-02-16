@@ -70,7 +70,7 @@ class _Internal {
   const _Internal();
 }
 
-class IsInstanceOf<T> implements Function {
+class IsInstanceOf<T> {
   const IsInstanceOf();
   
   bool call(obj) =>

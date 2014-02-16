@@ -1,6 +1,8 @@
 part of restlib.common.collections.immutable;
 
 abstract class ImmutableBiMap<K,V> implements BiMap<K,V>, ImmutableDictionary<K,V> {  
+  Option<V> call(K key);
+  
   ImmutableBiMap<K,V> putAll(final Iterable<Pair<K, V>> other);
   
   ImmutableBiMap<K,V> put(final K key, final V value);

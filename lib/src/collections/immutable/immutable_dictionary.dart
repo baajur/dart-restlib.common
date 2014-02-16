@@ -1,6 +1,8 @@
 part of restlib.common.collections.immutable;
 
 abstract class ImmutableDictionary<K,V> implements Dictionary<K,V>, ImmutableAssociative<K,V> {
+  Option<V> call(K key);
+  
   ImmutableDictionary<K,V> putAll(final Iterable<Pair<K, V>> other);
   
   ImmutableDictionary<K,V> put(final K key, final V value);
@@ -38,6 +40,23 @@ abstract class _ImmutableDictionaryBase<K,V>
     } else {
       return false;
     }
+  }
+  
+  ImmutableDictionary<K,V> putAll(final Iterable<Pair<K, V>> pairs) {
+    if (this.isEmpty && pairs is ImmutableDictionary) {
+      return pairs;
+    } else {
+      return pairs.fold(this, 
+          (final ImmutableDictionary accumulator, final Pair<K,V> element) => 
+              accumulator.putIfAbsent(element.fst, element.snd));
+    }
+  }   
+  
+  ImmutableDictionary<K,V> putAllFromMap(final Map<K,V> map) {
+    ImmutableDictionary<K,V> result = this;
+    map.forEach((k,v) => 
+        result = result.put(k, v));
+    return result;
   }
       
   ImmutableDictionary<K,V> putPair(final Pair<K,V> pair) =>

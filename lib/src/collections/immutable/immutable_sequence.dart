@@ -9,6 +9,8 @@ abstract class ImmutableSequence<E> implements Sequence<E>, ImmutableCollection<
   
   ImmutableSequence<E> addAll(Iterable<E> elements);  
   
+  Option<E> call(final int key);
+  
   ImmutableSequence<E> remove(E element);
   
   ImmutableSequence<E> get tail;    
