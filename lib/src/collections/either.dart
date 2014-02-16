@@ -9,6 +9,9 @@ abstract class Either<L, R> {
   
   Option<L> get left;
   Option<R> get right; 
+  dynamic get value;
+  
+  /*<T>*/ fold(/*<T>*/ leftCase(L left), /*<T>*/ rightCase(R right));
 }
   
 class _Either<L, R> implements Either<L,R> {
