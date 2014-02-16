@@ -2,15 +2,15 @@ part of restlib.common.collections.immutable;
 
 class _PersistentSequenceMultimapBase<K,V> 
     extends _PersistentMultimapBase<K,V,Sequence<V>> 
-    implements ImmutableSequenceMultimap<K,V>, Persistent {  
+    implements ImmutableSequenceMultimap<K,V> {  
       
   static const ImmutableSequenceMultimap EMPTY = 
-    const _PersistentSequenceMultimapBase._internal(Persistent.EMPTY_DICTIONARY);   
+    const _PersistentSequenceMultimapBase._internal(EMPTY_DICTIONARY);   
   
   const _PersistentSequenceMultimapBase._internal(ImmutableDictionary<K, ImmutableSequence<V>> dictionary): super._internal(dictionary);
   
   ImmutableSequence get emptyValueContainer =>
-      Persistent.EMPTY_SEQUENCE;
+      EMPTY_SEQUENCE;
   
   ImmutableSequenceMultimap<K,V> put(final K key, final V value) =>
       new _PersistentSequenceMultimapBase._internal(

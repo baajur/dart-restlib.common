@@ -2,7 +2,7 @@ part of restlib.common.collections.immutable;
 
 class _PersistentStack<E> 
     extends IterableBase<E> 
-    implements ImmutableStack<E>, Persistent {  
+    implements ImmutableStack<E> {  
   
   static const ImmutableStack EMPTY = const _PersistentStack._empty();
       

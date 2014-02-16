@@ -1,10 +1,9 @@
 part of restlib.common.collections.immutable;
 
 class _PersistentSetBase<E> 
-    extends _ImmutableSetBase<E>
-    implements Persistent {
+    extends _ImmutableSetBase<E> {
   static const ImmutableSet EMPTY = 
-      const _PersistentSetBase._internal(Persistent.EMPTY_DICTIONARY);  
+      const _PersistentSetBase._internal(EMPTY_DICTIONARY);  
   
   final ImmutableDictionary<E,E> delegate;
   

@@ -6,7 +6,7 @@ class PatternMatcher<T> implements Function {
   final ImmutableSequence<Pattern> _patterns;
   
   PatternMatcher(final Iterable<Pattern> patterns) :
-    _patterns = Persistent.EMPTY_SEQUENCE.addAll(patterns);
+    _patterns = EMPTY_SEQUENCE.addAll(patterns);
 
   Option<T> call(final obj) =>
       firstWhere(_patterns, (final Pattern<T> p) => 

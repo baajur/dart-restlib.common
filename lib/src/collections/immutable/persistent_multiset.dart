@@ -1,10 +1,9 @@
 part of restlib.common.collections.immutable;
 
 class _PersistentMultisetBase<E> 
-    extends _ImmutableMultisetBase<E> 
-    implements Persistent {
+    extends _ImmutableMultisetBase<E> {
       
-  static const ImmutableMultiset EMPTY = const _PersistentMultisetBase(Persistent.EMPTY_DICTIONARY);    
+  static const ImmutableMultiset EMPTY = const _PersistentMultisetBase(EMPTY_DICTIONARY);    
   
   final ImmutableDictionary<E,int> _delegate;
   

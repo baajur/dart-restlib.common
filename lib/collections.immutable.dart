@@ -4,21 +4,9 @@ import "dart:collection";
 
 import "collections.dart";
 import "collections.internal.dart";
-import "collections.mutable.dart";
 import "objects.dart";
 import "preconditions.dart";
 
-part "src/collections/immutable/copy_on_write_bimap.dart";
-part "src/collections/immutable/copy_on_write_collection.dart";
-part "src/collections/immutable/copy_on_write_dictionary.dart";
-part "src/collections/immutable/copy_on_write_multimap.dart";
-part "src/collections/immutable/copy_on_write_multimap_multiset.dart";
-part "src/collections/immutable/copy_on_write_multimap_sequence.dart";
-part "src/collections/immutable/copy_on_write_multimap_set.dart";
-part "src/collections/immutable/copy_on_write_multiset.dart";
-part "src/collections/immutable/copy_on_write_sequence.dart";
-part "src/collections/immutable/copy_on_write_set.dart";
-part "src/collections/immutable/immutable.dart";
 part "src/collections/immutable/immutable_associative.dart";
 part "src/collections/immutable/immutable_bimap.dart";
 part "src/collections/immutable/immutable_collection.dart";
@@ -41,3 +29,13 @@ part "src/collections/immutable/persistent_multiset.dart";
 part "src/collections/immutable/persistent_sequence.dart";
 part "src/collections/immutable/persistent_set.dart";
 part "src/collections/immutable/persistent_stack.dart";
+
+const ImmutableBiMap EMPTY_BIMAP = _PersistentBiMap.EMPTY;
+const ImmutableDictionary EMPTY_DICTIONARY = _PersistentDictionary.EMPTY;
+const ImmutableMultisetMultimap EMPTY_MULTISET_MULTIMAP = _PersistentMultisetMultimapBase.EMPTY;
+const ImmutableSequenceMultimap EMPTY_SEQUENCE_MULTIMAP = _PersistentSequenceMultimapBase.EMPTY;
+const ImmutableSetMultimap EMPTY_SET_MULTIMAP = _PersistentSetMultimapBase.EMPTY;
+const ImmutableMultiset EMPTY_MULTISET = _PersistentMultisetBase.EMPTY;
+const ImmutableSequence EMPTY_SEQUENCE = _PersistentSequence.EMPTY;
+const ImmutableSet EMPTY_SET = _PersistentSetBase.EMPTY;
+const ImmutableStack EMPTY_STACK = _PersistentStack.EMPTY;

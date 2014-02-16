@@ -1,8 +1,7 @@
 part of restlib.common.collections.immutable;
 
 class _PersistentDictionary<K,V> 
-    extends  _ImmutableDictionaryBase<K,V> 
-    implements Persistent {
+    extends  _ImmutableDictionaryBase<K,V> {
   static const ImmutableDictionary EMPTY = 
       const _PersistentDictionary._internal(0, null);    
       

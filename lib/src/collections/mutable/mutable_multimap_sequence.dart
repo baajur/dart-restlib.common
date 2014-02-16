@@ -12,7 +12,7 @@ class _MutableSequenceMultimapBase<K,V> extends _AbstractMutableMultimap<K,V, Se
   _MutableSequenceMultimapBase(final MutableDictionary<K, GrowableSequence<V>> _delegate) : super(_delegate);
   
   Sequence<V> get emptyValueContainer =>
-      Persistent.EMPTY_SEQUENCE;
+      EMPTY_SEQUENCE;
   
   GrowableSequence<V> _newValueContainer() =>
       new GrowableSequence();

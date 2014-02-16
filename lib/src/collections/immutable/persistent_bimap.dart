@@ -1,12 +1,10 @@
 part of restlib.common.collections.immutable;
 
 class _PersistentBiMap<K,V> 
-    extends _ImmutableBiMapBase<K,V>
-    implements Persistent {
+    extends _ImmutableBiMapBase<K,V> {
 
   static const ImmutableBiMap EMPTY = 
-      const _PersistentBiMap._internal(
-          Persistent.EMPTY_DICTIONARY, Persistent.EMPTY_DICTIONARY);
+      const _PersistentBiMap._internal(EMPTY_DICTIONARY, EMPTY_DICTIONARY);
 
   final ImmutableDictionary<K,V> _delegate;
   final ImmutableDictionary<V,K> _inverse;

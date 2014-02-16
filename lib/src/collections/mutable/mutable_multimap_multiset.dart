@@ -19,7 +19,7 @@ class _MutableHashMultisetMultimapBase<K,V> extends _AbstractMutableMultimap<K,V
   _MutableHashMultisetMultimapBase(final MutableDictionary<K, MutableMultiset<V>> _delegate) : super(_delegate);
   
   Multiset<V> get emptyValueContainer =>
-      Persistent.EMPTY_MULTISET;
+      EMPTY_MULTISET;
   
   MutableMultiset<V> _newValueContainer() =>
       new MutableMultiset.hash();
@@ -29,7 +29,7 @@ class _MutableSplayTreeMultisetMultimapBase<K,V> extends _AbstractMutableMultima
   _MutableSplayTreeMultisetMultimapBase(final MutableDictionary<K, MutableMultiset<V>> _delegate) : super(_delegate);
   
   Multiset<V> get emptyValueContainer =>
-      Persistent.EMPTY_MULTISET;
+      EMPTY_MULTISET;
   
   MutableMultiset<V> _newValueContainer() =>
       new MutableMultiset.splayTree();

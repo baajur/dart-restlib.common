@@ -1,8 +1,7 @@
 part of restlib.common.collections.immutable;
 
 abstract class _PersistentMultimapBase<K,V, I extends Iterable<V>> 
-    extends _ImmutableMultimapBase<K,V, I> 
-    implements Persistent {
+    extends _ImmutableMultimapBase<K,V, I> {
   final ImmutableDictionary<K, I> dictionary;
   
   const _PersistentMultimapBase._internal(this.dictionary); 
