@@ -101,7 +101,8 @@ abstract class _ImmutableSequenceBase<E> extends SequenceBase<E> implements Immu
     checkArgument(start + length <= this.length);
     
     if (this is _ImmutableSubSequence) {
-      
+      final _ImmutableSubSequence self = this;
+      return new _ImmutableSubSequence(self.delegate, self.start + start, length);   
     }
     
     return new _ImmutableSubSequence(this, start, length);
