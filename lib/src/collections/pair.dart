@@ -1,14 +1,22 @@
 part of restlib.common.collections;
 
-class Pair<T1, T2> {
+abstract class Pair<T1, T2> {
+  factory Pair(final T1 fst, final T2 snd) =>
+      new _Pair(checkNotNull(fst), checkNotNull(snd));
+  
+  T1 get fst;
+  T2 get snd;
+}
+
+class _Pair<T1, T2> implements Pair<T1, T2> {
   final T1 fst;
   final T2 snd;
-  
-  const Pair(this.fst, this.snd);
-  
+    
+  _Pair(this.fst, this.snd);
+    
   int get hashCode => 
       computeHashCode([fst, snd]);
-  
+    
   bool operator==(final other) {
     if (identical(this, other)) {
       return true;
@@ -19,7 +27,7 @@ class Pair<T1, T2> {
       return false;
     }
   }
-  
+    
   String toString() => 
       "Pair($fst, $snd)";
 }

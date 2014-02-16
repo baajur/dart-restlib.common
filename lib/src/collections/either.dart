@@ -1,16 +1,21 @@
 part of restlib.common.collections;
 
-class Either<L, R> {
-  final Option<L> left;
-  final Option<R> right;  
-  
-  Either.leftValue(final L value):
-    left = new Option(checkNotNull(value)),
-    right = Option.NONE;
+abstract class Either<L, R> {
+  factory Either.leftValue(final L value) =>
+      new _Either(new Option(checkNotNull(value)), Option.NONE);
 
-  Either.rightValue(final R value):
-    left = Option.NONE,
-    right = new Option(checkNotNull(value));
+  factory Either.rightValue(final R value) =>
+      new _Either(Option.NONE, new Option(checkNotNull(value)));
+  
+  Option<L> get left;
+  Option<R> get right; 
+}
+  
+class _Either<L, R> implements Either<L,R> {
+  final Option<L> left;
+  final Option<R> right;
+  
+  _Either(this.left, this.right);
   
   int get hashCode => computeHashCode([left, right]);
   
