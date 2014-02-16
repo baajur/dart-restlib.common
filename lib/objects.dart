@@ -7,6 +7,8 @@ import "collections.immutable.dart";
 part "src/objects/forwarder.dart";
 part "src/objects/pattern_matching.dart";
 
+typedef bool Predicate(dynamic object);
+
 const int _HASH_INITIAL_VALUE = 17;
 const int _HASH_MULTIPLIER_VALUE = 31;
 
@@ -25,9 +27,6 @@ void computeIfNotNull(final value, compute(value))  {
     compute(value);
   }
 }
-
-dynamic computeIfNotNullOtherwise(first, second, compute(dyanmic)) =>
-    isNull(first) ? second : compute(first);
 
 Predicate equals(final obj) =>
     (final other) =>

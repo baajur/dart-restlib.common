@@ -1,7 +1,5 @@
 part of restlib.common.objects;
 
-typedef Predicate(dynamic object);
-
 class PatternMatcher<T> implements Function {
   final ImmutableSequence<Pattern> _patterns;
   
