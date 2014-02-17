@@ -11,7 +11,6 @@ part "src/collections/array.dart";
 part "src/collections/either.dart";
 part "src/collections/iterables.dart";
 part "src/collections/option.dart";
-part "src/collections/option_array.dart";
 part "src/collections/pair.dart";
 
 const List EMPTY_LIST = const [];

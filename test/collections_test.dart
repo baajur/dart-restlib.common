@@ -20,7 +20,6 @@ part "src/collections/immutable_set_test.dart";
 part "src/collections/immutable_stack_test.dart";
 part "src/collections/iterables_test.dart";
 part "src/collections/map_as_dictionary_test.dart";
-part "src/collections/option_array_test.dart";
 part "src/collections/option_test.dart";
 part "src/collections/pair_test.dart";
 
@@ -32,7 +31,6 @@ void collectionsTestGroup() {
         new ArrayTester().testArray());
     group("class:Either", eitherTests);
     group("class:Option", optionTests);
-    group("class:OptionArray", () => new OptionArrayTester().testObjectArray());
     group("class:Pair", pairTests);
   
     group("class:GrowableSequence", () =>
