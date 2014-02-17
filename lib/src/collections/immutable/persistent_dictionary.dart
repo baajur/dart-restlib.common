@@ -23,7 +23,7 @@ class _PersistentDictionary<K,V>
     checkNotNull(key);
     checkNotNull(value);
     
-    final _INode newroot = _root.orElse(_BitmapIndexedNode.EMPTY).assoc(0, key.hashCode, key, value);
+    final _INode newroot = _root.orElse(_BitmapIndexedNode.EMPTY).assoc(0, key.hashCode, key, new Option(value));
     final int newLength = containsKey(key) ? length : length + 1;
     
     return (identical(newroot, _root.nullableValue)) ? this :
@@ -40,7 +40,7 @@ class _PersistentDictionary<K,V>
 }
 
 abstract class _INode<K,V> extends Iterable<Pair<K,V>> {  
-  _INode<K,V> assoc(int shift, int keyHash, K key, V value);
+  _INode<K,V> assoc(int shift, int keyHash, K key, Option<V> value);
  
   Option<V> find(int shift, int keyHash, K key);
   
@@ -59,7 +59,7 @@ class _ArrayNode<K,V> extends Object with IterableMixin<Pair<K,V>> implements _I
         .expand((_INode e) => e)
         .iterator;
 
-  _INode<K,V> assoc(final int shift, final int keyHash, final K key, final V value) { 
+  _INode<K,V> assoc(final int shift, final int keyHash, final K key, final Option<V> value) { 
     final int idx = _mask(keyHash, shift);
     final _INode node = _array[idx];
     
@@ -132,7 +132,7 @@ class _BitmapIndexedNode<K,V> extends IterableBase<Pair<K,V>> implements _INode<
   Iterator<Pair<K,V>> get iterator =>
       new _BitmapIndexedNodeIterator(this);
   
-  _INode<K,V> assoc (final int shift, final int keyHash, final K key, final V value) { 
+  _INode<K,V> assoc (final int shift, final int keyHash, final K key, final Option<V> value) { 
     final int hash = keyHash;
     final int bit = _bitpos(hash, shift);
     final int idx = _index(bit);
@@ -199,7 +199,7 @@ class _BitmapIndexedNode<K,V> extends IterableBase<Pair<K,V>> implements _INode<
     if(isNull(keyOrNull)) {
       return (valOrNode as _INode).find(shift + 5, keyHash, key);
     } else if(key == keyOrNull) {
-      return new Option(valOrNode);
+      return valOrNode;
     } else {
       return Option.NONE;
     }
@@ -273,7 +273,7 @@ class _BitmapIndexedNodeIterator<K,V> implements Iterator<Pair<K,V>> {
       _nodeValueItr = value.iterator;
       return moveNext();
     } else {
-      _current = new Pair(key, value);
+      _current = new Pair(key, value.value);
       return true;
     }
   }
@@ -288,7 +288,7 @@ class _HashCollisionNode<K,V> extends Object with IterableMixin<Pair<K,V>> imple
   
   Iterator<Pair<K,V>> get iterator =>  new _HashCollisionNodeIterator(this);
   
-  _INode<K,V> assoc(final int shift, final int keyHash, final K key, final V value) {
+  _INode<K,V> assoc(final int shift, final int keyHash, final K key, final Option<V> value) {
     if (keyHash == _hash) {
       final int idx = findIndex(key);
       if (idx != -1) {
@@ -308,7 +308,7 @@ class _HashCollisionNode<K,V> extends Object with IterableMixin<Pair<K,V>> imple
     if (idx < 0) {
       return Option.NONE;
     } else if (key == _array[idx]) {
-      return new Option(_array[idx+1]);
+      return _array[idx+1];
     } else {
       return Option.NONE;
     }
@@ -352,8 +352,8 @@ class _HashCollisionNodeIterator<K,V> implements Iterator<Pair<K,V>> {
     }
     
     final K key = _node._array[_nodeIdx];
-    final V value = _node._array[_nodeIdx +1];
-    _current = new Pair (key, value);
+    final Option<V> value = _node._array[_nodeIdx +1];
+    _current = new Pair (key, value.value);
     return true;
   }
 }
