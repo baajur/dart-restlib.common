@@ -5,7 +5,6 @@ import "dart:collection";
 import "package:collection/wrappers.dart";
 
 import "collections.dart";
-import "collections.forwarding.dart";
 import "objects.dart";
 import "preconditions.dart";
 
