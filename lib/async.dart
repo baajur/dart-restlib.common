@@ -1,4 +1,4 @@
-library restlib.common.async;
+library async;
 
 import "dart:async";
 

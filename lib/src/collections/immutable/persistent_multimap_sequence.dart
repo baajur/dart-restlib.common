@@ -1,4 +1,4 @@
-part of restlib.common.collections.immutable;
+part of collections.immutable;
 
 class _PersistentSequenceMultimapBase<K,V> 
     extends _PersistentMultimapBase<K,V,Sequence<V>> 

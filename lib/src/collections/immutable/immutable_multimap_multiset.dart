@@ -1,4 +1,4 @@
-part of restlib.common.collections.immutable;
+part of collections.immutable;
 
 abstract class ImmutableMultisetMultimap<K,V> extends IterableBase<Pair<K,V>> implements ImmutableMultimap<K,V,Multiset<V>>, MultisetMultimap<K,V> {    
   ImmutableMultiset<V> call(K key);

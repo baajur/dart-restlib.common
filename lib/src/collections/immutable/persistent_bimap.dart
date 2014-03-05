@@ -1,4 +1,4 @@
-part of restlib.common.collections.immutable;
+part of collections.immutable;
 
 class _PersistentBiMap<K,V> 
     extends _ImmutableBiMapBase<K,V> {

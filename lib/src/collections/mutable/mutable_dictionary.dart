@@ -1,4 +1,4 @@
-part of restlib.common.collections.mutable;
+part of collections.mutable;
 
 abstract class MutableDictionary<K,V> implements Dictionary<K,V>, MutableAssociative<K,V> {
   factory MutableDictionary.hash({final Iterable<Pair<K,V>> pairs}) =>

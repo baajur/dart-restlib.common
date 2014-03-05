@@ -1,4 +1,4 @@
-part of restlib.common.collections.immutable;
+part of collections.immutable;
 
 abstract class ImmutableSequence<E> implements Sequence<E>, ImmutableCollection<E>, ImmutableStack<E>, ImmutableAssociative<int, E> {    
   int get hashCode;

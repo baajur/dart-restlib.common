@@ -1,4 +1,4 @@
-part of restlib.common.collections.mutable;
+part of collections.mutable;
 
 abstract class MutableSequenceMultimap<K, V> implements MutableMultimap<K, V, Sequence<V>>, SequenceMultimap<K,V> {
   factory MutableSequenceMultimap.hash() =>

@@ -1,4 +1,4 @@
-part of restlib.common.collections.mutable;
+part of collections.mutable;
 
 abstract class MutableMultiset<E> implements Multiset<E>, MutableCollection<E> {
   factory MutableMultiset.hash() =>

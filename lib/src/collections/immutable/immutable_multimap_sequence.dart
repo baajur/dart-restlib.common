@@ -1,4 +1,4 @@
-part of restlib.common.collections.immutable;
+part of collections.immutable;
 
 abstract class ImmutableSequenceMultimap<K,V> implements ImmutableMultimap<K,V,Sequence<V>>, SequenceMultimap<K,V> {      
   ImmutableSequence<V> call(K key);

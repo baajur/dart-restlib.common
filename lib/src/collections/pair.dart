@@ -1,4 +1,4 @@
-part of restlib.common.collections;
+part of collections;
 
 abstract class Pair<T1, T2> {
   factory Pair(final T1 fst, final T2 snd) =>

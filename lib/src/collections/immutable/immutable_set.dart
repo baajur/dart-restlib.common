@@ -1,4 +1,4 @@
-part of restlib.common.collections.immutable;
+part of collections.immutable;
 
 abstract class ImmutableSet<E> 
     extends ImmutableCollection<E> 

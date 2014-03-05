@@ -1,4 +1,4 @@
-part of restlib.common.collections.forwarding;
+part of collections.forwarding;
 
 abstract class ForwardingSet<E> implements Forwarder, FiniteSet<E> {
   FiniteSet<E> difference(FiniteSet<E> other) =>

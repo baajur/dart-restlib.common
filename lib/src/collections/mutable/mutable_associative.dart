@@ -1,4 +1,4 @@
-part of restlib.common.collections.mutable;
+part of collections.mutable;
 
 abstract class MutableAssociative<K,V> implements Associative<K,V> {
   void operator[]=(final K key, final V value);

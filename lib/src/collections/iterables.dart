@@ -1,4 +1,4 @@
-part of restlib.common.collections;
+part of collections;
 
 Iterable computeIfEmpty(final Iterable itr1, Iterable compute()) =>
     itr1.isNotEmpty ? itr1 : compute();

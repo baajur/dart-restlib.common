@@ -1,4 +1,4 @@
-part of restlib.common.collections.mutable;
+part of collections.mutable;
 
 abstract class GrowableSequence<E> implements MutableSequence<E> {  
   factory GrowableSequence() =>

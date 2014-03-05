@@ -1,4 +1,4 @@
-part of restlib.common.collections.immutable;
+part of collections.immutable;
 
 abstract class ImmutableStack<E> implements Stack<E> {    
   ImmutableStack<E> get tail;    

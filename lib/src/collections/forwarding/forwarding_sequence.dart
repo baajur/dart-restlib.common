@@ -1,4 +1,4 @@
-part of restlib.common.collections.forwarding;
+part of collections.forwarding;
 
 abstract class ForwardingSequence<E> implements Forwarder, Sequence<E> {
   Iterable<E> get reversed => 

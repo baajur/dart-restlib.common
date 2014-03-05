@@ -1,4 +1,4 @@
-part of restlib.common.collections.immutable;
+part of collections.immutable;
 
 class _PersistentMultisetMultimapBase<K,V> 
     extends _PersistentMultimapBase<K,V, Multiset<V>> 

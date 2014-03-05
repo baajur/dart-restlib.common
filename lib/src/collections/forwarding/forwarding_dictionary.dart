@@ -1,4 +1,4 @@
-part of restlib.common.collections.forwarding;
+part of collections.forwarding;
 
 abstract class ForwardingDictionary<K,V> implements Forwarder, Dictionary<K,V> {  
   Option<V> operator[](final K key) => 

@@ -1,4 +1,4 @@
-part of  restlib.common.collections.internal;
+part of  collections.internal;
 
 abstract class MultimapBase<K,V,I extends Iterable<V>> 
     extends IterableBase<Pair<K,V>> implements Multimap<K,V,I> {

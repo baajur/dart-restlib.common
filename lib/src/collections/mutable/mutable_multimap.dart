@@ -1,4 +1,4 @@
-part of restlib.common.collections.mutable;
+part of collections.mutable;
 
 abstract class MutableMultimap<K, V, I extends Iterable<V>> implements Multimap<K, V, I>, MutableAssociative<K,V> {  
   I operator[](final K key);

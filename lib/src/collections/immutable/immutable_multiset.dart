@@ -1,4 +1,4 @@
-part of restlib.common.collections.immutable;
+part of collections.immutable;
 
 abstract class ImmutableMultiset<E> implements ImmutableCollection<E>, Multiset<E> {    
   bool operator==(other);

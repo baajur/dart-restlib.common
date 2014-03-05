@@ -1,4 +1,4 @@
-part of restlib.common.collections.mutable;
+part of collections.mutable;
 
 abstract class MutableSetMultimap<K, V> implements MutableMultimap<K, V, FiniteSet<V>>, SetMultimap<K,V> {
   factory MutableSetMultimap.hashSetHashDictionary() => 

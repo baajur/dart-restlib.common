@@ -1,4 +1,4 @@
-part of restlib.common.collections.mutable;
+part of collections.mutable;
 
 abstract class MutableBiMap<K,V> implements BiMap<K,V>, MutableDictionary<K,V> {  
   factory MutableBiMap.hash({final Iterable<Pair<K,V>> pairs}) =>

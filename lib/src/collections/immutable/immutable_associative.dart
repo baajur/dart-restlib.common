@@ -1,4 +1,4 @@
-part of restlib.common.collections.immutable;
+part of collections.immutable;
 
 abstract class ImmutableAssociative<K,V> implements Associative<K,V> {
   Iterable<V> call(K key);

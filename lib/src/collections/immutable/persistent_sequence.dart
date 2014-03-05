@@ -1,4 +1,4 @@
-part of restlib.common.collections.immutable;
+part of collections.immutable;
 
 class _PersistentSequence<E> 
     extends _ImmutableSequenceBase<E> {

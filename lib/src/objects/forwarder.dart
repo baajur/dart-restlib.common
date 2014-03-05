@@ -1,4 +1,4 @@
-part of restlib.common.objects;
+part of objects;
 
 abstract class Forwarder {  
   dynamic get delegate;

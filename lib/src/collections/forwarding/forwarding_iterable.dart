@@ -1,4 +1,4 @@
-part of restlib.common.collections.forwarding;
+part of collections.forwarding;
 
 abstract class ForwardingIterable<E> implements Forwarder, Iterable<E> {  
   Iterable map(f(E element)) => 

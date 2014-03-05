@@ -1,4 +1,4 @@
-part of restlib.common.collections.mutable;
+part of collections.mutable;
 
 abstract class MutableCollection<E> extends Iterable<E> {
   void add(E value);

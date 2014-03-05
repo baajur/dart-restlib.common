@@ -1,8 +1,6 @@
-library restlib.common.collections.internal;
+library collections.internal;
 
 import "dart:collection";
-
-import "package:collection/wrappers.dart";
 
 import "collections.dart";
 import "objects.dart";

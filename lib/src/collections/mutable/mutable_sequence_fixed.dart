@@ -1,4 +1,4 @@
-part of restlib.common.collections.mutable;
+part of collections.mutable;
 
 abstract class MutableFixedSizeSequence<E> implements MutableSequence<E> {
   static MutableFixedSizeSequence<double> newFloat32Sequence(final int size) =>

@@ -1,4 +1,4 @@
-part of restlib.common.collections.internal;
+part of collections.internal;
 
 abstract class DictionaryBase<K,V> extends IterableBase<Pair<K,V>> implements Dictionary<K,V> {
   const DictionaryBase();

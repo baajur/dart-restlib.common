@@ -1,4 +1,4 @@
-library restlib.common.collections.mutable;
+library collections.mutable;
 
 import "dart:collection";
 import "dart:typed_data";

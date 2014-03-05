@@ -1,4 +1,4 @@
-part of restlib.common.collections.forwarding;
+part of collections.forwarding;
 
 abstract class ForwardingAssociative<K,V> implements Forwarder, Associative<K,V> { 
   Iterable<K> get keys =>

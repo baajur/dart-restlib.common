@@ -1,4 +1,4 @@
-part of restlib.common.collections.mutable;
+part of collections.mutable;
 
 abstract class MutableSet<E> extends MutableCollection<E> implements FiniteSet<E>{
   factory MutableSet.hash({final Iterable<E> elements}) =>

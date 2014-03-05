@@ -1,4 +1,4 @@
-part of restlib.common.collections;
+part of collections;
 
 class Array<E> implements Iterable<E>, Forwarder {
   static const Array EMPTY = const Array.wrap(EMPTY_LIST);

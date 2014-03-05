@@ -1,4 +1,4 @@
-library restlib.common.collections.immutable;
+library collections.immutable;
 
 import "dart:collection";
 

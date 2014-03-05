@@ -1,4 +1,4 @@
-part of  restlib.common.collections.internal;
+part of  collections.internal;
 
 abstract class DictionaryBackedSet<E> 
     extends IterableBase<E>

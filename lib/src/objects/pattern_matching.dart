@@ -1,4 +1,4 @@
-part of restlib.common.objects;
+part of objects;
 
 class PatternMatcher<T> {
   final ImmutableSequence<Pattern> _patterns;

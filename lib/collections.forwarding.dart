@@ -1,4 +1,4 @@
-library restlib.common.collections.forwarding;
+library collections.forwarding;
 
 import "collections.dart";
 import "objects.dart";

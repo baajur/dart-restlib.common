@@ -1,4 +1,4 @@
-part of restlib.common.collections.immutable;
+part of collections.immutable;
 
 abstract class ImmutableCollection<E> implements Iterable<E> {
   ImmutableCollection<E> add(E value);

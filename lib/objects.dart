@@ -1,4 +1,4 @@
-library restlib.common.objects;
+library objects;
 
 import "dart:mirrors";
 import "collections.dart";

@@ -1,4 +1,4 @@
-part of restlib.common.collections.forwarding;
+part of collections.forwarding;
 
 abstract class ForwardingMultimap<K,V, I extends Iterable<V>> 
     implements Forwarder, Multimap<K,V,I> {  

@@ -1,4 +1,4 @@
-library restlib.common.preconditions;
+library preconditions;
 
 import "objects.dart";
 

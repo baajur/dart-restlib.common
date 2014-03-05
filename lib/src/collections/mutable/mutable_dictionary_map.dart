@@ -1,4 +1,4 @@
-part of restlib.common.collections.mutable;
+part of collections.mutable;
 
 class _MutableDictionaryBase<K,V> 
     extends DictionaryBase<K,V> implements MutableDictionary<K,V> {

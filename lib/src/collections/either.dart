@@ -1,4 +1,4 @@
-part of restlib.common.collections;
+part of collections;
 
 abstract class Either<L, R> {
   factory Either.leftValue(final L value) =>

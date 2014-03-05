@@ -1,4 +1,4 @@
-part of restlib.common.collections.immutable;
+part of collections.immutable;
 
 abstract class _PersistentMultimapBase<K,V, I extends Iterable<V>> 
     extends _ImmutableMultimapBase<K,V, I> {
