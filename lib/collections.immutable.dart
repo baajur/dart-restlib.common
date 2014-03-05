@@ -1,6 +1,7 @@
 library collections.immutable;
 
 import "dart:collection";
+import "package:collection/equality.dart";
 
 import "collections.dart";
 import "collections.internal.dart";

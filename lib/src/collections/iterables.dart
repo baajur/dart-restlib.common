@@ -27,23 +27,6 @@ Option/*<T>*/ elementAt(final Iterable/*<T>*/ itr, final int index) {
   }
 }
 
-bool equal(final Iterable fst, final Iterable snd) {
-  final Iterator itrFst = fst.iterator;
-  final Iterator itrSnd = snd.iterator;
-  
-  bool fstMoveNext = itrFst.moveNext();
-  bool sndMoveNext = itrSnd.moveNext();
-  
-  for (;fstMoveNext && sndMoveNext; 
-      fstMoveNext = itrFst.moveNext(), sndMoveNext = itrSnd.moveNext()) {
-    if(itrFst.current != itrSnd.current) {
-      return false;
-    }
-  }
-  
-  return fstMoveNext == sndMoveNext;
-}
-
 Option/*<T>*/ first(final Iterable/*<T>*/ itr) {
   try {
     return new Option(itr.first);
@@ -82,20 +65,20 @@ Iterable<Pair/*<T1,T2>*/> zip(final Iterable/*<T1>*/ fst, final Iterable/*<T2>*/
 class _ConcatIterable<T> extends IterableBase<T> {
   final Iterable<T> _fst;
   final Iterable<T> _snd;
-  
+
   _ConcatIterable(this._fst, this._snd);
-  
+
   Iterator<T> get iterator => new _ConcatIterator(_fst.iterator, _snd.iterator);
 }
 
 class _ConcatIterator<T> implements Iterator<T> {
   final Iterator<T> _fst;
   final Iterator<T> _snd;
-  
+
   _ConcatIterator(this._fst, this._snd);
-  
+
   T get current => firstNotNull(_fst.current, _snd.current);
-  
+
   bool moveNext() =>
     _fst.moveNext() ? true : _snd.moveNext();
 }
@@ -103,9 +86,9 @@ class _ConcatIterator<T> implements Iterator<T> {
 class _ZippedIterable<T1,T2> extends IterableBase<Pair<T1,T2>> {
   final Iterable<T1> _fst;
   final Iterable<T2> _snd;
-  
+
   _ZippedIterable(this._fst, this._snd);
-  
+
   Iterator<Pair<T1,T2>> get iterator =>
       new _ZippedIterator(_fst.iterator, _snd.iterator);
 }
@@ -113,14 +96,14 @@ class _ZippedIterable<T1,T2> extends IterableBase<Pair<T1,T2>> {
 class _ZippedIterator<T1,T2> implements Iterator<Pair<T1, T2>> {
   final Iterator<T1> _fst;
   final Iterator<T2> _snd;
-  
+
   Pair<T1, T2> _current = null;
-  
+
   _ZippedIterator(this._fst, this._snd);
-    
+
   Pair<T1, T2> get current =>
       _current;
-    
+
   bool moveNext() {
     if (_fst.moveNext() && _snd.moveNext()) {
       _current = new Pair(_fst.current, _snd.current);
@@ -128,6 +111,6 @@ class _ZippedIterator<T1,T2> implements Iterator<Pair<T1, T2>> {
     } else {
       _current = null;
       return false;
-    } 
+    }
   }
 }
