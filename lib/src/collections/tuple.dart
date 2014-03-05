@@ -7,7 +7,7 @@ abstract class None implements Tuple, Option {
 
 }
 
-abstract class Some<T> implements Tuple<T>, Option {
+abstract class Some<T> implements Tuple<T>, Option<T> {
   T get e0;
 }
 
@@ -57,5 +57,3 @@ abstract class TupleRest<T0, T1, T2, T3, T4, T5, TRest extends Tuple> implements
   T4 get e4;
   T5 get e5;
 }
-
-
