@@ -9,7 +9,7 @@ abstract class DictionaryBackedSet<E>
   Dictionary<E,E> get delegate;
   
   E get first =>
-      delegate.first.fst;
+      delegate.first.e0;
   
   bool get isEmpty =>
       delegate.isEmpty;
@@ -18,13 +18,13 @@ abstract class DictionaryBackedSet<E>
       delegate.keys.iterator;
   
   E get last =>
-      delegate.last.fst;
+      delegate.last.e0;
   
   int get length =>
       delegate.length;
   
   E get single =>
-      delegate.single.fst;
+      delegate.single.e0;
   
   bool contains(final E element) =>
       delegate[element]

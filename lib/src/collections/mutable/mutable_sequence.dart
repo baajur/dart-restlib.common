@@ -18,14 +18,14 @@ abstract class _AbstractMutableSequence<E>
   
   void putAll(final Iterable<Pair<int, E>> other) =>
       other.forEach((final Pair<int, E> pair) => 
-          this.put(pair.fst, pair.snd));
+          this.put(pair.e0, pair.e1));
   
   void put(final int key, final E value) {
       this[key] = value;
   }
   
   void putPair(final Pair<int, E> pair) =>
-      put(pair.fst, pair.snd);
+      put(pair.e0, pair.e1);
           
   void addAll(final Iterable<E> elements) =>
       elements.forEach((final E element) => 

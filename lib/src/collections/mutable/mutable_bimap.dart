@@ -6,7 +6,7 @@ abstract class MutableBiMap<K,V> implements BiMap<K,V>, MutableDictionary<K,V> {
           pairs.fold(
               new _MutableBiMapBase._internal(new MutableDictionary.hash(), new MutableDictionary.hash()),  
               (final MutableBiMap<K,V> accumulator, final Pair<K,V> pair) => 
-                  accumulator..put(pair.fst, pair.snd)) :
+                  accumulator..put(pair.e0, pair.e1)) :
                     new _MutableBiMapBase._internal(new MutableDictionary.hash(), new MutableDictionary.hash());      
   
   factory MutableBiMap.splayTree({final Iterable<Pair<K,V>> pairs}) =>
@@ -14,7 +14,7 @@ abstract class MutableBiMap<K,V> implements BiMap<K,V>, MutableDictionary<K,V> {
           pairs.fold(
               new _MutableBiMapBase._internal(new MutableDictionary.splayTree(), new MutableDictionary.splayTree()),  
               (final MutableBiMap<K,V> accumulator, final Pair<K,V> pair) => 
-                  accumulator..put(pair.fst, pair.snd)) :
+                  accumulator..put(pair.e0, pair.e1)) :
                     new _MutableBiMapBase._internal(new MutableDictionary.splayTree(), new MutableDictionary.splayTree()); 
 }
 
@@ -45,7 +45,7 @@ class _MutableBiMapBase<K,V>
   
   void putAll(final Iterable<Pair<K, V>> other) =>
       other.forEach((final Pair<K,V> pair) =>
-          put(pair.fst, pair.snd));
+          put(pair.e0, pair.e1));
   
   void putAllFromMap(final Map<K,V> map) =>
       map.forEach((final K key, final V value) => 
@@ -63,7 +63,7 @@ class _MutableBiMapBase<K,V>
   }
   
   void putPair(final Pair<K,V> pair) =>
-      put(pair.fst, pair.snd);
+      put(pair.e0, pair.e1);
  
   Option<V> removeAt(final K key) =>
       _delegate[key]

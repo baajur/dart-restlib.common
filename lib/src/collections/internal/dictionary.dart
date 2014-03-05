@@ -7,20 +7,20 @@ abstract class DictionaryBase<K,V> extends IterableBase<Pair<K,V>> implements Di
 
   Iterable<K> get keys =>
       this.map((final Pair<K,V> pair) =>
-          pair.fst);
+          pair.e0);
 
   Iterable<V> get values =>
       this.map((final Pair<K,V> pair) =>
-          pair.snd);
+          pair.e1);
 
   Option<V> call(final K key) =>
       this[key];
 
   bool contains(final Object pair) {
     if (pair is Pair) {
-      return this[pair.fst]
+      return this[pair.e0]
         .map((final V value) =>
-            value == pair.snd)
+            value == pair.e1)
         .orElse(false);
     } else {
       return false;
@@ -32,7 +32,7 @@ abstract class DictionaryBase<K,V> extends IterableBase<Pair<K,V>> implements Di
 
   bool containsValue(final V value) =>
       this.any((final Pair<K,V> pair) =>
-          pair.snd == value);
+          pair.e1 == value);
 
   Dictionary<K,V> filterKeys(bool filterFunc(K key)) =>
       new _KeyFilteredDictionary(this, filterFunc);
@@ -44,7 +44,7 @@ abstract class DictionaryBase<K,V> extends IterableBase<Pair<K,V>> implements Di
       new _DictionaryAsMap(this);
 
   String toString() =>
-      "{" + map((pair) => "${pair.fst} : ${pair.snd}").join(", ") + "}";
+      "{" + map((pair) => "${pair.e0} : ${pair.e1}").join(", ") + "}";
 }
 
 class _MappedDictionary extends DictionaryBase implements Forwarder {
@@ -55,7 +55,7 @@ class _MappedDictionary extends DictionaryBase implements Forwarder {
 
   Iterator<Pair> get iterator =>
       delegate.map((final Pair pair) =>
-          new Pair(pair.fst, mapFunc(pair.snd))).iterator;
+          new Pair(pair.e0, mapFunc(pair.e1))).iterator;
 
   int get length =>
       delegate.length;
@@ -103,7 +103,7 @@ class _DictionaryAsMap<K,V> implements Forwarder, Map<K,V> {
       delegate.contains(value);
 
   void forEach(void f(K key, V value)) =>
-      delegate.forEach((final Pair<K,V> pair) => f(pair.fst, pair.snd));
+      delegate.forEach((final Pair<K,V> pair) => f(pair.e0, pair.e1));
 
   V putIfAbsent(K key, V ifAbsent())  =>
       throw new UnsupportedError("Map is read only");
@@ -124,13 +124,13 @@ class _KeyFilteredDictionary<K,V>
   _KeyFilteredDictionary(this.delegate, this.keyFilterFunc);
 
   Iterator<Pair<K,V>> get iterator =>
-      delegate.where((final Pair<K,V> pair) => keyFilterFunc(pair.fst)).iterator;
+      delegate.where((final Pair<K,V> pair) => keyFilterFunc(pair.e0)).iterator;
 
   Iterable<K> get keys =>
       delegate.keys.where((keyFilterFunc));
 
   Iterable<V> get values =>
-      delegate.where((final Pair<K,V> pair) => keyFilterFunc(pair.fst)).map((final Pair<K, V> pair) => pair.snd);
+      delegate.where((final Pair<K,V> pair) => keyFilterFunc(pair.e0)).map((final Pair<K, V> pair) => pair.e1);
 
   Option<V> operator[](K key) {
     if (keyFilterFunc(key)) {

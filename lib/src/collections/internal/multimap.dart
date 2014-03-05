@@ -11,15 +11,15 @@ abstract class MultimapBase<K,V,I extends Iterable<V>>
   
   Iterator<Pair<K,V>> get iterator =>
       dictionary.expand((final Pair<K, I> pair) => 
-          pair.snd.map((final V value) =>
-              new Pair(pair.fst, value))).iterator;
+          pair.e1.map((final V value) =>
+              new Pair(pair.e0, value))).iterator;
   
   Iterable<K> get keys =>
       dictionary.keys;
   
   Iterable<V> get values =>
       this.map((final Pair<K,V> pair) => 
-          pair.snd);
+          pair.e1);
   
   I operator[](final K key) =>
       dictionary[key]
@@ -32,9 +32,9 @@ abstract class MultimapBase<K,V,I extends Iterable<V>>
   
   bool contains(final Object pair) {
     if (pair is Pair) {
-      return dictionary[pair.fst]
+      return dictionary[pair.e0]
         .map((final I values) =>
-            values.contains(pair.snd))
+            values.contains(pair.e1))
         .orElse(false);
     } else {
       return false;

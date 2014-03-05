@@ -16,14 +16,14 @@ class _MutableMultisetBase<E> extends IterableBase<E> implements MutableMultiset
   _MutableMultisetBase(this._delegate);
   
   Iterable<E> get elements =>
-      _delegate.map((final Pair<E, int> pair) => pair.fst);
+      _delegate.map((final Pair<E, int> pair) => pair.e0);
   
   Dictionary<E, int> get entries =>
       _delegate;
   
   Iterator<E> get iterator => 
       _delegate.expand((final Pair<E, int> pair) =>
-          new List.filled(pair.snd, pair.fst)).iterator;
+          new List.filled(pair.e1, pair.e0)).iterator;
   
   int count(final E element) => 
       _delegate[element].orElse(0);

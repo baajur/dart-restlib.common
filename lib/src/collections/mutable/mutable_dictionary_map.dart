@@ -30,7 +30,7 @@ class _MutableDictionaryBase<K,V>
   
   void putAll(final Iterable<Pair<K, V>> other) =>
       other.forEach((final Pair<K,V> pair) =>
-          _delegate[pair.fst] = pair.snd);
+          _delegate[pair.e0] = pair.e1);
   
   void putAllFromMap(final Map<K,V> map) =>
       map.forEach((final K key, final V value) => 
@@ -41,7 +41,7 @@ class _MutableDictionaryBase<K,V>
   }
   
   void putPair(final Pair<K,V> pair) =>
-      put(pair.fst, pair.snd);
+      put(pair.e0, pair.e1);
   
   Option<V> removeAt(final K key) {
     if (containsKey(key)) {

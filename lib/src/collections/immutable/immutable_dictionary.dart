@@ -22,7 +22,7 @@ abstract class _ImmutableDictionaryBase<K,V>
   
   int get hashCode =>
       fold(0, (final int accumulator, final Pair<K,V> pair) => 
-          accumulator + (pair.fst.hashCode ^ pair.snd.hashCode));
+          accumulator + (pair.e0.hashCode ^ pair.e1.hashCode));
   
   bool operator ==(final other) {
     if (identical(this, other)) {
@@ -33,9 +33,9 @@ abstract class _ImmutableDictionaryBase<K,V>
       }
       
       return every((final Pair<K,V> pair) => 
-          other[pair.fst]
+          other[pair.e0]
             .map((final V value) => 
-                pair.snd == value)
+                pair.e1 == value)
             .orElse(false));      
     } else {
       return false;
@@ -48,7 +48,7 @@ abstract class _ImmutableDictionaryBase<K,V>
     } else {
       return pairs.fold(this, 
           (final ImmutableDictionary accumulator, final Pair<K,V> element) => 
-              accumulator.putIfAbsent(element.fst, element.snd));
+              accumulator.putIfAbsent(element.e0, element.e1));
     }
   }   
   
@@ -60,7 +60,7 @@ abstract class _ImmutableDictionaryBase<K,V>
   }
       
   ImmutableDictionary<K,V> putPair(final Pair<K,V> pair) =>
-      put(pair.fst, pair.snd);
+      put(pair.e0, pair.e1);
   
   ImmutableDictionary<K,V> putIfAbsent(final K key, final V value) =>
       this[key]

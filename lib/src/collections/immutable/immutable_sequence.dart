@@ -58,7 +58,7 @@ abstract class _ImmutableSequenceBase<E> extends SequenceBase<E> implements Immu
   }
 
   ImmutableSequence<E> putPair(final Pair<int,E> pair) =>
-      put(pair.fst, pair.snd);
+      put(pair.e0, pair.e1);
 
   ImmutableSequence<E> push(final E element) =>
       add(element);
@@ -69,7 +69,7 @@ abstract class _ImmutableSequenceBase<E> extends SequenceBase<E> implements Immu
   ImmutableSequence<E> putAll(final Iterable<Pair<int, E>> pairs) =>
       pairs.fold(this,
           (final ImmutableSequence<E> accumulator, final Pair<int, E> pair) =>
-              accumulator.put(pair.fst, pair.snd));
+              accumulator.put(pair.e0, pair.e1));
 
   ImmutableSequence<E> putAllFromMap(final Map<int,E> map) {
     ImmutableSequence<E> result = this;

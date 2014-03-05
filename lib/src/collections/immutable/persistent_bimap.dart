@@ -42,7 +42,7 @@ class _PersistentBiMap<K,V>
     } else {
       return pairs.fold(this,
           (final ImmutableBiMap<K,V> previousValue, final Pair<K,V> element) => 
-              previousValue.put(element.fst, element.snd));
+              previousValue.put(element.e0, element.e1));
     }
   }
   

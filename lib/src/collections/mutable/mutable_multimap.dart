@@ -40,14 +40,14 @@ abstract class _AbstractMutableMultimap<K,V, I extends Iterable<V>>
   
   void putAll(final Iterable<Pair<K, V>> pairs) =>
       pairs.forEach((final Pair<K, V> pair) => 
-          put(pair.fst, pair.snd));
+          put(pair.e0, pair.e1));
   
   void putAllFromMap(final Map<K,V> map) =>
       map.forEach((final K key, final V value) => 
           put (key, value));
   
   void putPair(final Pair<K,V> pair) =>
-      put(pair.fst, pair.snd);
+      put(pair.e0, pair.e1);
   
   I removeAt(final K key) =>
       _delegate.removeAt(key);

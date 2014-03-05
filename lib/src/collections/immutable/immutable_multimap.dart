@@ -29,5 +29,5 @@ abstract class _ImmutableMultimapBase<K,V, I extends Iterable<V>>
   }
   
   ImmutableMultimap<K,V,I> putPair(final Pair<K,V> pair) =>
-      put(pair.fst, pair.snd);
+      put(pair.e0, pair.e1);
 }
