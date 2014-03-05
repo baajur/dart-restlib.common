@@ -18,7 +18,7 @@ class _None extends IterableBase implements None {
 
   Option map(f(element)) => Option.NONE;
 
-  dynamic orCompute(dynamic call()) => call;
+  dynamic orCompute(dynamic call()) => call();
 
   dynamic orElse(final dynamic alternative) => alternative;
 
