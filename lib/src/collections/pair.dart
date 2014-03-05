@@ -1,12 +1,6 @@
 part of collections;
 
-abstract class Pair<T0, T1> implements Iterable {
-  factory Pair(final T0 e0, final T1 e1) =>
-      new _Pair(checkNotNull(e0), checkNotNull(e1));
 
-  T0 get e0;
-  T1 get e1;
-}
 
 class _Pair<T0, T1> extends IterableBase implements Pair<T0, T1> {
   final T0 e0;
