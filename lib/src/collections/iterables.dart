@@ -77,7 +77,7 @@ class _ConcatIterator<T> implements Iterator<T> {
 
   _ConcatIterator(this._fst, this._snd);
 
-  T get current => firstNotNull(_fst.current, _snd.current);
+  T get current => computeIfNull(_fst.current, () => _snd.current);
 
   bool moveNext() =>
     _fst.moveNext() ? true : _snd.moveNext();
