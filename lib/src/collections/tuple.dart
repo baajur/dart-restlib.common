@@ -3,44 +3,44 @@ part of collections;
 abstract class Tuple<T> implements Iterable<T> {
   static const Tuple NONE = const _None();
 
-  static Some tuple1(final value) =>
+  static Some create1(final value) =>
       new _Some(checkNotNull(value));
 
-  static Pair tuple2(final e0, final e1) =>
+  static Pair create2(final e0, final e1) =>
       new Pair(e0, e1);
 
-  static Tuple3 tuple3(final e0, final e1, final e2) =>
+  static Tuple3 create3(final e0, final e1, final e2) =>
       new Tuple3(e0, e1, e2);
 
-  static Tuple4 tuple4(final e0, final e1, final e2, final e3) =>
+  static Tuple4 create4(final e0, final e1, final e2, final e3) =>
       new Tuple4(e0, e1, e2, e3);
 
-  static Tuple5 tuple5(final e0, final e1, final e2, final e3, final e4) =>
+  static Tuple5 create5(final e0, final e1, final e2, final e3, final e4) =>
       new Tuple5(e0, e1, e2, e3, e4);
 
-  static Tuple6 tuple6(final e0, final e1, final e2, final e3, final e4, final e5) =>
+  static Tuple6 create6(final e0, final e1, final e2, final e3, final e4, final e5) =>
       new Tuple6(e0, e1, e2, e3, e4, e5);
 
-  static Tuple tuple(final Iterable ele) {
+  static Tuple create(final Iterable ele) {
     checkNotNull(ele);
     switch (ele.length) {
       case 0:
         return NONE;
       case 1:
-        return tuple1(ele.first);
+        return create1(ele.first);
       case 2:
-        return tuple2(ele.elementAt(0), ele.elementAt(1));
+        return create2(ele.elementAt(0), ele.elementAt(1));
       case 3:
-        return tuple3(ele.elementAt(0), ele.elementAt(1), ele.elementAt(2));
+        return create3(ele.elementAt(0), ele.elementAt(1), ele.elementAt(2));
       case 4:
-        return tuple4(ele.elementAt(0), ele.elementAt(1), ele.elementAt(2), ele.elementAt(3));
+        return create4(ele.elementAt(0), ele.elementAt(1), ele.elementAt(2), ele.elementAt(3));
       case 5:
-        return tuple5(ele.elementAt(0), ele.elementAt(1), ele.elementAt(2), ele.elementAt(3), ele.elementAt(4));
+        return create5(ele.elementAt(0), ele.elementAt(1), ele.elementAt(2), ele.elementAt(3), ele.elementAt(4));
       case 6:
-        return tuple6(ele.elementAt(0), ele.elementAt(1), ele.elementAt(2), ele.elementAt(3), ele.elementAt(4), ele.elementAt(5));
+        return create6(ele.elementAt(0), ele.elementAt(1), ele.elementAt(2), ele.elementAt(3), ele.elementAt(4), ele.elementAt(5));
       default:
         return new _TupleRest(
-            ele.elementAt(0), ele.elementAt(1), ele.elementAt(2), ele.elementAt(3), ele.elementAt(4), ele.elementAt(5), tuple(ele.skip(6)));
+            ele.elementAt(0), ele.elementAt(1), ele.elementAt(2), ele.elementAt(3), ele.elementAt(4), ele.elementAt(5), create(ele.skip(6)));
     }
   }
 }
