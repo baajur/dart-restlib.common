@@ -3,7 +3,9 @@ library objects;
 import "dart:mirrors";
 import "collections.dart";
 import "collections.immutable.dart";
+import "preconditions.dart";
 
+part "src/objects/curry.dart";
 part "src/objects/forwarder.dart";
 part "src/objects/pattern_matching.dart";
 
@@ -16,10 +18,10 @@ const Object visibleForTesting = const _VisibleForTesting();
 const Object internal = const _Internal();
 
 int computeHashCode(final Iterable items) =>
-    items.fold(_HASH_INITIAL_VALUE, (int prev, var ele) => 
+    items.fold(_HASH_INITIAL_VALUE, (int prev, var ele) =>
       _HASH_MULTIPLIER_VALUE * prev + ele.hashCode);
 
-/*<T>*/ computeIfNull(final /*<T>*/first, /*<T>*/second()) => 
+/*<T>*/ computeIfNull(final /*<T>*/first, /*<T>*/second()) =>
     isNotNull(first) ? first : second();
 
 void computeIfNotNull(final value, compute(value))  {
@@ -27,6 +29,9 @@ void computeIfNotNull(final value, compute(value))  {
     compute(value);
   }
 }
+
+Function curry(final Function function, [Iterable positionalParameters = EMPTY_LIST, Map<Symbol, dynamic> namedArguments = const{}]) =>
+    new _Curry(checkNotNull(function), checkNotNull(positionalParameters), checkNotNull(namedArguments));
 
 Predicate equals(final obj) =>
     (final other) =>
@@ -44,22 +49,22 @@ Predicate equals(final obj) =>
 dynamic identity(final obj) =>
     obj;
 
-bool isFalse(final bool value) => 
+bool isFalse(final bool value) =>
     value == false;
 
-bool isNotNull(final value) => 
+bool isNotNull(final value) =>
     !identical(value, null);
 
 bool isNull(final value) =>
     identical(value, null);
 
-bool isTrue(final bool value) => 
+bool isTrue(final bool value) =>
     value == true;
 
 String nullToEmpty(final String string) =>
     firstNotNull(string, "");
 
-String objectToString(final dynamic obj) => 
+String objectToString(final dynamic obj) =>
     obj.toString();
 
 class _VisibleForTesting {
@@ -72,7 +77,7 @@ class _Internal {
 
 class IsInstanceOf<T> {
   const IsInstanceOf();
-  
+
   bool call(obj) =>
       obj is T;
 }
