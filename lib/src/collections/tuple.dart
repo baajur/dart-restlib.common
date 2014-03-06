@@ -101,8 +101,8 @@ abstract class Tuple6<T0, T1, T2, T3, T4, T5> implements Tuple {
   T5 get e5;
 }
 
-abstract class TupleRest<T0, T1, T2, T3, T4, T5> implements Tuple {
-  factory TupleRest(final T0 e0, final T1 e1, final T2 e2, final T3 e3, T4 e4, T5 e5, Tuple rest) =>
+abstract class TupleRest<T0, T1, T2, T3, T4, T5, TRest extends Tuple> implements Tuple {
+  factory TupleRest(final T0 e0, final T1 e1, final T2 e2, final T3 e3, T4 e4, T5 e5, TRest rest) =>
         new _TupleRest(checkNotNull(e0), checkNotNull(e1), checkNotNull(e2), checkNotNull(e3), checkNotNull(e4), checkNotNull(e5), checkNotNull(rest));
 
   T0 get e0;
@@ -111,5 +111,5 @@ abstract class TupleRest<T0, T1, T2, T3, T4, T5> implements Tuple {
   T3 get e3;
   T4 get e4;
   T5 get e5;
-  Tuple get rest;
+  TRest get rest;
 }

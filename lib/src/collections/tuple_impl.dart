@@ -183,14 +183,14 @@ class _Tuple6<T0, T1, T2, T3, T4, T5> extends IterableBase implements Tuple6<T0,
         (other is Tuple6) ?  const IterableEquality().equals(this, other) : false;
 }
 
-class _TupleRest<T0, T1, T2, T3, T4, T5> extends IterableBase implements TupleRest<T0, T1, T2, T3, T4, T5> {
+class _TupleRest<T0, T1, T2, T3, T4, T5, TRest extends Tuple> extends IterableBase implements TupleRest<T0, T1, T2, T3, T4, T5, TRest> {
   final T0 e0;
   final T1 e1;
   final T2 e2;
   final T3 e3;
   final T4 e4;
   final T5 e5;
-  final Tuple rest;
+  final TRest rest;
 
   _TupleRest(this.e0, this.e1, this.e2, this.e3, this.e4, this.e5, this.rest);
 
