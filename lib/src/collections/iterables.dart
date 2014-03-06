@@ -15,7 +15,7 @@ Iterable/*<T>*/ concat(final Iterable/*<T>*/ fst, final Iterable/*<T>*/ snd) {
     } else if (snd.isEmpty) {
       return fst;
     } else {
-      return new _ConcatIterable(fst, snd);
+      return [fst, snd].expand((e) => e);
     }
 }
 
@@ -62,26 +62,6 @@ Option/*<T>*/ lastWhere(final Iterable/*<T>*/ itr, bool test(value)) {
 Iterable<Tuple> zip(final Iterable<Iterable> itrs) =>
     new _ZippedIterable(itrs);
 
-class _ConcatIterable<T> extends IterableBase<T> {
-  final Iterable<T> _fst;
-  final Iterable<T> _snd;
-
-  _ConcatIterable(this._fst, this._snd);
-
-  Iterator<T> get iterator => new _ConcatIterator(_fst.iterator, _snd.iterator);
-}
-
-class _ConcatIterator<T> implements Iterator<T> {
-  final Iterator<T> _fst;
-  final Iterator<T> _snd;
-
-  _ConcatIterator(this._fst, this._snd);
-
-  T get current => computeIfNull(_fst.current, () => _snd.current);
-
-  bool moveNext() =>
-    _fst.moveNext() ? true : _snd.moveNext();
-}
 
 class _ZippedIterable extends IterableBase<Tuple> {
   final Iterable<Iterable> itrs;
