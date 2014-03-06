@@ -3,6 +3,8 @@ library collections;
 import "dart:collection";
 import "dart:math";
 
+import "package:collection/equality.dart";
+
 import "collections.internal.dart";
 import "objects.dart";
 import "preconditions.dart";
@@ -11,7 +13,6 @@ part "src/collections/array.dart";
 part "src/collections/either.dart";
 part "src/collections/iterables.dart";
 part "src/collections/option.dart";
-part "src/collections/pair.dart";
 part "src/collections/tuple.dart";
 part "src/collections/tuple_impl.dart";
 
