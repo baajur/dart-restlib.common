@@ -59,8 +59,8 @@ Option/*<T>*/ lastWhere(final Iterable/*<T>*/ itr, bool test(value)) {
   }
 }
 
-Iterable<Pair/*<T1,T2>*/> zip(final Iterable/*<T1>*/ fst, final Iterable/*<T2>*/ snd) =>
-    new _ZippedIterable(fst, snd);
+Iterable<Tuple> zip(final Iterable<Iterable> itrs) =>
+    new _ZippedIterable(itrs);
 
 class _ConcatIterable<T> extends IterableBase<T> {
   final Iterable<T> _fst;
@@ -83,30 +83,28 @@ class _ConcatIterator<T> implements Iterator<T> {
     _fst.moveNext() ? true : _snd.moveNext();
 }
 
-class _ZippedIterable<T1,T2> extends IterableBase<Pair<T1,T2>> {
-  final Iterable<T1> _fst;
-  final Iterable<T2> _snd;
+class _ZippedIterable extends IterableBase<Tuple> {
+  final Iterable<Iterable> itrs;
 
-  _ZippedIterable(this._fst, this._snd);
+  _ZippedIterable(this.itrs);
 
-  Iterator<Pair<T1,T2>> get iterator =>
-      new _ZippedIterator(_fst.iterator, _snd.iterator);
+  Iterator<Tuple> get iterator =>
+      new _ZippedIterator(itrs.map((final Iterable itr) => itr.iterator).toList(growable: false));
 }
 
-class _ZippedIterator<T1,T2> implements Iterator<Pair<T1, T2>> {
-  final Iterator<T1> _fst;
-  final Iterator<T2> _snd;
+class _ZippedIterator implements Iterator<Tuple> {
+  final Iterable<Iterator> itrs;
 
-  Pair<T1, T2> _current = null;
+  Tuple _current = null;
 
-  _ZippedIterator(this._fst, this._snd);
+  _ZippedIterator(this.itrs);
 
-  Pair<T1, T2> get current =>
+  Tuple get current =>
       _current;
 
   bool moveNext() {
-    if (_fst.moveNext() && _snd.moveNext()) {
-      _current = new Pair(_fst.current, _snd.current);
+    if (itrs.every((final Iterator itr) => itr.moveNext())) {
+      _current = Tuple.create(itrs.map((final Iterator itr) => itr.current));
       return true;
     } else {
       _current = null;

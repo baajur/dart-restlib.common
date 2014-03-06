@@ -1,7 +1,7 @@
 part of collections;
 
 abstract class Tuple<T> implements Iterable<T> {
-  static const Tuple NONE = const _None();
+  static const None NONE = const _None();
 
   static Some create1(final value) =>
       new _Some(checkNotNull(value));

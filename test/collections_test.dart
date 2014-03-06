@@ -26,13 +26,13 @@ part "src/collections/pair_test.dart";
 void collectionsTestGroup() {
   group("package:collections", () {
     iterablesTests();
-    
+
     group("class:Array", () =>
         new ArrayTester().testArray());
     group("class:Either", eitherTests);
     group("class:Option", optionTests);
     group("class:Pair", pairTests);
-  
+
     group("class:GrowableSequence", () =>
         new MutableSequenceTester()
           ..elementGenerator = new SequenceElementGenerator()
@@ -41,7 +41,7 @@ void collectionsTestGroup() {
           ..pairGenerator = new SequencePairGenerator()
           ..testSizes = [0, 1, 1000]
           ..testMutableSequence());
-    
+
     group("class:ImmutableBiMap", immutableBiMapTests);
     group("class:ImmutableDictionary", immutableDictionaryTests);
     group("class:ImmutableMultisetMultimap", immutableMultisetMultimapTests);
@@ -51,11 +51,11 @@ void collectionsTestGroup() {
     group("class:ImmutableSequence", immutableSequenceTests);
     group("class:ImmutableSet", immutableSetTests);
     group("class:ImmutableStack", immutableStackTests);
-    
-    group("class:Dictionary() factory:wrapMap()", () => 
+
+    group("class:Dictionary() factory:wrapMap()", () =>
         new _MapAsDictionaryTester()
-          ..generator = ((final int size) => 
-              new Dictionary.wrapMap((new List.generate(size, (final int i) => 
+          ..generator = ((final int size) =>
+              new Dictionary.wrapMap((new List.generate(size, (final int i) =>
                   i))
               .fold({}, (final Map map, final int next) {
                 map[next] = next;
@@ -64,25 +64,25 @@ void collectionsTestGroup() {
           ..invalidKey = 1001
           ..testSizes = [0, 1, 1000]
           ..testMapAsDictionary());
-    
-    group("class:MutableBiMap", () => 
+
+    group("class:MutableBiMap", () =>
         new MutableBiMapTester()
-          ..generator = ((final int size) => 
+          ..generator = ((final int size) =>
               new MutableBiMap.hash()..putAll(new List.generate(size, (i) => new Pair(i,i))))
         ..invalidKey = 1001
         ..pairGenerator = new SequencePairGenerator()
         ..testSizes = [0, 1, 1000]
         ..testMutableBiMap());
-    
-    group("class:MutableDictionary", () => 
+
+    group("class:MutableDictionary", () =>
         new MutableDictionaryTester()
-          ..generator = ((final int size) => 
+          ..generator = ((final int size) =>
               new MutableDictionary.hash()..putAll(new List.generate(size, (i) => new Pair(i,i))))
           ..invalidKey = 1001
           ..pairGenerator = new SequencePairGenerator()
           ..testSizes = [0, 1, 1000]
           ..testMutableDictionary());
-    
+
     group("class:MutableFixedSizeSequence", () =>
         new MutableSequenceTester()
           ..elementGenerator = new SequenceElementGenerator()
@@ -90,10 +90,10 @@ void collectionsTestGroup() {
           ..invalidKey = 1001
           ..pairGenerator = new SequencePairGenerator()
           ..testSizes = [0, 1, 1000]
-          ..testMutableSequence());  
+          ..testMutableSequence());
   });
 }
 
-void main() {  
+void main() {
   collectionsTestGroup();
 }
