@@ -33,6 +33,26 @@ void computeIfNotNull(final value, compute(value))  {
 Function curry(final Function function, [Iterable positionalParameters = EMPTY_LIST, Map<Symbol, dynamic> namedArguments = const{}]) =>
     new _Curry(checkNotNull(function), checkNotNull(positionalParameters), checkNotNull(namedArguments));
 
+Function curry1(final Function function, [Iterable positionalParameters = EMPTY_LIST, Map<Symbol, dynamic> namedArguments = const{}]) {
+  dynamic func = curry(function, positionalParameters, namedArguments);
+  return (arg) => func(arg);
+}
+
+Function curry2(final Function function, [Iterable positionalParameters = EMPTY_LIST, Map<Symbol, dynamic> namedArguments = const{}]) {
+  dynamic func = curry(function, positionalParameters, namedArguments);
+  return (arg1, arg2) => func(arg1, arg2);
+}
+
+Function curry3(final Function function, [Iterable positionalParameters = EMPTY_LIST, Map<Symbol, dynamic> namedArguments = const{}]) {
+  dynamic func = curry(function, positionalParameters, namedArguments);
+  return (arg1, arg2, arg3) => func(arg1, arg2, arg3);
+}
+
+Function curry4(final Function function, [Iterable positionalParameters = EMPTY_LIST, Map<Symbol, dynamic> namedArguments = const{}]) {
+  dynamic func = curry(function, positionalParameters, namedArguments);
+  return (arg1, arg2, arg3, arg4) => func(arg1, arg2, arg3, arg4);
+}
+
 Predicate equals(final obj) =>
     (final other) =>
         obj == other;
