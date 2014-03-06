@@ -33,6 +33,11 @@ void computeIfNotNull(final value, compute(value))  {
 Function curry(final Function function, [Iterable positionalParameters = EMPTY_LIST, Map<Symbol, dynamic> namedArguments = const{}]) =>
     new _Curry(checkNotNull(function), checkNotNull(positionalParameters), checkNotNull(namedArguments));
 
+Function curry0(final Function function, [Iterable positionalParameters = EMPTY_LIST, Map<Symbol, dynamic> namedArguments = const{}]) {
+  dynamic func = curry(function, positionalParameters, namedArguments);
+  return () => func();
+}
+
 Function curry1(final Function function, [Iterable positionalParameters = EMPTY_LIST, Map<Symbol, dynamic> namedArguments = const{}]) {
   dynamic func = curry(function, positionalParameters, namedArguments);
   return (arg) => func(arg);
