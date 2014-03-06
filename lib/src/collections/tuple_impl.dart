@@ -198,7 +198,7 @@ class _TupleRest<T0, T1, T2, T3, T4, T5, TRest extends Tuple> extends IterableBa
       computeHashCode(this);
 
   Iterator get iterator =>
-      concat([e0, e1, e2, e3, e4, e5], rest).iterator;
+      concat([[e0, e1, e2, e3, e4, e5], rest]).iterator;
 
   bool operator==(other) =>
         (other is TupleRest) ?  const IterableEquality().equals(this, other) : false;

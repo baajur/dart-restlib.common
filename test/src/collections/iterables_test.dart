@@ -41,11 +41,11 @@ iterablesTests() {
 
   group("concat()", () {
     test("with empty first list", () =>
-        expect(concat([], ["a", "b", "c"]), equals(["a", "b", "c"])));
+        expect(concat([[], ["a", "b", "c"]]), equals(["a", "b", "c"])));
     test("with empty second list", () =>
-        expect(concat(["a", "b", "c"], []), equals(["a", "b", "c"])));
+        expect(concat([["a", "b", "c"], []]), equals(["a", "b", "c"])));
     test("with different list that concat to the same result", () =>
-        expect(concat(["a", "b"], ["c"]), equals(concat(["a"], ["b", "c"]))));
+        expect(concat([["a", "b"], ["c"]]), equals(concat([["a"], ["b", "c"]]))));
   });
 
   group("elemenAt()", () {

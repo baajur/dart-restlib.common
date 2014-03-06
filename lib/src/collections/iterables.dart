@@ -9,15 +9,9 @@ void computeIfNotEmpty(final Iterable/*<T>*/ itr, void compute(Iterable/*<T>*/))
     }
 }
 
-Iterable/*<T>*/ concat(final Iterable/*<T>*/ fst, final Iterable/*<T>*/ snd) {
-    if (fst.isEmpty) {
-      return snd;
-    } else if (snd.isEmpty) {
-      return fst;
-    } else {
-      return [fst, snd].expand((e) => e);
-    }
-}
+Iterable/*<T>*/ concat(final Iterable<Iterable> iterables) =>
+    iterables.expand((e) => e);
+
 
 Option/*<T>*/ elementAt(final Iterable/*<T>*/ itr, final int index) {
   try {
