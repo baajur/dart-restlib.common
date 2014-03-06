@@ -83,7 +83,7 @@ abstract class _ImmutableSequenceBase<E> extends SequenceBase<E> implements Immu
 
   // FIXME: Performance?
   ImmutableSequence<E> removeAt(final int key) {
-    checkRangeInclusive(key, 0, length);
+    checkRangeInclusive(0, length, key);
     ImmutableSequence<E> retval = this;
 
     for (int i = length; i > key; i--) {
