@@ -1,6 +1,8 @@
 library objects;
 
 import "dart:mirrors";
+import "package:collection/equality.dart";
+
 import "collections.dart";
 import "collections.immutable.dart";
 import "preconditions.dart";
@@ -11,15 +13,11 @@ part "src/objects/pattern_matching.dart";
 
 typedef bool Predicate(dynamic object);
 
-const int _HASH_INITIAL_VALUE = 17;
-const int _HASH_MULTIPLIER_VALUE = 31;
-
 const Object visibleForTesting = const _VisibleForTesting();
 const Object internal = const _Internal();
 
 int computeHashCode(final Iterable items) =>
-    items.fold(_HASH_INITIAL_VALUE, (int prev, var ele) =>
-      _HASH_MULTIPLIER_VALUE * prev + ele.hashCode);
+    const IterableEquality().hash(items);
 
 /*<T>*/ computeIfNull(final /*<T>*/first, /*<T>*/second()) =>
     isNotNull(first) ? first : second();
