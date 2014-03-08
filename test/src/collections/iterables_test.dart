@@ -21,21 +21,17 @@ iterablesTests() {
 
   group("computeIfNotEmpty()", () {
     test("with empty iterable", () {
-      bool result = false;
-      computeIfNotEmpty(Option.NONE, (final Iterable itr) {
-        result = true;
-      });
-      expect(result, isFalse);
+      Option result = computeIfNotEmpty(Option.NONE, (_) => new Object());
+      expect(result.isEmpty, isTrue);
     });
 
     test("with non-empty iterable", () {
-      bool result = false;
       final Option testCase = new Option("a");
-      computeIfNotEmpty(testCase, (final Iterable itr) {
+      Option result = computeIfNotEmpty(testCase, (final Iterable itr) {
         expect(itr, equals(testCase));
-        result = true;
+        return true;
       });
-      expect(result, isTrue);
+      expect(result.isNotEmpty, isTrue);
     });
   });
 
