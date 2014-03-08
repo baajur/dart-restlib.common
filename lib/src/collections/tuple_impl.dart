@@ -183,23 +183,117 @@ class _Tuple6<T0, T1, T2, T3, T4, T5> extends IterableBase implements Tuple6<T0,
         (other is Tuple6) ?  const IterableEquality().equals(this, other) : false;
 }
 
-class _TupleRest<T0, T1, T2, T3, T4, T5, TRest extends Tuple> extends IterableBase implements TupleRest<T0, T1, T2, T3, T4, T5, TRest> {
+class _Tuple7<T0, T1, T2, T3, T4, T5, T6> extends IterableBase implements Tuple7<T0, T1, T2, T3, T4, T5, T6> {
   final T0 e0;
   final T1 e1;
   final T2 e2;
   final T3 e3;
   final T4 e4;
   final T5 e5;
-  final TRest rest;
+  final T6 e6;
 
-  _TupleRest(this.e0, this.e1, this.e2, this.e3, this.e4, this.e5, this.rest);
+  _Tuple7(this.e0, this.e1, this.e2, this.e3, this.e4, this.e5, this.e6);
 
   int get hashCode =>
       computeHashCode(this);
 
   Iterator get iterator =>
-      concat([[e0, e1, e2, e3, e4, e5], rest]).iterator;
+      [e0, e1, e2, e3, e4, e5, e6].iterator;
 
   bool operator==(other) =>
-        (other is TupleRest) ?  const IterableEquality().equals(this, other) : false;
+        (other is Tuple7) ?  const IterableEquality().equals(this, other) : false;
+}
+
+class _Tuple8<T0, T1, T2, T3, T4, T5, T6, T7> extends IterableBase implements Tuple8<T0, T1, T2, T3, T4, T5, T6, T7> {
+  final T0 e0;
+  final T1 e1;
+  final T2 e2;
+  final T3 e3;
+  final T4 e4;
+  final T5 e5;
+  final T6 e6;
+  final T7 e7;
+
+  _Tuple8(this.e0, this.e1, this.e2, this.e3, this.e4, this.e5, this.e6, this.e7);
+
+  int get hashCode =>
+      computeHashCode(this);
+
+  Iterator get iterator =>
+      [e0, e1, e2, e3, e4, e5, e6, e7].iterator;
+
+  bool operator==(other) =>
+        (other is Tuple8) ?  const IterableEquality().equals(this, other) : false;
+}
+
+class _Tuple9<T0, T1, T2, T3, T4, T5, T6, T7, T8> extends IterableBase implements Tuple9<T0, T1, T2, T3, T4, T5, T6, T7, T8> {
+  final T0 e0;
+  final T1 e1;
+  final T2 e2;
+  final T3 e3;
+  final T4 e4;
+  final T5 e5;
+  final T6 e6;
+  final T7 e7;
+  final T8 e8;
+
+  _Tuple9(this.e0, this.e1, this.e2, this.e3, this.e4, this.e5, this.e6, this.e7, this.e8);
+
+  int get hashCode =>
+      computeHashCode(this);
+
+  Iterator get iterator =>
+      [e0, e1, e2, e3, e4, e5, e6, e7, e8].iterator;
+
+  bool operator==(other) =>
+        (other is Tuple9) ?  const IterableEquality().equals(this, other) : false;
+}
+
+class _Tuple10<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> extends IterableBase implements Tuple10<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> {
+  final T0 e0;
+  final T1 e1;
+  final T2 e2;
+  final T3 e3;
+  final T4 e4;
+  final T5 e5;
+  final T6 e6;
+  final T7 e7;
+  final T8 e8;
+  final T9 e9;
+
+  _Tuple10(this.e0, this.e1, this.e2, this.e3, this.e4, this.e5, this.e6, this.e7, this.e8, this.e9);
+
+  int get hashCode =>
+      computeHashCode(this);
+
+  Iterator get iterator =>
+      [e0, e1, e2, e3, e4, e5, e6, e7, e8, e9].iterator;
+
+  bool operator==(other) =>
+        (other is Tuple10) ?  const IterableEquality().equals(this, other) : false;
+}
+
+class _TupleN<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, TN> extends IterableBase implements TupleN<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, TN> {
+  final T0 e0;
+  final T1 e1;
+  final T2 e2;
+  final T3 e3;
+  final T4 e4;
+  final T5 e5;
+  final T6 e6;
+  final T7 e7;
+  final T8 e8;
+  final T9 e9;
+  final TN eN;
+
+  _TupleN(this.e0, this.e1, this.e2, this.e3, this.e4, this.e5, this.e6, this.e7, this.e8, this.e9, this.eN);
+
+  int get hashCode =>
+      computeHashCode(this);
+
+  Iterator get iterator =>
+      concat([[e0, e1, e2, e3, e4, e5, e6, e7, e8, e9], eN]).iterator;
+
+  bool operator==(other) =>
+        (other is TupleN) ?  const IterableEquality().equals(this, other) : false;
 }
