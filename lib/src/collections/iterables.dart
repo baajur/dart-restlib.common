@@ -3,11 +3,8 @@ part of collections;
 Iterable computeIfEmpty(final Iterable itr1, Iterable compute()) =>
     itr1.isNotEmpty ? itr1 : compute();
 
-void computeIfNotEmpty(final Iterable/*<T>*/ itr, void compute(Iterable/*<T>*/)) {
-    if (itr.isNotEmpty) {
-      compute(itr);
-    }
-}
+Option computeIfNotEmpty(final Iterable/*<T>*/ itr, compute(Iterable/*<T>*/)) =>
+    itr.isNotEmpty ? new Option(compute(itr)) : Option.NONE;
 
 Iterable/*<T>*/ concat(final Iterable<Iterable> iterables) =>
     iterables.expand((e) => e);

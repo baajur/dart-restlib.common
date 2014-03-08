@@ -24,11 +24,8 @@ int computeHashCode(final Iterable items) =>
 /*<T>*/ computeIfNull(final /*<T>*/first, /*<T>*/second()) =>
     isNotNull(first) ? first : second();
 
-void computeIfNotNull(final value, compute(value))  {
-  if(value != null) {
-    compute(value);
-  }
-}
+Option computeIfNotNull(final value, compute(value)) =>
+    isNotNull(value) ?  new Option(compute(value)) : Option.NONE;
 
 Function curry(final Function function, [Iterable positionalParameters = EMPTY_LIST, Map<Symbol, dynamic> namedArguments = const{}]) =>
     new _Curry(checkNotNull(function), checkNotNull(positionalParameters), checkNotNull(namedArguments));
