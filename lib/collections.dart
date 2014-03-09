@@ -50,7 +50,10 @@ abstract class Dictionary<K,V> implements Associative<K,V>, Iterable<Pair<K,V>>{
   Dictionary<K, dynamic> mapValues(mapFunc(V value));
 }
 
-abstract class FiniteSet<E> implements Iterable<E> {
+abstract class FiniteSet<E> implements Iterable<E>, Associative<E,E> {
+  Option<E> operator[](E key);
+  Option<E> call(E key);
+
   FiniteSet<E> difference(FiniteSet<E> other);
   FiniteSet<E> intersection(FiniteSet<E> other);
   FiniteSet<E> union(FiniteSet<E> other);
