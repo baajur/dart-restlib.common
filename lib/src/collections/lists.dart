@@ -17,9 +17,11 @@ List subList(final List list, [int start, int length]) {
 class _SubList<T> extends ListBase<T> implements List<T> {
   final List<T> _delegate;
   final int _start;
-  final int length;
+  final int _length;
 
-  _SubList(this._delegate, this._start, this.length);
+  _SubList(this._delegate, this._start, this._length);
+
+  int get length => _length;
 
   void set length(int length) =>
       throw new UnsupportedError("List is unmodifiable");
