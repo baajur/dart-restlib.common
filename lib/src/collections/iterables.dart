@@ -53,6 +53,13 @@ Option/*<T>*/ lastWhere(final Iterable/*<T>*/ itr, bool test(value)) {
 Iterable<Tuple> zip(final Iterable<Iterable> itrs) =>
     new _ZippedIterable(itrs);
 
+abstract class IndexedIterator<T> implements BidirectionalIterator<T> {
+  factory IndexedIterator.list(final List<T> list) =>
+      new _ListIterator(checkNotNull(list));
+
+  int get index;
+  void set index(final int index);
+}
 
 class _ZippedIterable extends IterableBase<Tuple> {
   final Iterable<Iterable> itrs;
@@ -79,6 +86,54 @@ class _ZippedIterator implements Iterator<Tuple> {
       return true;
     } else {
       _current = null;
+      return false;
+    }
+  }
+}
+
+class _ListIterator<T> implements IndexedIterator<T> {
+  int _current = null;
+  int _index = -1;
+
+  final List<T> list;
+
+  _ListIterator(this.list);
+
+  int get current =>
+      computeIfNull(_current, () =>
+          throw new StateError("Index is out of bounds"));
+
+  int get index => _index;
+
+  void set index(final int index) {
+    checkRangeInclusive(-1, list.length, index);
+    _index = index;
+  }
+
+  void _updateCurrent() {
+    if(index == -1 || index == list.length) {
+      this._current = null;
+    } else {
+      this._current = list[index];
+    }
+  }
+
+  bool moveNext() {
+    if (index < list.length) {
+      _index++;
+      _updateCurrent();
+      return !(index == list.length);
+    } else {
+      return false;
+    }
+  }
+
+  bool movePrevious() {
+    if (index > -1) {
+      index--;
+      _updateCurrent();
+      return !(index == -1);
+    } else {
       return false;
     }
   }
