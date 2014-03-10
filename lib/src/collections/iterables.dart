@@ -59,6 +59,7 @@ abstract class IndexedIterator<T> implements BidirectionalIterator<T> {
 
   int get index;
   void set index(final int index);
+  Iterable<T> get iterable;
 }
 
 class _ZippedIterable extends IterableBase<Tuple> {
@@ -95,9 +96,9 @@ class _ListIterator<T> implements IndexedIterator<T> {
   int _current = null;
   int _index = -1;
 
-  final List<T> list;
+  final List<T> iterable;
 
-  _ListIterator(this.list);
+  _ListIterator(this.iterable);
 
   int get current =>
       computeIfNull(_current, () =>
@@ -106,23 +107,23 @@ class _ListIterator<T> implements IndexedIterator<T> {
   int get index => _index;
 
   void set index(final int index) {
-    checkRangeInclusive(-1, list.length, index);
+    checkRangeInclusive(-1, iterable.length, index);
     _index = index;
   }
 
   void _updateCurrent() {
-    if(index == -1 || index == list.length) {
+    if(index == -1 || index == iterable.length) {
       this._current = null;
     } else {
-      this._current = list[index];
+      this._current = iterable[index];
     }
   }
 
   bool moveNext() {
-    if (index < list.length) {
+    if (index < iterable.length) {
       _index++;
       _updateCurrent();
-      return !(index == list.length);
+      return !(index == iterable.length);
     } else {
       return false;
     }
