@@ -97,8 +97,7 @@ abstract class Multiset<E> implements Iterable<E> {
 }
 
 abstract class Sequence<E> implements Associative<int, E>, Iterable<E> {
-  factory Sequence.wrapList(final List<E> delegate) =>
-      new ListAsSequence<E>(delegate);
+  const factory Sequence.wrapList(List<E> delegate) = ListAsSequence;
 
   Sequence<E> get reversed;
 
