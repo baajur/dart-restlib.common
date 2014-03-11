@@ -64,9 +64,9 @@ abstract class Tuple<T> implements Iterable<T> {
   }
 }
 
-abstract class None implements Tuple, Option{}
+abstract class None implements Option{}
 
-abstract class Some<T> implements Tuple<T>, Option<T> {
+abstract class Some<T> implements Option<T> {
   T get e0;
 }
 

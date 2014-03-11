@@ -1,7 +1,7 @@
 part of collections;
 
-abstract class Option<E> implements Iterable<E> {
-  static const Option NONE = const _None();
+abstract class Option<E> implements Tuple<E> {
+  static const None NONE = const _None();
 
   factory Option(final E value) =>
         value == null ? Option.NONE : new _Some(value);
