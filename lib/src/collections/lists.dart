@@ -3,15 +3,15 @@ part of collections;
 List concatLists(final Iterable<List> lists) =>
     new _ConcatList(checkNotNull(lists.toList(growable: false)));
 
-List subList(final List list, [int start, int length]) {
+List sublist(final List list, int startIndex, [int length]) {
   checkNotNull(list);
-  start = firstNotNull(start, 0);
+  checkNotNull(startIndex);
   length = firstNotNull(length, list.length);
 
-  checkArgument(start >= 0 && start < list.length);
-  checkArgument(length <= list.length - start);
+  checkArgument(startIndex >= 0 && startIndex < list.length);
+  checkArgument(length <= list.length - startIndex);
 
-  return new _SubList(list, start, length);
+  return new _SubList(list, startIndex, length);
 }
 
 class _SubList<T> extends ListBase<T> implements List<T> {
