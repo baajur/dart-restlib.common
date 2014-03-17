@@ -2,56 +2,61 @@ part of collections;
 
 abstract class Either<L, R> {
   factory Either.leftValue(final L value) =>
-      new _Either(new Option(checkNotNull(value)), Option.NONE);
+      new _EitherLeft(Tuple.create1(value));
 
   factory Either.rightValue(final R value) =>
-      new _Either(Option.NONE, new Option(checkNotNull(value)));
-  
+      new _EitherRight(Tuple.create1(value));
+
   Option<L> get left;
-  Option<R> get right; 
+  Option<R> get right;
   dynamic get value;
-  
-  /*<T>*/ fold(/*<T>*/ leftCase(L left), /*<T>*/ rightCase(R right));
+
+  /*<T>*/ fold(/*<T>*/ onLeft(L left), /*<T>*/ onRight(R right));
 }
-  
-class _Either<L, R> implements Either<L,R> {
-  final Option<L> left;
-  final Option<R> right;
-  
-  _Either(this.left, this.right);
-  
+
+abstract class _Either<L,R> implements Either<L,R> {
   int get hashCode => computeHashCode([left, right]);
-  
-  dynamic get value =>
-      left
-        .map((final L left) =>
-          left)
-        .orCompute(() =>
-             right.value); 
-  
-  /*<T>*/ fold(/*<T>*/ leftCase(L left), /*<T>*/ rightCase(R right)) {      
-    return left
-      .map((final L left) => 
-          leftCase(left))
-      .orCompute(() => 
-          rightCase(right.value)); 
-  }
 
   bool operator==(final other) {
-    if (identical(this, other)) {
-      return true;
-    } else if (other is Either) {
-      return this.left == other.left &&
-          this.right == other.right;
-    } else {
-      return false;
+      if (identical(this, other)) {
+        return true;
+      } else if (other is Either) {
+        return this.left == other.left &&
+            this.right == other.right;
+      } else {
+        return false;
+      }
     }
-  }
-  
-  String toString() =>
-      fold(
-          (final L left) => 
-              "Either.left($left)", 
-          (final R right) =>     
-            "Either.right($right)");
+
+    String toString() =>
+        fold((final L left) => "Either.left($left)",
+             (final R right) => "Either.right($right)");
+}
+
+class _EitherLeft<L,R> extends _Either<L,R> {
+  final Some<L> left;
+
+  _EitherLeft(this.left);
+
+  Option<R> get right =>
+      Option.NONE;
+
+  dynamic get value => left.e0;
+
+  /*<T>*/ fold(/*<T>*/ onLeft(L left), /*<T>*/ onRight(R right)) =>
+      onLeft(left.e0);
+}
+
+class _EitherRight<L,R> extends _Either<L,R> {
+  final Some<R> right;
+
+  _EitherRight(this.right);
+
+  Option<L> get left =>
+      Option.NONE;
+
+  dynamic get value => right.e0;
+
+  /*<T>*/ fold(/*<T>*/ onLeft(L left), /*<T>*/ onRight(R right)) =>
+      onRight(right.e0);
 }
