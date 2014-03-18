@@ -10,6 +10,7 @@ import "preconditions.dart";
 part "src/objects/curry.dart";
 part "src/objects/forwarder.dart";
 part "src/objects/pattern_matching.dart";
+part "src/objects/try.dart";
 
 typedef bool Predicate(dynamic object);
 
