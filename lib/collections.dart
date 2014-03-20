@@ -14,6 +14,7 @@ part "src/collections/either.dart";
 part "src/collections/iterables.dart";
 part "src/collections/lists.dart";
 part "src/collections/option.dart";
+part "src/collections/range.dart";
 part "src/collections/tuple.dart";
 part "src/collections/tuple_impl.dart";
 
