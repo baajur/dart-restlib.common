@@ -257,7 +257,7 @@ class _RangeAsSetIterator<E extends Comparable> implements Iterator<E> {
                 _current = next;
                 return true;
               }
-            }).orElse(() {
+            }).orCompute(() {
               _current = null;
               return false;
             });
