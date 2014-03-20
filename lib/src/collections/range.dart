@@ -74,6 +74,9 @@ class IntegerDomain implements DiscreteDomain<int> {
     checkArgument(value >= minValue.value);
     return value == minValue.value ? Option.NONE : new Option(value - 1);
   }
+
+  String toString() =>
+      "${minValue.map((final int i) => "[i").orElse("(-oo")}, ${maxValue.map((final int i) => "i]").orElse("oo)")}";
 }
 
 // http://docs.guava-libraries.googlecode.com/git-history/release/javadoc/com/google/common/collect/Range.html
@@ -142,12 +145,17 @@ class _Range<T extends Comparable> implements Range<T> {
   const _Range (this.lowerBound, this.upperBound);
 
   bool contains(final T value) {
-    bool compareToBound(final Bound bound) =>
-        value.compareTo(bound.bound) >= 0;
-
     checkNotNull(value);
-    final bool lower = lowerBound.map(compareToBound).orElse(true);
-    final bool upper = upperBound.map(compareToBound).orElse(true);
+
+    final bool lower = lowerBound.map((final Bound bound) =>
+        bound is ClosedBound ?
+            value.compareTo(bound.bound) >= 0 :
+              value.compareTo(bound.bound) > 0).orElse(true);
+
+    final bool upper = upperBound.map((final Bound bound) =>
+        bound is ClosedBound ?
+            value.compareTo(bound.bound) <= 0 :
+              value.compareTo(bound.bound) < 0).orElse(true);
 
     return lower && upper;
   }
@@ -160,6 +168,11 @@ class _Range<T extends Comparable> implements Range<T> {
 
     return new _RangeAsSet(this, domain);
   }
+
+  String toString() =>
+      "${lowerBound.map((final Bound bound) =>
+          bound is ClosedBound ? "[${bound.bound}": "(${bound.bound}").orElse("(-oo")}, ${upperBound.map((final Bound bound) =>
+              bound is ClosedBound ? "${bound.bound}]": "${bound.bound})").orElse("oo)")}";
 }
 
 abstract class Bound<T extends Comparable> {
@@ -217,6 +230,9 @@ class _RangeAsSet<E extends Comparable<E>> extends IterableBase<E> implements Fi
 
   FiniteSet<E> union(FiniteSet<E> other) =>
       throw new UnimplementedError();
+
+  String toString() =>
+      range.toString();
 }
 
 class _RangeAsSetIterator<E extends Comparable> implements Iterator<E> {
