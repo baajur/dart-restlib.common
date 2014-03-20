@@ -134,9 +134,12 @@ class _Range<T extends Comparable> implements Range<T> {
   const _Range (this.lowerBound, this.upperBound);
 
   bool contains(final T value) {
+    bool compareToBound(final Bound bound) =>
+        value.compareTo(bound.bound) >= 0;
+
     checkNotNull(value);
-    final bool lower = lowerBound.isNotEmpty ? value.compareTo(lowerBound.value) >= 0 : true;
-    final bool upper = upperBound.isNotEmpty ? value.compareTo(upperBound.value) <= 0 : true;
+    final bool lower = lowerBound.map(compareToBound).orElse(true);
+    final bool upper = upperBound.map(compareToBound).orElse(true);
 
     return lower && upper;
   }
