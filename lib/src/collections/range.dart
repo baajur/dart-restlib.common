@@ -116,6 +116,14 @@ abstract class Range<T extends Comparable> {
     return new _Range(new Option(new OpenBound._(lower)), new Option(new OpenBound._(upper)));
   }
 
+  factory Range.openClosed(final T lower, final T upper) {
+    checkNotNull(lower);
+    checkNotNull(upper);
+    checkArgument(lower.compareTo(upper) <= 0);
+
+    return new _Range(new Option(new OpenBound._(lower)), new Option(new ClosedBound._(upper)));
+  }
+
   factory Range.single(final T value) =>
       new Range.closed(value, value);
 
