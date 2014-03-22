@@ -15,6 +15,9 @@ abstract class Either<L, R> {
   dynamic get value;
 
   /*<T>*/ fold(/*<T>*/ onLeft(L left), /*<T>*/ onRight(R right));
+
+  Either<dynamic, R> mapLeft(f(L element));
+  Either<L, dynamic> mapRight(f(R element));
 }
 
 abstract class _Either<L,R> implements Either<L,R> {
@@ -33,9 +36,9 @@ abstract class _Either<L,R> implements Either<L,R> {
       }
     }
 
-    String toString() =>
-        fold((final L left) => "Either.left($left)",
-             (final R right) => "Either.right($right)");
+  String toString() =>
+      fold((final L left) => "Either.left($left)",
+           (final R right) => "Either.right($right)");
 }
 
 class _Left<L,R> extends _Either<L,R> {
@@ -50,6 +53,15 @@ class _Left<L,R> extends _Either<L,R> {
 
   /*<T>*/ fold(/*<T>*/ onLeft(L left), /*<T>*/ onRight(R right)) =>
       onLeft(left.e0);
+
+  Either<dynamic, R> mapLeft(f(L element)) {
+    final Option mapped = left.map(f);
+    checkArgument(mapped is Some);
+    return new _Left(mapped);
+  }
+
+  Either<L, dynamic> mapRight(f(R element)) =>
+      this;
 }
 
 class _Right<L,R> extends _Either<L,R> {
@@ -64,4 +76,13 @@ class _Right<L,R> extends _Either<L,R> {
 
   /*<T>*/ fold(/*<T>*/ onLeft(L left), /*<T>*/ onRight(R right)) =>
       onRight(right.e0);
+
+  Either<dynamic, R> mapLeft(f(L element)) =>
+      this;
+
+  Either<L, dynamic> mapRight(f(R element)) {
+    final Option mapped = right.map(f);
+    checkArgument(mapped is Some);
+    return new _Right(mapped);
+  }
 }
