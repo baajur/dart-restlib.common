@@ -15,9 +15,16 @@ abstract class Either<L, R> {
   dynamic get value;
 
   /*<T>*/ fold(/*<T>*/ onLeft(L left), /*<T>*/ onRight(R right));
+}
 
-  Either<dynamic, R> mapLeft(f(L element));
-  Either<L, dynamic> mapRight(f(R element));
+abstract class Left<L> implements Either<L,dynamic> {
+  Some<L> get left;
+  None get right;
+}
+
+abstract class Right<R> implements Either<dynamic, R> {
+  None get left;
+  Some<R> get right;
 }
 
 abstract class _Either<L,R> implements Either<L,R> {
@@ -41,48 +48,28 @@ abstract class _Either<L,R> implements Either<L,R> {
            (final R right) => "Either.right($right)");
 }
 
-class _Left<L,R> extends _Either<L,R> {
+class _Left<L> extends _Either<L, dynamic> implements Left<L> {
   final Some<L> left;
 
   const _Left(this.left);
 
-  Option<R> get right =>
-      Option.NONE;
+  None get right => Tuple.NONE;
 
   dynamic get value => left.e0;
 
-  /*<T>*/ fold(/*<T>*/ onLeft(L left), /*<T>*/ onRight(R right)) =>
+  /*<T>*/ fold(/*<T>*/ onLeft(L left), /*<T>*/ onRight(dynamic right)) =>
       onLeft(left.e0);
-
-  Either<dynamic, R> mapLeft(f(L element)) {
-    final Option mapped = left.map(f);
-    checkArgument(mapped is Some);
-    return new _Left(mapped);
-  }
-
-  Either<L, dynamic> mapRight(f(R element)) =>
-      this;
 }
 
-class _Right<L,R> extends _Either<L,R> {
+class _Right<R> extends _Either<dynamic,R> implements Right<R> {
   final Some<R> right;
 
   const _Right(this.right);
 
-  Option<L> get left =>
-      Option.NONE;
+  None get left => Tuple.NONE;
 
   dynamic get value => right.e0;
 
-  /*<T>*/ fold(/*<T>*/ onLeft(L left), /*<T>*/ onRight(R right)) =>
+  /*<T>*/ fold(/*<T>*/ onLeft(dynamic left), /*<T>*/ onRight(R right)) =>
       onRight(right.e0);
-
-  Either<dynamic, R> mapLeft(f(L element)) =>
-      this;
-
-  Either<L, dynamic> mapRight(f(R element)) {
-    final Option mapped = right.map(f);
-    checkArgument(mapped is Some);
-    return new _Right(mapped);
-  }
 }
