@@ -23,7 +23,7 @@ class _Success<T> implements Try<T> {
   _Success(this.value);
 
   Try then(f(T element), {Function onError}) =>
-      try_(f(value));
+      try_(() => f(value));
 
   Try catchError(Function onError,{bool test(error)}) =>
       this;
