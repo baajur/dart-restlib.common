@@ -15,8 +15,6 @@ abstract class Try<T> {
   Try then(f(T element), {Function onError});
 
   Try catchError(Function onError, {bool test(error)});
-
-  Option<T> toOption();
 }
 
 class _Success<T> implements Try<T> {
