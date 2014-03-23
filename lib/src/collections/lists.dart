@@ -1,7 +1,7 @@
 part of collections;
 
 List concatLists(final Iterable<List> lists) =>
-    new _ConcatList(checkNotNull(lists.toList(growable: false)));
+    new _ConcatList(checkNotNull(lists).toList(growable: false));
 
 List sublist(final List list, int startIndex, [int length]) {
   checkNotNull(list);
