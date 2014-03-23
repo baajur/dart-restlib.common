@@ -18,20 +18,20 @@ abstract class Either<L, R> {
   Either<R, L> swap();
 }
 
-abstract class Left<L> implements Either<L,dynamic> {
+abstract class Left<L,R> implements Either<L,R> {
   Some<L> get left;
   None get right;
   L get value;
 
-  Right<L> swap();
+  Right<R,L> swap();
 }
 
-abstract class Right<R> implements Either<dynamic, R> {
+abstract class Right<L,R> implements Either<L,R> {
   None get left;
   Some<R> get right;
   R get value;
 
-  Left<R> swap();
+  Left<R,L> swap();
 }
 
 abstract class _Either<L,R> implements Either<L,R> {
@@ -55,7 +55,7 @@ abstract class _Either<L,R> implements Either<L,R> {
            (final R right) => "Either.right($right)");
 }
 
-class _Left<L> extends _Either<L, dynamic> implements Left<L> {
+class _Left<L,R> extends _Either<L, R> implements Left<L,R> {
   final Some<L> left;
 
   const _Left(this.left);
@@ -64,14 +64,14 @@ class _Left<L> extends _Either<L, dynamic> implements Left<L> {
 
   L get value => left.e0;
 
-  /*<T>*/ fold(/*<T>*/ onLeft(L left), /*<T>*/ onRight(dynamic right)) =>
+  /*<T>*/ fold(/*<T>*/ onLeft(L left), /*<T>*/ onRight(R right)) =>
       onLeft(left.e0);
 
-  Right<L> swap() =>
+  Right<R,L> swap() =>
       new _Right(left);
 }
 
-class _Right<R> extends _Either<dynamic,R> implements Right<R> {
+class _Right<L,R> extends _Either<L,R> implements Right<L,R> {
   final Some<R> right;
 
   const _Right(this.right);
@@ -83,6 +83,6 @@ class _Right<R> extends _Either<dynamic,R> implements Right<R> {
   /*<T>*/ fold(/*<T>*/ onLeft(dynamic left), /*<T>*/ onRight(R right)) =>
       onRight(right.e0);
 
-  Left<R> swap() =>
+  Left<R,L> swap() =>
       new _Left(right);
 }
