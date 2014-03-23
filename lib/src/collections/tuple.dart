@@ -68,6 +68,7 @@ abstract class None implements Option{}
 
 abstract class Some<T> implements Option<T> {
   T get e0;
+  T get value;
 }
 
 abstract class Pair<T0, T1> implements Tuple {

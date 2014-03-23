@@ -21,6 +21,7 @@ abstract class Either<L, R> {
 abstract class Left<L> implements Either<L,dynamic> {
   Some<L> get left;
   None get right;
+  L get value;
 
   Right<L> swap();
 }
@@ -28,6 +29,7 @@ abstract class Left<L> implements Either<L,dynamic> {
 abstract class Right<R> implements Either<dynamic, R> {
   None get left;
   Some<R> get right;
+  R get value;
 
   Left<R> swap();
 }
@@ -60,7 +62,7 @@ class _Left<L> extends _Either<L, dynamic> implements Left<L> {
 
   None get right => Tuple.NONE;
 
-  dynamic get value => left.e0;
+  L get value => left.e0;
 
   /*<T>*/ fold(/*<T>*/ onLeft(L left), /*<T>*/ onRight(dynamic right)) =>
       onLeft(left.e0);
@@ -76,7 +78,7 @@ class _Right<R> extends _Either<dynamic,R> implements Right<R> {
 
   None get left => Tuple.NONE;
 
-  dynamic get value => right.e0;
+  R get value => right.e0;
 
   /*<T>*/ fold(/*<T>*/ onLeft(dynamic left), /*<T>*/ onRight(R right)) =>
       onRight(right.e0);
