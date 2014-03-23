@@ -10,6 +10,12 @@ Try try_(dynamic compute()) {
 }
 
 abstract class Try<T> {
+  factory Try.success(final T value) =>
+      new _Success(value);
+
+  factory Try.failure(final e, [final StackTrace st]) =>
+      new _Failure(checkNotNull(e), st);
+
   T get value;
 
   Try then(f(T element), {Function onError});
