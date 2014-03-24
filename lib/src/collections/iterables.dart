@@ -59,7 +59,6 @@ abstract class IndexedIterator<T> implements BidirectionalIterator<T> {
 
   int get index;
   void set index(final int index);
-  Iterable<T> get iterable;
 }
 
 class _ZippedIterable extends IterableBase<Tuple> {
