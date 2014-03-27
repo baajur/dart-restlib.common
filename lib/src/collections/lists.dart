@@ -15,17 +15,17 @@ List sublist(final List list, int startIndex, [int endIndex]) {
     return const[];
   }
 
-  return new _SubList(list, startIndex, length);
+  return new _SubList(list, startIndex, endIndex);
 }
 
 class _SubList<T> extends ListBase<T> implements List<T> {
   final List<T> _delegate;
-  final int _start;
-  final int _length;
+  final int _startIndex;
+  final int _endIndex;
 
-  _SubList(this._delegate, this._start, this._length);
+  _SubList(this._delegate, this._startIndex, this._length);
 
-  int get length => _length;
+  int get length => _endIndex - _start;
 
   void set length(int length) =>
       throw new UnsupportedError("List is unmodifiable");
@@ -33,8 +33,10 @@ class _SubList<T> extends ListBase<T> implements List<T> {
   void operator[]=(final int index, final T value) =>
       throw new UnsupportedError("List is unmodifiable");
 
-  T operator[](final int index) =>
-      _delegate[_start + index];
+  T operator[](final int index) {
+    checkArgument(start + index < _endIndex);
+    return _delegate[_start + index];
+  }
 }
 
 class _ConcatList<T> extends ListBase<T> implements List<T> {
