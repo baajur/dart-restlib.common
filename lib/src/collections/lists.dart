@@ -23,9 +23,9 @@ class _SubList<T> extends ListBase<T> implements List<T> {
   final int _startIndex;
   final int _endIndex;
 
-  _SubList(this._delegate, this._startIndex, this._length);
+  _SubList(this._delegate, this._startIndex, this._endIndex);
 
-  int get length => _endIndex - _start;
+  int get length => _endIndex - _startIndex;
 
   void set length(int length) =>
       throw new UnsupportedError("List is unmodifiable");
@@ -34,8 +34,8 @@ class _SubList<T> extends ListBase<T> implements List<T> {
       throw new UnsupportedError("List is unmodifiable");
 
   T operator[](final int index) {
-    checkArgument(start + index < _endIndex);
-    return _delegate[_start + index];
+    checkArgument(_startIndex + index < _endIndex);
+    return _delegate[_startIndex + index];
   }
 }
 
