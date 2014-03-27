@@ -3,13 +3,17 @@ part of collections;
 List concatLists(final Iterable<List> lists) =>
     new _ConcatList(checkNotNull(lists).toList(growable: false));
 
-List sublist(final List list, int startIndex, [int length]) {
+List sublist(final List list, int startIndex, [int endIndex]) {
   checkNotNull(list);
   checkNotNull(startIndex);
-  length = firstNotNull(length, list.length);
+  endIndex = firstNotNull(endIndex, list.length);
 
-  checkArgument(startIndex >= 0 && startIndex < list.length);
-  checkArgument(length <= list.length - startIndex);
+  checkArgument(startIndex >= 0 && startIndex <= endIndex);
+  checkArgument(endIndex <= list.length);
+
+  if(startIndex == endIndex) {
+    return const[];
+  }
 
   return new _SubList(list, startIndex, length);
 }
