@@ -2,6 +2,11 @@ library async;
 
 import "dart:async";
 import "objects.dart";
+import "collections.dart";
+import "collections.mutable.dart";
+import "preconditions.dart";
+
+part "src/async/replay_stream.dart";
 
 Stream valueAsStream(dynamic value) =>
     new Stream.fromFuture(new Future.value(value));

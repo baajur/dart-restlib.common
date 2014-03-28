@@ -108,6 +108,7 @@ abstract class Sequence<E> implements Associative<int, E>, Iterable<E> {
 
   int indexOf(E element, [int start=0]);
 
+  // FIXME: change to subSequence(int start, int end); to be consistent
   Sequence<E> subSequence(int start, int length);
 
   List<E> asList();
