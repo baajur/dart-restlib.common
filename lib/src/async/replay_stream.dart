@@ -1,6 +1,15 @@
 part of async;
 
-class ReplayStream<T> extends Stream<T> {
+abstract class ReplayStream<T> implements Stream<T> {
+  factory ReplayStream(final Stream<T> stream) =>
+      new _ReplayStream(checkNotNull(stream));
+
+  Iterable<T> get values;
+
+  Stream<T> replay();
+}
+
+class _ReplayStream<T> extends Stream<T> implements ReplayStream<T> {
   final Stream<T> _stream;
   final MutableSequence<Try<T>> _events = new GrowableSequence();
 
@@ -10,7 +19,7 @@ class ReplayStream<T> extends Stream<T> {
   Option<StreamController> _streamController = Option.NONE;
   bool _replayDisabled = false;
 
-  ReplayStream(this._stream);
+  _ReplayStream(this._stream);
 
   Iterable<T> get values =>
       _events
