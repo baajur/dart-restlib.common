@@ -7,6 +7,8 @@ abstract class ReplayStream<T> implements Stream<T> {
   Iterable<T> get values;
 
   Stream<T> replay();
+
+  void disableReplay();
 }
 
 class _ReplayStream<T> extends Stream<T> implements ReplayStream<T> {
